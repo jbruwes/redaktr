@@ -61,3 +61,12 @@
     background: url(https://source.unsplash.com/TR_BV5LLXtY) 100% 100% no-repeat;
     background-size: cover;
 }
+.signInViewRight {
+  background-color: rgba(255, 255, 255, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.signInViewField {
+    background-color: white;
+    border-left: 4px solid #027bc7;
+}
