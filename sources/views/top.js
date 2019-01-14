@@ -1,43 +1,51 @@
 import { JetView, plugins } from "webix-jet";
 export default class TopView extends JetView {
 	config() {
-		var header = {
-			type: "header",
-			template: this.app.config.name,
-			css: "webix_header app_header"
-		};
-		var menu = {
-			view: "menu",
-			id: "top:menu",
-			css: "app_menu",
-			width: 180,
-			layout: "y",
-			select: true,
-			template: "<span class='webix_icon #icon#'></span> #value# ",
-			data: [
-				{ value: "Sign In", id: "signin", icon: "wxi-user" },
-				{ value: "About", id: "about", icon: "wxi-alert" }
-			]
-		};
 		var ui = {
-			type: "clean",
-			paddingX: 5,
-			css: "app_layout",
-			cols: [
-				{ paddingX: 5, paddingY: 10, rows: [{ css: "webix_shadow_medium", rows: [header, menu] }] },
+			rows: [{
+					view: "toolbar",
+					height: 56,
+					elements: [{
+							view: "icon",
+							icon: "mdi mdi-menu",
+							click: function() {
+								$$("menu").toggle();
+							}
+						},
+						{},
+						{ view: "icon", icon: "mdi mdi-bell", badge: 3 },
+						{ view: "icon", icon: "mdi mdi-settings" }
+					]
+				},
 				{
-					type: "wide",
-					paddingY: 10,
-					paddingX: 5,
-					rows: [
-						{ $subview: true }
+					cols: [{
+							view: "sidebar",
+							collapsed: true,
+							id: "menu",
+							data: [
+								{ id: "signin", icon: "mdi mdi-login-variant", value: "Sign In" },
+								{ id: "about", icon: "mdi mdi-help-circle-outline", value: "About" }
+							],
+							click: function(id) {
+								this.$scope.show(id);
+							}
+						},
+						{
+							type: "space",
+							css: "app_layout",
+							rows: [
+								{ $subview: true }
+							]
+						}
 					]
 				}
+
 			]
 		};
 		return ui;
 	}
 	init() {
-		this.use(plugins.Menu, "top:menu");
+		$$("menu").getPopup().attachEvent("onBeforeShow", function() { return false; });
+		$$("menu").select("signin");
 	}
 }
