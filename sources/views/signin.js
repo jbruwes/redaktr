@@ -8,14 +8,11 @@ export default class SignInView extends JetView {
                 webix.message({ text: err, type: "error" });
             }
             else {
-                //console.log(self.$scope);
-                //var app = self.$scope.app;
-                //app.refresh();
-                console.log('Signin');
-                $$("menu").remove($$("menu").getSelectedId());
-                $$("menu").add({ id: "content", icon: "mdi mdi-help-circle-outline", value: "Content" }, 0);
+                $$("sidebar").clearAll();
+                //$$("sidebar").remove($$("sidebar").getSelectedId());
+                $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
+                $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
                 self.app.show("/top/content");
-                //self.app.refresh();
             }
         };
         return {

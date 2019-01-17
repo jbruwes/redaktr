@@ -8,31 +8,32 @@ export default class TopView extends JetView {
 					elements: [{
 							view: "icon",
 							icon: "mdi mdi-menu",
-							click: function() {
-								$$("menu").toggle();
+							click: () => {
+								$$("sidebar").toggle();
 							}
 						},
 						{},
-						{
-							view: "icon",
-							icon: "mdi mdi-logout-variant",
-							click: () => {
-								delete AWS.config.credentials.params.Logins['accounts.google.com'];
-								delete AWS.config.credentials.params.Logins['graph.facebook.com'];
-								this.show('signin');
-								this.app.refresh();
-							}
-						}
+						{ view: "icon", icon: "mdi mdi-help-circle-outline" }
 					]
 				},
 				{
 					cols: [{
 							view: "sidebar",
 							collapsed: true,
-							id: "menu",
-							data: [{ id: "signin", icon: "mdi mdi-login-variant", value: "Sign In" }, { id: "about", icon: "mdi mdi-help-circle-outline", value: "About" }],
-							click: function(id) {
-								this.$scope.show(id);
+							id: "sidebar",
+							data: [],
+							click: (id) => {
+								if (id === "signout") {
+									delete AWS.config.credentials.params.Logins['accounts.google.com'];
+									delete AWS.config.credentials.params.Logins['graph.facebook.com'];
+									webix.delay(() => {
+										this.resetSidebar();
+										this.show('signin');
+									});
+								}
+								else {
+									this.show(id);
+								}
 							}
 						},
 						{
@@ -49,15 +50,19 @@ export default class TopView extends JetView {
 		};
 		return ui;
 	}
+	resetSidebar() {
+		$$("sidebar").clearAll();
+		$$("sidebar").add({ id: "signin", icon: "mdi mdi-login-variant", value: "Sign In" });
+		$$("sidebar").add({ id: "about", icon: "mdi mdi-information-outline", value: "About" });
+	}
 	init() {
-		$$("menu").getPopup().attachEvent("onBeforeShow", function() { return false; });
-		this.app.attachEvent("app:route", function(url) {
-			$$("menu").select(url[1].page);
-		});
-		this.app.attachEvent("app:guard", function(url, view, nav) {
-			if (!(nav.url[1].page === 'signin' || nav.url[1].page === 'about') && !Object.keys(AWS.config.credentials.params.Logins).length) {
-				nav.redirect = "/top/signin";
-		}
+		$$("sidebar").getPopup().attachEvent("onBeforeShow", () => { return false; });
+		webix.delay(() => {
+			this.app.attachEvent("app:route", (url) => {
+				$$("sidebar").select(url[1].page);
+			});
+			this.resetSidebar();
+			this.show('signin');
 		});
 	}
 }
