@@ -12,8 +12,11 @@ export default class TopView extends JetView {
 								$$("sidebar").toggle();
 							}
 						},
+						{ view: "label", label: "<span class='mdi mdi-36px mdi-glassdoor logoRedaktr'></span> REDAKTR" },
 						{},
-						{ view: "icon", icon: "mdi mdi-help-circle-outline" }
+						{ view: "icon", icon: "mdi mdi-help-circle-outline", click: () => {
+							window.open("https://redaktr.com/spravka/","_blank");
+						} }
 					]
 				},
 				{
@@ -37,7 +40,8 @@ export default class TopView extends JetView {
 							}
 						},
 						{
-							type: "space",
+							type: "wide",
+							padding: 2,
 							css: "app_layout",
 							rows: [
 								{ $subview: true }
