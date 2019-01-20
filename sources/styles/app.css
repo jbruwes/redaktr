@@ -120,3 +120,10 @@
     height: 92px;
     width: 92px;
 }
+
+.redaktrHeader {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 2.42857rem;
+    font-weight: 200;
+    padding-left: 20px;
+}
