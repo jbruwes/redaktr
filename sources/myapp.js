@@ -48,4 +48,9 @@ if (!BUILD_AS_MODULE) {
 		});
 		app.render();
 	});
+
+	webix.protoUI({
+		name: "edittree"
+	}, webix.EditAbility, webix.ui.tree);
+
 }

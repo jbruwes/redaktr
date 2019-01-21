@@ -19,8 +19,9 @@ export default class SignInView extends JetView {
             css: "signInView",
             cols: [{ gravity: 0.38 }, {
                 css: "signInViewRight",
-                rows: [{gravity: 2},
+                rows: [
                     { paddingX: 10, cols: [{}, { view: "label", label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>', height: 152, width: 152 }] },
+                   {gravity: 2},
                     { view: "template", template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website creator</div></h1>", minHeight: 150 , type: "clean"},
                     {
                         css: "signInViewField",
