@@ -41,20 +41,65 @@ export default class ContentView extends JetView {
 					rows: [{
 							view: "toolbar",
 							cols: [{
-									view: "button",
-									value: "Add new row",
+									view: "icon",
+									icon: "mdi mdi-file-document-outline",
 									click: () => {
 										$$("tree").select($$("tree").add({ checked: true, value: "New film" }, null, $$("tree").getSelectedId() || 0));
 									}
 								},
 								{
-									view: "button",
-									value: "Remove selected row",
+									view: "icon",
+									icon: "mdi mdi-pencil",
 									click: () => {
 										var sel = $$("tree").getSelectedId(true);
 										if (!sel) return;
 										for (var i = 0; i < sel.length; i++)
 											$$("tree").remove(sel[i]);
+									}
+								}, {
+									view: "icon",
+									icon: "mdi mdi-delete-outline",
+									click: () => {
+										var sel = $$("tree").getSelectedId(true);
+										if (!sel) return;
+										for (var i = 0; i < sel.length; i++)
+											$$("tree").remove(sel[i]);
+									}
+								}, {
+									view: "icon",
+									icon: "mdi mdi-arrow-up-bold-box-outline",
+									click: () => {
+										var sel = $$("tree").getSelectedId(true);
+										if (!sel) return;
+										for (var i = 0; i < sel.length; i++)
+											$$("tree").move(sel[i],0);
+									}
+								}, {
+									view: "icon",
+									icon: "mdi mdi-arrow-down-bold-box-outline",
+									click: () => {
+										var sel = $$("tree").getSelectedId(true);
+										if (!sel) return;
+										for (var i = 0; i < sel.length; i++)
+											$$("tree").moveDown(sel[i]);
+									}
+								}, {
+									view: "icon",
+									icon: "mdi mdi-arrow-left-bold-box-outline",
+									click: () => {
+										var sel = $$("tree").getSelectedId(true);
+										if (!sel) return;
+										for (var i = 0; i < sel.length; i++)
+											$$("tree").moveLeft(sel[i]);
+									}
+								}, {
+									view: "icon",
+									icon: "mdi mdi-arrow-right-bold-box-outline",
+									click: () => {
+										var sel = $$("tree").getSelectedId(true);
+										if (!sel) return;
+										for (var i = 0; i < sel.length; i++)
+											$$("tree").moveRight(sel[i]);
 									}
 								}, {}
 							]
@@ -74,7 +119,8 @@ export default class ContentView extends JetView {
 							url: "https://api.redaktr.com/index",
 							save: {
 								url: "https://api.redaktr.com/index",
-								updateFromResponse: false
+								updateFromResponse: false,
+								trackMove:true
 							}
 						}
 					]
