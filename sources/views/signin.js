@@ -74,7 +74,7 @@ export default class SignInView extends JetView {
                                         label: "Sign In with Google",
                                         type: "iconButton",
                                         icon: "mdi mdi-google",
-                                        click: function() {
+                                        click: () => {
                                             //var self = this;
                                             $script('//apis.google.com/js/platform.js', () => {
                                                 window.gapi.load('auth2', () => {

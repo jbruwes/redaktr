@@ -1,15 +1,15 @@
 import { JetView } from "webix-jet";
 export default class ContentView extends JetView {
 	config() {
-
-		var guid = function() {
-			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-				var r = Math.random() * 16 | 0,
-					v = c == 'x' ? r : r & 0x3 | 0x8;
-				return v.toString(16);
+		var onChangeFnc = function(id) {
+			webix.delay(() => {
+				console.log(webix.ajax().stringify($$("tree").data.serialize()));
+				webix.ajax().post("https://api.redaktr.com/index", webix.ajax().stringify($$("tree").data.serialize()), function(text, xml, xhr) {
+					response
+					console.log(text);
+				});
 			});
 		};
-
 		return {
 			view: "accordion",
 			cols: [{
@@ -44,62 +44,71 @@ export default class ContentView extends JetView {
 									view: "icon",
 									icon: "mdi mdi-file-document-outline",
 									click: () => {
-										$$("tree").select($$("tree").add({ checked: true, value: "New film" }, null, $$("tree").getSelectedId() || 0));
+										var item = $$("tree").add({ checked: true, value: "" }, $$("tree").getBranchIndex($$("tree").getSelectedId()) + 1, $$("tree").getParentId($$("tree").getSelectedId()) || 0);
+										$$("tree").select(item);
+										$$("tree").edit(item);
 									}
 								},
 								{
 									view: "icon",
 									icon: "mdi mdi-pencil",
-									click: () => {
-										var sel = $$("tree").getSelectedId(true);
-										if (!sel) return;
-										for (var i = 0; i < sel.length; i++)
-											$$("tree").remove(sel[i]);
-									}
+									click: () => { $$("tree").edit($$("tree").getSelectedId()) }
 								}, {
 									view: "icon",
 									icon: "mdi mdi-delete-outline",
-									click: () => {
-										var sel = $$("tree").getSelectedId(true);
-										if (!sel) return;
-										for (var i = 0; i < sel.length; i++)
-											$$("tree").remove(sel[i]);
+									click: function() {
+										var sel = $$("tree").getSelectedId();
+										var sel2 = $$("tree").getNextSiblingId(sel) || $$("tree").getPrevSiblingId(sel) || $$("tree").getParentId(sel);
+										if (sel2) {
+											webix.confirm("Are you sure?", function(result) {
+												if (result) {
+													$$("tree").remove(sel);
+													$$("tree").select(sel2);
+												}
+											});
+										}
 									}
 								}, {
 									view: "icon",
 									icon: "mdi mdi-arrow-up-bold-box-outline",
 									click: () => {
-										var sel = $$("tree").getSelectedId(true);
-										if (!sel) return;
-										for (var i = 0; i < sel.length; i++)
-											$$("tree").move(sel[i],0);
+										var sel = $$("tree").getSelectedId(),
+											par = $$("tree").getParentId(sel);
+										if ($$("tree").getPrevSiblingId(sel)) {
+											$$("tree").move(sel, $$("tree").getBranchIndex(sel) - 1, null, { parent: par });
+										}
 									}
 								}, {
 									view: "icon",
 									icon: "mdi mdi-arrow-down-bold-box-outline",
 									click: () => {
-										var sel = $$("tree").getSelectedId(true);
-										if (!sel) return;
-										for (var i = 0; i < sel.length; i++)
-											$$("tree").moveDown(sel[i]);
+										var sel = $$("tree").getSelectedId(),
+											par = $$("tree").getParentId(sel);
+										if ($$("tree").getNextSiblingId(sel)) {
+											$$("tree").move(sel, $$("tree").getBranchIndex(sel) + 1, null, { parent: par });
+										}
 									}
 								}, {
 									view: "icon",
 									icon: "mdi mdi-arrow-left-bold-box-outline",
 									click: () => {
-										var sel = $$("tree").getSelectedId(true);
-										if (!sel) return;
-										for (var i = 0; i < sel.length; i++)
-											$$("tree").moveLeft(sel[i]);
+										var sel = $$("tree").getSelectedId(),
+											par = $$("tree").getParentId(sel);
+										if (par) {
+											var parpar = $$("tree").getParentId(par);
+											$$("tree").move(sel, $$("tree").getBranchIndex(par) + 1, null, { parent: parpar });
+										}
 									}
 								}, {
 									view: "icon",
 									icon: "mdi mdi-arrow-right-bold-box-outline",
 									click: () => {
-										var sel = $$("tree").getSelectedId(true);
-										if (!sel) return;
-										for (var i = 0; i < sel.length; i++)
-											$$("tree").moveRight(sel[i]);
+										var sel = $$("tree").getSelectedId(),
+											sib = $$("tree").getPrevSiblingId(sel);
+										if (sib) {
+											$$("tree").move(sel, -1, null, { parent: sib });
+											$$("tree").open(sib);
+										}
 									}
 								}, {}
 							]
@@ -112,15 +121,18 @@ export default class ContentView extends JetView {
 							template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
 							checkboxRefresh: true,
 							editable: true,
-							editor: "text",
+							editor: "popup",
 							editValue: "value",
 							editaction: "dblclick",
 							//drag:"order",
 							url: "https://api.redaktr.com/index",
-							save: {
-								url: "https://api.redaktr.com/index",
-								updateFromResponse: false,
-								trackMove:true
+							on: {
+								"data->onAfterAdd": onChangeFnc,
+								"data->onAfterDelete": onChangeFnc,
+								"data->onDataUpdate": onChangeFnc,
+								"data->onDataMove": onChangeFnc,
+								"onItemCheck": onChangeFnc,
+								"onAfterLoad": () => { $$("tree").select($$("tree").getFirstId()) }
 							}
 						}
 					]
