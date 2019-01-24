@@ -1,16 +1,28 @@
 import { JetView } from "webix-jet";
 export default class ContentView extends JetView {
 	config() {
-		var lastXHR = null;
+		var lastXHRGet = null;
+		var lastXHRPost = null;
 		webix.attachEvent("onBeforeAjax", function(mode, url, params, xhr) {
-			lastXHR = xhr;
+			if (mode === 'POST') {
+				lastXHRPost = xhr;
+			}
+			else {
+				lastXHRGet = xhr;
+			}
 		});
 		var onChangeFnc = function(id) {
 			webix.delay(() => {
-				lastXHR.abort();
+				lastXHRPost.abort();
 				webix.ajax().post("https://api.redaktr.com/index", webix.ajax().stringify($$("tree").data.serialize()), function(text, xml, xhr) {
 					webix.message("Tree save complete");
 				});
+			});
+		};
+		var onSelectFnc = function(id) {
+			lastXHRGet.abort();
+			webix.ajax().get("https://api.redaktr.com/page/" + id, null, function(text, xml, xhr) {
+					webix.message(text);
 			});
 		};
 		return {
@@ -135,7 +147,8 @@ export default class ContentView extends JetView {
 								"data->onDataUpdate": onChangeFnc,
 								"data->onDataMove": onChangeFnc,
 								"onItemCheck": onChangeFnc,
-								"onAfterLoad": () => { $$("tree").select($$("tree").getFirstId()) }
+								"onAfterLoad": () => { $$("tree").select($$("tree").getFirstId()) },
+								"onAfterSelect": onSelectFnc
 							}
 						}
 					]
