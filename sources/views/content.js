@@ -1,12 +1,15 @@
 import { JetView } from "webix-jet";
 export default class ContentView extends JetView {
 	config() {
+		var lastXHR = null;
+		webix.attachEvent("onBeforeAjax", function(mode, url, params, xhr) {
+			lastXHR = xhr;
+		});
 		var onChangeFnc = function(id) {
 			webix.delay(() => {
-				console.log(webix.ajax().stringify($$("tree").data.serialize()));
+				lastXHR.abort();
 				webix.ajax().post("https://api.redaktr.com/index", webix.ajax().stringify($$("tree").data.serialize()), function(text, xml, xhr) {
-					response
-					console.log(text);
+					webix.message("Tree save complete");
 				});
 			});
 		};

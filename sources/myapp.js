@@ -28,6 +28,7 @@ if (!BUILD_AS_MODULE) {
 			httpRequest.headers['Content-Type'] = "application/json";
 			//OPTIONAL
 			httpRequest.method = mode; //Default is POST
+			if (data) { httpRequest.body = data; }
 			var v4signer = new AWS.Signers.V4(httpRequest, "execute-api", true);
 			v4signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate());
 			headers["Authorization"] = httpRequest.headers["Authorization"];
