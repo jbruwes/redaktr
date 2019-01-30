@@ -9,7 +9,6 @@ export default class SignInView extends JetView {
             }
             else {
                 $$("sidebar").clearAll();
-                //$$("sidebar").remove($$("sidebar").getSelectedId());
                 $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
                 $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
                 self.app.show("/top/content");
@@ -123,3 +122,7 @@ export default class SignInView extends JetView {
         };
     }
 }
+/* global AWS */
+/* global webix */
+/* global FB */
+/* global $$ */

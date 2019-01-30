@@ -1,4 +1,4 @@
-import { JetView, plugins } from "webix-jet";
+import { JetView } from "webix-jet";
 export default class TopView extends JetView {
 	config() {
 		var ui = {
@@ -70,3 +70,6 @@ export default class TopView extends JetView {
 		});
 	}
 }
+/* global webix */
+/* global AWS */
+/* global $$ */

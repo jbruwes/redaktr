@@ -12,38 +12,39 @@ export default class TreeView extends JetView {
             editor: "popup",
             editValue: "value",
             editaction: "dblclick",
-            url: "https://api.redaktr.com/tree"
+            url: "https://assets.redaktr.com/" + AWS.config.credentials.identityId + ".json"
         };
     }
     init(view, url) {
+        var S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
         var lastXHRGetContent = null;
         var lastXHRPostTree = null;
         this.app.attachEvent("onBeforeAjax", function(mode, url, params, xhr) {
-            if (mode === 'POST' && !url.indexOf('https://api.redaktr.com/tree')) {
-                lastXHRPostTree = xhr;
-            }
-            if (mode === 'GET' && !url.indexOf('https://api.redaktr.com/content')) {
+            if (mode === 'GET' && !url.indexOf('https://content.redaktr.com')) {
                 lastXHRGetContent = xhr;
             }
         });
         var onChangeFnc = function(id) {
             webix.delay(() => {
                 if (lastXHRPostTree) { lastXHRPostTree.abort(); }
-                webix.ajax().post("https://api.redaktr.com/tree", JSON.stringify($$("tree").data.serialize(), function(key, value) {
-                    if (typeof value === 'string' && !value.length) {
-                        return undefined; // удаляем все строковые свойства
+                lastXHRPostTree = S3.putObject({
+                        Bucket: 'assets.redaktr.com',
+                        Key: AWS.config.credentials.identityId + '.json',
+                        ContentType: 'application/json',
+                        Body: webix.ajax().stringify($$("tree").data.serialize())
+                    },
+                    (err, data) => {
+                        if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+                        else webix.message("Tree save complete");
                     }
-                    return value;
-                }), function(text, xml, xhr) {
-                    webix.message("Tree save complete");
-                });
+                );
             });
         };
         var onSelectFnc = function(id) {
             if (lastXHRGetContent) { lastXHRGetContent.abort(); }
             var content = $$("tinymce").getEditor();
             content.setProgressState(1);
-            webix.ajax("https://api.redaktr.com/content/" + id, {
+            webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                 success: function(text, data, XmlHttpRequest) {
                     content.setProgressState(0);
                     content.getWin().scrollTo(0, 0);
@@ -53,7 +54,6 @@ export default class TreeView extends JetView {
                     content.nodeChanged();
                 },
                 error: function(text, data, XmlHttpRequest) {
-                    webix.message(text);
                     content.setProgressState(0);
                     content.getWin().scrollTo(0, 0);
                     content.setContent('');
@@ -75,3 +75,7 @@ export default class TreeView extends JetView {
         this.app.detachEvent("onBeforeAjax");
     }
 }
+
+/* global webix */
+/* global AWS */
+/* global $$ */

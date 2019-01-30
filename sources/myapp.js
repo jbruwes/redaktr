@@ -19,6 +19,7 @@ if (!BUILD_AS_MODULE) {
 		IdentityPoolId: 'us-east-1:92faa262-cf0e-4586-98d5-2f74fa89baec',
 		Logins: {}
 	});
+	/*
 	webix.attachEvent("onBeforeAjax",
 		function(mode, url, data, request, headers, files, promise) {
 			var httpRequest = new AWS.HttpRequest(url, "us-east-1");
@@ -38,6 +39,7 @@ if (!BUILD_AS_MODULE) {
 			headers["x-amz-security-token"] = httpRequest.headers["x-amz-security-token"];
 		}
 	);
+	*/
 	webix.ready(() => {
 		var app = new MyApp();
 		app.attachEvent("app:guard", (url, view, nav) => {
@@ -49,9 +51,9 @@ if (!BUILD_AS_MODULE) {
 		});
 		app.render();
 	});
-
 	webix.protoUI({
 		name: "edittree"
 	}, webix.EditAbility, webix.ui.tree);
-
 }
+/* global webix */
+/* global AWS */

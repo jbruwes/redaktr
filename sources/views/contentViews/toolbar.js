@@ -78,3 +78,5 @@ export default class ToolbarView extends JetView {
         };
     }
 }
+/* global webix */
+/* global $$ */
