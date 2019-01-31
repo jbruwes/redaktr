@@ -9,6 +9,7 @@ export default class ContentView extends JetView {
 	}
 	init() {
 		var S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
+		var lastXHRPostTree = null;
 		S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
@@ -18,33 +19,23 @@ export default class ContentView extends JetView {
 				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
 				head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
 			}
-			var rowData = [];
-			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each(function(i, val) {
-				rowData.push($(val).attr("href").replace(/^.*?:/, ""));
-			});
-			rowData = rowData.join(",");
-
-			var freeCSS = [];
-			$('<div>' + head + '</div>').find("style:not([id])").each(function(i, val) {
-				console.log(i, val);
-			});
-			var save = function() {
-				/*var s3=new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
-            
-            s3.putObject({
-								Bucket: 'content.redaktr.com',
-								ContentType: 'text/html',
-								Key: 'us-east-1:b7764491-78e7-4aed-9032-b5e04e26d221/:2017-02-08T15:48:04.764Z.htm',
-								Body: "<p>Let's prove the fun!</p>"
-							},function(err, data) {
-							    console.log(err);
-							    console.log(data);
-							});*/
-
-				//if (lastXHRPostTree) { lastXHRPostTree.abort(); }
-				//webix.ajax().post("https://api.redaktr.com/content/" + $$("tree").getSelectedId(), $$("tinymce").getValue(), function(text, xml, xhr) {
-				//	webix.message("Content save complete");
-				//});
+			var content_css = [];
+			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
+			content_css = content_css.join(",");
+			var content_style = [];
+			$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
+			content_style = content_style.join("\n");
+			var save = () => {
+				if (lastXHRPostTree) lastXHRPostTree.abort();
+				lastXHRPostTree = S3.putObject({
+					Bucket: 'content.redaktr.com',
+					ContentType: 'text/html',
+					Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
+					Body: $$("tinymce").getValue()
+				}, (err, data) => {
+					if (err) webix.message(err.message);
+					else webix.message("Content save complete");
+				});
 			};
 			$$("accordion").addView({
 				view: "accordionitem",
@@ -59,7 +50,7 @@ export default class ContentView extends JetView {
 									id: "tinymce",
 									view: "tinymce-editor",
 									config: {
-										init_instance_callback: function(editor) {
+										init_instance_callback: (editor) => {
 											$$("accordion").addView({
 												view: "accordionitem",
 												collapsed: true,
@@ -68,7 +59,7 @@ export default class ContentView extends JetView {
 													rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
 												}
 											});
-											editor.serializer.addNodeFilter('script,style', function(nodes, name) {
+											editor.serializer.addNodeFilter('script,style', (nodes, name) => {
 												var i = nodes.length,
 													node, value;
 												while (i--) {
@@ -87,6 +78,7 @@ export default class ContentView extends JetView {
 											editor.on('Redo', save);
 										},
 										theme: "modern",
+										width: "100%",
 										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern save'
 											/*[
 												"advlist autolink link image lists charmap print hr anchor pagebreak",
@@ -97,8 +89,8 @@ export default class ContentView extends JetView {
 											,
 										menubar: "file edit insert view format table",
 										toolbar1: " fontselect | fontsizeselect | forecolor backcolor bullist numlist outdent indent rtl zlink",
-										content_style: ".mce-content-body{font-size:14px;padding:8px;}",
-										content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + rowData + "," +
+										content_style: ".mce-content-body{font-size:14px;padding:8px;}\n" + content_style,
+										content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + content_css + "," +
 											"//fonts.googleapis.com/css?family=Alice|Andika|Anonymous+Pro|Arimo|Arsenal|Bad+Script|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cousine|Cuprum|Didact+Gothic|EB+Garamond|El+Messiri|Exo+2|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Forum|Gabriela|Istok+Web|Jura|Kelly+Slab|Kurale|Ledger|Lobster|Lora|Marck+Script|Marmelad|Merriweather|Neucha|Noto+Sans|Noto+Serif|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oranienbaum|Oswald|PT+Mono|PT+Sans|PT+Sans+Caption|PT+Sans+Narrow|PT+Serif|PT+Serif+Caption|Pangolin|Pattaya|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Poiret+One|Prata|Press+Start+2P|Prosto+One|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rubik|Rubik+Mono+One|Ruslan+Display|Russo+One|Scada|Seymour+One|Source+Sans+Pro|Stalinist+One|Tenor+Sans|Tinos|Ubuntu|Ubuntu+Condensed|Ubuntu+Mono|Underdog|Yanone+Kaffeesatz|Yeseva+One&amp;subset=cyrillic",
 										templates: [
 											{ title: 'Social Share', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' }
@@ -381,7 +373,19 @@ export default class ContentView extends JetView {
 								{ value: "Source", id: "ace" }
 							],
 							multiview: "true",
-							type: "bottom"
+							type: "bottom",
+							on: {
+								onChange: function() {
+									switch (this.getValue()) {
+										case 'tinymce':
+											$$("tinymce").setValue($$("ace").getValue());
+											break;
+										case 'ace':
+											$$("ace").getEditor().setValue($$("tinymce").getValue(), -1);
+											break;
+									}
+								}
+							}
 						}
 					]
 				}
@@ -389,6 +393,7 @@ export default class ContentView extends JetView {
 		});
 	}
 }
+/* global webix */
 /* global AWS */
 /* global $$ */
 /* global $ */

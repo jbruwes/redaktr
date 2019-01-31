@@ -12,23 +12,23 @@ export default class TreeView extends JetView {
             editor: "popup",
             editValue: "value",
             editaction: "dblclick",
-            url: "https://assets.redaktr.com/" + AWS.config.credentials.identityId + ".json"
+            url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json"
         };
     }
     init(view, url) {
         var S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
         var lastXHRGetContent = null;
         var lastXHRPostTree = null;
-        this.app.attachEvent("onBeforeAjax", function(mode, url, params, xhr) {
+        this.app.attachEvent("onBeforeAjax", (mode, url, params, xhr) => {
             if (mode === 'GET' && !url.indexOf('https://content.redaktr.com')) {
                 lastXHRGetContent = xhr;
             }
         });
-        var onChangeFnc = function(id) {
+        var onChangeFnc = (id) => {
             webix.delay(() => {
                 if (lastXHRPostTree) { lastXHRPostTree.abort(); }
                 lastXHRPostTree = S3.putObject({
-                        Bucket: 'assets.redaktr.com',
+                        Bucket: 'res.redaktr.com',
                         Key: AWS.config.credentials.identityId + '.json',
                         ContentType: 'application/json',
                         Body: webix.ajax().stringify($$("tree").data.serialize())
@@ -40,26 +40,28 @@ export default class TreeView extends JetView {
                 );
             });
         };
-        var onSelectFnc = function(id) {
+        var onSelectFnc = (id) => {
             if (lastXHRGetContent) { lastXHRGetContent.abort(); }
-            var content = $$("tinymce").getEditor();
-            content.setProgressState(1);
+            var tinymce = $$("tinymce").getEditor();
+            tinymce.setProgressState(1);
             webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
-                success: function(text, data, XmlHttpRequest) {
-                    content.setProgressState(0);
-                    content.getWin().scrollTo(0, 0);
-                    content.setContent(text);
-                    content.focus();
-                    content.undoManager.clear();
-                    content.nodeChanged();
+                success: (text, data, XmlHttpRequest) => {
+                    tinymce.setProgressState(0);
+                    tinymce.getWin().scrollTo(0, 0);
+                    tinymce.setContent(text);
+                    //tinymce.focus();
+                    tinymce.undoManager.clear();
+                    tinymce.nodeChanged();
+                    $$("ace").getEditor().getSession().setValue(text, -1);
                 },
-                error: function(text, data, XmlHttpRequest) {
-                    content.setProgressState(0);
-                    content.getWin().scrollTo(0, 0);
-                    content.setContent('');
-                    content.focus();
-                    content.undoManager.clear();
-                    content.nodeChanged();
+                error: (text, data, XmlHttpRequest) => {
+                    tinymce.setProgressState(0);
+                    tinymce.getWin().scrollTo(0, 0);
+                    tinymce.setContent('');
+                    //tinymce.focus();
+                    tinymce.undoManager.clear();
+                    tinymce.nodeChanged();
+                    $$("ace").getEditor().getSession().setValue("");
                 }
             });
         };

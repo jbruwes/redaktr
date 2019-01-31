@@ -4,9 +4,17 @@ export default class AceView extends JetView {
         return {
             id: "ace",
             view: "ace-editor",
-            theme: "xcode",
+            theme: "tomorrow",
             mode: "html",
-            value: '<h2>Text editor</h2> <div><small>From Wikipedia, the free encyclopedia</small></div> <p>A <strong>text editor</strong> is a type of program used for editing plain text files </p>'
+            value: ''
         };
+    }
+    init() {
+        $$("ace").getEditor(true).then(function(editor) {
+            editor.getSession().setUseWrapMode(true);
+            editor.getSession().on('change', function(e) {
+                //webix.message("ace change");
+            });
+        });
     }
 }

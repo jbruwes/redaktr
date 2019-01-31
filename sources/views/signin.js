@@ -2,16 +2,19 @@ import $script from "scriptjs";
 import { JetView } from "webix-jet";
 export default class SignInView extends JetView {
     config() {
-        var self = this;
-        var signIn = function(err) {
+        var appShow = () => {
+            $$("sidebar").clearAll();
+            $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
+            $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
+            this.app.show("/top/content");
+        };
+        var signIn = (err) => {
             if (err) {
                 webix.message({ text: err, type: "error" });
             }
             else {
-                $$("sidebar").clearAll();
-                $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
-                $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
-                self.app.show("/top/content");
+                if (AWS.config.credentials.identityId) appShow();
+                else AWS.config.credentials.refresh(() => { appShow() });
             }
         };
         return {
@@ -20,8 +23,8 @@ export default class SignInView extends JetView {
                 css: "signInViewRight",
                 rows: [
                     { paddingX: 10, cols: [{}, { view: "label", label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>', height: 152, width: 152 }] },
-                   {gravity: 2},
-                    { view: "template", template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website creator</div></h1>", minHeight: 150 , type: "clean"},
+                    { gravity: 2 },
+                    { view: "template", template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website creator</div></h1>", minHeight: 150, type: "clean" },
                     {
                         css: "signInViewField",
                         padding: 30,
