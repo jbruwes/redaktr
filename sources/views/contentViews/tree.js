@@ -52,7 +52,9 @@ export default class TreeView extends JetView {
                     //tinymce.focus();
                     tinymce.undoManager.clear();
                     tinymce.nodeChanged();
-                    $$("ace").getEditor().getSession().setValue(text, -1);
+                    $$("ace").getEditor(true).then(function(editor) {
+                        editor.getSession().setValue(text, -1);
+                    });
                 },
                 error: (text, data, XmlHttpRequest) => {
                     tinymce.setProgressState(0);

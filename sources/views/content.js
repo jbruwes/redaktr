@@ -9,11 +9,11 @@ export default class ContentView extends JetView {
 	}
 	init() {
 		var S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
-		var lastXHRPostTree = null;
 		S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
 		}, (err, data) => {
+			var lastXHRPostTree = null;
 			var head = '';
 			if (!err) {
 				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
@@ -33,10 +33,88 @@ export default class ContentView extends JetView {
 					Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
 					Body: $$("tinymce").getValue()
 				}, (err, data) => {
-					if (err) webix.message(err.message);
+					if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
 					else webix.message("Content save complete");
 				});
 			};
+
+			var images_upload_handler = (blobInfo, success, failure) => {
+				var fileext = blobInfo.filename().split('.').pop(),
+					mime = 'image/';
+				switch (fileext) {
+					case 'jpeg':
+					case 'jpg':
+					case 'jpe':
+					case 'jif':
+					case 'jfif':
+					case 'jfi':
+						mime += "jpeg";
+						break;
+					case 'jp2':
+					case 'j2k':
+					case 'jpf':
+						mime += "jp2";
+						break;
+					case 'jpx':
+						mime += "jpx";
+						break;
+					case 'jpm':
+						mime += "jpm";
+						break;
+					case 'jxr':
+					case 'hdp':
+					case 'wdp':
+						mime += "jxr";
+						break;
+					case 'webp':
+						mime += "webp";
+						break;
+					case 'gif':
+						mime += "gif";
+						break;
+					case 'png':
+						mime += "png";
+						break;
+					case 'tiff':
+					case 'tif':
+						mime += "tiff";
+						break;
+					case 'svg':
+					case 'svgz':
+						mime += "svg+xml";
+						break;
+					case 'xbm':
+						mime += "x-xbitmap";
+						break;
+					case 'bmp':
+					case 'dib':
+						mime += "bmp";
+						break;
+					case 'ico':
+						mime += "x-icon";
+						break;
+					default:
+						mime = "image";
+				}
+				S3.headObject({
+					Bucket: 'media.redaktr.com',
+					Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
+				}, (err, data) => {
+					var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
+					S3.putObject({
+						Bucket: 'media.redaktr.com',
+						Key: AWS.config.credentials.identityId + '/' + filePath,
+						ContentType: mime,
+						StorageClass: "REDUCED_REDUNDANCY",
+						Body: blobInfo.blob()
+					}, (err, data) => {
+						if (err) failure(err.message);
+						else success(filePath);
+
+					});
+				});
+			};
+
 			$$("accordion").addView({
 				view: "accordionitem",
 				header: "Content",
@@ -87,7 +165,7 @@ export default class ContentView extends JetView {
 												"imagetools tabfocus fullpage toc save template preview fullscreen codesample"
 											]*/
 											,
-										menubar: "file edit insert view format table",
+										//menubar: "file edit insert view format table",
 										toolbar1: " fontselect | fontsizeselect | forecolor backcolor bullist numlist outdent indent rtl zlink",
 										content_style: ".mce-content-body{font-size:14px;padding:8px;}\n" + content_style,
 										content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + content_css + "," +
@@ -192,10 +270,12 @@ export default class ContentView extends JetView {
 											"Wingdings='wingdings', zapf dingbats;" +
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
-										//file_browser_callback: redaktr.TinyMCE._fileBrowserCallback,
+
+										//file_browser_callback: file_browser_callback,
+
 										branding: false,
-										extended_valid_elements: 'script[*],i[*],span[*]',
-										valid_children: "+body[style],+body[link]",
+										//extended_valid_elements: 'script[*],i[*],span[*]',
+										//valid_children: "+body[style],+body[link]",
 										//force_p_newlines : true,
 										//forced_root_block : '',
 										//forced_root_block: 'div',
@@ -211,16 +291,17 @@ export default class ContentView extends JetView {
 										//relative_urls: true,
 										paste_data_images: true,
 
-										//images_upload_handler: redaktr.TinyMCE._imagesUploadHandler,
+										images_upload_handler: images_upload_handler,
+
 										document_base_url: "//www.redaktr.com/" + AWS.config.credentials.identityId + "/",
-										imagetools_cors_hosts: ['www.redaktr.com'],
+										//imagetools_cors_hosts: ['www.redaktr.com'],
 										//save_onsavecallback: params.save_onsavecallback,
 										//automatic_uploads: true,
 										//images_reuse_filename: true,
 										//images_upload_credentials: true,
 										//style_formats_autohide: true,
-										//statusbar: true,
-										//resize: false,
+										statusbar: false,
+										resize: false,
 										//language_url: "resource/redaktr/langs/" + context.tr("en") + ".js",
 										//browser_spellcheck: true,
 										//init_instance_callback: params.init_instance_callback,
@@ -390,6 +471,20 @@ export default class ContentView extends JetView {
 					]
 				}
 			});
+
+/*
+			$$("tinymce").getEditor(true).then(function(editor) {
+				$$("accordion").addView({
+					view: "accordionitem",
+					collapsed: true,
+					header: "Tree",
+					body: {
+						rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
+					}
+				});
+			});
+*/
+
 		});
 	}
 }

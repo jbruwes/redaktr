@@ -1,3 +1,5 @@
+@import url("//cdn.materialdesignicons.com/3.3.92/css/materialdesignicons.min.css");
+
 .webixappstart {
     opacity: 0;
 }
@@ -126,4 +128,21 @@
     font-size: 2.42857rem;
     font-weight: 300;
     padding-left: 20px;
+}
+
+.mce-edit-area,
+.mce-edit-area>iframe,
+.mce-stack-layout,
+div[view_id="tinymce"]>div {
+    height: 100%!important;
+    width: 100%!important;
+    border: 0!important
+}
+
+.mce-stack-layout {
+    display: table!important
+}
+
+.mce-edit-area {
+    display: table-row!important
 }
