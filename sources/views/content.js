@@ -125,11 +125,28 @@ export default class ContentView extends JetView {
 			var onChangeFnc = (id) => {
 				webix.delay(() => {
 					if (lastXHRPostTree) { lastXHRPostTree.abort(); }
+					var tree = $$("tree").data.serialize();
+					var tinymce = $$("tinymce").getEditor();
+					var ace = $$("ace").getEditor();
+					if (!tree.length) {
+						tinymce.setProgressState(0);
+						tinymce.getWin().scrollTo(0, 0);
+						tinymce.setContent('');
+						tinymce.undoManager.clear();
+						tinymce.nodeChanged();
+						tinymce.setMode('readonly');
+						ace.setValue("");
+						ace.setReadOnly(true);
+					}
+					else {
+						tinymce.setMode('design');
+						ace.setReadOnly(false);
+					}
 					lastXHRPostTree = S3.putObject({
 							Bucket: 'res.redaktr.com',
 							Key: AWS.config.credentials.identityId + '.json',
 							ContentType: 'application/json',
-							Body: webix.ajax().stringify($$("tree").data.serialize())
+							Body: webix.ajax().stringify(tree)
 						},
 						(err, data) => {
 							if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
@@ -165,57 +182,6 @@ export default class ContentView extends JetView {
 									view: "tinymce-editor",
 									config: {
 										init_instance_callback: (editor) => {
-											$$("accordion").addView({
-												view: "accordionitem",
-												collapsed: true,
-												header: "Tree",
-												body: {
-													rows: [{ $subview: "contentViews.toolbar" }, {
-														view: "edittree",
-														id: "tree",
-														select: true,
-														activeTitle: true,
-														template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
-														checkboxRefresh: true,
-														editable: true,
-														editor: "popup",
-														editValue: "value",
-														editaction: "dblclick",
-														url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
-														on: {
-															"onAfterLoad": function() { this.select(this.getFirstId()) },
-															"data->onAfterAdd": onChangeFnc,
-															"data->onAfterDelete": onChangeFnc,
-															"data->onDataUpdate": onChangeFnc,
-															"data->onDataMove": onChangeFnc,
-															"onItemCheck": onChangeFnc,
-															"onAfterSelect": (id) => {
-																if (lastXHRGetContent) { lastXHRGetContent.abort(); }
-																var tinymce = $$("tinymce").getEditor();
-																tinymce.setProgressState(1);
-																webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
-																	success: (text, data, XmlHttpRequest) => {
-																		tinymce.setProgressState(0);
-																		tinymce.getWin().scrollTo(0, 0);
-																		tinymce.setContent(text);
-																		tinymce.undoManager.clear();
-																		tinymce.nodeChanged();
-																		setAce(text);
-																	},
-																	error: (text, data, XmlHttpRequest) => {
-																		tinymce.setProgressState(0);
-																		tinymce.getWin().scrollTo(0, 0);
-																		tinymce.setContent('');
-																		tinymce.undoManager.clear();
-																		tinymce.nodeChanged();
-																		setAce("");
-																	}
-																});
-															}
-														}
-													}]
-												}
-											});
 											editor.serializer.addNodeFilter('script,style', (nodes, name) => {
 												var i = nodes.length,
 													node, value;
@@ -486,7 +452,12 @@ export default class ContentView extends JetView {
 
 									}
 								},
-								{ $subview: "contentViews.ace" }
+								{
+									id: "ace",
+									view: "ace-editor",
+									theme: "tomorrow",
+									mode: "html"
+								}
 							]
 						},
 						{
@@ -514,18 +485,69 @@ export default class ContentView extends JetView {
 					]
 				}
 			});
-			/*
-						$$("tinymce").getEditor(true).then(function(editor) {
-							$$("accordion").addView({
-								view: "accordionitem",
-								collapsed: true,
-								header: "Tree",
-								body: {
-									rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
+			$$("ace").getEditor(true).then(function(editor) {
+				var session = editor.getSession();
+				session.setUseWorker(false);
+				session.setUseWrapMode(true);
+				session.on('change', function() {
+					$$("tinymce").setValue('<!DOCTYPE html><html><head>' + header + '</head><body>' + $$("ace").getValue() + '</body></html>');
+					save();
+				});
+			});
+			$$("tinymce").getEditor(true).then(function(editor) {
+				$$("accordion").addView({
+					view: "accordionitem",
+					collapsed: true,
+					header: "Tree",
+					body: {
+						rows: [{ $subview: "contentViews.toolbar" }, {
+							view: "edittree",
+							id: "tree",
+							select: true,
+							activeTitle: true,
+							template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
+							checkboxRefresh: true,
+							editable: true,
+							editor: "popup",
+							editValue: "value",
+							editaction: "dblclick",
+							url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
+							on: {
+								"onAfterLoad": function() { this.select(this.getFirstId()) },
+								"data->onAfterAdd": onChangeFnc,
+								"data->onAfterDelete": onChangeFnc,
+								"data->onDataUpdate": onChangeFnc,
+								"data->onDataMove": onChangeFnc,
+								"onItemCheck": onChangeFnc,
+								"onAfterSelect": (id) => {
+									if (lastXHRGetContent) { lastXHRGetContent.abort(); }
+									var tinymce = $$("tinymce").getEditor();
+									var ace = $$("ace").getEditor();
+									tinymce.setProgressState(1);
+									webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
+										success: (text, data, XmlHttpRequest) => {
+											tinymce.setProgressState(0);
+											tinymce.getWin().scrollTo(0, 0);
+											tinymce.setContent(text);
+											tinymce.undoManager.clear();
+											tinymce.nodeChanged();
+											setAce(text);
+										},
+										error: (text, data, XmlHttpRequest) => {
+											tinymce.setProgressState(0);
+											tinymce.getWin().scrollTo(0, 0);
+											tinymce.setContent('');
+											tinymce.undoManager.clear();
+											tinymce.nodeChanged();
+											ace.setValue("");
+										}
+									});
 								}
-							});
-						});
-			*/
+							}
+						}]
+					}
+				});
+			});
 		});
 	}
 	destroy() {

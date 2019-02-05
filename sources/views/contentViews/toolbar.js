@@ -7,7 +7,13 @@ export default class ToolbarView extends JetView {
                     view: "icon",
                     icon: "mdi mdi-file-document-outline",
                     click: () => {
-                        var item = $$("tree").add({ checked: true, value: "" }, $$("tree").getBranchIndex($$("tree").getSelectedId()) + 1, $$("tree").getParentId($$("tree").getSelectedId()) || 0);
+                        var sel = $$("tree").getSelectedId();
+                        var item = null;
+                        if(sel) {
+                        item = $$("tree").add({ checked: true, value: "" }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
+                        } else {
+                        item = $$("tree").add({ checked: true, value: "" });
+                        }
                         $$("tree").select(item);
                         $$("tree").edit(item);
                     }
@@ -22,14 +28,12 @@ export default class ToolbarView extends JetView {
                     click: function() {
                         var sel = $$("tree").getSelectedId();
                         var sel2 = $$("tree").getNextSiblingId(sel) || $$("tree").getPrevSiblingId(sel) || $$("tree").getParentId(sel);
-                        if (sel2) {
-                            webix.confirm("Are you sure?", function(result) {
-                                if (result) {
-                                    $$("tree").remove(sel);
-                                    $$("tree").select(sel2);
-                                }
-                            });
-                        }
+                        webix.confirm("Are you sure?", function(result) {
+                            if (result) {
+                                $$("tree").remove(sel);
+                                $$("tree").select(sel2);
+                            }
+                        });
                     }
                 }, {
                     view: "icon",
