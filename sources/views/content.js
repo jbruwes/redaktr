@@ -13,7 +13,9 @@ export default class ContentView extends JetView {
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
 		}, (err, data) => {
-			var lastXHRPostTree = null;
+			var lastXHRPostContent = null;
+			var html = '';
+			var header = '';
 			var head = '';
 			if (!err) {
 				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
@@ -26,8 +28,8 @@ export default class ContentView extends JetView {
 			$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
 			content_style = content_style.join("\n");
 			var save = () => {
-				if (lastXHRPostTree) lastXHRPostTree.abort();
-				lastXHRPostTree = S3.putObject({
+				if (lastXHRPostContent) lastXHRPostContent.abort();
+				lastXHRPostContent = S3.putObject({
 					Bucket: 'content.redaktr.com',
 					ContentType: 'text/html',
 					Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
@@ -37,7 +39,6 @@ export default class ContentView extends JetView {
 					else webix.message("Content save complete");
 				});
 			};
-
 			var images_upload_handler = (blobInfo, success, failure) => {
 				var fileext = blobInfo.filename().split('.').pop(),
 					mime = 'image/';
@@ -114,7 +115,42 @@ export default class ContentView extends JetView {
 					});
 				});
 			};
-
+			var lastXHRPostTree = null;
+			var lastXHRGetContent = null;
+			this.app.attachEvent("onBeforeAjax", (mode, url, params, xhr) => {
+				if (mode === 'GET' && !url.indexOf('https://content.redaktr.com')) {
+					lastXHRGetContent = xhr;
+				}
+			});
+			var onChangeFnc = (id) => {
+				webix.delay(() => {
+					if (lastXHRPostTree) { lastXHRPostTree.abort(); }
+					lastXHRPostTree = S3.putObject({
+							Bucket: 'res.redaktr.com',
+							Key: AWS.config.credentials.identityId + '.json',
+							ContentType: 'application/json',
+							Body: webix.ajax().stringify($$("tree").data.serialize())
+						},
+						(err, data) => {
+							if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+							else webix.message("Tree save complete");
+						}
+					);
+				});
+			};
+			var setAce = (text) => {
+				$$("ace").getEditor(true).then(function(editor) {
+					html = text;
+					header = '';
+					if (html.match(/<html[^>]*>[\s\S]*<\/html>/gi)) {
+						header = html.match(/<head[^>]*>[\s\S]*<\/head>/gi);
+						header = header ? header[0].replace(/^<head>/, '').replace(/<\/head>$/, '') : '';
+						html = html.match(/<body[^>]*>[\s\S]*<\/body>/gi);
+						html = html ? html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
+					}
+					editor.getSession().setValue(html, -1);
+				});
+			};
 			$$("accordion").addView({
 				view: "accordionitem",
 				header: "Content",
@@ -134,7 +170,50 @@ export default class ContentView extends JetView {
 												collapsed: true,
 												header: "Tree",
 												body: {
-													rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
+													rows: [{ $subview: "contentViews.toolbar" }, {
+														view: "edittree",
+														id: "tree",
+														select: true,
+														activeTitle: true,
+														template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
+														checkboxRefresh: true,
+														editable: true,
+														editor: "popup",
+														editValue: "value",
+														editaction: "dblclick",
+														url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
+														on: {
+															"onAfterLoad": function() { this.select(this.getFirstId()) },
+															"data->onAfterAdd": onChangeFnc,
+															"data->onAfterDelete": onChangeFnc,
+															"data->onDataUpdate": onChangeFnc,
+															"data->onDataMove": onChangeFnc,
+															"onItemCheck": onChangeFnc,
+															"onAfterSelect": (id) => {
+																if (lastXHRGetContent) { lastXHRGetContent.abort(); }
+																var tinymce = $$("tinymce").getEditor();
+																tinymce.setProgressState(1);
+																webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
+																	success: (text, data, XmlHttpRequest) => {
+																		tinymce.setProgressState(0);
+																		tinymce.getWin().scrollTo(0, 0);
+																		tinymce.setContent(text);
+																		tinymce.undoManager.clear();
+																		tinymce.nodeChanged();
+																		setAce(text);
+																	},
+																	error: (text, data, XmlHttpRequest) => {
+																		tinymce.setProgressState(0);
+																		tinymce.getWin().scrollTo(0, 0);
+																		tinymce.setContent('');
+																		tinymce.undoManager.clear();
+																		tinymce.nodeChanged();
+																		setAce("");
+																	}
+																});
+															}
+														}
+													}]
 												}
 											});
 											editor.serializer.addNodeFilter('script,style', (nodes, name) => {
@@ -157,15 +236,7 @@ export default class ContentView extends JetView {
 										},
 										theme: "modern",
 										width: "100%",
-										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern save'
-											/*[
-												"advlist autolink link image lists charmap print hr anchor pagebreak",
-												"searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-												"table contextmenu directionality emoticons textcolor paste colorpicker textpattern",
-												"imagetools tabfocus fullpage toc save template preview fullscreen codesample"
-											]*/
-											,
-										//menubar: "file edit insert view format table",
+										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern save',
 										toolbar1: " fontselect | fontsizeselect | forecolor backcolor bullist numlist outdent indent rtl zlink",
 										content_style: ".mce-content-body{font-size:14px;padding:8px;}\n" + content_style,
 										content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + content_css + "," +
@@ -270,42 +341,14 @@ export default class ContentView extends JetView {
 											"Wingdings='wingdings', zapf dingbats;" +
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
-
-										//file_browser_callback: file_browser_callback,
-
 										branding: false,
-										//extended_valid_elements: 'script[*],i[*],span[*]',
-										//valid_children: "+body[style],+body[link]",
-										//force_p_newlines : true,
-										//forced_root_block : '',
-										//forced_root_block: 'div',
-										//fullpage_hide_in_source_view: false,
-										//save_enablewhendirty: false,
-										//autosave_ask_before_unload: false,
-										//visualblocks_default_state: true,
-										//image_advtab: true,
-										//image_caption: true,
-										//image_title: true,
 										convert_urls: false,
 										allow_script_urls: true,
-										//relative_urls: true,
 										paste_data_images: true,
-
 										images_upload_handler: images_upload_handler,
-
 										document_base_url: "//www.redaktr.com/" + AWS.config.credentials.identityId + "/",
-										//imagetools_cors_hosts: ['www.redaktr.com'],
-										//save_onsavecallback: params.save_onsavecallback,
-										//automatic_uploads: true,
-										//images_reuse_filename: true,
-										//images_upload_credentials: true,
-										//style_formats_autohide: true,
 										statusbar: false,
 										resize: false,
-										//language_url: "resource/redaktr/langs/" + context.tr("en") + ".js",
-										//browser_spellcheck: true,
-										//init_instance_callback: params.init_instance_callback,
-										//setup: params.setup,
 										link_class_list: [{
 											title: 'None',
 											value: ''
@@ -459,10 +502,10 @@ export default class ContentView extends JetView {
 								onChange: function() {
 									switch (this.getValue()) {
 										case 'tinymce':
-											$$("tinymce").setValue($$("ace").getValue());
+											$$("tinymce").setValue('<!DOCTYPE html><html><head>' + header + '</head><body>' + $$("ace").getValue() + '</body></html>');
 											break;
 										case 'ace':
-											$$("ace").getEditor().setValue($$("tinymce").getValue(), -1);
+											setAce($$("tinymce").getValue());
 											break;
 									}
 								}
@@ -471,21 +514,22 @@ export default class ContentView extends JetView {
 					]
 				}
 			});
-
-/*
-			$$("tinymce").getEditor(true).then(function(editor) {
-				$$("accordion").addView({
-					view: "accordionitem",
-					collapsed: true,
-					header: "Tree",
-					body: {
-						rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
-					}
-				});
-			});
-*/
-
+			/*
+						$$("tinymce").getEditor(true).then(function(editor) {
+							$$("accordion").addView({
+								view: "accordionitem",
+								collapsed: true,
+								header: "Tree",
+								body: {
+									rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
+								}
+							});
+						});
+			*/
 		});
+	}
+	destroy() {
+		this.app.detachEvent("onBeforeAjax");
 	}
 }
 /* global webix */

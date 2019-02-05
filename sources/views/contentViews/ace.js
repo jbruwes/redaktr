@@ -11,9 +11,15 @@ export default class AceView extends JetView {
     }
     init() {
         $$("ace").getEditor(true).then(function(editor) {
-            editor.getSession().setUseWrapMode(true);
-            editor.getSession().on('change', function(e) {
-                //webix.message("ace change");
+
+            var session = editor.getSession();
+            
+            session.setUseWorker(false);
+
+            session.setUseWrapMode(true);
+            console.log(session.getUndoManager());
+            session.on('change', function() {
+                webix.message("ace changed");
             });
         });
     }
