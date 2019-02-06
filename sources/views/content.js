@@ -27,6 +27,16 @@ export default class ContentView extends JetView {
 			var content_style = [];
 			$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
 			content_style = content_style.join("\n");
+			var setTinymce = (val) => {
+				var tinymce = $$("tinymce").getEditor();
+				tinymce.off("Change");
+				tinymce.setProgressState(0);
+				tinymce.getWin().scrollTo(0, 0);
+				tinymce.setContent(val);
+				tinymce.undoManager.clear();
+				tinymce.nodeChanged();
+				tinymce.on("Change", save);
+			};
 			var save = () => {
 				if (lastXHRPostContent) lastXHRPostContent.abort();
 				lastXHRPostContent = S3.putObject({
@@ -129,11 +139,7 @@ export default class ContentView extends JetView {
 					var tinymce = $$("tinymce").getEditor();
 					var ace = $$("ace").getEditor();
 					if (!tree.length) {
-						tinymce.setProgressState(0);
-						tinymce.getWin().scrollTo(0, 0);
-						tinymce.setContent('');
-						tinymce.undoManager.clear();
-						tinymce.nodeChanged();
+						setTinymce('');
 						tinymce.setMode('readonly');
 						ace.setValue("");
 						ace.setReadOnly(true);
@@ -155,6 +161,10 @@ export default class ContentView extends JetView {
 					);
 				});
 			};
+			var aceChange = () => {
+				$$("tinymce").setValue('<!DOCTYPE html><html><head>' + header + '</head><body>' + $$("ace").getValue() + '</body></html>');
+				save();
+			};
 			var setAce = (text) => {
 				$$("ace").getEditor(true).then(function(editor) {
 					html = text;
@@ -165,7 +175,11 @@ export default class ContentView extends JetView {
 						html = html.match(/<body[^>]*>[\s\S]*<\/body>/gi);
 						html = html ? html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
 					}
-					editor.getSession().setValue(html, -1);
+					var session = editor.getSession();
+					session.off('change', aceChange);
+					session.setValue(html, -1);
+					session.on('change', aceChange);
+
 				});
 			};
 			$$("accordion").addView({
@@ -182,29 +196,24 @@ export default class ContentView extends JetView {
 									view: "tinymce-editor",
 									config: {
 										init_instance_callback: (editor) => {
-											editor.serializer.addNodeFilter('script,style', (nodes, name) => {
-												var i = nodes.length,
-													node, value;
-												while (i--) {
-													node = nodes[i];
-													value = node.firstChild ? node.firstChild.value : '';
-													if (value.length > 0) {
-														node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
-															.replace(/^[\r\n]*|[\r\n]*$/g, '')
-															.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
-															.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
-													}
-												}
-											});
-											editor.on('Change', save);
-											editor.on('Undo', save);
-											editor.on('Redo', save);
+											//editor.serializer.addNodeFilter('script,style', (nodes, name) => {
+											//	var i = nodes.length,
+											//		node, value;
+											//	while (i--) {
+											//		node = nodes[i];
+											//		value = node.firstChild ? node.firstChild.value : '';
+											//		if (value.length > 0) {
+											//			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
+											//				.replace(/^[\r\n]*|[\r\n]*$/g, '')
+											//				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
+											//				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
+											//		}
+											//	}
+											//});
 										},
-										theme: "modern",
-										width: "100%",
-										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount imagetools contextmenu colorpicker textpattern save',
-										toolbar1: " fontselect | fontsizeselect | forecolor backcolor bullist numlist outdent indent rtl zlink",
-										content_style: ".mce-content-body{font-size:14px;padding:8px;}\n" + content_style,
+										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
+										toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+										content_style: ".mce-content-body{padding:8px;}\n" + content_style,
 										content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + content_css + "," +
 											"//fonts.googleapis.com/css?family=Alice|Andika|Anonymous+Pro|Arimo|Arsenal|Bad+Script|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cousine|Cuprum|Didact+Gothic|EB+Garamond|El+Messiri|Exo+2|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Forum|Gabriela|Istok+Web|Jura|Kelly+Slab|Kurale|Ledger|Lobster|Lora|Marck+Script|Marmelad|Merriweather|Neucha|Noto+Sans|Noto+Serif|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oranienbaum|Oswald|PT+Mono|PT+Sans|PT+Sans+Caption|PT+Sans+Narrow|PT+Serif|PT+Serif+Caption|Pangolin|Pattaya|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Poiret+One|Prata|Press+Start+2P|Prosto+One|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rubik|Rubik+Mono+One|Ruslan+Display|Russo+One|Scada|Seymour+One|Source+Sans+Pro|Stalinist+One|Tenor+Sans|Tinos|Ubuntu|Ubuntu+Condensed|Ubuntu+Mono|Underdog|Yanone+Kaffeesatz|Yeseva+One&amp;subset=cyrillic",
 										templates: [
@@ -307,14 +316,23 @@ export default class ContentView extends JetView {
 											"Wingdings='wingdings', zapf dingbats;" +
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
+										extended_valid_elements: 'script[*],i[*],span[*]',
 										branding: false,
 										convert_urls: false,
+										image_advtab: true,
+										image_caption: true,
+										image_title: true,
 										allow_script_urls: true,
 										paste_data_images: true,
+										importcss_append: true,
+										images_reuse_filename: true,
 										images_upload_handler: images_upload_handler,
 										document_base_url: "//www.redaktr.com/" + AWS.config.credentials.identityId + "/",
 										statusbar: false,
 										resize: false,
+										spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",
+										spellchecker_language: "ru", // default language
+										spellchecker_rpc_url: "//speller.yandex.net/services/tinyspell",
 										link_class_list: [{
 											title: 'None',
 											value: ''
@@ -471,13 +489,8 @@ export default class ContentView extends JetView {
 							type: "bottom",
 							on: {
 								onChange: function() {
-									switch (this.getValue()) {
-										case 'tinymce':
-											$$("tinymce").setValue('<!DOCTYPE html><html><head>' + header + '</head><body>' + $$("ace").getValue() + '</body></html>');
-											break;
-										case 'ace':
-											setAce($$("tinymce").getValue());
-											break;
+									if (this.getValue() === 'ace') {
+										setAce($$("tinymce").getValue());
 									}
 								}
 							}
@@ -489,10 +502,6 @@ export default class ContentView extends JetView {
 				var session = editor.getSession();
 				session.setUseWorker(false);
 				session.setUseWrapMode(true);
-				session.on('change', function() {
-					$$("tinymce").setValue('<!DOCTYPE html><html><head>' + header + '</head><body>' + $$("ace").getValue() + '</body></html>');
-					save();
-				});
 			});
 			$$("tinymce").getEditor(true).then(function(editor) {
 				$$("accordion").addView({
@@ -526,19 +535,11 @@ export default class ContentView extends JetView {
 									tinymce.setProgressState(1);
 									webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
 										success: (text, data, XmlHttpRequest) => {
-											tinymce.setProgressState(0);
-											tinymce.getWin().scrollTo(0, 0);
-											tinymce.setContent(text);
-											tinymce.undoManager.clear();
-											tinymce.nodeChanged();
+											setTinymce(text);
 											setAce(text);
 										},
 										error: (text, data, XmlHttpRequest) => {
-											tinymce.setProgressState(0);
-											tinymce.getWin().scrollTo(0, 0);
-											tinymce.setContent('');
-											tinymce.undoManager.clear();
-											tinymce.nodeChanged();
+											setTinymce("");
 											ace.setValue("");
 										}
 									});

@@ -83,7 +83,7 @@ webix.protoUI({
 			return;
 		};
 
-		var cdn = this.config.cdn ? this.config.cdn : "//cloud.tinymce.com/stable";
+		var cdn = this.config.cdn ? this.config.cdn : "//cloud.tinymce.com/5";
 
 		//path to tinymce codebase
 		window.tinyMCEPreInit = { 
@@ -141,7 +141,7 @@ webix.protoUI({
 	},
 	_set_inner_size:function(){
 		if (!this._3rd_editor || !this.$width) return;
-		this._3rd_editor.theme.resizeTo(this.$width-2, this.$height - this.config.barHeight);
+		//this._3rd_editor.theme.resizeTo(this.$width-2, this.$height - this.config.barHeight);
 	},
 	$setSize:function(x,y){
 		if (webix.ui.view.prototype.$setSize.call(this, x, y)){
