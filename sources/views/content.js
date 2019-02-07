@@ -33,9 +33,10 @@ export default class ContentView extends JetView {
 			var content_css = [];
 			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
 			content_css = content_css.join(",");
-			var content_style = [];
-			$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
-			content_style = content_style.join("\n");
+			
+			//var content_style = [];
+			//$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
+			//content_style = content_style.join("\n");
 
 			var setTinymce = val => {
 					var tinymce = $$("tinymce").getEditor();
@@ -131,7 +132,6 @@ export default class ContentView extends JetView {
 						}, (err, data) => {
 							if (err) failure(err.message);
 							else success(filePath);
-
 						});
 					});
 				},
@@ -203,7 +203,7 @@ export default class ContentView extends JetView {
 									id: "tinymce",
 									view: "tinymce-editor",
 									config: {
-										init_instance_callback: (editor) => {
+										//init_instance_callback: (editor) => {
 											//editor.serializer.addNodeFilter('script,style', (nodes, name) => {
 											//	var i = nodes.length,
 											//		node, value;
@@ -218,10 +218,10 @@ export default class ContentView extends JetView {
 											//		}
 											//	}
 											//});
-										},
+										//},
 										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
-										toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-										content_style: ".mce-content-body{padding:8px;}\n" + content_style,
+										toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+										content_style: ".mce-content-body{padding:8px;}",
 										content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + content_css + "," +
 											"//fonts.googleapis.com/css?family=Alice|Andika|Anonymous+Pro|Arimo|Arsenal|Bad+Script|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cousine|Cuprum|Didact+Gothic|EB+Garamond|El+Messiri|Exo+2|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Forum|Gabriela|Istok+Web|Jura|Kelly+Slab|Kurale|Ledger|Lobster|Lora|Marck+Script|Marmelad|Merriweather|Neucha|Noto+Sans|Noto+Serif|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oranienbaum|Oswald|PT+Mono|PT+Sans|PT+Sans+Caption|PT+Sans+Narrow|PT+Serif|PT+Serif+Caption|Pangolin|Pattaya|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Poiret+One|Prata|Press+Start+2P|Prosto+One|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rubik|Rubik+Mono+One|Ruslan+Display|Russo+One|Scada|Seymour+One|Source+Sans+Pro|Stalinist+One|Tenor+Sans|Tinos|Ubuntu|Ubuntu+Condensed|Ubuntu+Mono|Underdog|Yanone+Kaffeesatz|Yeseva+One&amp;subset=cyrillic",
 										templates: [
@@ -324,6 +324,107 @@ export default class ContentView extends JetView {
 											"Wingdings='wingdings', zapf dingbats;" +
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
+
+										setup: function(editor) {
+
+											/* example, adding a toolbar menu button */
+											editor.ui.registry.addMenuButton('rlink', {
+												icon: 'link',
+												tooltip: 'Insert/edit link',
+												fetch: function(callback) {
+													var items = [{
+															type: 'menuitem',
+															text: 'Menu item 1',
+															onAction: function() {
+																editor.insertContent('&nbsp;<em>You clicked menu item 1!</em>');
+															}
+														},
+														{
+															type: 'nestedmenuitem',
+															text: 'Menu item 2',
+															icon: 'user',
+															getSubmenuItems: function() {
+																return [{
+																		type: 'menuitem',
+																		text: 'Sub menu item 1',
+																		icon: 'unlock',
+																		onAction: function() {
+																			editor.insertContent('&nbsp;<em>You clicked Sub menu item 1!</em>');
+																		}
+																	},
+																	{
+																		type: 'menuitem',
+																		text: 'Sub menu item 2',
+																		icon: 'lock',
+																		onAction: function() {
+																			editor.insertContent('&nbsp;<em>You clicked Sub menu item 2!</em>');
+																		}
+																	}
+																];
+															}
+														}
+													];
+													callback(items);
+												}
+											});
+
+										},
+
+										file_picker_types: "image media file",
+										file_picker_callback: function(cb, value, meta) {
+											/*
+											var input = document.createElement('input');
+											input.setAttribute('type', 'file');
+											input.setAttribute('accept', 'image/*,video/*');
+											input.onchange = function() {
+												var file = this.files[0];
+												var reader = new FileReader();
+												reader.onload = function() {
+													var id = 'blobid' + webix.uid();
+													var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+													var base64 = reader.result.split(',')[1];
+													var blobInfo = blobCache.create(id, file, base64);
+													blobCache.add(blobInfo);
+													cb(blobInfo.blobUri(), { title: file.name });
+												};
+												reader.readAsDataURL(file);
+											};
+											input.click();
+											*/
+
+											var input = document.createElement('input');
+											input.setAttribute('type', 'file');
+											input.setAttribute('accept', 'image/*,video/*');
+											input.onchange = function() {
+												var file = this.files[0];
+												var reader = new FileReader();
+												reader.onload = function() {
+													var id = 'blobid' + webix.uid();
+													var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+													var base64 = reader.result.split(',')[1];
+													var blobInfo = blobCache.create(id, file, base64);
+													blobCache.add(blobInfo);
+													S3.headObject({
+														Bucket: 'media.redaktr.com',
+														Key: AWS.config.credentials.identityId + '/' + file.name
+													}, (err, data) => {
+														var filePath = (err ? '' : webix.uid() + '/') + file.name;
+														S3.putObject({
+															Bucket: 'media.redaktr.com',
+															Key: AWS.config.credentials.identityId + '/' + filePath,
+															ContentType: file.type,
+															StorageClass: "REDUCED_REDUNDANCY",
+															Body: blobInfo.blob()
+														}, (err, data) => {
+															if (err) webix.message({ text: err.message, type: "error" });
+															else cb(filePath, { title: file.name });
+														});
+													});
+												};
+												reader.readAsDataURL(file);
+											};
+											input.click();
+										},
 										extended_valid_elements: 'script[*],i[*],span[*]',
 										valid_children: "+body[style],+body[link]",
 										branding: false,
@@ -527,6 +628,8 @@ export default class ContentView extends JetView {
 							template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
 							checkboxRefresh: true,
 							editable: true,
+							//clipboard:true,
+							onContext: {},
 							editor: "popup",
 							editValue: "value",
 							editaction: "dblclick",
@@ -541,7 +644,7 @@ export default class ContentView extends JetView {
 								"onAfterSelect": (id) => {
 									if (lastXHRGetContent) { lastXHRGetContent.abort(); }
 									var tinymce = $$("tinymce").getEditor(),
-									ace = $$("ace").getEditor();
+										ace = $$("ace").getEditor();
 									tinymce.setProgressState(1);
 									webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
 										success: (text, data, XmlHttpRequest) => {
