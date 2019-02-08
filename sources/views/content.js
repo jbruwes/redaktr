@@ -33,7 +33,7 @@ export default class ContentView extends JetView {
 			var content_css = [];
 			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
 			content_css = content_css.join(",");
-			
+
 			//var content_style = [];
 			//$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
 			//content_style = content_style.join("\n");
@@ -204,20 +204,20 @@ export default class ContentView extends JetView {
 									view: "tinymce-editor",
 									config: {
 										//init_instance_callback: (editor) => {
-											//editor.serializer.addNodeFilter('script,style', (nodes, name) => {
-											//	var i = nodes.length,
-											//		node, value;
-											//	while (i--) {
-											//		node = nodes[i];
-											//		value = node.firstChild ? node.firstChild.value : '';
-											//		if (value.length > 0) {
-											//			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
-											//				.replace(/^[\r\n]*|[\r\n]*$/g, '')
-											//				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
-											//				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
-											//		}
-											//	}
-											//});
+										//editor.serializer.addNodeFilter('script,style', (nodes, name) => {
+										//	var i = nodes.length,
+										//		node, value;
+										//	while (i--) {
+										//		node = nodes[i];
+										//		value = node.firstChild ? node.firstChild.value : '';
+										//		if (value.length > 0) {
+										//			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
+										//				.replace(/^[\r\n]*|[\r\n]*$/g, '')
+										//				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
+										//				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
+										//		}
+										//	}
+										//});
 										//},
 										plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
 										toolbar: 'formatselect | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
@@ -325,43 +325,78 @@ export default class ContentView extends JetView {
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
 
-										setup: function(editor) {
+										setup: editor => {
+
+											var onAction = function() {
+
+												console.log(this);
+												//editor.insertContent('<a>' + this.text + '</a>');
+											};
+
+											var getSubmenuItems = val => {
+
+												var items = [{
+														type: 'choiceitem',
+														text: 'Menu item 1',
+														icon: "link",
+														value: "asddsa"
+													},
+													{
+														type: 'menuitem',
+														text: 'Menu item 2',
+														icon: 'chevron-right',
+														onAction: onAction,
+														getSubmenuItems: _ => {
+															return [{
+																	type: 'menuitem',
+																	text: 'Sub menu item 1',
+																	icon: 'link',
+																	onAction: onAction
+																},
+																{
+																	type: 'menuitem',
+																	text: 'Sub menu item 2',
+																	icon: 'link',
+																	onAction: onAction
+																}
+															];
+														}
+													}
+												];
+												return items;
+											};
 
 											/* example, adding a toolbar menu button */
-											editor.ui.registry.addMenuButton('rlink', {
+											/*editor.ui.registry.addMenuButton('rlink', {
 												icon: 'link',
 												tooltip: 'Insert/edit link',
+												fetch: callback => {
+													callback(getSubmenuItems($$("tree").data.serialize()));
+												}
+											});*/
+											editor.ui.registry.addSplitButton('rlink', {
+												text: 'Insert Date',
+												onAction: function(_) {
+													editor.insertContent('<p>Its Friday!</p>')
+												},
+												onItemAction: function(buttonApi, value) {
+													editor.insertContent(value);
+												},
 												fetch: function(callback) {
 													var items = [{
-															type: 'menuitem',
-															text: 'Menu item 1',
-															onAction: function() {
-																editor.insertContent('&nbsp;<em>You clicked menu item 1!</em>');
-															}
+															type: 'choiceitem',
+															text: 'Insert Date',
+															value: toDateHtml(new Date())
 														},
 														{
-															type: 'nestedmenuitem',
-															text: 'Menu item 2',
-															icon: 'user',
-															getSubmenuItems: function() {
-																return [{
-																		type: 'menuitem',
-																		text: 'Sub menu item 1',
-																		icon: 'unlock',
-																		onAction: function() {
-																			editor.insertContent('&nbsp;<em>You clicked Sub menu item 1!</em>');
-																		}
-																	},
-																	{
-																		type: 'menuitem',
-																		text: 'Sub menu item 2',
-																		icon: 'lock',
-																		onAction: function() {
-																			editor.insertContent('&nbsp;<em>You clicked Sub menu item 2!</em>');
-																		}
-																	}
-																];
-															}
+															type: 'choiceitem',
+															text: 'Insert GMT Date',
+															value: toGmtHtml(new Date())
+														},
+														{
+															type: 'choiceitem',
+															text: 'Insert ISO Date',
+															value: toIsoHtml(new Date())
 														}
 													];
 													callback(items);
@@ -371,7 +406,7 @@ export default class ContentView extends JetView {
 										},
 
 										file_picker_types: "image media file",
-										file_picker_callback: function(cb, value, meta) {
+										file_picker_callback: (cb, value, meta) => {
 											/*
 											var input = document.createElement('input');
 											input.setAttribute('type', 'file');
@@ -668,6 +703,7 @@ export default class ContentView extends JetView {
 		this.app.detachEvent("onBeforeAjax");
 	}
 }
+/* global tinymce */
 /* global webix */
 /* global AWS */
 /* global $$ */
