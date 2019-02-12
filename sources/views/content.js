@@ -324,87 +324,45 @@ export default class ContentView extends JetView {
 											"Wingdings='wingdings', zapf dingbats;" +
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
-
 										setup: editor => {
-
-											var onAction = function() {
-
-												console.log(this);
-												//editor.insertContent('<a>' + this.text + '</a>');
-											};
-
-											var getSubmenuItems = val => {
-
-												var items = [{
-														type: 'choiceitem',
-														text: 'Menu item 1',
-														icon: "link",
-														value: "asddsa"
-													},
-													{
-														type: 'menuitem',
-														text: 'Menu item 2',
-														icon: 'chevron-right',
-														onAction: onAction,
-														getSubmenuItems: _ => {
-															return [{
-																	type: 'menuitem',
-																	text: 'Sub menu item 1',
-																	icon: 'link',
-																	onAction: onAction
-																},
-																{
-																	type: 'menuitem',
-																	text: 'Sub menu item 2',
-																	icon: 'link',
-																	onAction: onAction
-																}
-															];
+											var getSubmenuItems = (id, path) => {
+												var items = [];
+												var item;
+												var child;
+												var children = null;
+												var value = null;
+												var newPath = null;
+												do {
+													item = $$("tree").getItem(id);
+													if (item.checked) {
+														child = $$("tree").getFirstChildId(id);
+														value = item.value.replace(/[\""]/g, '\\"');
+														newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
+														children = child ? getSubmenuItems(child, newPath) : null;
+														item = '{"type":"menuitem","text":"' + value + '",onAction:function(){""===tinyMCE.activeEditor.selection.getContent()?tinyMCE.execCommand("mceInsertContent",!1,"<a href=\\"' + newPath + '\\">' + value + '</a>"):tinyMCE.execCommand("mceInsertLink",!1,"' + newPath + '")},"icon":';
+														if (children) {
+															item = item + '"chevron-right",';
+															item = item + '"getSubmenuItems":function(){return ' + children + '}';
 														}
+														else {
+															item = item + '"link"';
+														}
+														item = item + '}';
+														items.push(item);
 													}
-												];
-												return items;
+													id = $$("tree").getNextSiblingId(id);
+												} while (id);
+												items = items.join();
+												return '[' + items + ']';
 											};
-
-											/* example, adding a toolbar menu button */
-											/*editor.ui.registry.addMenuButton('rlink', {
+											editor.ui.registry.addMenuButton('rlink', {
 												icon: 'link',
 												tooltip: 'Insert/edit link',
 												fetch: callback => {
-													callback(getSubmenuItems($$("tree").data.serialize()));
-												}
-											});*/
-											editor.ui.registry.addSplitButton('rlink', {
-												text: 'Insert Date',
-												onAction: function(_) {
-													editor.insertContent('<p>Its Friday!</p>')
-												},
-												onItemAction: function(buttonApi, value) {
-													editor.insertContent(value);
-												},
-												fetch: function(callback) {
-													var items = [{
-															type: 'choiceitem',
-															text: 'Insert Date',
-															value: toDateHtml(new Date())
-														},
-														{
-															type: 'choiceitem',
-															text: 'Insert GMT Date',
-															value: toGmtHtml(new Date())
-														},
-														{
-															type: 'choiceitem',
-															text: 'Insert ISO Date',
-															value: toIsoHtml(new Date())
-														}
-													];
-													callback(items);
+													callback(eval(getSubmenuItems($$("tree").getFirstId(), '/')));
 												}
 											});
-
 										},
-
 										file_picker_types: "image media file",
 										file_picker_callback: (cb, value, meta) => {
 											/*
