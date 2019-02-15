@@ -62,7 +62,6 @@ export default class TemplateView extends JetView {
                         body: {
                             rows: [{ $subview: "contentViews.toolbar" }, {
                                 view: "list",
-                                width: 400,
                                 type: {
                                     markCheckbox: function(obj) {
                                         return "<span class='check mdi mdi-18px mdi-checkbox-" + (obj.markCheckbox ? "marked-" : "blank-") + "outline'></span>";
