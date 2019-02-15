@@ -146,3 +146,17 @@ div[view_id="tinymce"]>div {
 .mce-edit-area {
     display: table-row!important
 }
+
+.canvas-container {
+    position: absolute!important;
+    top: 0;
+}
+
+.check {
+    float: right;
+    /*margin: 7px;*/
+}
+
+.check:hover {
+    color: #3498db;
+}
