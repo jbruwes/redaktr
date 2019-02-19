@@ -5,16 +5,16 @@ export default class TemplateView extends JetView {
     config() {
 
         var film_set = [
-            { id: 1, title: "The Shawshank Redemption", year: 1994, rank: 1, markCheckbox: 1, icon:"desktop-mac" },
-            { id: 2, title: "The Godfather", year: 1972, rank: 2, markCheckbox: 0, icon:"desktop-mac" },
-            { id: 3, title: "The Godfather: Part II", year: 1974, rank: 3, icon:"desktop-mac" },
-            { id: 4, title: "The Good, the Bad and the Ugly", year: 1966, rank: 4, markCheckbox: 1, icon:"desktop-mac" },
-            { id: 5, title: "My Fair Lady", year: 1964, rank: 5, markCheckbox: 1, icon:"desktop-mac" },
-            { id: 6, title: "12 Angry Men", year: 1957, rank: 6, markCheckbox: 0, icon:"desktop-mac" }
+            { id: 1, title: "The Shawshank Redemption", year: 1994, rank: 1, markCheckbox: 1, icon: "desktop-mac" },
+            { id: 2, title: "The Godfather", year: 1972, rank: 2, markCheckbox: 0, icon: "desktop-mac" },
+            { id: 3, title: "The Godfather: Part II", year: 1974, rank: 3, icon: "desktop-mac" },
+            { id: 4, title: "The Good, the Bad and the Ugly", year: 1966, rank: 4, markCheckbox: 1, icon: "desktop-mac" },
+            { id: 5, title: "My Fair Lady", year: 1964, rank: 5, markCheckbox: 1, icon: "desktop-mac" },
+            { id: 6, title: "12 Angry Men", year: 1957, rank: 6, markCheckbox: 0, icon: "desktop-mac" }
         ];
 
         return {
-            id: "accordion",
+            id: "templateAccordion",
             view: "accordion",
             cols: [{
                 view: "accordionitem",
@@ -81,7 +81,172 @@ export default class TemplateView extends JetView {
                         }
                     }, {
                         view: "accordionitem",
-                        header: "Geometry"
+                        header: "Geometry",
+                        body: {
+                            view: "form",
+                            scroll: true,
+                            elements: [
+
+                                {
+                                    rows: [
+                                        { template: "Layout", type: "section" },
+                                        //{ view: "switch", value: 1, label: "Responsive", onLabel: "On", offLabel: "Off", labelWidth: 100 },
+                                        {
+                                            view: "richselect",
+                                            value: 1,
+                                            options: [
+                                                { id: 1, value: "Static", icon: "mdi mdi-monitor-cellphone-star" },
+                                                { id: 2, value: "Fixed", icon: "mdi mdi-monitor" },
+                                                { id: 3, value: "Website Relative", icon: "mdi mdi-monitor-multiple" },
+                                                { id: 4, value: "Content Relative", icon: "mdi mdi-monitor-dashboard" }
+                                            ]
+                                        }, {
+                                            view: "segmented",
+                                            value: 1,
+                                            options: [
+                                                { id: 1, value: "Responsive" },
+                                                { id: 2, value: "Fluid" }
+                                            ]
+                                        }
+                                    ]
+                                },
+
+                                {
+                                    rows: [
+                                        { template: "Vertical", type: "section" },
+                                        {
+                                            view: "fieldset",
+                                            label: "top",
+                                            body: {
+                                                cols: [
+                                                    { view: "switch", value: 1, width: 60 },
+                                                    { view: "text", type: "number" },
+                                                    {
+                                                        view: "segmented",
+                                                        width: 70,
+                                                        value: 1,
+                                                        options: [
+                                                            { id: 1, value: "px" },
+                                                            { id: 2, value: "%" },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "height",
+                                            body: {
+                                                cols: [
+                                                    { view: "switch", value: 1, width: 60 },
+                                                    { view: "text", type: "number" },
+                                                    {
+                                                        view: "segmented",
+                                                        width: 70,
+                                                        value: 1,
+                                                        options: [
+                                                            { id: 1, value: "px" },
+                                                            { id: 2, value: "%" },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "bottom",
+                                            body: {
+                                                cols: [
+                                                    { view: "switch", value: 1, width: 60 },
+                                                    { view: "text", type: "number" },
+                                                    {
+                                                        view: "segmented",
+                                                        width: 70,
+                                                        value: 1,
+                                                        options: [
+                                                            { id: 1, value: "px" },
+                                                            { id: 2, value: "%" },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    rows: [
+                                        { template: "Horizontal", type: "section" },
+                                        {
+                                            view: "fieldset",
+                                            label: "left",
+                                            body: {
+                                                cols: [
+                                                    { view: "switch", value: 1, width: 60 },
+                                                    { view: "text", type: "number" },
+                                                    {
+                                                        view: "segmented",
+                                                        width: 70,
+                                                        value: 1,
+                                                        options: [
+                                                            { id: 1, value: "px" },
+                                                            { id: 2, value: "%" },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "width",
+                                            body: {
+                                                cols: [
+                                                    { view: "switch", value: 1, width: 60 },
+                                                    { view: "text", type: "number" },
+                                                    {
+                                                        view: "segmented",
+                                                        width: 70,
+                                                        value: 1,
+                                                        options: [
+                                                            { id: 1, value: "px" },
+                                                            { id: 2, value: "%" },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "right",
+                                            body: {
+                                                cols: [
+                                                    { view: "switch", value: 1, width: 60 },
+                                                    { view: "text", type: "number" },
+                                                    {
+                                                        view: "segmented",
+                                                        width: 70,
+                                                        value: 1,
+                                                        options: [
+                                                            { id: 1, value: "px" },
+                                                            { id: 2, value: "%" },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    rows: [
+                                        { template: "Rotation", type: "section" },
+                                        {
+                                            view: "fieldset",
+                                            label: "angle, °",
+                                            body: { view: "text", type: "number" }
+                                        },
+                                    ]
+                                }
+                            ]
+                        }
                     }, {
                         view: "accordionitem",
                         collapsed: true,
