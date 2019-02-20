@@ -9,10 +9,11 @@ export default class ToolbarView extends JetView {
                     click: () => {
                         var sel = $$("tree").getSelectedId();
                         var item = null;
-                        if(sel) {
-                        item = $$("tree").add({ checked: true, value: "" }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
-                        } else {
-                        item = $$("tree").add({ checked: true, value: "" });
+                        if (sel) {
+                            item = $$("tree").add({ checked: true, value: "" }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
+                        }
+                        else {
+                            item = $$("tree").add({ checked: true, value: "" });
                         }
                         $$("tree").select(item);
                         $$("tree").edit(item);
@@ -25,7 +26,7 @@ export default class ToolbarView extends JetView {
                 }, {
                     view: "icon",
                     icon: "mdi mdi-delete-outline",
-                    click: function() {
+                    click: () => {
                         var sel = $$("tree").getSelectedId();
                         var sel2 = $$("tree").getNextSiblingId(sel) || $$("tree").getPrevSiblingId(sel) || $$("tree").getParentId(sel);
                         webix.confirm("Are you sure?", function(result) {

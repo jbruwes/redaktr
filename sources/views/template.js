@@ -52,15 +52,17 @@ export default class TemplateView extends JetView {
             }, {
                 view: "accordionitem",
                 collapsed: true,
-                header: "Layers",
+                header: "Tools",
+                //maxWidth: 250,
                 body: {
                     id: "accordionRight",
                     view: "accordion",
                     type: "line",
                     rows: [{
                         view: "accordionitem",
+                        header: "Layers",
                         body: {
-                            rows: [{ $subview: "contentViews.toolbar" }, {
+                            rows: [{ $subview: "templateViews.toolbar" }, {
                                 view: "list",
                                 type: {
                                     markCheckbox: function(obj) {
@@ -82,12 +84,11 @@ export default class TemplateView extends JetView {
                     }, {
                         view: "accordionitem",
                         header: "Geometry",
+                        collapsed: true,
                         body: {
                             view: "form",
                             scroll: true,
-                            elements: [
-
-                                {
+                            elements: [{
                                     rows: [
                                         { template: "Layout", type: "section" },
                                         //{ view: "switch", value: 1, label: "Responsive", onLabel: "On", offLabel: "Off", labelWidth: 100 },
@@ -110,7 +111,6 @@ export default class TemplateView extends JetView {
                                         }
                                     ]
                                 },
-
                                 {
                                     rows: [
                                         { template: "Vertical", type: "section" },
@@ -119,7 +119,7 @@ export default class TemplateView extends JetView {
                                             label: "top",
                                             body: {
                                                 cols: [
-                                                    { view: "switch", value: 1, width: 60 },
+                                                    //{ view: "switch", value: 1, width: 60 },
                                                     { view: "text", type: "number" },
                                                     {
                                                         view: "segmented",
@@ -138,7 +138,7 @@ export default class TemplateView extends JetView {
                                             label: "height",
                                             body: {
                                                 cols: [
-                                                    { view: "switch", value: 1, width: 60 },
+                                                    //{ view: "switch", value: 1, width: 60 },
                                                     { view: "text", type: "number" },
                                                     {
                                                         view: "segmented",
@@ -157,7 +157,7 @@ export default class TemplateView extends JetView {
                                             label: "bottom",
                                             body: {
                                                 cols: [
-                                                    { view: "switch", value: 1, width: 60 },
+                                                    //{ view: "switch", value: 1, width: 60 },
                                                     { view: "text", type: "number" },
                                                     {
                                                         view: "segmented",
@@ -181,7 +181,7 @@ export default class TemplateView extends JetView {
                                             label: "left",
                                             body: {
                                                 cols: [
-                                                    { view: "switch", value: 1, width: 60 },
+                                                    //{ view: "switch", value: 1, width: 60 },
                                                     { view: "text", type: "number" },
                                                     {
                                                         view: "segmented",
@@ -200,7 +200,7 @@ export default class TemplateView extends JetView {
                                             label: "width",
                                             body: {
                                                 cols: [
-                                                    { view: "switch", value: 1, width: 60 },
+                                                    //{ view: "switch", value: 1, width: 60 },
                                                     { view: "text", type: "number" },
                                                     {
                                                         view: "segmented",
@@ -219,7 +219,7 @@ export default class TemplateView extends JetView {
                                             label: "right",
                                             body: {
                                                 cols: [
-                                                    { view: "switch", value: 1, width: 60 },
+                                                    //{ view: "switch", value: 1, width: 60 },
                                                     { view: "text", type: "number" },
                                                     {
                                                         view: "segmented",
@@ -244,13 +244,255 @@ export default class TemplateView extends JetView {
                                             body: { view: "text", type: "number" }
                                         },
                                     ]
-                                }
+                                }, {}
                             ]
                         }
                     }, {
                         view: "accordionitem",
                         collapsed: true,
-                        header: "Appearance"
+                        header: "Appearance",
+                        body: {
+                            view: "form",
+                            scroll: true,
+                            elements: [{
+                                    rows: [
+                                        { template: "Padding", type: "section" },
+                                        {
+                                            view: "fieldset",
+                                            label: "Left",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Right",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Top",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Bottom",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        }
+                                    ]
+                                },
+                                {
+                                    rows: [
+                                        { template: "Border", type: "section" },
+                                        {
+                                            view: "fieldset",
+                                            label: "Left",
+                                            body: {
+                                                rows: [{
+                                                    cols: [{
+                                                        view: "richselect",
+                                                        value: 1,
+                                                        options: [
+                                                            { "id": 1, "value": "none" },
+                                                            { "id": 2, "value": "solid" },
+                                                            { "id": 3, "value": "dotted" },
+                                                            { "id": 4, "value": "dashed" },
+                                                            { "id": 5, "value": "double" },
+                                                            { "id": 6, "value": "groove" },
+                                                            { "id": 7, "value": "ridge" },
+                                                            { "id": 8, "value": "inset" },
+                                                            { "id": 9, "value": "outset" }
+                                                        ]
+                                                    }, { width: 17 }]
+                                                }, { cols: [{ view: "colorpicker", value: "#000000" }, { width: 17 }] }, { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Right",
+                                            body: {
+                                                rows: [{
+                                                    cols: [{
+                                                        view: "richselect",
+                                                        value: 1,
+                                                        options: [
+                                                            { "id": 1, "value": "none" },
+                                                            { "id": 2, "value": "solid" },
+                                                            { "id": 3, "value": "dotted" },
+                                                            { "id": 4, "value": "dashed" },
+                                                            { "id": 5, "value": "double" },
+                                                            { "id": 6, "value": "groove" },
+                                                            { "id": 7, "value": "ridge" },
+                                                            { "id": 8, "value": "inset" },
+                                                            { "id": 9, "value": "outset" }
+                                                        ]
+                                                    }, { width: 17 }]
+                                                }, { cols: [{ view: "colorpicker", value: "#000000" }, { width: 17 }] }, { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Top",
+                                            body: {
+                                                rows: [{
+                                                    cols: [{
+                                                        view: "richselect",
+                                                        value: 1,
+                                                        options: [
+                                                            { "id": 1, "value": "none" },
+                                                            { "id": 2, "value": "solid" },
+                                                            { "id": 3, "value": "dotted" },
+                                                            { "id": 4, "value": "dashed" },
+                                                            { "id": 5, "value": "double" },
+                                                            { "id": 6, "value": "groove" },
+                                                            { "id": 7, "value": "ridge" },
+                                                            { "id": 8, "value": "inset" },
+                                                            { "id": 9, "value": "outset" }
+                                                        ]
+                                                    }, { width: 17 }]
+                                                }, { cols: [{ view: "colorpicker", value: "#000000" }, { width: 17 }] }, { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }]
+                                            }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Bottom",
+                                            body: {
+                                                rows: [{
+                                                    cols: [{
+                                                        view: "richselect",
+                                                        value: 1,
+                                                        options: [
+                                                            { "id": 1, "value": "none" },
+                                                            { "id": 2, "value": "solid" },
+                                                            { "id": 3, "value": "dotted" },
+                                                            { "id": 4, "value": "dashed" },
+                                                            { "id": 5, "value": "double" },
+                                                            { "id": 6, "value": "groove" },
+                                                            { "id": 7, "value": "ridge" },
+                                                            { "id": 8, "value": "inset" },
+                                                            { "id": 9, "value": "outset" }
+                                                        ]
+                                                    }, { width: 17 }]
+                                                }, { cols: [{ view: "colorpicker", value: "#000000" }, { width: 17 }] }, { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }]
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    rows: [
+                                        { template: "Corner Radius", type: "section" },
+                                        {
+                                            view: "fieldset",
+                                            label: "Left Top",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Right Top",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Left Bottom",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Right Bottom",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        }
+                                    ]
+                                },
+                                {
+                                    rows: [
+                                        { template: "Text Color", type: "section" },
+                                        { view: "colorpicker", value: "#000000" }
+                                    ]
+                                },
+                                {
+                                    rows: [
+                                        { template: "Background", type: "section" },
+                                        {
+                                            //view: "fieldset",
+                                            //label: "Image",
+                                            //body: {
+                                            rows: [{
+                                                    view: "uploader",
+                                                    value: 'Upload Image',
+                                                    multiple: false,
+                                                    autosend: false,
+                                                    name: "files",
+                                                    link: "bglist",
+                                                    accept: "image/png, image/gif, image/jpeg"
+                                                },
+                                                {
+                                                    view: "list",
+                                                    id: "bglist",
+                                                    type: "uploader",
+                                                    autoheight: true,
+                                                    borderless: true
+                                                }
+                                            ]
+                                            //}
+                                        }
+                                    ]
+                                }, {},
+                                {
+                                    rows: [{
+                                            view: "fieldset",
+                                            label: "Color",
+                                            body: { cols: [{ view: "colorpicker", value: "#000000" }, { width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Left Bottom",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        },
+                                        {
+                                            view: "fieldset",
+                                            label: "Right Bottom",
+                                            body: { cols: [{ view: "text", type: "number" }, { view: "label", label: "px", width: 17 }] }
+                                        }
+                                    ]
+                                }, {}
+
+                                /*,
+                                                                {
+                                                                    rows: [
+                                                                        { template: "Horizontal", type: "section" },
+                                                                        {
+                                                                            view: "fieldset",
+                                                                            label: "left",
+                                                                            body: {
+                                                                                cols: []
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            view: "fieldset",
+                                                                            label: "width",
+                                                                            body: {
+                                                                                cols: []
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            view: "fieldset",
+                                                                            label: "right",
+                                                                            body: {
+                                                                                cols: []
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    rows: [
+                                                                        { template: "Rotation", type: "section" },
+                                                                        {
+                                                                            view: "fieldset",
+                                                                            label: "angle, °",
+                                                                            body: { cols: [] }
+                                                                        },
+                                                                    ]
+                                                                }, {}*/
+                            ]
+                        }
                     }, {
                         view: "accordionitem",
                         collapsed: true,
