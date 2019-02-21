@@ -1,0 +1,89 @@
+import { JetView } from "webix-jet";
+export default class TreeView extends JetView {
+    config() {
+
+        var lastXHRPostTree = null,
+            //lastXHRGetContent = null,
+            onChangeFnc = id => {
+                webix.delay(() => {
+                    if (lastXHRPostTree) { lastXHRPostTree.abort(); }
+                    var tree = $$("tree").data.serialize(),
+                        tinymce = $$("tinymce").getEditor(),
+                        ace = $$("ace").getEditor();
+                    if (!tree.length) {
+                        this.getParentView().setTinymce('');
+                        tinymce.setMode('readonly');
+                        ace.setValue("");
+                        ace.setReadOnly(true);
+                    }
+                    else {
+                        tinymce.setMode('design');
+                        ace.setReadOnly(false);
+                    }
+                    lastXHRPostTree = this.getParentView().S3.putObject({
+                        Bucket: 'res.redaktr.com',
+                        Key: AWS.config.credentials.identityId + '.json',
+                        ContentType: 'application/json',
+                        Body: webix.ajax().stringify(tree)
+                    }, (err, data) => {
+                        if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+                        else webix.message("Tree save complete");
+                    });
+                });
+            };
+
+        return {
+            view: "edittree",
+            id: "tree",
+            select: true,
+            activeTitle: true,
+            template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
+            checkboxRefresh: true,
+            editable: true,
+            //clipboard:true,
+            onContext: {},
+            editor: "popup",
+            editValue: "value",
+            editaction: "dblclick",
+            url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
+            on: {
+                "onAfterLoad": function() { this.select(this.getFirstId()) },
+                "data->onAfterAdd": onChangeFnc,
+                "data->onAfterDelete": onChangeFnc,
+                "data->onDataUpdate": onChangeFnc,
+                "data->onDataMove": onChangeFnc,
+                "onItemCheck": onChangeFnc,
+                "onAfterSelect": (id) => {
+                    //if (this.getParentView().lastXHRGetContent) { this.getParentView().lastXHRGetContent.abort(); }
+                    var tinymce = $$("tinymce").getEditor(),
+                        ace = $$("ace").getEditor();
+                    tinymce.setProgressState(1);
+                    webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
+                        success: (text, data, XmlHttpRequest) => {
+                            this.getParentView().setTinymce(text);
+                            console.log(2);
+                            this.getParentView().setAce(text);
+                        },
+                        error: (text, data, XmlHttpRequest) => {
+                            this.getParentView().setTinymce("");
+                            ace.setValue("");
+                        }
+                    });
+                }
+            }
+        };
+    }
+    init() {
+        //this.app.attachEvent("onBeforeAjax", (mode, url, params, xhr) => {
+        //    if (mode === 'GET' && !url.indexOf('https://content.redaktr.com')) {
+        //        this.lastXHRGetContent = xhr;
+        //    }
+        //});
+    }
+    destroy() {
+        //this.app.detachEvent("onBeforeAjax");
+    }
+}
+/* global webix */
+/* global AWS */
+/* global $$ */

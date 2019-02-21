@@ -12,19 +12,17 @@ export default class ContentView extends JetView {
 
 	init() {
 
-		var S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
+		this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
+		this.lastXHRPostContent = null;
+		this.header = '';
+		this.html = '';
+		var head = '';
 
-		S3.getObject({
+
+		this.S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
 		}, (err, data) => {
-
-			var lastXHRPostContent = null,
-				lastXHRPostTree = null,
-				lastXHRGetContent = null,
-				html = '',
-				header = '',
-				head = '';
 
 			if (!err) {
 				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
@@ -38,29 +36,7 @@ export default class ContentView extends JetView {
 			//$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
 			//content_style = content_style.join("\n");
 
-			var setTinymce = val => {
-					var tinymce = $$("tinymce").getEditor();
-					tinymce.off("Change");
-					tinymce.setProgressState(0);
-					tinymce.getWin().scrollTo(0, 0);
-					tinymce.setContent(val);
-					tinymce.undoManager.clear();
-					tinymce.nodeChanged();
-					tinymce.on("Change", save);
-				},
-				save = _ => {
-					if (lastXHRPostContent) lastXHRPostContent.abort();
-					lastXHRPostContent = S3.putObject({
-						Bucket: 'content.redaktr.com',
-						ContentType: 'text/html',
-						Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
-						Body: $$("tinymce").getValue()
-					}, (err, data) => {
-						if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-						else webix.message("Content save complete");
-					});
-				},
-				images_upload_handler = (blobInfo, success, failure) => {
+			var images_upload_handler = (blobInfo, success, failure) => {
 					var fileext = blobInfo.filename().split('.').pop(),
 						mime = 'image/';
 					switch (fileext) {
@@ -118,12 +94,12 @@ export default class ContentView extends JetView {
 						default:
 							mime = "image";
 					}
-					S3.headObject({
+					this.S3.headObject({
 						Bucket: 'media.redaktr.com',
 						Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
 					}, (err, data) => {
 						var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
-						S3.putObject({
+						this.S3.putObject({
 							Bucket: 'media.redaktr.com',
 							Key: AWS.config.credentials.identityId + '/' + filePath,
 							ContentType: mime,
@@ -134,61 +110,7 @@ export default class ContentView extends JetView {
 							else success(filePath);
 						});
 					});
-				},
-				onChangeFnc = id => {
-					webix.delay(() => {
-						if (lastXHRPostTree) { lastXHRPostTree.abort(); }
-						var tree = $$("tree").data.serialize(),
-							tinymce = $$("tinymce").getEditor(),
-							ace = $$("ace").getEditor();
-						if (!tree.length) {
-							setTinymce('');
-							tinymce.setMode('readonly');
-							ace.setValue("");
-							ace.setReadOnly(true);
-						}
-						else {
-							tinymce.setMode('design');
-							ace.setReadOnly(false);
-						}
-						lastXHRPostTree = S3.putObject({
-							Bucket: 'res.redaktr.com',
-							Key: AWS.config.credentials.identityId + '.json',
-							ContentType: 'application/json',
-							Body: webix.ajax().stringify(tree)
-						}, (err, data) => {
-							if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-							else webix.message("Tree save complete");
-						});
-					});
-				},
-				aceChange = () => {
-					$$("tinymce").setValue('<!DOCTYPE html><html><head>' + header + '</head><body>' + $$("ace").getValue() + '</body></html>');
-					save();
-				},
-				setAce = (text) => {
-					$$("ace").getEditor(true).then(function(editor) {
-						html = text;
-						header = '';
-						if (html.match(/<html[^>]*>[\s\S]*<\/html>/gi)) {
-							header = html.match(/<head[^>]*>[\s\S]*<\/head>/gi);
-							header = header ? header[0].replace(/^<head>/, '').replace(/<\/head>$/, '') : '';
-							html = html.match(/<body[^>]*>[\s\S]*<\/body>/gi);
-							html = html ? html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
-						}
-						var session = editor.getSession();
-						session.off('change', aceChange);
-						session.setValue(html, -1);
-						session.on('change', aceChange);
-
-					});
 				};
-
-			this.app.attachEvent("onBeforeAjax", (mode, url, params, xhr) => {
-				if (mode === 'GET' && !url.indexOf('https://content.redaktr.com')) {
-					lastXHRGetContent = xhr;
-				}
-			});
 
 			$$("accordion").addView({
 				view: "accordionitem",
@@ -325,6 +247,7 @@ export default class ContentView extends JetView {
 											"Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
 											"Yeseva One='Yeseva One', cursive;",
 										setup: editor => {
+											editor.self = this;
 											var getSubmenuItems = (id, path) => {
 												var items = [];
 												var item;
@@ -365,44 +288,25 @@ export default class ContentView extends JetView {
 										},
 										file_picker_types: "image media file",
 										file_picker_callback: (cb, value, meta) => {
-											/*
 											var input = document.createElement('input');
 											input.setAttribute('type', 'file');
 											input.setAttribute('accept', 'image/*,video/*');
-											input.onchange = function() {
-												var file = this.files[0];
+											input.onchange = _ => {
+												//var file = this.files[0];
+												var file = input.files[0];
 												var reader = new FileReader();
-												reader.onload = function() {
+												reader.onload = _ => {
 													var id = 'blobid' + webix.uid();
 													var blobCache = tinymce.activeEditor.editorUpload.blobCache;
 													var base64 = reader.result.split(',')[1];
 													var blobInfo = blobCache.create(id, file, base64);
 													blobCache.add(blobInfo);
-													cb(blobInfo.blobUri(), { title: file.name });
-												};
-												reader.readAsDataURL(file);
-											};
-											input.click();
-											*/
-
-											var input = document.createElement('input');
-											input.setAttribute('type', 'file');
-											input.setAttribute('accept', 'image/*,video/*');
-											input.onchange = function() {
-												var file = this.files[0];
-												var reader = new FileReader();
-												reader.onload = function() {
-													var id = 'blobid' + webix.uid();
-													var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-													var base64 = reader.result.split(',')[1];
-													var blobInfo = blobCache.create(id, file, base64);
-													blobCache.add(blobInfo);
-													S3.headObject({
+													this.S3.headObject({
 														Bucket: 'media.redaktr.com',
 														Key: AWS.config.credentials.identityId + '/' + file.name
 													}, (err, data) => {
 														var filePath = (err ? '' : webix.uid() + '/') + file.name;
-														S3.putObject({
+														this.S3.putObject({
 															Bucket: 'media.redaktr.com',
 															Key: AWS.config.credentials.identityId + '/' + filePath,
 															ContentType: file.type,
@@ -574,13 +478,7 @@ export default class ContentView extends JetView {
 										}]
 
 									}
-								},
-								{
-									id: "ace",
-									view: "ace-editor",
-									theme: "tomorrow",
-									mode: "html"
-								}
+								},{ $subview: "contentViews.ace" }
 							]
 						},
 						{
@@ -593,9 +491,9 @@ export default class ContentView extends JetView {
 							multiview: "true",
 							type: "bottom",
 							on: {
-								onChange: function() {
-									if (this.getValue() === 'ace') {
-										setAce($$("tinymce").getValue());
+								onChange: _ => {
+									if ($("tabbar").getValue() === 'ace') {
+										this.setAce($$("tinymce").getValue());
 									}
 								}
 							}
@@ -603,64 +501,61 @@ export default class ContentView extends JetView {
 					]
 				}
 			});
-			$$("ace").getEditor(true).then(editor => {
-				var session = editor.getSession();
-				session.setUseWorker(false);
-				session.setUseWrapMode(true);
-			});
 			$$("tinymce").getEditor(true).then(editor => {
 				$$("accordion").addView({
 					view: "accordionitem",
 					collapsed: true,
 					header: "Tree",
-					body: {
-						rows: [{ $subview: "contentViews.toolbar" }, {
-							view: "edittree",
-							id: "tree",
-							select: true,
-							activeTitle: true,
-							template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
-							checkboxRefresh: true,
-							editable: true,
-							//clipboard:true,
-							onContext: {},
-							editor: "popup",
-							editValue: "value",
-							editaction: "dblclick",
-							url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
-							on: {
-								"onAfterLoad": function() { this.select(this.getFirstId()) },
-								"data->onAfterAdd": onChangeFnc,
-								"data->onAfterDelete": onChangeFnc,
-								"data->onDataUpdate": onChangeFnc,
-								"data->onDataMove": onChangeFnc,
-								"onItemCheck": onChangeFnc,
-								"onAfterSelect": (id) => {
-									if (lastXHRGetContent) { lastXHRGetContent.abort(); }
-									var tinymce = $$("tinymce").getEditor(),
-										ace = $$("ace").getEditor();
-									tinymce.setProgressState(1);
-									webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
-										success: (text, data, XmlHttpRequest) => {
-											setTinymce(text);
-											setAce(text);
-										},
-										error: (text, data, XmlHttpRequest) => {
-											setTinymce("");
-											ace.setValue("");
-										}
-									});
-								}
-							}
-						}]
-					}
+					body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
 				});
 			});
 		});
 	}
-	destroy() {
-		this.app.detachEvent("onBeforeAjax");
+	aceChange() {
+		$$("tinymce").setValue('<!DOCTYPE html><html><head>' + this.header + '</head><body>' + $$("ace").getValue() + '</body></html>');
+		this.save();
 	}
+	setTinymce(val) {
+		var tinymce = $$("tinymce").getEditor();
+		tinymce.off("Change");
+		tinymce.setProgressState(0);
+		tinymce.getWin().scrollTo(0, 0);
+		tinymce.setContent(val);
+		tinymce.undoManager.clear();
+		tinymce.nodeChanged();
+		tinymce.on("Change", this.save);
+	}
+	setAce(text) {
+		$$("ace").getEditor(true).then((editor) => {
+			this.html = text;
+			this.header = '';
+			if (this.html.match(/<html[^>]*>[\s\S]*<\/html>/gi)) {
+				this.header = this.html.match(/<head[^>]*>[\s\S]*<\/head>/gi);
+				this.header = this.header ? this.header[0].replace(/^<head>/, '').replace(/<\/head>$/, '') : '';
+				this.html = this.html.match(/<body[^>]*>[\s\S]*<\/body>/gi);
+				this.html = this.html ? this.html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
+			}
+			var session = editor.getSession();
+			session.off('change', this.aceChange);
+			session.setValue(this.html, -1);
+			session.on('change', this.aceChange);
+		});
+	}
+	save() {
+		if (this.self.lastXHRPostContent) this.self.lastXHRPostContent.abort();
+		this.self.lastXHRPostContent = this.self.S3.putObject({
+			Bucket: 'content.redaktr.com',
+			ContentType: 'text/html',
+			Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
+			Body: $$("tinymce").getValue()
+		}, (err, data) => {
+			if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+			else webix.message("Content save complete");
+		});
+	}
+	//destroy() {
+	//	this.app.detachEvent("onBeforeAjax");
+	//}
 }
 /* global tinymce */
 /* global webix */
