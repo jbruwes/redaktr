@@ -14,9 +14,13 @@ export default class TopView extends JetView {
 						},
 						{ view: "label", label: "<span class='mdi mdi-36px mdi-glassdoor logoRedaktr'></span> REDAKTR" },
 						{},
-						{ view: "icon", icon: "mdi mdi-help-circle-outline", click: () => {
-							window.open("https://redaktr.com/spravka/","_blank");
-						} }
+						{
+							view: "icon",
+							icon: "mdi mdi-help-circle-outline",
+							click: () => {
+								window.open("https://redaktr.com/spravka/", "_blank");
+							}
+						}
 					]
 				},
 				{
@@ -63,7 +67,7 @@ export default class TopView extends JetView {
 		$$("sidebar").getPopup().attachEvent("onBeforeShow", () => { return false; });
 		webix.delay(() => {
 			this.app.attachEvent("app:route", (url) => {
-				$$("sidebar").select(url[1].page);
+				$$("sidebar").select($.isArray(url) ? url[1].page : url.split('/').reverse()[0]);
 			});
 			this.resetSidebar();
 			this.show('signin');
@@ -73,3 +77,4 @@ export default class TopView extends JetView {
 /* global webix */
 /* global AWS */
 /* global $$ */
+/* global $ */

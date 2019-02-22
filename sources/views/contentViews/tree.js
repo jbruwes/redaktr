@@ -61,7 +61,6 @@ export default class TreeView extends JetView {
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
                             this.getParentView().setTinymce(text);
-                            console.log(2);
                             this.getParentView().setAce(text);
                         },
                         error: (text, data, XmlHttpRequest) => {
