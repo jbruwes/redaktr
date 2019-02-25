@@ -27,7 +27,8 @@ export default class ContentView extends JetView {
 			//var content_style = [];
 			//$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
 			//content_style = content_style.join("\n");
-			$$("accordion").addView({
+			var accordion = $$("accordion");
+			if (accordion) accordion.addView({
 				view: "accordionitem",
 				header: "Content",
 				body: {
@@ -48,7 +49,7 @@ export default class ContentView extends JetView {
 							type: "bottom",
 							on: {
 								onChange: _ => {
-									if ($("tabbar").getValue() === 'ace') {
+									if ($$("tabbar").getValue() === 'ace') {
 										this.setAce($$("tinymce").getValue());
 									}
 								}
@@ -57,22 +58,11 @@ export default class ContentView extends JetView {
 					]
 				}
 			});
-/*
-$$("tinymce").getEditor(true).then(editor => {
-				$$("accordion").addView({
-					view: "accordionitem",
-					collapsed: true,
-					header: "Tree",
-					body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
-				});
-			});
-			*/
 		});
 	}
 	setTinymce(val) {
 		var tinymce = $$("tinymce").getEditor();
 		tinymce.off("Change");
-		tinymce.setProgressState(0);
 		tinymce.getWin().scrollTo(0, 0);
 		tinymce.setContent(val);
 		tinymce.undoManager.clear();
@@ -100,8 +90,8 @@ $$("tinymce").getEditor(true).then(editor => {
 		});
 	}
 	save() {
-		if (this.self.lastXHRPostContent) this.self.lastXHRPostContent.abort();
-		this.self.lastXHRPostContent = this.self.S3.putObject({
+		if (this.self.getParentView().lastXHRPostContent) this.self.getParentView().lastXHRPostContent.abort();
+		this.self.getParentView().lastXHRPostContent = this.self.getParentView().S3.putObject({
 			Bucket: 'content.redaktr.com',
 			ContentType: 'text/html',
 			Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",

@@ -3,6 +3,7 @@ import { JetView } from "webix-jet";
 export default class SignInView extends JetView {
     config() {
         var appShow = () => {
+            this.show("content");
             $$("sidebar").clearAll();
             $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
             $$("sidebar").add({ id: "template", icon: "mdi mdi-language-html5", value: "Template" }, 1);
@@ -10,7 +11,8 @@ export default class SignInView extends JetView {
             $$("sidebar").add({ id: "js", icon: "mdi mdi-language-javascript", value: "JavaScript" }, 3);
             $$("sidebar").add({ id: "settings", icon: "mdi mdi-settings", value: "Settings" }, 4);
             $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
-            this.app.show("/top/content");
+            //this.app.show("/top/content");
+			$$("sidebar").select("content");
         };
         var signIn = (err) => {
             if (err) {

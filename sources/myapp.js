@@ -5,9 +5,9 @@ export default class MyApp extends JetApp {
 		const defaults = {
 			id: APPNAME,
 			version: VERSION,
-			router: BUILD_AS_MODULE ? EmptyRouter : HashRouter,
+			router: EmptyRouter,
 			debug: !PRODUCTION,
-			start: "/top"
+			start: "/top/signin"
 		};
 		super({ ...defaults, ...config });
 	}
@@ -43,13 +43,6 @@ if (!BUILD_AS_MODULE) {
 	webix.ready(() => {
 		webix.ui.fullScreen();
 		var app = new MyApp();
-		app.attachEvent("app:guard", (url, view, nav) => {
-			if (nav.url.length === 1 || (nav.url.length > 1 &&
-					(nav.url[0].page !== 'top' ||
-						(!(nav.url[1].page === 'signin' || nav.url[1].page === 'about') && !Object.keys(AWS.config.credentials.params.Logins).length)))) {
-				nav.redirect = "/top/signin";
-			}
-		});
 		app.render();
 	});
 
