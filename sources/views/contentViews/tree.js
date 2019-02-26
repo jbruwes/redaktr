@@ -47,7 +47,9 @@ export default class TreeView extends JetView {
             editaction: "dblclick",
             url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
             on: {
-                "onAfterLoad": function() { this.select(this.getFirstId()) },
+                "onAfterLoad": function() {
+                    $$("tinymce").getEditor(true).then(editor => { this.select(this.getFirstId()) });
+                },
                 "data->onAfterAdd": onChangeFnc,
                 "data->onAfterDelete": onChangeFnc,
                 "data->onDataUpdate": onChangeFnc,

@@ -81,26 +81,26 @@ export default class TinymceView extends JetView {
             view: "tinymce-editor",
             config: {
                 //init_instance_callback: (editor) => {
-                //editor.serializer.addNodeFilter('script,style', (nodes, name) => {
-                //	var i = nodes.length,
-                //		node, value;
-                //	while (i--) {
-                //		node = nodes[i];
-                //		value = node.firstChild ? node.firstChild.value : '';
-                //		if (value.length > 0) {
-                //			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
-                //				.replace(/^[\r\n]*|[\r\n]*$/g, '')
-                //				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
-                //				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
-                //		}
-                //	}
-                //});
+                    //editor.serializer.addNodeFilter('script,style', (nodes, name) => {
+                    //	var i = nodes.length,
+                    //		node, value;
+                    //	while (i--) {
+                    //		node = nodes[i];
+                    //		value = node.firstChild ? node.firstChild.value : '';
+                    //		if (value.length > 0) {
+                    //			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
+                    //				.replace(/^[\r\n]*|[\r\n]*$/g, '')
+                    //				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
+                    //				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
+                    //		}
+                    //	}
+                    //});
                 //},
                 plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
                 //toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
                 toolbar: "fullpage |undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
                 content_style: ".mce-content-body{padding:8px;}",
-                content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" + "," + this.getParentView().content_css + "," +
+                content_css: "//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css," +
                     "//fonts.googleapis.com/css?family=Alice|Andika|Anonymous+Pro|Arimo|Arsenal|Bad+Script|Comfortaa|Cormorant|Cormorant+Garamond|Cormorant+Infant|Cormorant+SC|Cormorant+Unicase|Cousine|Cuprum|Didact+Gothic|EB+Garamond|El+Messiri|Exo+2|Fira+Mono|Fira+Sans|Fira+Sans+Condensed|Fira+Sans+Extra+Condensed|Forum|Gabriela|Istok+Web|Jura|Kelly+Slab|Kurale|Ledger|Lobster|Lora|Marck+Script|Marmelad|Merriweather|Neucha|Noto+Sans|Noto+Serif|Old+Standard+TT|Open+Sans|Open+Sans+Condensed:300|Oranienbaum|Oswald|PT+Mono|PT+Sans|PT+Sans+Caption|PT+Sans+Narrow|PT+Serif|PT+Serif+Caption|Pangolin|Pattaya|Philosopher|Play|Playfair+Display|Playfair+Display+SC|Podkova|Poiret+One|Prata|Press+Start+2P|Prosto+One|Roboto|Roboto+Condensed|Roboto+Mono|Roboto+Slab|Rubik|Rubik+Mono+One|Ruslan+Display|Russo+One|Scada|Seymour+One|Source+Sans+Pro|Stalinist+One|Tenor+Sans|Tinos|Ubuntu|Ubuntu+Condensed|Ubuntu+Mono|Underdog|Yanone+Kaffeesatz|Yeseva+One&amp;subset=cyrillic",
                 templates: [
                     { title: 'Social Share', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' }
@@ -432,19 +432,8 @@ export default class TinymceView extends JetView {
                     title: 'Disabled',
                     value: 'disabled'
                 }]
-
             }
         };
-    }
-    init() {
-        $$("tinymce").getEditor(true).then(editor => {
-            $$("accordion").addView({
-                view: "accordionitem",
-                collapsed: true,
-                header: "Tree",
-                body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
-            });
-        });
     }
 }
 /* global tinymce */

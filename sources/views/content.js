@@ -4,31 +4,7 @@ export default class ContentView extends JetView {
 		return {
 			id: "accordion",
 			view: "accordion",
-			cols: []
-		};
-	}
-	init() {
-		this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
-		this.lastXHRPostContent = null;
-		this.header = '';
-		this.html = '';
-		this.S3.getObject({
-			Bucket: 'template.redaktr.com',
-			Key: AWS.config.credentials.identityId + '.htm'
-		}, (err, data) => {
-			var head = '';
-			if (!err) {
-				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
-				head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
-			}
-			this.content_css = [];
-			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { this.content_css.push($(val).attr("href")) });
-			this.content_css = this.content_css.join(",");
-			//var content_style = [];
-			//$('<div>' + head + '</div>').find("style:not([id])").each((i, val) => { content_style.push(val) });
-			//content_style = content_style.join("\n");
-			var accordion = $$("accordion");
-			if (accordion) accordion.addView({
+			cols: [{
 				view: "accordionitem",
 				header: "Content",
 				body: {
@@ -57,7 +33,32 @@ export default class ContentView extends JetView {
 						}
 					]
 				}
-			});
+			}, {
+				view: "accordionitem",
+				collapsed: true,
+				header: "Tree",
+				body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
+			}]
+		};
+	}
+	init() {
+		this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
+		this.lastXHRPostContent = null;
+		this.header = '';
+		this.html = '';
+		this.S3.getObject({
+			Bucket: 'template.redaktr.com',
+			Key: AWS.config.credentials.identityId + '.htm'
+		}, (err, data) => {
+			var head = '';
+			if (!err) {
+				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
+				head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
+			}
+			var content_css = [];
+			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
+			content_css = content_css.join(",");
+			$$("tinymce").getEditor(true).then(editor => { tinyMCE.activeEditor.dom.loadCSS(content_css) });
 		});
 	}
 	setTinymce(val) {
@@ -73,6 +74,7 @@ export default class ContentView extends JetView {
 		var aceChange = _ => {
 			$$("tinymce").setValue('<!DOCTYPE html><html><head>' + this.header + '</head><body>' + $$("ace").getValue() + '</body></html>');
 			this.save(null, this);
+			console.log(1);
 		};
 		$$("ace").getEditor(true).then((editor) => {
 			this.html = text;
@@ -84,9 +86,10 @@ export default class ContentView extends JetView {
 				this.html = this.html ? this.html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
 			}
 			var session = editor.getSession();
-			session.removeAllListeners('change');
+			session.off('change', aceChange);
 			session.setValue(this.html, -1);
 			session.on('change', aceChange);
+			editor.resize();
 		});
 	}
 	save(e, that) {
@@ -104,6 +107,7 @@ export default class ContentView extends JetView {
 
 	}
 }
+/* global tinyMCE */
 /* global webix */
 /* global AWS */
 /* global $$ */

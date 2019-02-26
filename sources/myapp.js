@@ -116,7 +116,7 @@ if (!BUILD_AS_MODULE) {
 				this._mce_editor_setup(editor);
 			}, this);
 
-			if(this.$view.innerHTML)tinyMCE.init(config);
+			tinyMCE.init(config);
 
 
 			this._init_tinymce_once = function() {};
