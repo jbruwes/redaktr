@@ -16,5 +16,4 @@ export default class AceView extends JetView {
         });
     }
 }
-/* global webix */
 /* global $$ */

@@ -72,4 +72,3 @@ export default class TopView extends JetView {
 /* global webix */
 /* global AWS */
 /* global $$ */
-/* global $ */

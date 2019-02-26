@@ -11,7 +11,6 @@ export default class SignInView extends JetView {
             $$("sidebar").add({ id: "js", icon: "mdi mdi-language-javascript", value: "JavaScript" }, 3);
             $$("sidebar").add({ id: "settings", icon: "mdi mdi-settings", value: "Settings" }, 4);
             $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
-            //this.app.show("/top/content");
 			$$("sidebar").select("content");
         };
         var signIn = (err) => {

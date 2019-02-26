@@ -70,11 +70,11 @@ export default class ContentView extends JetView {
 		tinymce.on("Change", this.save);
 	}
 	setAce(text) {
+		var aceChange = _ => {
+			$$("tinymce").setValue('<!DOCTYPE html><html><head>' + this.header + '</head><body>' + $$("ace").getValue() + '</body></html>');
+			this.save(null, this);
+		};
 		$$("ace").getEditor(true).then((editor) => {
-			var aceChange = _ => {
-				$$("tinymce").setValue('<!DOCTYPE html><html><head>' + this.header + '</head><body>' + $$("ace").getValue() + '</body></html>');
-				this.save();
-			};
 			this.html = text;
 			this.header = '';
 			if (this.html.match(/<html[^>]*>[\s\S]*<\/html>/gi)) {
@@ -84,14 +84,15 @@ export default class ContentView extends JetView {
 				this.html = this.html ? this.html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
 			}
 			var session = editor.getSession();
-			session.off('change', aceChange);
+			session.removeAllListeners('change');
 			session.setValue(this.html, -1);
 			session.on('change', aceChange);
 		});
 	}
-	save() {
-		if (this.self.getParentView().lastXHRPostContent) this.self.getParentView().lastXHRPostContent.abort();
-		this.self.getParentView().lastXHRPostContent = this.self.getParentView().S3.putObject({
+	save(e, that) {
+		var self = e ? this.self.getParentView() : that;
+		if (self.lastXHRPostContent) self.lastXHRPostContent.abort();
+		self.lastXHRPostContent = self.S3.putObject({
 			Bucket: 'content.redaktr.com',
 			ContentType: 'text/html',
 			Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
@@ -100,6 +101,7 @@ export default class ContentView extends JetView {
 			if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
 			else webix.message("Content save complete");
 		});
+
 	}
 }
 /* global webix */
