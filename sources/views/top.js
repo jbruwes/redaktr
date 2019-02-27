@@ -34,9 +34,7 @@ export default class TopView extends JetView {
 									delete AWS.config.credentials.params.Logins['accounts.google.com'];
 									delete AWS.config.credentials.params.Logins['graph.facebook.com'];
 									this.show('signin');
-									webix.delay(() => {
-										this.resetSidebar();
-									});
+									this._resetSidebar();
 								}
 								else {
 									this.show(id);
@@ -58,7 +56,7 @@ export default class TopView extends JetView {
 		};
 		return ui;
 	}
-	resetSidebar() {
+	_resetSidebar() {
 		$$("sidebar").clearAll();
 		$$("sidebar").add({ id: "signin", icon: "mdi mdi-login-variant", value: "Sign In" });
 		$$("sidebar").add({ id: "about", icon: "mdi mdi-information-outline", value: "About" });
@@ -66,9 +64,8 @@ export default class TopView extends JetView {
 	}
 	init() {
 		$$("sidebar").getPopup().attachEvent("onBeforeShow", () => { return false; });
-		this.resetSidebar();
+		this._resetSidebar();
 	}
 }
-/* global webix */
 /* global AWS */
 /* global $$ */

@@ -80,22 +80,22 @@ export default class TinymceView extends JetView {
             id: "tinymce",
             view: "tinymce-editor",
             config: {
-                //init_instance_callback: (editor) => {
-                    //editor.serializer.addNodeFilter('script,style', (nodes, name) => {
-                    //	var i = nodes.length,
-                    //		node, value;
-                    //	while (i--) {
-                    //		node = nodes[i];
-                    //		value = node.firstChild ? node.firstChild.value : '';
-                    //		if (value.length > 0) {
-                    //			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
-                    //				.replace(/^[\r\n]*|[\r\n]*$/g, '')
-                    //				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
-                    //				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
-                    //		}
-                    //	}
-                    //});
-                //},
+                init_instance_callback: (editor) => {
+                //editor.serializer.addNodeFilter('script,style', (nodes, name) => {
+                //	var i = nodes.length,
+                //		node, value;
+                //	while (i--) {
+                //		node = nodes[i];
+                //		value = node.firstChild ? node.firstChild.value : '';
+                //		if (value.length > 0) {
+                //			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
+                //				.replace(/^[\r\n]*|[\r\n]*$/g, '')
+                //				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
+                //				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
+                //		}
+                //	}
+                //});
+                },
                 plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
                 //toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
                 toolbar: "fullpage |undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
@@ -203,7 +203,7 @@ export default class TinymceView extends JetView {
                     "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" +
                     "Yeseva One='Yeseva One', cursive;",
                 setup: editor => {
-                    editor.self = this;
+                    editor.that = this;
                     var getSubmenuItems = (id, path) => {
                         var items = [];
                         var item;
@@ -434,6 +434,15 @@ export default class TinymceView extends JetView {
                 }]
             }
         };
+    }
+    setValue(val) {
+        var tinymce = $$("tinymce").getEditor();
+        tinymce.off("Change");
+        tinymce.getWin().scrollTo(0, 0);
+        tinymce.setContent(val);
+        tinymce.undoManager.clear();
+        tinymce.nodeChanged();
+        tinymce.on("Change", this.getParentView().save);
     }
 }
 /* global tinymce */

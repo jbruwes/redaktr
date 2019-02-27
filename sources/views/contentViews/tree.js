@@ -11,7 +11,7 @@ export default class TreeView extends JetView {
                         tinymce = $$("tinymce").getEditor(),
                         ace = $$("ace").getEditor();
                     if (!tree.length) {
-                        this.getParentView().setTinymce('');
+                        $$("tinymce").$scope.setValue('');
                         tinymce.setMode('readonly');
                         ace.setValue("");
                         ace.setReadOnly(true);
@@ -62,19 +62,12 @@ export default class TreeView extends JetView {
                     //tinymce.setProgressState(1);
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
-                            var parentView = this.getParentView();
-                            if (parentView) {
-                                parentView.setTinymce(text);
-                                parentView.setAce(text);
-                            }
+                            $$("tinymce").$scope.setValue(text);
+                            $$("ace").$scope.setValue(text);
                         },
                         error: (text, data, XmlHttpRequest) => {
-                            var parentView = this.getParentView();
-                            if (parentView) {
-                                parentView.setTinymce("");
-                                parentView.setAce("");
-                                //ace.setValue("");
-                            }
+                            $$("tinymce").$scope.setValue("");
+                            $$("ace").$scope.setValue("");
                         }
                     });
                 }

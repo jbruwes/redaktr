@@ -134,6 +134,7 @@
 .mce-edit-area,
 .mce-edit-area>iframe,
 .mce-stack-layout,
+div[view_id="tinymce"],
 div[view_id="tinymce"]>div {
     height: 100%!important;
     width: 100%!important;

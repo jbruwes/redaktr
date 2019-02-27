@@ -3,15 +3,20 @@ import { JetView } from "webix-jet";
 export default class SignInView extends JetView {
     config() {
         var appShow = () => {
-            this.show("content");
             $$("sidebar").clearAll();
-            $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
-            $$("sidebar").add({ id: "template", icon: "mdi mdi-language-html5", value: "Template" }, 1);
-            $$("sidebar").add({ id: "css", icon: "mdi mdi-language-css3", value: "CSS" }, 2);
-            $$("sidebar").add({ id: "js", icon: "mdi mdi-language-javascript", value: "JavaScript" }, 3);
-            $$("sidebar").add({ id: "settings", icon: "mdi mdi-settings", value: "Settings" }, 4);
-            $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
-			$$("sidebar").select("content");
+            this.show("content").then(function(value) {
+                $$("tinymce").getEditor(true).then(editor => {
+                    $$("sidebar").add({ id: "content", icon: "mdi mdi-file-tree", value: "Content" }, 0);
+                    $$("sidebar").add({ id: "template", icon: "mdi mdi-language-html5", value: "Template" }, 1);
+                    $$("sidebar").add({ id: "css", icon: "mdi mdi-language-css3", value: "CSS" }, 2);
+                    $$("sidebar").add({ id: "js", icon: "mdi mdi-language-javascript", value: "JavaScript" }, 3);
+                    $$("sidebar").add({ id: "settings", icon: "mdi mdi-settings", value: "Settings" }, 4);
+                    $$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
+                    $$("sidebar").select("content");
+                });
+            }, function(reason) {
+                webix.message({ text: "Something goes wrong", type: "error" });
+            });
         };
         var signIn = (err) => {
             if (err) {
@@ -82,7 +87,6 @@ export default class SignInView extends JetView {
                                         type: "iconButton",
                                         icon: "mdi mdi-google",
                                         click: () => {
-                                            //var self = this;
                                             $script('//apis.google.com/js/platform.js', () => {
                                                 window.gapi.load('auth2', () => {
                                                     var auth2 = window.gapi.auth2.init({
