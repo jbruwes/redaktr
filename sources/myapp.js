@@ -61,7 +61,8 @@ if (!BUILD_AS_MODULE) {
 			this.$view.className += " webix_selectable";
 
 			this._waitEditor = webix.promise.defer();
-			this.$ready.push(this.render);
+			//this.$ready.push(this.render);
+			this.$ready.push(this._require_tinymce_once);
 		},
 		render: function() {
 			this._set_inner_size();
