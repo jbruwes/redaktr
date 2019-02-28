@@ -509,9 +509,8 @@ export default class TemplateView extends JetView {
             ]
         };
     }
-
     ready() {
-        $('[view_id="tinymce"]').css("display", "none");
+        $('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
     }
 }
 /* global webix */
