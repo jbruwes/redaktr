@@ -1,7 +1,6 @@
 import { JetView } from "webix-jet";
 export default class TinymceView extends JetView {
     config() {
-        console.log(1);
         var images_upload_handler = (blobInfo, success, failure) => {
             var fileext = blobInfo.filename().split('.').pop(),
                 mime = 'image/';
