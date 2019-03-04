@@ -63,7 +63,8 @@ export default class TemplateView extends JetView {
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Shadow"
+                            header: "Shadow",
+                            body: { $subview: "templateViews.shadows" }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
