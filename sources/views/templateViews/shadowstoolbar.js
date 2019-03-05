@@ -1,5 +1,5 @@
 import { JetView } from "webix-jet";
-export default class ToolbarView extends JetView {
+export default class ShadowToolbarView extends JetView {
     config() {
         return {
             view: "toolbar",
@@ -9,10 +9,6 @@ export default class ToolbarView extends JetView {
                     click: () => {}
                 },
                 {
-                    view: "icon",
-                    icon: "mdi mdi-pencil",
-                    click: () => {}
-                }, {
                     view: "icon",
                     icon: "mdi mdi-delete-outline",
                     click: () => {}

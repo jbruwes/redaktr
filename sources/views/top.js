@@ -12,8 +12,8 @@ export default class TopView extends JetView {
 								$$("sidebar").toggle();
 							}
 						},
-						{ view: "label", label: "<span class='mdi mdi-36px mdi-glassdoor logoRedaktr'></span> REDAKTR" },
-						{},
+						{ view: "label", label: "<span class='mdi mdi-36px mdi-glassdoor logoRedaktr'></span> <span class='mdi mdi-dark mdi-24px mdi-alpha-r'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-e'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-d'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-a'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-k'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-t'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-r'></span>" },
+						//{},
 						{
 							view: "icon",
 							icon: "mdi mdi-help-circle-outline",

@@ -38,7 +38,7 @@ export default class TemplateView extends JetView {
                 {
                     view: "accordionitem",
                     collapsed: true,
-                    header: "Tools",
+                    header: "<span class='mdi mdi-wrench-outline'></span> Tools",
                     //maxWidth: 250,
                     body: {
                         id: "accordionRight",
@@ -48,7 +48,7 @@ export default class TemplateView extends JetView {
                             view: "accordionitem",
                             header: "Layers",
                             body: {
-                                rows: [{ $subview: "templateViews.toolbar" }, { $subview: "templateViews.layers" }]
+                                rows: [{ $subview: "templateViews.layerstoolbar" }, { $subview: "templateViews.layers" }]
                             }
                         }, {
                             view: "accordionitem",
@@ -64,15 +64,17 @@ export default class TemplateView extends JetView {
                             view: "accordionitem",
                             collapsed: true,
                             header: "Shadow",
-                            body: { $subview: "templateViews.shadows" }
+                            body: { rows: [{ $subview: "templateViews.shadowstoolbar" }, { $subview: "templateViews.shadows" }] }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Data"
+                            header: "Data",
+                            body: { rows: [{ $subview: "templateViews.datatoolbar" }, { $subview: "templateViews.data" }] }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Class"
+                            header: "Class",
+                            body: { rows: [{ $subview: "templateViews.classtoolbar" }, { $subview: "templateViews.class" }] }
                         }]
                     }
                 }
