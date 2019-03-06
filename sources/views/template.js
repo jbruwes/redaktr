@@ -6,7 +6,7 @@ export default class TemplateView extends JetView {
             view: "accordion",
             cols: [{
                     view: "accordionitem",
-                    header: "Template",
+                    header: "<span class='mdi mdi-postage-stamp'></span> Template",
                     body: {
                         rows: [{
                                 id: "views",
@@ -18,9 +18,9 @@ export default class TemplateView extends JetView {
                                 view: "tabbar",
                                 id: "tabbar",
                                 options: [
-                                    { value: "Layout", id: "fabric" },
-                                    { value: "Visual", id: "tinymce" },
-                                    { value: "Source", id: "ace" }
+                                    { value: "Layout", id: "fabric", icon: "mdi mdi-ungroup" },
+                                    { value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
+                                    { value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
                                 ],
                                 multiview: "true",
                                 type: "bottom" //,
@@ -46,34 +46,34 @@ export default class TemplateView extends JetView {
                         type: "line",
                         rows: [{
                             view: "accordionitem",
-                            header: "Layers",
+                            header: "<span class='mdi mdi-layers-outline'></span> Layers",
                             body: {
                                 rows: [{ $subview: "templateViews.layerstoolbar" }, { $subview: "templateViews.layers" }]
                             }
                         }, {
                             view: "accordionitem",
-                            header: "Geometry",
+                            header: "<span class='mdi mdi-move-resize'></span> Geometry",
                             collapsed: true,
                             body: { $subview: "templateViews.geometry" }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Appearance",
+                            header: "<span class='mdi mdi-format-paint'></span> Appearance",
                             body: { $subview: "templateViews.appearance" }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Shadow",
+                            header: "<span class='mdi mdi-box-shadow'></span> Shadow",
                             body: { rows: [{ $subview: "templateViews.shadowstoolbar" }, { $subview: "templateViews.shadows" }] }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Data",
+                            header: "<span class='mdi mdi-database'></span> Data",
                             body: { rows: [{ $subview: "templateViews.datatoolbar" }, { $subview: "templateViews.data" }] }
                         }, {
                             view: "accordionitem",
                             collapsed: true,
-                            header: "Class",
+                            header: "<span class='mdi mdi-language-css3'></span> Class",
                             body: { rows: [{ $subview: "templateViews.classtoolbar" }, { $subview: "templateViews.class" }] }
                         }]
                     }

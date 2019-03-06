@@ -6,7 +6,7 @@ export default class ContentView extends JetView {
 			view: "accordion",
 			cols: [{
 				view: "accordionitem",
-				header: "Content",
+				header: "<span class='mdi mdi-file-document-outline'></span> Content",
 				body: {
 					rows: [{
 							id: "views",
@@ -18,8 +18,8 @@ export default class ContentView extends JetView {
 							view: "tabbar",
 							id: "tabbar",
 							options: [
-								{ value: "Visual", id: "tinymce" },
-								{ value: "Source", id: "ace" }
+								{ value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
+								{ value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
 							],
 							multiview: "true",
 							type: "bottom",
@@ -36,7 +36,7 @@ export default class ContentView extends JetView {
 			}, {
 				view: "accordionitem",
 				collapsed: true,
-				header: "Tree",
+				header: "<span class='mdi mdi-file-tree'></span> Tree",
 				body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
 			}]
 		};
