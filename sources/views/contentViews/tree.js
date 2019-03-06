@@ -40,7 +40,6 @@ export default class TreeView extends JetView {
             template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
             checkboxRefresh: true,
             editable: true,
-            //clipboard:true,
             onContext: {},
             editor: "popup",
             editValue: "value",
@@ -57,17 +56,18 @@ export default class TreeView extends JetView {
                 "onItemCheck": onChangeFnc,
                 "onAfterSelect": (id) => {
                     //if (this.getParentView().lastXHRGetContent) { this.getParentView().lastXHRGetContent.abort(); }
-                    //var tinymce = $$("tinymce").getEditor(),
-                    //    ace = $$("ace").getEditor();
-                    //tinymce.setProgressState(1);
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
-                            $$("tinymce").$scope.setValue(text);
-                            $$("ace").$scope.setValue(text);
+                            try { $$("tinymce").$scope.setValue(text) }
+                            catch (e) {}
+                            try { $$("ace").$scope.setValue(text) }
+                            catch (e) {}
                         },
                         error: (text, data, XmlHttpRequest) => {
-                            $$("tinymce").$scope.setValue("");
-                            $$("ace").$scope.setValue("");
+                            try { $$("tinymce").$scope.setValue("") }
+                            catch (e) {}
+                            try { $$("ace").$scope.setValue("") }
+                            catch (e) {}
                         }
                     });
                 }

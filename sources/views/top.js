@@ -36,7 +36,9 @@ export default class TopView extends JetView {
 									this._resetSidebar();
 								}
 								else {
-									this.show(id);
+									//webix.delay(_ => {
+										this.show(id);
+									//});
 								}
 							}
 						},
