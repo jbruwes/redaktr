@@ -59,12 +59,12 @@ export default class TinymceView extends JetView {
                 default:
                     mime = "image";
             }
-            this.getParentView().S3.headObject({
+            this.app.S3.headObject({
                 Bucket: 'media.redaktr.com',
                 Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
             }, (err, data) => {
                 var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
-                this.getParentView().S3.putObject({
+                this.app.S3.putObject({
                     Bucket: 'media.redaktr.com',
                     Key: AWS.config.credentials.identityId + '/' + filePath,
                     ContentType: mime,
@@ -257,12 +257,12 @@ export default class TinymceView extends JetView {
                             var base64 = reader.result.split(',')[1];
                             var blobInfo = blobCache.create(id, file, base64);
                             blobCache.add(blobInfo);
-                            this.getParentView().S3.headObject({
+                            this.app.S3.headObject({
                                 Bucket: 'media.redaktr.com',
                                 Key: AWS.config.credentials.identityId + '/' + file.name
                             }, (err, data) => {
                                 var filePath = (err ? '' : webix.uid() + '/') + file.name;
-                                this.getParentView().S3.putObject({
+                                this.app.S3.putObject({
                                     Bucket: 'media.redaktr.com',
                                     Key: AWS.config.credentials.identityId + '/' + filePath,
                                     ContentType: file.type,

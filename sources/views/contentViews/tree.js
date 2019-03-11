@@ -20,7 +20,7 @@ export default class TreeView extends JetView {
                         tinymce.setMode('design');
                         ace.setReadOnly(false);
                     }
-                    lastXHRPostTree = this.getParentView().S3.putObject({
+                    lastXHRPostTree = this.app.S3.putObject({
                         Bucket: 'res.redaktr.com',
                         Key: AWS.config.credentials.identityId + '.json',
                         ContentType: 'application/json',

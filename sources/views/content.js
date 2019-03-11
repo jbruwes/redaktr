@@ -42,9 +42,9 @@ export default class ContentView extends JetView {
 		};
 	}
 	init() {
-		this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
+		//this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
 		this.lastXHRPostContent = null;
-		this.S3.getObject({
+		this.app.S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
 		}, (err, data) => {
@@ -62,7 +62,7 @@ export default class ContentView extends JetView {
 	save(e, self) {
 		var that = e ? this.that.getParentView() : self;
 		if (that.lastXHRPostContent) that.lastXHRPostContent.abort();
-		that.lastXHRPostContent = that.S3.putObject({
+		that.lastXHRPostContent = that.app.S3.putObject({
 			Bucket: 'content.redaktr.com',
 			ContentType: 'text/html',
 			Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
