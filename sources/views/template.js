@@ -12,11 +12,7 @@ export default class TemplateView extends JetView {
                                 id: "views",
                                 animate: false,
                                 keepViews: true,
-                                cells: [{
-                                    id: "fabric",
-                                    view: "fabric",
-                                    canvas: "fabric"
-                                }, { $subview: "tinymce", id: "tinymce" }, { $subview: "ace", id: "ace" }]
+                                cells: [{ id: "fabric", view: "fabric", canvas: "fabric" }, { $subview: "tinymce", id: "tinymce" }, { $subview: "ace", id: "ace" }]
                             },
                             {
                                 view: "tabbar",

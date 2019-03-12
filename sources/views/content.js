@@ -12,7 +12,7 @@ export default class ContentView extends JetView {
 							id: "views",
 							animate: false,
 							keepViews: true,
-							cells: [{ $subview: "tinymce" }, { $subview: "ace" }]
+							cells: [{ $subview: "tinymce" }, { $subview: "ace", id: "ace" }]
 						},
 						{
 							view: "tabbar",
