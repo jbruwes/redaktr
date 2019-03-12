@@ -92,20 +92,6 @@ export default class TemplateView extends JetView {
     ready() {
         $('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
     }
-    _reload(canvas) {
-        console.log(canvas);
-
-
-        //if (this._observer) {
-        //    this._observer.disconnect();
-        //}
-        //this._site.addListenerOnce("load", this._siteLoad, this);
-        //if (this._html) {
-        //    this._loadSite();
-        //}
-        //else {
-        //}
-    }
 
 
     _reload() {
@@ -137,7 +123,7 @@ export default class TemplateView extends JetView {
 
             //this._body = $($.parseHTML(body));
             this._body = $('<div/>').html(body);
-            console.log(this._body.html());
+            //console.log(this._body.html());
 
             //that._checkStructure();
             //that._rightSideWidget.setBody(that.getBody());
@@ -145,7 +131,7 @@ export default class TemplateView extends JetView {
 
             //this._header = $($.parseHTML(head));
             this._header = $('<div/>').html(head);
-            console.log(this._header.html());
+            //console.log(this._header.html());
 
             /*
 
@@ -190,12 +176,20 @@ export default class TemplateView extends JetView {
 
             this._genHtml(true);
             console.log(this._html);
-            //this._loadSite();
+            this._loadSite();
 
         });
         //}
     }
     _loadSite() {
+
+console.log(2222);
+
+        var document = $$("fabric").getWindow().document;
+        document.open();
+        document.write(this._html);
+        document.close();
+
         /*
                 if (this._site) {
                     var siteDocument = this._siteDocument = this._site.getDocument();
@@ -213,6 +207,7 @@ export default class TemplateView extends JetView {
     }
 
     _genHtml(identity) {
+        console.log(this._body.html());
         var dynamicHeader = this._header.html();
         dynamicHeader = dynamicHeader ? dynamicHeader : '';
         //var author = this.getController().getAuthor();
@@ -232,12 +227,13 @@ export default class TemplateView extends JetView {
             '<base href="' + (identity ? '//media.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
             dynamicHeader +
             '</head><body>' +
-            this._body.find('#body').html() +
+            this._body.html() +
             (identity ? '<script>$(document).keydown(function(e){8==e.keyCode&&e.preventDefault()});</script>' : '') +
             '</body></html>';
         this._html = this._html.replace(new RegExp((location.protocol + "//" + location.host + location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
 }
+/* global location */
 /* global webix */
 /* global AWS */
 /* global $$ */
