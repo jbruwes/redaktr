@@ -174,20 +174,19 @@ export default class TemplateView extends JetView {
         $('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
     }
     _getMode(item) {
-        var fixed = 1;
         if (item.parents('div[data-absolute]:not([id])').parents('#body').length) {
-            fixed = 0;
+            return 0;
         }
         if (item.parents('div[data-fixed]:not([id])').parents('#body').length) {
-            fixed = 1;
+            return 1;
         }
         if (item.parents('div[data-static]:not([id])').parents('#body').length || item.parents('div[data-static]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) {
-            fixed = 2;
+            return 2;
         }
         if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) {
-            fixed = 3;
+            return 3;
         }
-        return fixed;
+        return 1;
     }
     _loadSite() {
         var document = $$("fabric").getWindow().document;
