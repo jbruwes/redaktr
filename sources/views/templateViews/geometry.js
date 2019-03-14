@@ -11,8 +11,8 @@ export default class GeometryView extends JetView {
                             view: "richselect",
                             value: 1,
                             options: [
-                                { id: 1, value: "Static", icon: "mdi mdi-monitor-cellphone-star" },
-                                { id: 2, value: "Fixed", icon: "mdi mdi-monitor" },
+                                { id: 1, value: "Static", icon: "mdi mdi-monitor-star" },
+                                { id: 2, value: "Fixed", icon: "mdi mdi-monitor-lock" },
                                 { id: 3, value: "Website Relative", icon: "mdi mdi-monitor-multiple" },
                                 { id: 4, value: "Content Relative", icon: "mdi mdi-monitor-dashboard" }
                             ]

@@ -195,16 +195,17 @@ if (!BUILD_AS_MODULE) {
 				selection: false,
 				preserveObjectStacking: true
 			});
-			this._waitCanvas.resolve(this._canvas);
+			this._waitCanvas.resolve();
 
 			if (this.config.ready)
 				this.config.ready.call(this, this._canvas);
 		},
 		$setSize: function(x, y) {
 			if (webix.ui.view.prototype.$setSize.call(this, x, y)) {
-				this._waitCanvas.then(function(canvas) {
-					canvas.setWidth(x);
-					canvas.setHeight(y);
+				this._waitCanvas.then(_ => {
+					var body = $((this.getIframe().contentDocument || this.getIframe().contentWindow.document).body);
+					this._canvas.setWidth(body.width());
+					this._canvas.setHeight(body.innerHeight());
 				});
 			}
 		},
@@ -212,9 +213,9 @@ if (!BUILD_AS_MODULE) {
 			return waitCanvas ? this._waitCanvas : this._canvas;
 		}
 	}, webix.ui.iframe);
-
 }
 /* global tinyMCE */
 /* global webix */
 /* global fabric */
 /* global AWS */
+/* global $ */

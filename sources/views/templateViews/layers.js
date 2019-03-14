@@ -14,6 +14,7 @@ export default class LayersView extends JetView {
 
         return {
             view: "list",
+            id: "layers",
             type: {
                 markCheckbox: function(obj) {
                     return "<span class='check mdi mdi-18px mdi-checkbox-" + (obj.markCheckbox ? "marked-" : "blank-") + "outline'></span>";
@@ -26,8 +27,8 @@ export default class LayersView extends JetView {
                     this.updateItem(id, item);
                 }
             },
-            template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}",
-            data: film_set
+            template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}"//,
+            //data: film_set
         };
     }
 }
