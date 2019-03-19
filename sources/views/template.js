@@ -17,8 +17,7 @@ export default class TemplateView extends JetView {
                             {
                                 view: "tabbar",
                                 id: "tabbar",
-                                options: [
-                                    { value: "Layout", id: "fabric", icon: "mdi mdi-ungroup" },
+                                options: [{ value: "Layout", id: "fabric", icon: "mdi mdi-ungroup" },
                                     { value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
                                     { value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
                                 ],
@@ -74,6 +73,8 @@ export default class TemplateView extends JetView {
         };
     }
     init() {
+        $$('fabric').attachEvent("onAfterLoad", _ => $$("layers").select($$("layers").getFirstId()));
+        $$('fabric').attachEvent("onViewResize", function(){console.log('resize')});
         this.app.S3.getObject({
             Bucket: 'template.redaktr.com',
             Key: AWS.config.credentials.identityId + '.htm',
@@ -125,35 +126,17 @@ export default class TemplateView extends JetView {
                         originY: 'center',
                         lockScalingFlip: true,
                         id: id
-                        //parentItem: val
                     })
                 });
             });
-            //console.log($$("layers").data);
-            //($$("layers").data.reverse()).each((i, e) => {
-  //              //this._canvas.add(e.rect) 
-//                console.log(e.rect);
-//
-  //          });
-            $$("layers").select($$("layers").getFirstId());
-            //console.log($$("layers").getItem('button'));
-            //$$("layers").data= rawData;
+            $$("fabric").getCanvas(true).then(canvas => { $(list.toArray().reverse()).each((i, e) => { canvas.add($$("layers").getItem($(e).attr("id")).rect) }) });
+            //$$("layers").select($$("layers").getFirstId());
             /*
-                        
-                        var model = that._model = qx.data.marshal.Json.createModel(that._rawData);
-                        model.forEach(that._modelSetRect, that);
-                        that._list.setModel(model);
                         that._list.getSelection().addListener("change", that._listOnChange, that);
-                        model.reverse();
-                        model.forEach(that._canvasAddRect, that);
-                        model.reverse();
-                        that._list.getSelection().push(model.getItem(0));
                         that.zIndex();
-                        //that._canvas.on('selection:created', that._canvasObjectSelected);
                         that._canvas.on('selection:updated', that._canvasObjectSelected);
                         that._canvas.on('selection:cleared', that._canvasSelectionCleared);
                         that._canvas.on('object:modified', that._canvasObjectModified);
-                        fabric.util.addListener(that._canvas.upperCanvasEl, 'dblclick', that._canvasDblclick);
             */
 
             this._header = $('<div/>').html(head);
@@ -174,18 +157,10 @@ export default class TemplateView extends JetView {
         $('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
     }
     _getMode(item) {
-        if (item.parents('div[data-absolute]:not([id])').parents('#body').length) {
-            return 0;
-        }
-        if (item.parents('div[data-fixed]:not([id])').parents('#body').length) {
-            return 1;
-        }
-        if (item.parents('div[data-static]:not([id])').parents('#body').length || item.parents('div[data-static]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) {
-            return 2;
-        }
-        if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) {
-            return 3;
-        }
+        if (item.parents('div[data-absolute]:not([id])').parents('#body').length) return 0;
+        if (item.parents('div[data-fixed]:not([id])').parents('#body').length) return 1;
+        if (item.parents('div[data-static]:not([id])').parents('#body').length || item.parents('div[data-static]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 2;
+        if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 3;
         return 1;
     }
     _loadSite() {
@@ -200,9 +175,9 @@ export default class TemplateView extends JetView {
         this._html =
             '<!DOCTYPE html><html><head>' +
             '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
-            '<link rel="stylesheet" href="' + (location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.css' : '//cdn.redaktr.com/index.min.css') + '">' +
+            '<link rel="stylesheet" href="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.css' : '//cdn.redaktr.com/index.min.css') + '">' +
             '<script src="//cdn.redaktr.com/jquery.min.js"></script>' +
-            '<script src="' + (location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.js' : '//cdn.redaktr.com/index.min.js') + '"></script>' +
+            '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.js' : '//cdn.redaktr.com/index.min.js') + '"></script>' +
             '<link rel="shortcut icon" href="//favicon.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
             '<base href="' + (identity ? '//media.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
             dynamicHeader +
@@ -210,10 +185,90 @@ export default class TemplateView extends JetView {
             this._body.find('#body').html() +
             (identity ? '<script>$(document).keydown(function(e){8===e.keyCode&&e.preventDefault()});</script>' : '') +
             '</body></html>';
-        this._html = this._html.replace(new RegExp((location.protocol + "//" + location.host + location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
+        this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
+    }
+    _makeSelection() {
+        var id = $$("layers").getFirstId(),
+            //fabricWindow = $$("fabric").getWindow(),
+            fabricWindow = $($$("fabric").getWindow()),
+            map = null,
+            rect = null,
+            selObj = null,
+            style = null,
+            //boundingClientRect = null,
+            outerWidth = null,
+            outerHeight = null,
+            isHidden = $($$("fabric").getIframe()).parents(':hidden');
+
+        function swap(elem, options, callback, args) {
+            var ret, name,
+                old = {};
+            for (name in options) {
+                old[name] = elem.style[name];
+                elem.style[name] = options[name];
+            }
+            ret = callback.apply(elem, args || []);
+            for (name in options) {
+                elem.style[name] = old[name];
+            }
+            return ret;
+        }
+
+        function doLayers() {
+            do {
+                rect = $$("layers").getItem(id).rect;
+                selObj = $($$("fabric").getWindow().document).find("#" + id);
+                if (selObj.length) {
+                    if (selObj.attr("hidden")) {
+                        rect.set({
+                            hasBorders: false,
+                            hasControls: false,
+                            selectable: false,
+                            evented: false
+                        });
+                    }
+                    else {
+                        map = selObj.offset();
+                        style = selObj.attr("style");
+                        outerHeight = selObj.outerHeight();
+                        outerWidth = selObj.outerWidth();
+                        rect.set({
+                            left: Math.round(map.left - fabricWindow.scrollLeft() + outerWidth / 2),
+                            top: Math.round(map.top - fabricWindow.scrollTop() + outerHeight / 2),
+                            width: outerWidth,
+                            height: outerHeight,
+                            scaleX: 1,
+                            scaleY: 1,
+                            angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
+                            hasBorders: true,
+                            hasControls: true,
+                            selectable: true,
+                            evented: true
+                        });
+                    }
+                }
+                else {
+                    rect.set({
+                        left: 0,
+                        top: 0,
+                        width: 0,
+                        height: 0,
+                        scaleX: 1,
+                        scaleY: 1,
+                        angle: 0
+                    });
+                }
+                rect.setCoords();
+                id = $$("layers").getNextId(id);
+            } while (id);
+            $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
+            $$('fabric').getCanvas().requestRenderAll();
+        }
+        if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
+        else doLayers();
     }
 }
-/* global location */
+/* global fabric */
 /* global AWS */
 /* global $$ */
 /* global $ */
