@@ -73,8 +73,14 @@ export default class TemplateView extends JetView {
         };
     }
     init() {
-        $$('fabric').attachEvent("onAfterLoad", _ => $$("layers").select($$("layers").getFirstId()));
-        $$('fabric').attachEvent("onViewResize", function(){console.log('resize')});
+        $$('fabric').attachEvent("onAfterLoad", _ => {
+            $$('fabric').getCanvas().setWidth($$('fabric').getWindow().document.documentElement.clientWidth);
+            $$('fabric').getCanvas().setHeight($$('fabric').getWindow().document.documentElement.clientHeight);
+            $($$('fabric').getWindow()).scroll(this._makeSelection);
+            var observer = new MutationObserver(this._makeSelection);
+            observer.observe($$("fabric").getWindow().document.body, { 'attributes': true, 'childList': true, 'characterData': true, 'subtree': true });
+            $$("layers").select($$("layers").getFirstId());
+        });
         this.app.S3.getObject({
             Bucket: 'template.redaktr.com',
             Key: AWS.config.credentials.identityId + '.htm',
@@ -129,15 +135,18 @@ export default class TemplateView extends JetView {
                     })
                 });
             });
-            $$("fabric").getCanvas(true).then(canvas => { $(list.toArray().reverse()).each((i, e) => { canvas.add($$("layers").getItem($(e).attr("id")).rect) }) });
-            //$$("layers").select($$("layers").getFirstId());
-            /*
-                        that._list.getSelection().addListener("change", that._listOnChange, that);
-                        that.zIndex();
-                        that._canvas.on('selection:updated', that._canvasObjectSelected);
-                        that._canvas.on('selection:cleared', that._canvasSelectionCleared);
-                        that._canvas.on('object:modified', that._canvasObjectModified);
-            */
+            $$("fabric").getCanvas(true).then(canvas => {
+                $(list.toArray().reverse()).each((i, e) => { canvas.add($$("layers").getItem($(e).attr("id")).rect) });
+                canvas.on('selection:updated', options => {
+                    //console.log(options);
+                });
+                canvas.on('selection:cleared', options => {
+                    //console.log(options);
+                });
+                canvas.on('object:modified', options => {
+                    //console.log(options);
+                });
+            });
 
             this._header = $('<div/>').html(head);
             this._header.find('meta[charset]').remove();
@@ -189,16 +198,15 @@ export default class TemplateView extends JetView {
     }
     _makeSelection() {
         var id = $$("layers").getFirstId(),
-            //fabricWindow = $$("fabric").getWindow(),
             fabricWindow = $($$("fabric").getWindow()),
             map = null,
             rect = null,
             selObj = null,
             style = null,
-            //boundingClientRect = null,
             outerWidth = null,
             outerHeight = null,
-            isHidden = $($$("fabric").getIframe()).parents(':hidden');
+            isHidden = $($$("fabric").getIframe()).parents(':hidden'),
+            fabricDocument = $($$("fabric").getIframe()).contents();
 
         function swap(elem, options, callback, args) {
             var ret, name,
@@ -217,7 +225,7 @@ export default class TemplateView extends JetView {
         function doLayers() {
             do {
                 rect = $$("layers").getItem(id).rect;
-                selObj = $($$("fabric").getWindow().document).find("#" + id);
+                selObj = fabricDocument.find("#" + id);
                 if (selObj.length) {
                     if (selObj.attr("hidden")) {
                         rect.set({
@@ -268,6 +276,7 @@ export default class TemplateView extends JetView {
         else doLayers();
     }
 }
+/* global MutationObserver */
 /* global fabric */
 /* global AWS */
 /* global $$ */

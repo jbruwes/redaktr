@@ -195,7 +195,7 @@ if (!BUILD_AS_MODULE) {
 				selection: false,
 				preserveObjectStacking: true
 			});
-			this._waitCanvas.resolve();
+			this._waitCanvas.resolve(this._canvas);
 
 			if (this.config.ready)
 				this.config.ready.call(this, this._canvas);
@@ -203,9 +203,9 @@ if (!BUILD_AS_MODULE) {
 		$setSize: function(x, y) {
 			if (webix.ui.view.prototype.$setSize.call(this, x, y)) {
 				this._waitCanvas.then(_ => {
-					var body = $((this.getIframe().contentDocument || this.getIframe().contentWindow.document).body);
-					this._canvas.setWidth(body.width());
-					this._canvas.setHeight(body.innerHeight());
+					var de = this.getWindow().document.documentElement;
+					this._canvas.setWidth(de.clientWidth);
+					this._canvas.setHeight(de.clientHeight);
 				});
 			}
 		},
