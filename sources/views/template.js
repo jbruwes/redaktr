@@ -137,14 +137,10 @@ export default class TemplateView extends JetView {
             });
             $$("fabric").getCanvas(true).then(canvas => {
                 $(list.toArray().reverse()).each((i, e) => { canvas.add($$("layers").getItem($(e).attr("id")).rect) });
-                canvas.on('selection:updated', options => {
-                    //console.log(options);
-                });
-                canvas.on('selection:cleared', options => {
-                    //console.log(options);
-                });
+                canvas.on('selection:updated', options => { $$("layers").select(options.target.id) });
+                canvas.on('selection:cleared', options => { canvas.setActiveObject(options.deselected[0]) });
                 canvas.on('object:modified', options => {
-                    //console.log(options);
+                    console.log('object:modified', options);
                 });
             });
 

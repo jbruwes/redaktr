@@ -43,7 +43,7 @@ export default class ContentView extends JetView {
 	}
 	init() {
 		//this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
-		this.lastXHRPostContent = null;
+		//this.lastXHRPostContent = null;
 		this.app.S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'

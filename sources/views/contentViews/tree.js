@@ -56,6 +56,27 @@ export default class TreeView extends JetView {
                 "onItemCheck": onChangeFnc,
                 "onAfterSelect": (id) => {
                     //if (this.getParentView().lastXHRGetContent) { this.getParentView().lastXHRGetContent.abort(); }
+
+                    if (this.lastXHRPostContent) this.lastXHRPostContent.abort();
+                    this.lastXHRPostContent = this.app.S3.getObject({
+                        Bucket: 'content.redaktr.com',
+                        Key: AWS.config.credentials.identityId + "/" + id + ".htm"
+                    }, (err, data) => {
+                        if (err) {
+                            try { $$("tinymce").$scope.setValue("") }
+                            catch (e) {}
+                            try { $$("ace").$scope.setValue("") }
+                            catch (e) {}
+
+                        }
+                        else {
+                            try { $$("tinymce").$scope.setValue(data.Body.toString()) }
+                            catch (e) {}
+                            try { $$("ace").$scope.setValue(data.Body.toString()) }
+                            catch (e) {}
+                        }
+                    });
+                    /*
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
                             try { $$("tinymce").$scope.setValue(text) }
@@ -70,6 +91,7 @@ export default class TreeView extends JetView {
                             catch (e) {}
                         }
                     });
+                    */
                 }
             }
         };
