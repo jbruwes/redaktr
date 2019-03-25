@@ -6,112 +6,116 @@ export default class AppearanceView extends JetView {
             scroll: true,
             elements: [{
                     rows: [
-                        { template: "Padding", type: "section" },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>", labelWidth: 33 },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-right'></span>", labelWidth: 33 },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>", labelWidth: 33 },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-down'></span>", labelWidth: 33 },
+                        { template: "Padding", type: "section", css: "webix_section" },
+                        { view: "text", id: "paddingLeft", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>", labelWidth: 33 },
+                        { view: "text", id: "paddingRight", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-right'></span>", labelWidth: 33 },
+                        { view: "text", id: "paddingTop", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>", labelWidth: 33 },
+                        { view: "text", id: "paddingBottom", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-down'></span>", labelWidth: 33 },
                     ]
                 },
                 {
                     rows: [
-                        { template: "Border", type: "section" },
+                        { template: "Border", type: "section", css: "webix_section" },
                         {
                             rows: [{
                                     view: "richselect",
-                                    value: 1,
+                                    value: "none",
+                                    id: "borderLeftStyle",
                                     options: [
-                                        { "id": 1, "value": "none" },
-                                        { "id": 2, "value": "solid" },
-                                        { "id": 3, "value": "dotted" },
-                                        { "id": 4, "value": "dashed" },
-                                        { "id": 5, "value": "double" },
-                                        { "id": 6, "value": "groove" },
-                                        { "id": 7, "value": "ridge" },
-                                        { "id": 8, "value": "inset" },
-                                        { "id": 9, "value": "outset" }
+                                        { "id": "none", "value": "none" },
+                                        { "id": "solid", "value": "solid" },
+                                        { "id": "dotted", "value": "dotted" },
+                                        { "id": "dashed", "value": "dashed" },
+                                        { "id": "double", "value": "double" },
+                                        { "id": "groove", "value": "groove" },
+                                        { "id": "ridge", "value": "ridge" },
+                                        { "id": "inset", "value": "inset" },
+                                        { "id": "outset", "value": "outset" }
                                     ],
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-left-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
+                                { view: "colorpicker", id: "borderLeftColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "text", id: "borderLeftWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
                         { height: 8 },
                         {
                             rows: [{
                                     view: "richselect",
-                                    value: 1,
+                                    value: "none",
+                                    id: "borderRightStyle",
                                     options: [
-                                        { "id": 1, "value": "none" },
-                                        { "id": 2, "value": "solid" },
-                                        { "id": 3, "value": "dotted" },
-                                        { "id": 4, "value": "dashed" },
-                                        { "id": 5, "value": "double" },
-                                        { "id": 6, "value": "groove" },
-                                        { "id": 7, "value": "ridge" },
-                                        { "id": 8, "value": "inset" },
-                                        { "id": 9, "value": "outset" }
+                                        { "id": "none", "value": "none" },
+                                        { "id": "solid", "value": "solid" },
+                                        { "id": "dotted", "value": "dotted" },
+                                        { "id": "dashed", "value": "dashed" },
+                                        { "id": "double", "value": "double" },
+                                        { "id": "groove", "value": "groove" },
+                                        { "id": "ridge", "value": "ridge" },
+                                        { "id": "inset", "value": "inset" },
+                                        { "id": "outset", "value": "outset" }
                                     ],
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-right-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
+                                { view: "colorpicker", id: "borderRightColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "text", id: "borderRightWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
                         { height: 8 },
                         {
                             rows: [{
                                     view: "richselect",
-                                    value: 1,
+                                    value: "none",
+                                    id: "borderTopStyle",
                                     options: [
-                                        { "id": 1, "value": "none" },
-                                        { "id": 2, "value": "solid" },
-                                        { "id": 3, "value": "dotted" },
-                                        { "id": 4, "value": "dashed" },
-                                        { "id": 5, "value": "double" },
-                                        { "id": 6, "value": "groove" },
-                                        { "id": 7, "value": "ridge" },
-                                        { "id": 8, "value": "inset" },
-                                        { "id": 9, "value": "outset" }
+                                        { "id": "none", "value": "none" },
+                                        { "id": "solid", "value": "solid" },
+                                        { "id": "dotted", "value": "dotted" },
+                                        { "id": "dashed", "value": "dashed" },
+                                        { "id": "double", "value": "double" },
+                                        { "id": "groove", "value": "groove" },
+                                        { "id": "ridge", "value": "ridge" },
+                                        { "id": "inset", "value": "inset" },
+                                        { "id": "outset", "value": "outset" }
                                     ],
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-top-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
+                                { view: "colorpicker", id: "borderTopColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "text", id: "borderTopWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
                         { height: 8 },
                         {
                             rows: [{
                                     view: "richselect",
-                                    value: 1,
+                                    value: "none",
+                                    id: "borderBottomStyle",
                                     options: [
-                                        { "id": 1, "value": "none" },
-                                        { "id": 2, "value": "solid" },
-                                        { "id": 3, "value": "dotted" },
-                                        { "id": 4, "value": "dashed" },
-                                        { "id": 5, "value": "double" },
-                                        { "id": 6, "value": "groove" },
-                                        { "id": 7, "value": "ridge" },
-                                        { "id": 8, "value": "inset" },
-                                        { "id": 9, "value": "outset" }
+                                        { "id": "none", "value": "none" },
+                                        { "id": "solid", "value": "solid" },
+                                        { "id": "dotted", "value": "dotted" },
+                                        { "id": "dashed", "value": "dashed" },
+                                        { "id": "double", "value": "double" },
+                                        { "id": "groove", "value": "groove" },
+                                        { "id": "ridge", "value": "ridge" },
+                                        { "id": "inset", "value": "inset" },
+                                        { "id": "outset", "value": "outset" }
                                     ],
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-bottom-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
+                                { view: "colorpicker", id: "borderBottomColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "text", id: "borderBottomWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
                     ]
                 },
                 {
                     rows: [
-                        { template: "Corner Radius", type: "section" },
+                        { template: "Corner Radius", type: "section", css: "webix_section" },
                         { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-top-left'></span>", labelWidth: 33 },
                         { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-top-right'></span>", labelWidth: 33 },
                         { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-bottom-left'></span>", labelWidth: 33 },
@@ -120,13 +124,13 @@ export default class AppearanceView extends JetView {
                 },
                 {
                     rows: [
-                        { template: "Text", type: "section" },
+                        { template: "Text", type: "section", css: "webix_section" },
                         { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 }
                     ]
                 },
                 {
                     rows: [
-                        { template: "Background", type: "section" },
+                        { template: "Background", type: "section", css: "webix_section" },
                         {
                             rows: [{
                                     view: "uploader",
@@ -178,7 +182,7 @@ export default class AppearanceView extends JetView {
                 },
                 {
                     rows: [
-                        { template: "Transparensy", type: "section" },
+                        { template: "Transparensy", type: "section", css: "webix_section" },
                         { view: "slider", value: "0", min: 0, max: 100, label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>', labelWidth: 33, title: webix.template("#value#") }
                     ]
                 }, {}

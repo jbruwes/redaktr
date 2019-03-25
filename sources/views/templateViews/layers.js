@@ -19,7 +19,7 @@ export default class LayersView extends JetView {
             },
             template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}",
             on: {
-                onSelectChange: this.getParentView()._makeSelection
+                onSelectChange: _ => this.getParentView()._makeSelection(this.getParentView())
             }
         };
     }

@@ -6,18 +6,20 @@ export default class GeometryView extends JetView {
             scroll: true,
             elements: [{
                     rows: [
-                        { template: "Layout", type: "section" },
+                        { template: "Layout", type: "section", css: "webix_section" },
                         {
                             view: "richselect",
                             value: 1,
+                            id: "mode",
                             options: [
-                                { id: 1, value: "Static", icon: "mdi mdi-monitor-star" },
+                                { id: 3, value: "Static", icon: "mdi mdi-monitor-star" },
                                 { id: 2, value: "Fixed", icon: "mdi mdi-monitor-lock" },
-                                { id: 3, value: "Website Relative", icon: "mdi mdi-monitor-multiple" },
+                                { id: 1, value: "Website Relative", icon: "mdi mdi-monitor-multiple" },
                                 { id: 4, value: "Content Relative", icon: "mdi mdi-monitor-dashboard" }
                             ]
                         }, {
                             view: "segmented",
+                            id: "dock",
                             value: 1,
                             options: [{ id: 1, value: "Responsive" }, { id: 2, value: "Fluid" }]
                         }
@@ -25,7 +27,7 @@ export default class GeometryView extends JetView {
                 },
                 {
                     rows: [
-                        { template: "Vertical", type: "section" },
+                        { template: "Vertical", type: "section", css: "webix_section" },
                         {
                             cols: [
                                 { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>", labelWidth: 33 },
@@ -63,7 +65,7 @@ export default class GeometryView extends JetView {
                 },
                 {
                     rows: [
-                        { template: "Horizontal", type: "section" },
+                        { template: "Horizontal", type: "section", css: "webix_section" },
                         {
                             cols: [
                                 { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>", labelWidth: 33 },
@@ -99,7 +101,7 @@ export default class GeometryView extends JetView {
                         }
                     ]
                 },
-                { rows: [{ template: "Rotation", type: "section" }, { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-screen-rotation'></span>", labelWidth: 33 }] }, {}
+                { rows: [{ template: "Rotation", type: "section", css: "webix_section" }, { view: "text", id: "angle", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-screen-rotation'></span>", labelWidth: 33 }] }, {}
             ]
         };
     }

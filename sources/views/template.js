@@ -76,8 +76,8 @@ export default class TemplateView extends JetView {
         $$('fabric').attachEvent("onAfterLoad", _ => {
             $$('fabric').getCanvas().setWidth($$('fabric').getWindow().document.documentElement.clientWidth);
             $$('fabric').getCanvas().setHeight($$('fabric').getWindow().document.documentElement.clientHeight);
-            $($$('fabric').getWindow()).scroll(this._makeSelection);
-            var observer = new MutationObserver(this._makeSelection);
+            $($$('fabric').getWindow()).scroll(_ => this._makeSelection(this));
+            var observer = new MutationObserver(_ => this._makeSelection(this));
             observer.observe($$("fabric").getWindow().document.body, { 'attributes': true, 'childList': true, 'characterData': true, 'subtree': true });
             $$("layers").select($$("layers").getFirstId());
         });
@@ -103,16 +103,16 @@ export default class TemplateView extends JetView {
                     id = $(e).attr("id"),
                     visible = !$(e).attr("hidden");
                 switch (this._getMode($(e))) {
-                    case 0:
+                    case 1:
                         icon = 'mdi mdi-monitor-multiple';
                         break;
-                    case 1:
+                    case 2:
                         icon = 'mdi mdi-monitor-lock';
                         break;
-                    case 2:
+                    case 3:
                         icon = 'mdi mdi-monitor-star';
                         break;
-                    case 3:
+                    case 4:
                         icon = 'mdi mdi-monitor-dashboard';
                         break;
                 }
@@ -162,11 +162,11 @@ export default class TemplateView extends JetView {
         $('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
     }
     _getMode(item) {
-        if (item.parents('div[data-absolute]:not([id])').parents('#body').length) return 0;
-        if (item.parents('div[data-fixed]:not([id])').parents('#body').length) return 1;
-        if (item.parents('div[data-static]:not([id])').parents('#body').length || item.parents('div[data-static]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 2;
-        if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 3;
-        return 1;
+        if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 4;
+        if (item.parents('div[data-absolute]:not([id])').parents('#body').length) return 1;
+        if (item.parents('div[data-fixed]:not([id])').parents('#body').length) return 2;
+        //if (item.parents('div[data-static]:not([id])').parents('#body').length || item.parents('div[data-static]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 3;
+        return 3;
     }
     _loadSite() {
         var document = $$("fabric").getWindow().document;
@@ -192,15 +192,14 @@ export default class TemplateView extends JetView {
             '</body></html>';
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
-    _makeSelection() {
+    _makeSelection(that) {
+        that = that ? that : this;
         var id = $$("layers").getFirstId(),
             fabricWindow = $($$("fabric").getWindow()),
             map = null,
             rect = null,
             selObj = null,
             style = null,
-            outerWidth = null,
-            outerHeight = null,
             isHidden = $($$("fabric").getIframe()).parents(':hidden'),
             fabricDocument = $($$("fabric").getIframe()).contents();
 
@@ -232,15 +231,13 @@ export default class TemplateView extends JetView {
                         });
                     }
                     else {
-                        map = selObj.offset();
+                        map = selObj[0].getBoundingClientRect();
                         style = selObj.attr("style");
-                        outerHeight = selObj.outerHeight();
-                        outerWidth = selObj.outerWidth();
                         rect.set({
-                            left: Math.round(map.left - fabricWindow.scrollLeft() + outerWidth / 2),
-                            top: Math.round(map.top - fabricWindow.scrollTop() + outerHeight / 2),
-                            width: outerWidth,
-                            height: outerHeight,
+                            left: Math.round(fabricWindow.scrollLeft() + (map.right + map.left) / 2),
+                            top: Math.round(fabricWindow.scrollTop() + (map.bottom + map.top) / 2),
+                            width: selObj.outerWidth(),
+                            height: selObj.outerHeight(),
                             scaleX: 1,
                             scaleY: 1,
                             angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
@@ -270,6 +267,32 @@ export default class TemplateView extends JetView {
         }
         if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
         else doLayers();
+
+        var item = that._body.find("#" + $$('layers').getSelectedId());
+        $$('mode').setValue(that._getMode(item));
+        $$('dock').setValue((!item.parents('div.container:not([id])').length) + 1);
+        $$('angle').setValue(+(item.attr('style').match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''));
+        $$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
+        $$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
+        $$('paddingTop').setValue(parseInt(item[0].style.paddingTop));
+        $$('paddingBottom').setValue(parseInt(item[0].style.paddingBottom));
+        $$('borderLeftWidth').setValue(parseInt(item[0].style.borderLeftWidth));
+        $$('borderRightWidth').setValue(parseInt(item[0].style.borderRightWidth));
+        $$('borderTopWidth').setValue(parseInt(item[0].style.borderTopWidth));
+        $$('borderBottomWidth').setValue(parseInt(item[0].style.borderBottomWidth));
+        $$('borderLeftStyle').setValue(item[0].style.borderLeftStyle ? item[0].style.borderLeftStyle : 'none');
+        $$('borderRightStyle').setValue(item[0].style.borderRightStyle ? item[0].style.borderRightStyle : 'none');
+        $$('borderTopStyle').setValue(item[0].style.borderTopStyle ? item[0].style.borderTopStyle : 'none');
+        $$('borderBottomStyle').setValue(item[0].style.borderBottomStyle ? item[0].style.borderBottomStyle : 'none');
+        $$('borderLeftColor').setValue(item[0].style.borderLeftColor ? webix.color.rgbToHex(item[0].style.borderLeftColor) : '#000000');
+        $$('borderRightColor').setValue(item[0].style.borderRightColor ? webix.color.rgbToHex(item[0].style.borderRightColor) : '#000000');
+        $$('borderTopColor').setValue(item[0].style.borderTopColor ? webix.color.rgbToHex(item[0].style.borderTopColor) : '#000000');
+        $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
+
+
+
+
+
     }
 }
 /* global MutationObserver */
