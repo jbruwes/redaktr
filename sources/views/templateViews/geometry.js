@@ -30,34 +30,37 @@ export default class GeometryView extends JetView {
                         { template: "Vertical", type: "section", css: "webix_section" },
                         {
                             cols: [
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>", labelWidth: 33 },
+                                { view: "text", id: "marginTop", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>", labelWidth: 33 },
                                 {
                                     view: "segmented",
+                                    id: "pmarginTop",
                                     width: 70,
-                                    value: 1,
-                                    options: [{ id: 1, value: "px" }, { id: 2, value: "%" }]
+                                    value: "px",
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
                                 }
                             ]
                         },
                         {
                             cols: [
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-vertical'></span>", labelWidth: 33 },
+                                { view: "text", id: "height", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-vertical'></span>", labelWidth: 33 },
                                 {
                                     view: "segmented",
+                                    id: "pheight",
                                     width: 70,
-                                    value: 1,
-                                    options: [{ id: 1, value: "px" }, { id: 2, value: "%" }]
+                                    value: "px",
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
                                 }
                             ]
                         },
                         {
                             cols: [
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-down'></span>", labelWidth: 33 },
+                                { view: "text", id: "marginBottom", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-down'></span>", labelWidth: 33 },
                                 {
                                     view: "segmented",
+                                    id: "pmarginBottom",
                                     width: 70,
-                                    value: 1,
-                                    options: [{ id: 1, value: "px" }, { id: 2, value: "%" }]
+                                    value: "px",
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
                                 }
                             ]
                         }
@@ -68,34 +71,37 @@ export default class GeometryView extends JetView {
                         { template: "Horizontal", type: "section", css: "webix_section" },
                         {
                             cols: [
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>", labelWidth: 33 },
+                                { view: "text", id: "marginLeft", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>", labelWidth: 33 },
                                 {
                                     view: "segmented",
+                                    id: "pmarginLeft",
                                     width: 70,
-                                    value: 1,
-                                    options: [{ id: 1, value: "px" }, { id: 2, value: "%" }]
+                                    value: "px",
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
                                 }
                             ]
                         },
                         {
                             cols: [
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 },
+                                { view: "text", id: "width", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 },
                                 {
                                     view: "segmented",
+                                    id: "pwidth",
                                     width: 70,
-                                    value: 1,
-                                    options: [{ id: 1, value: "px" }, { id: 2, value: "%" }]
+                                    value: "px",
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
                                 }
                             ]
                         },
                         {
                             cols: [
-                                { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-right'></span>", labelWidth: 33 },
+                                { view: "text", id: "marginRight", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-right'></span>", labelWidth: 33 },
                                 {
                                     view: "segmented",
+                                    id: "pmarginRight",
                                     width: 70,
-                                    value: 1,
-                                    options: [{ id: 1, value: "px" }, { id: 2, value: "%" }]
+                                    value: "px",
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
                                 }
                             ]
                         }

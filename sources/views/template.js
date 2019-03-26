@@ -267,11 +267,10 @@ export default class TemplateView extends JetView {
         }
         if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
         else doLayers();
-
         var item = that._body.find("#" + $$('layers').getSelectedId());
         $$('mode').setValue(that._getMode(item));
         $$('dock').setValue((!item.parents('div.container:not([id])').length) + 1);
-        $$('angle').setValue(+(item.attr('style').match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''));
+        $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
         $$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
         $$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
         $$('paddingTop').setValue(parseInt(item[0].style.paddingTop));
@@ -288,11 +287,24 @@ export default class TemplateView extends JetView {
         $$('borderRightColor').setValue(item[0].style.borderRightColor ? webix.color.rgbToHex(item[0].style.borderRightColor) : '#000000');
         $$('borderTopColor').setValue(item[0].style.borderTopColor ? webix.color.rgbToHex(item[0].style.borderTopColor) : '#000000');
         $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
-
-
-
-
-
+        var marginTop = item[0].style.marginTop;
+        $$('marginTop').setValue(parseInt(marginTop));
+        $$('pmarginTop').setValue(((marginTop && parseInt(marginTop)) ? marginTop : 'px').match(/\D+$/)[0]);
+        var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
+        $$('height').setValue(parseInt(height));
+        $$('pheight').setValue(((height && parseInt(height)) ? height : 'px').match(/\D+$/)[0]);
+        var marginBottom = item[0].style.marginBottom;
+        $$('marginBottom').setValue(parseInt(marginBottom));
+        $$('pmarginBottom').setValue(((marginBottom && parseInt(marginBottom)) ? marginBottom : 'px').match(/\D+$/)[0]);
+        var marginLeft = item[0].style.marginLeft;
+        $$('marginLeft').setValue(parseInt(marginLeft));
+        $$('pmarginLeft').setValue(((marginLeft && parseInt(marginLeft)) ? marginLeft : 'px').match(/\D+$/)[0]);
+        var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth;
+        $$('width').setValue(parseInt(width));
+        $$('pwidth').setValue(((width && parseInt(width)) ? width : 'px').match(/\D+$/)[0]);
+        var marginRight = item[0].style.marginRight;
+        $$('marginRight').setValue(parseInt(marginRight));
+        $$('pmarginRight').setValue(((marginRight && parseInt(marginRight)) ? marginRight : 'px').match(/\D+$/)[0]);
     }
 }
 /* global MutationObserver */
