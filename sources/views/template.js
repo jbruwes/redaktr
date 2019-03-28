@@ -305,6 +305,21 @@ export default class TemplateView extends JetView {
         var marginRight = item[0].style.marginRight;
         $$('marginRight').setValue(parseInt(marginRight));
         $$('pmarginRight').setValue(((marginRight && parseInt(marginRight)) ? marginRight : 'px').match(/\D+$/)[0]);
+        $$('borderTopLeftRadius').setValue(parseInt(item[0].style.borderTopLeftRadius));
+        $$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
+        $$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
+        $$('borderBottomRightRadius').setValue(parseInt(item[0].style.borderBottomRightRadius));
+        $$('textColor').setValue(item[0].style.color ? webix.color.rgbToHex(item[0].style.color) : '#000000');
+        
+        
+        var backgroundImage = item[0].style.backgroundImage;
+		backgroundImage = backgroundImage ? backgroundImage : '';
+		backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
+		$$('bglist').clearAll();
+		$$('bglist').add({
+        name: backgroundImage
+    },0);
+		
     }
 }
 /* global MutationObserver */

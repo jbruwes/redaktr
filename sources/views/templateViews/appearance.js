@@ -116,16 +116,16 @@ export default class AppearanceView extends JetView {
                 {
                     rows: [
                         { template: "Corner Radius", type: "section", css: "webix_section" },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-top-left'></span>", labelWidth: 33 },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-top-right'></span>", labelWidth: 33 },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-bottom-left'></span>", labelWidth: 33 },
-                        { view: "text", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-bottom-right'></span>", labelWidth: 33 },
+                        { view: "text", id:"borderTopLeftRadius", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-top-left'></span>", labelWidth: 33 },
+                        { view: "text", id:"borderTopRightRadius", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-top-right'></span>", labelWidth: 33 },
+                        { view: "text", id:"borderBottomLeftRadius", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-bottom-left'></span>", labelWidth: 33 },
+                        { view: "text", id:"borderBottomRightRadius", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-bottom-right'></span>", labelWidth: 33 },
                     ]
                 },
                 {
                     rows: [
                         { template: "Text", type: "section", css: "webix_section" },
-                        { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 }
+                        { view: "colorpicker", id:"textColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 }
                     ]
                 },
                 {
