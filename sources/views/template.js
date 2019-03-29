@@ -310,16 +310,20 @@ export default class TemplateView extends JetView {
         $$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
         $$('borderBottomRightRadius').setValue(parseInt(item[0].style.borderBottomRightRadius));
         $$('textColor').setValue(item[0].style.color ? webix.color.rgbToHex(item[0].style.color) : '#000000');
-        
-        
         var backgroundImage = item[0].style.backgroundImage;
-		backgroundImage = backgroundImage ? backgroundImage : '';
-		backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
-		$$('bglist').clearAll();
-		$$('bglist').add({
-        name: backgroundImage
-    },0);
-		
+        backgroundImage = backgroundImage ? backgroundImage : '';
+        backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
+        $$("uploader").files.data.clearAll();
+        if (backgroundImage) $$("uploader").addFile(backgroundImage, 0);
+        var backgroundPosition = item[0].style.backgroundPosition;
+        backgroundPosition = backgroundPosition ? backgroundPosition : 'px px';
+        backgroundPosition = backgroundPosition.split(" ");
+        $$('backgroundPositionH').setValue(parseInt(backgroundPosition[0]));
+        $$('pbackgroundPositionH').setValue(backgroundPosition[0].match(/\D+$/)[0]);
+        $$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
+        $$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
+
+
     }
 }
 /* global MutationObserver */
