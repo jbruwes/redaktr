@@ -322,34 +322,14 @@ export default class TemplateView extends JetView {
         $$('pbackgroundPositionH').setValue(backgroundPosition[0].match(/\D+$/)[0]);
         $$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
         $$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
-
-
 		var backgroundRepeat = item[0].style.backgroundRepeat;
         $$('repeatX').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-x') ? true : false);
         $$('repeatY').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-y') ? true : false);
 		var backgroundFixed = item[0].style.backgroundAttachment;
 		$$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
         $$('backgroundColor').setValue(item[0].style.backgroundColor ? webix.color.rgbToHex(item[0].style.backgroundColor) : '');
-
 		var transparency = item[0].style.opacity;
 		$$('transparency').setValue(transparency === '' ? 0 : Math.round(100 - transparency * 100));
-
-
-/*
-
-				var backgroundColor = item[0].style.backgroundColor;
-				backgroundColor = qx.util.ExtendedColor.isExtendedColor(backgroundColor) ? qx.util.ExtendedColor.toRgbString(backgroundColor) : backgroundColor;
-				this._pageAppearance.setBackgroundColorLabel((backgroundColor !== '' && backgroundColor !== 'transparent') ? backgroundColor : null);
-				this._pageAppearance.setBackground((backgroundColor !== '' && backgroundColor !== 'transparent') || (backgroundImage !== '' && backgroundImage !== 'none'));
-				var opacity = item[0].style.opacity;
-				opacity = opacity === '' ? null : Math.round(100 - opacity * 100);
-				this._pageAppearance.setOpacityCheck(Boolean(opacity));
-				this._pageAppearance.setOpacitySlider(opacity);
-
-
-*/
-
-
     }
 }
 /* global MutationObserver */
