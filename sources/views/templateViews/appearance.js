@@ -35,7 +35,7 @@ export default class AppearanceView extends JetView {
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-left-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", id: "borderLeftColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "colorpicker", id: "borderLeftColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true },
                                 { view: "text", id: "borderLeftWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
@@ -59,7 +59,7 @@ export default class AppearanceView extends JetView {
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-right-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", id: "borderRightColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "colorpicker", id: "borderRightColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true },
                                 { view: "text", id: "borderRightWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
@@ -83,7 +83,7 @@ export default class AppearanceView extends JetView {
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-top-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", id: "borderTopColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "colorpicker", id: "borderTopColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true },
                                 { view: "text", id: "borderTopWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
@@ -107,7 +107,7 @@ export default class AppearanceView extends JetView {
                                     label: "<span class='mdi mdi-dark mdi-24px mdi-border-bottom-variant'></span>",
                                     labelWidth: 33
                                 },
-                                { view: "colorpicker", id: "borderBottomColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                { view: "colorpicker", id: "borderBottomColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true },
                                 { view: "text", id: "borderBottomWidth", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 }
                             ]
                         },
@@ -125,7 +125,7 @@ export default class AppearanceView extends JetView {
                 {
                     rows: [
                         { template: "Text", type: "section", css: "webix_section" },
-                        { view: "colorpicker", id: "textColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 }
+                        { view: "colorpicker", id: "textColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true }
                     ]
                 },
                 {
@@ -150,11 +150,11 @@ export default class AppearanceView extends JetView {
                                     borderless: true
                                 }, {
                                     cols: [
-                                        { view: "toggle", label: "repeat X" },
-                                        { view: "toggle", label: "repeat Y" },
-                                        { view: "toggle", label: "fixed" }
+                                        { view: "toggle", id: "repeatX", label: "repeat X" },
+                                        { view: "toggle", id: "repeatY", label: "repeat Y" },
+                                        { view: "toggle", id: "fixed", label: "fixed" }
                                     ]
-                                }, { view: "colorpicker", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33 },
+                                }, { view: "colorpicker", id: "backgroundColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true },
                                 {
                                     cols: [
                                         { view: "text", id: "backgroundPositionH", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 },
@@ -186,7 +186,7 @@ export default class AppearanceView extends JetView {
                 {
                     rows: [
                         { template: "Transparensy", type: "section", css: "webix_section" },
-                        { view: "slider", value: "0", min: 0, max: 100, label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>', labelWidth: 33, title: webix.template("#value#") }
+                        { view: "slider", id: "transparency", value: "0", min: 0, max: 100, label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>', labelWidth: 33, title: webix.template("#value#") }
                     ]
                 }, {}
 
