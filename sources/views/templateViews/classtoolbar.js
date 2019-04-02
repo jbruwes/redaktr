@@ -6,14 +6,21 @@ export default class ClassToolbarView extends JetView {
             cols: [{
                 view: "icon",
                 icon: "mdi mdi-file-document-outline",
-                click: () => {}
+                click: _ => { $$("class").select($$('class').add({ class: '' })) }
             }, {
                 view: "icon",
                 icon: "mdi mdi-delete-outline",
-                click: () => {}
+                click: _ => {
+                    var id = $$("class").getSelectedId();
+                    if (id) {
+                        var newId = $$("class").getPrevId(id);
+                        if (!newId) newId = $$("class").getNextId(id);
+                        $$("class").remove(id);
+                        if (newId) $$("class").select(newId);
+                    }
+                }
             }, {}]
         };
     }
 }
-/* global webix */
 /* global $$ */

@@ -2,9 +2,13 @@ import { JetView } from "webix-jet";
 export default class LayersView extends JetView {
     config() {
         return {
-            view: "list",
+            view: "editlist",
             id: "layers",
             select: "row",
+            editable: true,
+            editaction: "dblclick",
+            editor: "text",
+            editValue: "title",
             type: {
                 markCheckbox: function(obj) {
                     return "<span class='check mdi mdi-18px mdi-checkbox-" + (obj.markCheckbox ? "marked-" : "blank-") + "outline'></span>";

@@ -41,7 +41,7 @@ export default class TreeView extends JetView {
             checkboxRefresh: true,
             editable: true,
             onContext: {},
-            editor: "popup",
+            editor: "text",
             editValue: "value",
             editaction: "dblclick",
             url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",

@@ -9,7 +9,7 @@ export default class ShadowView extends JetView {
             }
         }, webix.editors.text);
         return {
-            id:"shadows",
+            id: "shadows",
             view: "datatable",
             select: "row",
             columns: [
@@ -20,16 +20,8 @@ export default class ShadowView extends JetView {
                 { id: "inset", editor: "checkbox", header: "<span class='mdi mdi-square-inc'></span> inset", template: "{common.checkbox()}", fillspace: true },
                 { id: "color", editor: "color", header: "<span class='mdi mdi-palette'></span> color", fillspace: true, template: "<span style='background:#color#; border-radius:4px;padding-right:10px;'>&nbsp;&nbsp;</span> #color#" }
             ],
-            editable: true,
-            data: [
-                { x: 1, y: 1, blur: 1, spread: 1, inset: true, color: '#ffffff' },
-                { x: 2, y: 2, blur: 2, spread: 2, inset: false, color: '#000000' }
-            ]
+            editable: true
         };
-    }
-    init() {
-        $$("shadows").select($$("shadows").getFirstId());
     }
 }
 /* global webix */
-/* global $$ */

@@ -233,11 +233,20 @@ export default class TemplateView extends JetView {
                     else {
                         map = selObj[0].getBoundingClientRect();
                         style = selObj.attr("style");
+
+                        //var outerHeight = selObj.outerHeight();
+                        //var outerWidth = selObj.outerWidth();
+
                         rect.set({
                             left: Math.round(fabricWindow.scrollLeft() + (map.right + map.left) / 2),
                             top: Math.round(fabricWindow.scrollTop() + (map.bottom + map.top) / 2),
                             width: selObj.outerWidth(),
                             height: selObj.outerHeight(),
+                            //left: Math.round(map.left - fabricWindow.scrollLeft() + outerWidth / 2),
+                            //top: Math.round(map.top - fabricWindow.scrollTop() + outerHeight / 2),
+                            //width: outerWidth,
+                            //height: outerHeight,
+
                             scaleX: 1,
                             scaleY: 1,
                             angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
@@ -268,72 +277,128 @@ export default class TemplateView extends JetView {
         if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
         else doLayers();
         var item = that._body.find("#" + $$('layers').getSelectedId());
-        $$('mode').setValue(that._getMode(item));
-        $$('dock').setValue((!item.parents('div.container:not([id])').length) + 1);
-        $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
-        $$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
-        $$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
-        $$('paddingTop').setValue(parseInt(item[0].style.paddingTop));
-        $$('paddingBottom').setValue(parseInt(item[0].style.paddingBottom));
-        $$('borderLeftWidth').setValue(parseInt(item[0].style.borderLeftWidth));
-        $$('borderRightWidth').setValue(parseInt(item[0].style.borderRightWidth));
-        $$('borderTopWidth').setValue(parseInt(item[0].style.borderTopWidth));
-        $$('borderBottomWidth').setValue(parseInt(item[0].style.borderBottomWidth));
-        $$('borderLeftStyle').setValue(item[0].style.borderLeftStyle ? item[0].style.borderLeftStyle : 'none');
-        $$('borderRightStyle').setValue(item[0].style.borderRightStyle ? item[0].style.borderRightStyle : 'none');
-        $$('borderTopStyle').setValue(item[0].style.borderTopStyle ? item[0].style.borderTopStyle : 'none');
-        $$('borderBottomStyle').setValue(item[0].style.borderBottomStyle ? item[0].style.borderBottomStyle : 'none');
-        $$('borderLeftColor').setValue(item[0].style.borderLeftColor ? webix.color.rgbToHex(item[0].style.borderLeftColor) : '#000000');
-        $$('borderRightColor').setValue(item[0].style.borderRightColor ? webix.color.rgbToHex(item[0].style.borderRightColor) : '#000000');
-        $$('borderTopColor').setValue(item[0].style.borderTopColor ? webix.color.rgbToHex(item[0].style.borderTopColor) : '#000000');
-        $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
-        var marginTop = item[0].style.marginTop;
-        $$('marginTop').setValue(parseInt(marginTop));
-        $$('pmarginTop').setValue(((marginTop && parseInt(marginTop)) ? marginTop : 'px').match(/\D+$/)[0]);
-        var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
-        $$('height').setValue(parseInt(height));
-        $$('pheight').setValue(((height && parseInt(height)) ? height : 'px').match(/\D+$/)[0]);
-        var marginBottom = item[0].style.marginBottom;
-        $$('marginBottom').setValue(parseInt(marginBottom));
-        $$('pmarginBottom').setValue(((marginBottom && parseInt(marginBottom)) ? marginBottom : 'px').match(/\D+$/)[0]);
-        var marginLeft = item[0].style.marginLeft;
-        $$('marginLeft').setValue(parseInt(marginLeft));
-        $$('pmarginLeft').setValue(((marginLeft && parseInt(marginLeft)) ? marginLeft : 'px').match(/\D+$/)[0]);
-        var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth;
-        $$('width').setValue(parseInt(width));
-        $$('pwidth').setValue(((width && parseInt(width)) ? width : 'px').match(/\D+$/)[0]);
-        var marginRight = item[0].style.marginRight;
-        $$('marginRight').setValue(parseInt(marginRight));
-        $$('pmarginRight').setValue(((marginRight && parseInt(marginRight)) ? marginRight : 'px').match(/\D+$/)[0]);
-        $$('borderTopLeftRadius').setValue(parseInt(item[0].style.borderTopLeftRadius));
-        $$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
-        $$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
-        $$('borderBottomRightRadius').setValue(parseInt(item[0].style.borderBottomRightRadius));
-        $$('textColor').setValue(item[0].style.color ? webix.color.rgbToHex(item[0].style.color) : '#000000');
-        var backgroundImage = item[0].style.backgroundImage;
-        backgroundImage = backgroundImage ? backgroundImage : '';
-        backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
-        $$("uploader").files.data.clearAll();
-        if (backgroundImage) $$("uploader").addFile(backgroundImage, 0);
-        var backgroundPosition = item[0].style.backgroundPosition;
-        backgroundPosition = backgroundPosition ? backgroundPosition : 'px px';
-        backgroundPosition = backgroundPosition.split(" ");
-        $$('backgroundPositionH').setValue(parseInt(backgroundPosition[0]));
-        $$('pbackgroundPositionH').setValue(backgroundPosition[0].match(/\D+$/)[0]);
-        $$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
-        $$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
-		var backgroundRepeat = item[0].style.backgroundRepeat;
-        $$('repeatX').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-x') ? true : false);
-        $$('repeatY').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-y') ? true : false);
-		var backgroundFixed = item[0].style.backgroundAttachment;
-		$$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
-        $$('backgroundColor').setValue(item[0].style.backgroundColor ? webix.color.rgbToHex(item[0].style.backgroundColor) : '');
-		var transparency = item[0].style.opacity;
-		$$('transparency').setValue(transparency === '' ? 0 : Math.round(100 - transparency * 100));
+        if (item.length) {
+            $$('mode').setValue(that._getMode(item));
+            $$('dock').setValue((!item.parents('div.container:not([id])').length) + 1);
+            $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
+            $$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
+            $$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
+            $$('paddingTop').setValue(parseInt(item[0].style.paddingTop));
+            $$('paddingBottom').setValue(parseInt(item[0].style.paddingBottom));
+            $$('borderLeftWidth').setValue(parseInt(item[0].style.borderLeftWidth));
+            $$('borderRightWidth').setValue(parseInt(item[0].style.borderRightWidth));
+            $$('borderTopWidth').setValue(parseInt(item[0].style.borderTopWidth));
+            $$('borderBottomWidth').setValue(parseInt(item[0].style.borderBottomWidth));
+            $$('borderLeftStyle').setValue(item[0].style.borderLeftStyle ? item[0].style.borderLeftStyle : 'none');
+            $$('borderRightStyle').setValue(item[0].style.borderRightStyle ? item[0].style.borderRightStyle : 'none');
+            $$('borderTopStyle').setValue(item[0].style.borderTopStyle ? item[0].style.borderTopStyle : 'none');
+            $$('borderBottomStyle').setValue(item[0].style.borderBottomStyle ? item[0].style.borderBottomStyle : 'none');
+            $$('borderLeftColor').setValue(item[0].style.borderLeftColor ? webix.color.rgbToHex(item[0].style.borderLeftColor) : '#000000');
+            $$('borderRightColor').setValue(item[0].style.borderRightColor ? webix.color.rgbToHex(item[0].style.borderRightColor) : '#000000');
+            $$('borderTopColor').setValue(item[0].style.borderTopColor ? webix.color.rgbToHex(item[0].style.borderTopColor) : '#000000');
+            $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
+            var marginTop = item[0].style.marginTop;
+            $$('marginTop').setValue(parseInt(marginTop));
+            $$('pmarginTop').setValue(((marginTop && parseInt(marginTop)) ? marginTop : 'px').match(/\D+$/)[0]);
+            var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
+            $$('height').setValue(parseInt(height));
+            $$('pheight').setValue(((height && parseInt(height)) ? height : 'px').match(/\D+$/)[0]);
+            var marginBottom = item[0].style.marginBottom;
+            $$('marginBottom').setValue(parseInt(marginBottom));
+            $$('pmarginBottom').setValue(((marginBottom && parseInt(marginBottom)) ? marginBottom : 'px').match(/\D+$/)[0]);
+            var marginLeft = item[0].style.marginLeft;
+            $$('marginLeft').setValue(parseInt(marginLeft));
+            $$('pmarginLeft').setValue(((marginLeft && parseInt(marginLeft)) ? marginLeft : 'px').match(/\D+$/)[0]);
+            var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth;
+            $$('width').setValue(parseInt(width));
+            $$('pwidth').setValue(((width && parseInt(width)) ? width : 'px').match(/\D+$/)[0]);
+            var marginRight = item[0].style.marginRight;
+            $$('marginRight').setValue(parseInt(marginRight));
+            $$('pmarginRight').setValue(((marginRight && parseInt(marginRight)) ? marginRight : 'px').match(/\D+$/)[0]);
+            $$('borderTopLeftRadius').setValue(parseInt(item[0].style.borderTopLeftRadius));
+            $$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
+            $$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
+            $$('borderBottomRightRadius').setValue(parseInt(item[0].style.borderBottomRightRadius));
+            $$('textColor').setValue(item[0].style.color ? webix.color.rgbToHex(item[0].style.color) : '#000000');
+            var backgroundImage = item[0].style.backgroundImage;
+            backgroundImage = backgroundImage ? backgroundImage : '';
+            backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
+            $$("uploader").files.data.clearAll();
+            if (backgroundImage) $$("uploader").addFile(backgroundImage, 0);
+            var backgroundPosition = item[0].style.backgroundPosition;
+            backgroundPosition = backgroundPosition ? backgroundPosition : 'px px';
+            backgroundPosition = backgroundPosition.split(" ");
+            $$('backgroundPositionH').setValue(parseInt(backgroundPosition[0]));
+            $$('pbackgroundPositionH').setValue(backgroundPosition[0].match(/\D+$/)[0]);
+            $$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
+            $$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
+            var backgroundRepeat = item[0].style.backgroundRepeat;
+            $$('repeatX').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-x') ? true : false);
+            $$('repeatY').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-y') ? true : false);
+            var backgroundFixed = item[0].style.backgroundAttachment;
+            $$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
+            $$('backgroundColor').setValue(item[0].style.backgroundColor ? webix.color.rgbToHex(item[0].style.backgroundColor) : '');
+            var transparency = item[0].style.opacity;
+            $$('transparency').setValue(transparency === '' ? 0 : Math.round(100 - transparency * 100));
+            $$('shadows').clearAll();
+            var boxShadow = item[0].style.boxShadow;
+            boxShadow = boxShadow === 'none' ? null : boxShadow;
+            if (boxShadow) {
+                boxShadow = boxShadow.split(/,(?![^\(]*\))/);
+                $.each(boxShadow, (index, element) => {
+                    var cur = element.trim().split(/ (?![^\(]*\))/g);
+                    var boxShadowGeom = cur.filter(val => { return val.match(/^-?\d+/) });
+                    var boxShadowParams = cur.filter(val => { return !val.match(/^-?\d+/) });
+                    var inset = null;
+                    var color = null;
+                    if (boxShadowParams[0]) {
+                        switch (boxShadowParams[0]) {
+                            case 'inset':
+                                inset = true;
+                                break;
+                            default:
+                                color = boxShadowParams[0];
+                                break;
+                        }
+                    }
+                    if (boxShadowParams[1]) {
+                        switch (boxShadowParams[1]) {
+                            case 'inset':
+                                inset = true;
+                                break;
+                            default:
+                                color = boxShadowParams[1];
+                                break;
+                        }
+                    }
+                    $$('shadows').add({
+                        x: boxShadowGeom[0] ? parseFloat(boxShadowGeom[0]) : 0,
+                        y: boxShadowGeom[1] ? parseFloat(boxShadowGeom[1]) : 0,
+                        blur: boxShadowGeom[2] ? parseFloat(boxShadowGeom[2]) : 0,
+                        spread: boxShadowGeom[3] ? parseFloat(boxShadowGeom[3]) : 0,
+                        inset: inset ? inset : false,
+                        color: color ? '#' + webix.color.rgbToHex(color) : '#ffffff'
+                    });
+                });
+                $$("shadows").select($$("shadows").getFirstId());
+            }
+            $$("data").clearAll();
+            var data = item.data();
+            for (var x in data)
+                if (data.hasOwnProperty(x)) $$("data").add({ data: x.replace(/[A-Z]/g, '-$&').toLowerCase(), value: data[x] });
+            if (data.length) $$("data").select($$("data").getFirstId());
+            $$("class").clearAll();
+            var classRow = item.attr("class");
+            classRow = classRow ? classRow.split(/\s+/) : classRow;
+            for (var x in classRow)
+                $$("class").add({ class: classRow[x] });
+            if (classRow.length) $$("class").select($$("class").getFirstId());
+        }
     }
 }
 /* global MutationObserver */
 /* global fabric */
+/* global webix */
 /* global AWS */
 /* global $$ */
 /* global $ */

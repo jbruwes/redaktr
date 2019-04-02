@@ -150,8 +150,8 @@ export default class AppearanceView extends JetView {
                                     borderless: true
                                 }, {
                                     cols: [
-                                        { view: "toggle", id: "repeatX", label: "repeat X" },
-                                        { view: "toggle", id: "repeatY", label: "repeat Y" },
+                                        { view: "toggle", id: "repeatX", label: "repeatX" },
+                                        { view: "toggle", id: "repeatY", label: "repeatY" },
                                         { view: "toggle", id: "fixed", label: "fixed" }
                                     ]
                                 }, { view: "colorpicker", id: "backgroundColor", value: "#000000", label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>", labelWidth: 33, editable: true },

@@ -8,15 +8,7 @@ export default class ClassView extends JetView {
             columns: [
                 { id: "class", editor: "text", header: "class", fillspace: true }
             ],
-            editable: true,
-            data: [
-                { class: 'sss'},
-                { class: 'sss'},
-            ]
+            editable: true
         };
     }
-    init() {
-        $$("class").select($$("class").getFirstId());
-    }
 }
-/* global $$ */

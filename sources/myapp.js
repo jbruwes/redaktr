@@ -52,6 +52,10 @@ if (!BUILD_AS_MODULE) {
 	}, webix.EditAbility, webix.ui.tree);
 
 	webix.protoUI({
+		name: "editlist"
+	}, webix.EditAbility, webix.ui.list);
+
+	webix.protoUI({
 		name: "tinymce-editor",
 		defaults: {
 			config: { theme: "modern", statusbar: false },
