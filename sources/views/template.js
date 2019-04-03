@@ -140,7 +140,9 @@ export default class TemplateView extends JetView {
                 canvas.on('selection:updated', options => { $$("layers").select(options.target.id) });
                 canvas.on('selection:cleared', options => { canvas.setActiveObject(options.deselected[0]) });
                 canvas.on('object:modified', options => {
-                    console.log('object:modified', options);
+                    var layer = $$("layers").getItem(options.target.id);
+                    this._updateDND({ top: layer.top, left: layer.left, angle: layer.angle, oCoords: layer.oCoords }, { top: options.target.top, left: options.target.left, angle: options.target.angle, oCoords: options.target.oCoords });
+                    //this._redraw();
                 });
             });
 
@@ -192,10 +194,109 @@ export default class TemplateView extends JetView {
             '</body></html>';
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
+    _updateDND(oldRect, newRect) {
+        var deltaAngle = oldRect.angle - newRect.angle;
+        if (deltaAngle !== 0) {
+            deltaAngle = Math.round($$('angle').getValue() - deltaAngle);
+            if (deltaAngle > 180) {
+                deltaAngle = deltaAngle - 360;
+            }
+            $$('angle').setValue(deltaAngle);
+            console.log(deltaAngle);
+        }
+        /*else {
+            var oldOrigin = new fabric.Point(oldRect.left, oldRect.top),
+                newOrigin = new fabric.Point(newRect.left, newRect.top),
+                angle = -fabric.util.degreesToRadians(newRect.angle),
+                oldTr = fabric.util.rotatePoint(oldRect.oCoords.tr, oldOrigin, angle),
+                newTr = fabric.util.rotatePoint(newRect.oCoords.tr, newOrigin, angle),
+                oldBr = fabric.util.rotatePoint(oldRect.oCoords.br, oldOrigin, angle),
+                newBr = fabric.util.rotatePoint(newRect.oCoords.br, newOrigin, angle),
+                oldTl = fabric.util.rotatePoint(oldRect.oCoords.tl, oldOrigin, angle),
+                newTl = fabric.util.rotatePoint(newRect.oCoords.tl, newOrigin, angle),
+                delta = {
+                    top: newTr.y - oldTr.y,
+                    bottom: newBr.y - oldBr.y,
+                    left: newTl.x - oldTl.x,
+                    right: newTr.x - oldTr.x
+                },
+                document = this.getSite().getDocument(),
+                dX = 100 / document.body.scrollWidth,
+                dY = 100 / document.body.scrollHeight;
+            if (this._pageGeometry.getTopC()) {
+                switch (this._pageGeometry.getTopGUnit()) {
+                    case 'px':
+                        this._pageGeometry.setTopG(Math.round(this._pageGeometry.getTopGValue() + delta.top) + 'px');
+                        break;
+                    case '%':
+                    case 'vh':
+                        this._pageGeometry.setTopG(Math.round(this._pageGeometry.getTopGValue() + dY * delta.top) + '%');
+                        break;
+                }
+            }
+            if (this._pageGeometry.getBottomC()) {
+                switch (this._pageGeometry.getBottomGUnit()) {
+                    case 'px':
+                        this._pageGeometry.setBottomG(Math.round(this._pageGeometry.getBottomGValue() - delta.bottom) + 'px');
+                        break;
+                    case '%':
+                    case 'vh':
+                        this._pageGeometry.setBottomG(Math.round(this._pageGeometry.getBottomGValue() - dY * delta.bottom) + '%');
+                        break;
+                }
+            }
+            if (!(this._pageGeometry.getTopC() && this._pageGeometry.getBottomC()) && this._pageGeometry.getHeightC()) {
+                switch (this._pageGeometry.getHeightGUnit()) {
+                    case 'px':
+                        this._pageGeometry.setHeightG(Math.round(this._pageGeometry.getHeightGValue() - (delta.top - delta.bottom)) + 'px');
+                        break;
+                    case '%':
+                    case 'vh':
+                        this._pageGeometry.setHeightG(Math.round(this._pageGeometry.getHeightGValue() - dY * (delta.top - delta.bottom)) + '%');
+                        break;
+                }
+            }
+            if (this._pageGeometry.getLeftC()) {
+                switch (this._pageGeometry.getLeftGUnit()) {
+                    case 'px':
+                        this._pageGeometry.setLeftG(Math.round(this._pageGeometry.getLeftGValue() + delta.left) + 'px');
+                        break;
+                    case '%':
+                    case 'vh':
+                        this._pageGeometry.setLeftG(Math.round(this._pageGeometry.getLeftGValue() + dX * delta.left) + '%');
+                        break;
+                }
+            }
+            if (this._pageGeometry.getRightC()) {
+                switch (this._pageGeometry.getRightGUnit()) {
+                    case 'px':
+                        this._pageGeometry.setRightG(Math.round(this._pageGeometry.getRightGValue() - delta.right) + 'px');
+                        break;
+                    case '%':
+                    case 'vh':
+                        this._pageGeometry.setRightG(Math.round(this._pageGeometry.getRightGValue() - dX * delta.right) + '%');
+                        break;
+                }
+            }
+            if (!(this._pageGeometry.getLeftC() && this._pageGeometry.getRightC()) && this._pageGeometry.getWidthC()) {
+                switch (this._pageGeometry.getWidthGUnit()) {
+                    case 'px':
+                        this._pageGeometry.setWidthG(Math.round(this._pageGeometry.getWidthGValue() - (delta.left - delta.right)) + 'px');
+                        break;
+                    case '%':
+                    case 'vh':
+                        this._pageGeometry.setWidthG(Math.round(this._pageGeometry.getWidthGValue() - dX * (delta.left - delta.right)) + '%');
+                        break;
+                }
+            }
+        }*/
+    }
     _makeSelection(that) {
+        console.log('_makeSelection');
         that = that ? that : this;
         var id = $$("layers").getFirstId(),
-            fabricWindow = $($$("fabric").getWindow()),
+            //fabricWindow = $($$("fabric").getWindow()),
+            layer = null,
             map = null,
             rect = null,
             selObj = null,
@@ -219,7 +320,11 @@ export default class TemplateView extends JetView {
 
         function doLayers() {
             do {
-                rect = $$("layers").getItem(id).rect;
+                layer = $$("layers").getItem(id);
+                rect = layer.rect;
+                layer.left = 0;
+                layer.top = 0;
+                layer.angle = 0;
                 selObj = fabricDocument.find("#" + id);
                 if (selObj.length) {
                     if (selObj.attr("hidden")) {
@@ -233,20 +338,11 @@ export default class TemplateView extends JetView {
                     else {
                         map = selObj[0].getBoundingClientRect();
                         style = selObj.attr("style");
-
-                        //var outerHeight = selObj.outerHeight();
-                        //var outerWidth = selObj.outerWidth();
-
                         rect.set({
-                            left: Math.round(fabricWindow.scrollLeft() + (map.right + map.left) / 2),
-                            top: Math.round(fabricWindow.scrollTop() + (map.bottom + map.top) / 2),
+                            left: Math.round((map.right + map.left) / 2),
+                            top: Math.round((map.bottom + map.top) / 2),
                             width: selObj.outerWidth(),
                             height: selObj.outerHeight(),
-                            //left: Math.round(map.left - fabricWindow.scrollLeft() + outerWidth / 2),
-                            //top: Math.round(map.top - fabricWindow.scrollTop() + outerHeight / 2),
-                            //width: outerWidth,
-                            //height: outerHeight,
-
                             scaleX: 1,
                             scaleY: 1,
                             angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
@@ -255,6 +351,9 @@ export default class TemplateView extends JetView {
                             selectable: true,
                             evented: true
                         });
+                        layer.left = rect.left;
+                        layer.top = rect.top;
+                        layer.angle = rect.angle;
                     }
                 }
                 else {
@@ -269,6 +368,7 @@ export default class TemplateView extends JetView {
                     });
                 }
                 rect.setCoords();
+                layer.oCoords = rect.oCoords;
                 id = $$("layers").getNextId(id);
             } while (id);
             $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
