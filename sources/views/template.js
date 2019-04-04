@@ -190,9 +190,207 @@ export default class TemplateView extends JetView {
             dynamicHeader +
             '</head><body>' +
             this._body.find('#body').html() +
-            (identity ? '<script>$(document).keydown(function(e){8===e.keyCode&&e.preventDefault()});</script>' : '') +
             '</body></html>';
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
+    }
+    _redraw(that) {
+        that = that ? that : this;
+        if (!this._lockRedraw) {
+            /*
+                this._redo = [];
+                this._undo.push([this.getBody().find('#body').getHtml(), qxWeb(this.getSiteDocument()).find('body').getHtml()]);
+                */
+            var fabricDocument = $($$("fabric").getIframe()).contents(),
+                id = $$("layers").getSelectedId();
+            that._saveStage(this._body.find("#" + id), '#body', this._body);
+            that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
+            /*
+            this.getController().zIndex();
+            if (this.getId() === 'menu') {
+                this.getSite().getWindow().jQuery('.k-menu-scroll-wrapper').resize();
+            }
+        */
+        }
+    }
+    _saveStage(item, body, object) {
+
+        item.attr('style', '');
+        var id = $$('layers').getSelectedId(),
+            fixed = $$('mode').getValue(),
+            dock = $$('dock').getValue() - 1;
+        if (((fixed === 3) && (id === 'content')) || (fixed === 4)) {
+            object.find(body + '>div[data-relative]:not([id])').append(item);
+        }
+        else {
+            object.find(body).append(item);
+        }
+        if (dock) {
+            switch (fixed) {
+                case 1:
+                case 4:
+                    item.wrap('<div data-absolute>');
+                    break;
+                case 2:
+                    item.wrap('<div data-fixed>');
+                    break;
+                case 3:
+                    item.wrap('<div data-static>');
+                    break;
+            }
+        }
+        else {
+            switch (fixed) {
+                case 1:
+                case 4:
+                    item.wrap('<div data-absolute class="ui container">');
+                    break;
+                case 2:
+                    item.wrap('<div data-fixed class="ui container">');
+                    break;
+                case 3:
+                    item.wrap('<div data-static class="ui container">');
+                    break;
+            }
+        }
+        object.find(body + '>div:not([data-relative]):not([id]):empty,' + body + '>div[data-relative]:not([id])>div:not([id]):empty').remove();
+        object.find(body + '>div[data-relative]:not([id])').removeAttr('style');
+        var transform = [];
+        var marginLeft = $$('marginLeft').getValue(),
+            width = $$('width').getValue(),
+            marginRight = $$('marginRight').getValue();
+        if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
+        if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
+        if (width !== '') item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), width + $$('pwidth').getValue());
+
+        var bunit = $$('pmarginBottom').getValue(),
+            tunit = $$('pmarginTop').getValue(),
+            hunit = $$('pheight').getValue(),
+            marginTop = $$('marginTop').getValue(),
+            height = $$('height').getValue(),
+            marginBottom = $$('marginBottom').getValue();
+        bunit = bunit === "%" ? 'vh' : bunit;
+        tunit = tunit === "%" ? 'vh' : tunit;
+        hunit = hunit === "%" ? 'vh' : hunit;
+        //if (marginTop !== '') item.css("margin-top", fixed === 1 ? marginTop + tunit : marginLeft + $$('pmarginLeft').getValue());
+        /*
+				switch (this._pageGeometry.getVerticalSelection()) {
+					case 0:
+						item.setStyle("margin-bottom", fixed === 1 ? this._pageGeometry.getBottomGValue() + bunit : this._pageGeometry.getBottomG());
+						item.setStyle("height", this._pageGeometry.getHeightC() ? this._pageGeometry.getHeightGValue() + hunit : 'auto');
+						break;
+					case 1:
+						item.setStyle("margin-top", fixed === 1 ? this._pageGeometry.getTopGValue() + tunit : this._pageGeometry.getTopG());
+						item.setStyle("margin-bottom", fixed === 1 ? this._pageGeometry.getBottomGValue() + bunit : this._pageGeometry.getBottomG());
+						if (this._pageGeometry.getHeightC()) {
+							item.setStyle("min-height", this._pageGeometry.getHeightGValue() + hunit);
+						}
+						if (fixed === 2) {
+							item.setStyle("flex", "1 1 auto");
+						}
+						break;
+					case 2:
+						item.setStyle("margin-top", fixed === 1 ? this._pageGeometry.getTopGValue() + tunit : this._pageGeometry.getTopG());
+						item.setStyle("height", this._pageGeometry.getHeightC() ? this._pageGeometry.getHeightGValue() + hunit : 'auto');
+						break;
+					case 3:
+						item.setStyle("height", this._pageGeometry.getHeightC() ? this._pageGeometry.getHeightGValue() + hunit : 'auto');
+						break;
+				}
+				var angle = this._pageGeometry.getAngleValue();
+				if (angle) {
+					transform.push('rotate(' + angle + 'deg)');
+				}
+				if (transform) {
+					transform = transform.join(' ');
+					item.setStyle("transform", transform);
+				}
+				if (this._pageAppearance.getPaddingValue()) {
+					item.setStyle("padding-left", this._pageAppearance.getPaddingLeftTextField() + 'px');
+					item.setStyle("padding-right", this._pageAppearance.getPaddingRightTextField() + 'px');
+					item.setStyle("padding-top", this._pageAppearance.getPaddingTopTextField() + 'px');
+					item.setStyle("padding-bottom", this._pageAppearance.getPaddingBottomTextField() + 'px');
+				}
+				if (this._pageAppearance.getBorder()) {
+					item.setStyle("border-bottom-width", this._pageAppearance.getBorderBottomWidthTextField() + 'px');
+					item.setStyle("border-left-width", this._pageAppearance.getBorderLeftWidthTextField() + 'px');
+					item.setStyle("border-top-width", this._pageAppearance.getBorderTopWidthTextField() + 'px');
+					item.setStyle("border-right-width", this._pageAppearance.getBorderRightWidthTextField() + 'px');
+					item.setStyle("border-left-style", this._pageAppearance.getBorderLeftStyleSelectBox().getSelection()[0].getLabel());
+					item.setStyle("border-right-style", this._pageAppearance.getBorderRightStyleSelectBox().getSelection()[0].getLabel());
+					item.setStyle("border-top-style", this._pageAppearance.getBorderTopStyleSelectBox().getSelection()[0].getLabel());
+					item.setStyle("border-bottom-style", this._pageAppearance.getBorderBottomStyleSelectBox().getSelection()[0].getLabel());
+					item.setStyle("border-left-color", this._pageAppearance.getBorderLeftColorLabel());
+					item.setStyle("border-right-color", this._pageAppearance.getBorderRightColorLabel());
+					item.setStyle("border-top-color", this._pageAppearance.getBorderTopColorLabel());
+					item.setStyle("border-bottom-color", this._pageAppearance.getBorderBottomColorLabel());
+				}
+				else {
+					item.setStyle("border", null);
+				}
+				if (this._pageAppearance.getRadius()) {
+					item.setStyle("border-top-left-radius", this._pageAppearance.getBorderTopLeftRadiusTextField() + 'px');
+					item.setStyle("border-top-right-radius", this._pageAppearance.getBorderTopRightRadiusTextField() + 'px');
+					item.setStyle("border-bottom-left-radius", this._pageAppearance.getBorderBottomLeftRadiusTextField() + 'px');
+					item.setStyle("border-bottom-right-radius", this._pageAppearance.getBorderBottomRightRadiusTextField() + 'px');
+				}
+				else {
+					item.setStyle("border-radius", null);
+				}
+				this._shadowResult = [];
+				this._pageShadow.getShadow2Simple().getData().forEach(this._shadowArray, this);
+				this._shadowResult.join();
+				item.setStyle("box-shadow", this._shadowResult);
+				if (this._pageAppearance.getTextColorCheck()) {
+					item.setStyle("color", this._pageAppearance.getTextColorLabel());
+				}
+				else {
+					item.setStyle("color", null);
+				}
+				if (this._pageAppearance.getBackground()) {
+					var backgroundImage = this._pageAppearance.getBackgroundImageTextField();
+					item.setStyle("background-image", (backgroundImage === null || backgroundImage === '') ? null : 'url(' + backgroundImage + ')');
+					item.setStyle("background-position", this._pageAppearance.getBackgroundPositionXTextField().getValue() + this._pageAppearance.getBackgroundPositionXTextField().getUnit() + " " + this._pageAppearance.getBackgroundPositionYTextField().getValue() + this._pageAppearance.getBackgroundPositionYTextField().getUnit());
+					var repeatX = this._pageAppearance.getBackgroundRepeatXCheckBox();
+					var repeatY = this._pageAppearance.getBackgroundRepeatYCheckBox();
+					var repeat = null;
+					if (repeatX === repeatY) {
+						repeat = (repeatX && repeatY) ? 'repeat' : 'no-repeat';
+					}
+					else {
+						repeat = repeatX ? 'repeat-x' : 'repeat-y';
+					}
+					item.setStyle("background-repeat", repeat);
+					item.setStyle("background-attachment", this._pageAppearance.getBackgroundFixedCheckBox() ? 'fixed' : 'scroll');
+					item.setStyle("background-color", this._pageAppearance.getBackgroundColorLabel());
+				}
+				else {
+					item.setStyle("background", null);
+				}
+				if (this._pageAppearance.getOpacityCheck()) {
+					item.setStyle("opacity", (100 - this._pageAppearance.getOpacitySlider()) / 100);
+				}
+				else {
+					item.setStyle("opacity", null);
+				}
+				//var hidden = !Boolean(String(item.getAttribute("hidden")));
+				item.removeAttribute("class");
+				var classSimpleData = this._pageCss.getClassSimple().getData();
+				item.addClasses(classSimpleData.toString().split(','));
+				//if (hidden) {
+				//	item.setAttribute("hidden", "");
+				//if (fixed) {
+				//	item.getAncestorsUntil(body, "div:not([id])").setAttribute("hidden", "");
+				//}
+				//}
+				var data = item.getAllData();
+				for (var x in data) {
+					if (data.hasOwnProperty(x)) {
+						item.removeData(qxWeb.string.hyphenate(x));
+					}
+				}
+				this._item = item;
+				this._pageData.getDataSimple().getData().forEach(this._itemSetData, this);
+				*/
     }
     _updateDND(oldRect, newRect) {
         var deltaAngle = oldRect.angle - newRect.angle;
@@ -292,10 +490,8 @@ export default class TemplateView extends JetView {
         }*/
     }
     _makeSelection(that) {
-        console.log('_makeSelection');
         that = that ? that : this;
         var id = $$("layers").getFirstId(),
-            //fabricWindow = $($$("fabric").getWindow()),
             layer = null,
             map = null,
             rect = null,
@@ -378,6 +574,7 @@ export default class TemplateView extends JetView {
         else doLayers();
         var item = that._body.find("#" + $$('layers').getSelectedId());
         if (item.length) {
+            this._lockRedraw = true;
             $$('mode').setValue(that._getMode(item));
             $$('dock').setValue((!item.parents('div.container:not([id])').length) + 1);
             $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
@@ -399,13 +596,16 @@ export default class TemplateView extends JetView {
             $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
             var marginTop = item[0].style.marginTop;
             $$('marginTop').setValue(parseInt(marginTop));
-            $$('pmarginTop').setValue(((marginTop && parseInt(marginTop)) ? marginTop : 'px').match(/\D+$/)[0]);
+            var pmarginTop = ((marginTop && parseInt(marginTop)) ? marginTop : 'px').match(/\D+$/)[0];
+            $$('pmarginTop').setValue(pmarginTop === 'vh' ? '%' : pmarginTop);
             var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
             $$('height').setValue(parseInt(height));
-            $$('pheight').setValue(((height && parseInt(height)) ? height : 'px').match(/\D+$/)[0]);
+            var pheight = ((height && parseInt(height)) ? height : 'px').match(/\D+$/)[0];
+            $$('pheight').setValue(pheight === 'vh' ? '%' : pheight);
             var marginBottom = item[0].style.marginBottom;
             $$('marginBottom').setValue(parseInt(marginBottom));
-            $$('pmarginBottom').setValue(((marginBottom && parseInt(marginBottom)) ? marginBottom : 'px').match(/\D+$/)[0]);
+            var pmarginBottom = ((marginBottom && parseInt(marginBottom)) ? marginBottom : 'px').match(/\D+$/)[0];
+            $$('pmarginBottom').setValue(pmarginBottom === 'vh' ? '%' : pmarginBottom);
             var marginLeft = item[0].style.marginLeft;
             $$('marginLeft').setValue(parseInt(marginLeft));
             $$('pmarginLeft').setValue(((marginLeft && parseInt(marginLeft)) ? marginLeft : 'px').match(/\D+$/)[0]);
@@ -493,6 +693,7 @@ export default class TemplateView extends JetView {
             for (var x in classRow)
                 $$("class").add({ class: classRow[x] });
             if (classRow.length) $$("class").select($$("class").getFirstId());
+            this._lockRedraw = false;
         }
     }
 }

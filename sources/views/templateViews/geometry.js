@@ -16,12 +16,14 @@ export default class GeometryView extends JetView {
                                 { id: 2, value: "Fixed", icon: "mdi mdi-monitor-lock" },
                                 { id: 1, value: "Website Relative", icon: "mdi mdi-monitor-multiple" },
                                 { id: 4, value: "Content Relative", icon: "mdi mdi-monitor-dashboard" }
-                            ]
+                            ],
+                            on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                         }, {
                             view: "segmented",
                             id: "dock",
                             value: 1,
-                            options: [{ id: 1, value: "Responsive" }, { id: 2, value: "Fluid" }]
+                            options: [{ id: 1, value: "Responsive" }, { id: 2, value: "Fluid" }],
+                            on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                         }
                     ]
                 },
@@ -29,38 +31,59 @@ export default class GeometryView extends JetView {
                     rows: [
                         { template: "Vertical", type: "section", css: "webix_section" },
                         {
-                            cols: [
-                                { view: "text", id: "marginTop", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>", labelWidth: 33 },
+                            cols: [{
+                                    view: "text",
+                                    id: "marginTop",
+                                    type: "number",
+                                    label: "<span class='mdi mdi-dark mdi-24px mdi-pan-up'></span>",
+                                    labelWidth: 33,
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                                },
                                 {
                                     view: "segmented",
                                     id: "pmarginTop",
                                     width: 70,
                                     value: "px",
-                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }],
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                                 }
                             ]
                         },
                         {
-                            cols: [
-                                { view: "text", id: "height", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-vertical'></span>", labelWidth: 33 },
+                            cols: [{
+                                    view: "text",
+                                    id: "height",
+                                    type: "number",
+                                    label: "<span class='mdi mdi-dark mdi-24px mdi-pan-vertical'></span>",
+                                    labelWidth: 33,
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                                },
                                 {
                                     view: "segmented",
                                     id: "pheight",
                                     width: 70,
                                     value: "px",
-                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }],
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                                 }
                             ]
                         },
                         {
-                            cols: [
-                                { view: "text", id: "marginBottom", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-down'></span>", labelWidth: 33 },
+                            cols: [{
+                                    view: "text",
+                                    id: "marginBottom",
+                                    type: "number",
+                                    label: "<span class='mdi mdi-dark mdi-24px mdi-pan-down'></span>",
+                                    labelWidth: 33,
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                                },
                                 {
                                     view: "segmented",
                                     id: "pmarginBottom",
                                     width: 70,
                                     value: "px",
-                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }],
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                                 }
                             ]
                         }
@@ -70,44 +93,74 @@ export default class GeometryView extends JetView {
                     rows: [
                         { template: "Horizontal", type: "section", css: "webix_section" },
                         {
-                            cols: [
-                                { view: "text", id: "marginLeft", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>", labelWidth: 33 },
+                            cols: [{
+                                    view: "text",
+                                    id: "marginLeft",
+                                    type: "number",
+                                    label: "<span class='mdi mdi-dark mdi-24px mdi-pan-left'></span>",
+                                    labelWidth: 33,
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                                },
                                 {
                                     view: "segmented",
                                     id: "pmarginLeft",
                                     width: 70,
                                     value: "px",
-                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }],
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                                 }
                             ]
                         },
                         {
-                            cols: [
-                                { view: "text", id: "width", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>", labelWidth: 33 },
+                            cols: [{
+                                    view: "text",
+                                    id: "width",
+                                    type: "number",
+                                    label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+                                    labelWidth: 33,
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                                },
                                 {
                                     view: "segmented",
                                     id: "pwidth",
                                     width: 70,
                                     value: "px",
-                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }],
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                                 }
                             ]
                         },
                         {
-                            cols: [
-                                { view: "text", id: "marginRight", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-pan-right'></span>", labelWidth: 33 },
+                            cols: [{
+                                    view: "text",
+                                    id: "marginRight",
+                                    type: "number",
+                                    label: "<span class='mdi mdi-dark mdi-24px mdi-pan-right'></span>",
+                                    labelWidth: 33,
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                                },
                                 {
                                     view: "segmented",
                                     id: "pmarginRight",
                                     width: 70,
                                     value: "px",
-                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }]
+                                    options: [{ id: "px", value: "px" }, { id: "%", value: "%" }],
+                                    on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                                 }
                             ]
                         }
                     ]
                 },
-                { rows: [{ template: "Rotation", type: "section", css: "webix_section" }, { view: "text", id: "angle", type: "number", label: "<span class='mdi mdi-dark mdi-24px mdi-screen-rotation'></span>", labelWidth: 33 }] }, {}
+                {
+                    rows: [{ template: "Rotation", type: "section", css: "webix_section" }, {
+                        view: "text",
+                        id: "angle",
+                        type: "number",
+                        label: "<span class='mdi mdi-dark mdi-24px mdi-screen-rotation'></span>",
+                        labelWidth: 33,
+                        on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
+                    }]
+                }, {}
             ]
         };
     }
