@@ -254,56 +254,26 @@ export default class TemplateView extends JetView {
         }
         object.find(body + '>div:not([data-relative]):not([id]):empty,' + body + '>div[data-relative]:not([id])>div:not([id]):empty').remove();
         object.find(body + '>div[data-relative]:not([id])').removeAttr('style');
-        var transform = [];
         var marginLeft = $$('marginLeft').getValue(),
             width = $$('width').getValue(),
             marginRight = $$('marginRight').getValue();
         if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
         if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
-        if (width !== '') item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), width + $$('pwidth').getValue());
-
+        item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
         var bunit = $$('pmarginBottom').getValue(),
             tunit = $$('pmarginTop').getValue(),
             hunit = $$('pheight').getValue(),
             marginTop = $$('marginTop').getValue(),
             height = $$('height').getValue(),
             marginBottom = $$('marginBottom').getValue();
-        bunit = bunit === "%" ? 'vh' : bunit;
-        tunit = tunit === "%" ? 'vh' : tunit;
-        hunit = hunit === "%" ? 'vh' : hunit;
-        //if (marginTop !== '') item.css("margin-top", fixed === 1 ? marginTop + tunit : marginLeft + $$('pmarginLeft').getValue());
+        if (marginTop !== '') item.css("margin-top", marginTop + ((fixed === 2 && tunit === '%') ? "vh" : tunit));
+        if (marginBottom !== '') item.css("margin-bottom", marginBottom + ((fixed === 2 && bunit === '%') ? "vh" : bunit));
+        item.css(((marginTop !== '' && marginBottom !== '') ? 'min-height' : 'height'), ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
+        if (marginTop !== '' && marginBottom !== '' && fixed === 3) item.css("flex", "1 1 auto");
+        var angle = $$('angle').getValue();
+        if (angle) item.css("transform", 'rotate(' + angle + 'deg)');
+
         /*
-				switch (this._pageGeometry.getVerticalSelection()) {
-					case 0:
-						item.setStyle("margin-bottom", fixed === 1 ? this._pageGeometry.getBottomGValue() + bunit : this._pageGeometry.getBottomG());
-						item.setStyle("height", this._pageGeometry.getHeightC() ? this._pageGeometry.getHeightGValue() + hunit : 'auto');
-						break;
-					case 1:
-						item.setStyle("margin-top", fixed === 1 ? this._pageGeometry.getTopGValue() + tunit : this._pageGeometry.getTopG());
-						item.setStyle("margin-bottom", fixed === 1 ? this._pageGeometry.getBottomGValue() + bunit : this._pageGeometry.getBottomG());
-						if (this._pageGeometry.getHeightC()) {
-							item.setStyle("min-height", this._pageGeometry.getHeightGValue() + hunit);
-						}
-						if (fixed === 2) {
-							item.setStyle("flex", "1 1 auto");
-						}
-						break;
-					case 2:
-						item.setStyle("margin-top", fixed === 1 ? this._pageGeometry.getTopGValue() + tunit : this._pageGeometry.getTopG());
-						item.setStyle("height", this._pageGeometry.getHeightC() ? this._pageGeometry.getHeightGValue() + hunit : 'auto');
-						break;
-					case 3:
-						item.setStyle("height", this._pageGeometry.getHeightC() ? this._pageGeometry.getHeightGValue() + hunit : 'auto');
-						break;
-				}
-				var angle = this._pageGeometry.getAngleValue();
-				if (angle) {
-					transform.push('rotate(' + angle + 'deg)');
-				}
-				if (transform) {
-					transform = transform.join(' ');
-					item.setStyle("transform", transform);
-				}
 				if (this._pageAppearance.getPaddingValue()) {
 					item.setStyle("padding-left", this._pageAppearance.getPaddingLeftTextField() + 'px');
 					item.setStyle("padding-right", this._pageAppearance.getPaddingRightTextField() + 'px');
