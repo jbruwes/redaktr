@@ -370,9 +370,8 @@ export default class TemplateView extends JetView {
                 deltaAngle = deltaAngle - 360;
             }
             $$('angle').setValue(deltaAngle);
-            console.log(deltaAngle);
         }
-        /*else {
+        else {
             var oldOrigin = new fabric.Point(oldRect.left, oldRect.top),
                 newOrigin = new fabric.Point(newRect.left, newRect.top),
                 angle = -fabric.util.degreesToRadians(newRect.angle),
@@ -388,76 +387,28 @@ export default class TemplateView extends JetView {
                     left: newTl.x - oldTl.x,
                     right: newTr.x - oldTr.x
                 },
-                document = this.getSite().getDocument(),
-                dX = 100 / document.body.scrollWidth,
-                dY = 100 / document.body.scrollHeight;
-            if (this._pageGeometry.getTopC()) {
-                switch (this._pageGeometry.getTopGUnit()) {
-                    case 'px':
-                        this._pageGeometry.setTopG(Math.round(this._pageGeometry.getTopGValue() + delta.top) + 'px');
-                        break;
-                    case '%':
-                    case 'vh':
-                        this._pageGeometry.setTopG(Math.round(this._pageGeometry.getTopGValue() + dY * delta.top) + '%');
-                        break;
-                }
-            }
-            if (this._pageGeometry.getBottomC()) {
-                switch (this._pageGeometry.getBottomGUnit()) {
-                    case 'px':
-                        this._pageGeometry.setBottomG(Math.round(this._pageGeometry.getBottomGValue() - delta.bottom) + 'px');
-                        break;
-                    case '%':
-                    case 'vh':
-                        this._pageGeometry.setBottomG(Math.round(this._pageGeometry.getBottomGValue() - dY * delta.bottom) + '%');
-                        break;
-                }
-            }
-            if (!(this._pageGeometry.getTopC() && this._pageGeometry.getBottomC()) && this._pageGeometry.getHeightC()) {
-                switch (this._pageGeometry.getHeightGUnit()) {
-                    case 'px':
-                        this._pageGeometry.setHeightG(Math.round(this._pageGeometry.getHeightGValue() - (delta.top - delta.bottom)) + 'px');
-                        break;
-                    case '%':
-                    case 'vh':
-                        this._pageGeometry.setHeightG(Math.round(this._pageGeometry.getHeightGValue() - dY * (delta.top - delta.bottom)) + '%');
-                        break;
-                }
-            }
-            if (this._pageGeometry.getLeftC()) {
-                switch (this._pageGeometry.getLeftGUnit()) {
-                    case 'px':
-                        this._pageGeometry.setLeftG(Math.round(this._pageGeometry.getLeftGValue() + delta.left) + 'px');
-                        break;
-                    case '%':
-                    case 'vh':
-                        this._pageGeometry.setLeftG(Math.round(this._pageGeometry.getLeftGValue() + dX * delta.left) + '%');
-                        break;
-                }
-            }
-            if (this._pageGeometry.getRightC()) {
-                switch (this._pageGeometry.getRightGUnit()) {
-                    case 'px':
-                        this._pageGeometry.setRightG(Math.round(this._pageGeometry.getRightGValue() - delta.right) + 'px');
-                        break;
-                    case '%':
-                    case 'vh':
-                        this._pageGeometry.setRightG(Math.round(this._pageGeometry.getRightGValue() - dX * delta.right) + '%');
-                        break;
-                }
-            }
-            if (!(this._pageGeometry.getLeftC() && this._pageGeometry.getRightC()) && this._pageGeometry.getWidthC()) {
-                switch (this._pageGeometry.getWidthGUnit()) {
-                    case 'px':
-                        this._pageGeometry.setWidthG(Math.round(this._pageGeometry.getWidthGValue() - (delta.left - delta.right)) + 'px');
-                        break;
-                    case '%':
-                    case 'vh':
-                        this._pageGeometry.setWidthG(Math.round(this._pageGeometry.getWidthGValue() - dX * (delta.left - delta.right)) + '%');
-                        break;
-                }
-            }
-        }*/
+                fabricDocument = $($$("fabric").getIframe()).contents(),
+                dX = 100 / fabricDocument[0].body.scrollWidth,
+                dY = 100 / fabricDocument[0].body.scrollHeight;
+            var marginTop = $$('marginTop').getValue(),
+                pmarginTop = $$('pmarginTop').getValue();
+            if (marginTop !== '') $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
+            var marginBottom = $$('marginBottom').getValue(),
+                pmarginBottom = $$('pmarginBottom').getValue();
+            if (marginBottom !== '') $$('marginBottom').setValue(Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
+            var height = $$('height').getValue(),
+                pheight = $$('height').getValue();
+            if ((marginTop === '' || marginBottom === '') && height !== '') $$('height').setValue(Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
+            var marginLeft = $$('marginLeft').getValue(),
+                pmarginLeft = $$('pmarginLeft').getValue();
+            if (marginLeft !== '') $$('marginLeft').setValue(Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
+            var marginRight = $$('marginRight').getValue(),
+                pmarginRight = $$('pmarginRight').getValue();
+            if (marginRight !== '') $$('marginRight').setValue(Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
+            var width = $$('width').getValue(),
+                pwidth = $$('width').getValue();
+            if ((marginLeft === '' || marginRight === '') && width !== '') $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
+        }
     }
     _makeSelection(that) {
         that = that ? that : this;
