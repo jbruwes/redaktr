@@ -213,17 +213,12 @@ export default class TemplateView extends JetView {
         }
     }
     _saveStage(item, body, object) {
-
         item.attr('style', '');
         var id = $$('layers').getSelectedId(),
             fixed = $$('mode').getValue(),
             dock = $$('dock').getValue() - 1;
-        if (((fixed === 3) && (id === 'content')) || (fixed === 4)) {
-            object.find(body + '>div[data-relative]:not([id])').append(item);
-        }
-        else {
-            object.find(body).append(item);
-        }
+        if (((fixed === 3) && (id === 'content')) || (fixed === 4)) object.find(body + '>div[data-relative]:not([id])').append(item);
+        else object.find(body).append(item);
         if (dock) {
             switch (fixed) {
                 case 1:
@@ -272,40 +267,45 @@ export default class TemplateView extends JetView {
         if (marginTop !== '' && marginBottom !== '' && fixed === 3) item.css("flex", "1 1 auto");
         var angle = $$('angle').getValue();
         if (angle) item.css("transform", 'rotate(' + angle + 'deg)');
+        var paddingLeft = $$('paddingLeft').getValue();
+        if (paddingLeft !== '') item.css("padding-left", paddingLeft + 'px');
+        var paddingRight = $$('paddingRight').getValue();
+        if (paddingRight !== '') item.css("padding-right", paddingRight + 'px');
+        var paddingTop = $$('paddingTop').getValue();
+        if (paddingTop !== '') item.css("padding-top", paddingTop + 'px');
+        var paddingBottom = $$('paddingBottom').getValue();
+        if (paddingBottom !== '') item.css("padding-bottom", paddingBottom + 'px');
+        var borderLeftWidth = $$('borderLeftWidth').getValue();
+        if (borderLeftWidth !== '') item.css("border-left-width", borderLeftWidth + 'px');
+        var borderRightWidth = $$('borderRightWidth').getValue();
+        if (borderRightWidth !== '') item.css("border-right-width", borderRightWidth + 'px');
+        var borderTopWidth = $$('borderTopWidth').getValue();
+        if (borderTopWidth !== '') item.css("border-top-width", borderTopWidth + 'px');
+        var borderBottomWidth = $$('borderBottomWidth').getValue();
+        if (borderBottomWidth !== '') item.css("border-bottom-width", borderBottomWidth + 'px');
+        item.css("border-left-style", $$('borderLeftStyle').getValue());
+        item.css("border-right-style", $$('borderRightStyle').getValue());
+        item.css("border-top-style", $$('borderTopStyle').getValue());
+        item.css("border-bottom-style", $$('borderBottomStyle').getValue());
+        var borderLeftColor = $$('borderLeftColor').getValue();
+        if (borderLeftColor !== '') item.css("border-left-color", borderLeftColor);
+        var borderRightColor = $$('borderRightColor').getValue();
+        if (borderRightColor !== '') item.css("border-right-color", borderRightColor);
+        var borderTopColor = $$('borderTopColor').getValue();
+        if (borderTopColor !== '') item.css("border-top-color", borderTopColor);
+        var borderBottomColor = $$('borderBottomColor').getValue();
+        if (borderBottomColor !== '') item.css("border-bottom-color", borderBottomColor);
+        var borderTopLeftRadius = $$('borderTopLeftRadius').getValue();
+        if (borderTopLeftRadius !== '') item.css("border-top-left-radius", borderTopLeftRadius + 'px');
+        var borderTopRightRadius = $$('borderTopRightRadius').getValue();
+        if (borderTopRightRadius !== '') item.css("border-top-right-radius", borderTopRightRadius + 'px');
+        var borderBottomLeftRadius = $$('borderBottomLeftRadius').getValue();
+        if (borderBottomLeftRadius !== '') item.css("border-bottom-left-radius", borderBottomLeftRadius + 'px');
+        var borderBottomRightRadius = $$('borderBottomRightRadius').getValue();
+        if (borderBottomRightRadius !== '') item.css("border-bottom-right-radius", borderBottomRightRadius + 'px');
+        
 
         /*
-				if (this._pageAppearance.getPaddingValue()) {
-					item.setStyle("padding-left", this._pageAppearance.getPaddingLeftTextField() + 'px');
-					item.setStyle("padding-right", this._pageAppearance.getPaddingRightTextField() + 'px');
-					item.setStyle("padding-top", this._pageAppearance.getPaddingTopTextField() + 'px');
-					item.setStyle("padding-bottom", this._pageAppearance.getPaddingBottomTextField() + 'px');
-				}
-				if (this._pageAppearance.getBorder()) {
-					item.setStyle("border-bottom-width", this._pageAppearance.getBorderBottomWidthTextField() + 'px');
-					item.setStyle("border-left-width", this._pageAppearance.getBorderLeftWidthTextField() + 'px');
-					item.setStyle("border-top-width", this._pageAppearance.getBorderTopWidthTextField() + 'px');
-					item.setStyle("border-right-width", this._pageAppearance.getBorderRightWidthTextField() + 'px');
-					item.setStyle("border-left-style", this._pageAppearance.getBorderLeftStyleSelectBox().getSelection()[0].getLabel());
-					item.setStyle("border-right-style", this._pageAppearance.getBorderRightStyleSelectBox().getSelection()[0].getLabel());
-					item.setStyle("border-top-style", this._pageAppearance.getBorderTopStyleSelectBox().getSelection()[0].getLabel());
-					item.setStyle("border-bottom-style", this._pageAppearance.getBorderBottomStyleSelectBox().getSelection()[0].getLabel());
-					item.setStyle("border-left-color", this._pageAppearance.getBorderLeftColorLabel());
-					item.setStyle("border-right-color", this._pageAppearance.getBorderRightColorLabel());
-					item.setStyle("border-top-color", this._pageAppearance.getBorderTopColorLabel());
-					item.setStyle("border-bottom-color", this._pageAppearance.getBorderBottomColorLabel());
-				}
-				else {
-					item.setStyle("border", null);
-				}
-				if (this._pageAppearance.getRadius()) {
-					item.setStyle("border-top-left-radius", this._pageAppearance.getBorderTopLeftRadiusTextField() + 'px');
-					item.setStyle("border-top-right-radius", this._pageAppearance.getBorderTopRightRadiusTextField() + 'px');
-					item.setStyle("border-bottom-left-radius", this._pageAppearance.getBorderBottomLeftRadiusTextField() + 'px');
-					item.setStyle("border-bottom-right-radius", this._pageAppearance.getBorderBottomRightRadiusTextField() + 'px');
-				}
-				else {
-					item.setStyle("border-radius", null);
-				}
 				this._shadowResult = [];
 				this._pageShadow.getShadow2Simple().getData().forEach(this._shadowArray, this);
 				this._shadowResult.join();
