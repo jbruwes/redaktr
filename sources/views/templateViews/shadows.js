@@ -20,7 +20,8 @@ export default class ShadowView extends JetView {
                 { id: "inset", editor: "checkbox", header: "<span class='mdi mdi-square-inc'></span> inset", template: "{common.checkbox()}", fillspace: true },
                 { id: "color", editor: "color", header: "<span class='mdi mdi-palette'></span> color", fillspace: true, template: "<span style='background:#color#; border-radius:4px;padding-right:10px;'>&nbsp;&nbsp;</span> #color#" }
             ],
-            editable: true
+            editable: true,
+            on: { onAfterEditStop: _ => this.getParentView()._redraw(this.getParentView()) }
         };
     }
 }

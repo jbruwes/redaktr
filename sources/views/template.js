@@ -303,13 +303,12 @@ export default class TemplateView extends JetView {
         if (borderBottomLeftRadius !== '') item.css("border-bottom-left-radius", borderBottomLeftRadius + 'px');
         var borderBottomRightRadius = $$('borderBottomRightRadius').getValue();
         if (borderBottomRightRadius !== '') item.css("border-bottom-right-radius", borderBottomRightRadius + 'px');
-
+        var shadowResult = [];
+        $.each($$('shadows').serialize(), (index, value) => shadowResult.push((value.inset ? 'inset ' : '') + value.x + 'px ' + value.y + 'px ' + value.blur + 'px ' + value.spread + 'px ' + value.color));
+        console.log(shadowResult.join());
+        item.css("box-shadow", shadowResult.join());
 
         /*
-				this._shadowResult = [];
-				this._pageShadow.getShadow2Simple().getData().forEach(this._shadowArray, this);
-				this._shadowResult.join();
-				item.setStyle("box-shadow", this._shadowResult);
 				if (this._pageAppearance.getTextColorCheck()) {
 					item.setStyle("color", this._pageAppearance.getTextColorLabel());
 				}
@@ -390,8 +389,6 @@ export default class TemplateView extends JetView {
                 fabricDocument = $($$("fabric").getIframe()).contents(),
                 dX = 100 / fabricDocument[0].body.scrollWidth,
                 dY = 100 / fabricDocument[0].body.scrollHeight;
-            console.log('dX = ', dX, fabricDocument[0].body.scrollWidth);
-            console.log('dY = ', dY, fabricDocument[0].body.scrollHeight);
             var marginTop = $$('marginTop').getValue(),
                 pmarginTop = $$('pmarginTop').getValue();
             if (marginTop !== '') $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
