@@ -303,7 +303,7 @@ export default class TemplateView extends JetView {
         if (borderBottomLeftRadius !== '') item.css("border-bottom-left-radius", borderBottomLeftRadius + 'px');
         var borderBottomRightRadius = $$('borderBottomRightRadius').getValue();
         if (borderBottomRightRadius !== '') item.css("border-bottom-right-radius", borderBottomRightRadius + 'px');
-        
+
 
         /*
 				this._shadowResult = [];
@@ -390,6 +390,8 @@ export default class TemplateView extends JetView {
                 fabricDocument = $($$("fabric").getIframe()).contents(),
                 dX = 100 / fabricDocument[0].body.scrollWidth,
                 dY = 100 / fabricDocument[0].body.scrollHeight;
+            console.log('dX = ', dX, fabricDocument[0].body.scrollWidth);
+            console.log('dY = ', dY, fabricDocument[0].body.scrollHeight);
             var marginTop = $$('marginTop').getValue(),
                 pmarginTop = $$('pmarginTop').getValue();
             if (marginTop !== '') $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
@@ -410,7 +412,7 @@ export default class TemplateView extends JetView {
             if ((marginLeft === '' || marginRight === '') && width !== '') $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
         }
     }
-    _makeSelection(that) {
+    _makeSelection(that, resetDimension = false) {
         that = that ? that : this;
         var id = $$("layers").getFirstId(),
             layer = null,
@@ -517,25 +519,28 @@ export default class TemplateView extends JetView {
             $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
             var marginTop = item[0].style.marginTop;
             $$('marginTop').setValue(parseInt(marginTop));
-            var pmarginTop = ((marginTop && parseInt(marginTop)) ? marginTop : 'px').match(/\D+$/)[0];
-            $$('pmarginTop').setValue(pmarginTop === 'vh' ? '%' : pmarginTop);
+            if (marginTop !== '') $$('pmarginTop').setValue((marginTop.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+            else if (resetDimension) $$('pmarginTop').setValue('px');
             var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
             $$('height').setValue(parseInt(height));
-            var pheight = ((height && parseInt(height)) ? height : 'px').match(/\D+$/)[0];
-            $$('pheight').setValue(pheight === 'vh' ? '%' : pheight);
+            if (height !== '') $$('pheight').setValue((height.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+            else if (resetDimension) $$('pheight').setValue('px');
             var marginBottom = item[0].style.marginBottom;
             $$('marginBottom').setValue(parseInt(marginBottom));
-            var pmarginBottom = ((marginBottom && parseInt(marginBottom)) ? marginBottom : 'px').match(/\D+$/)[0];
-            $$('pmarginBottom').setValue(pmarginBottom === 'vh' ? '%' : pmarginBottom);
+            if (marginBottom !== '') $$('pmarginBottom').setValue((marginBottom.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+            else if (resetDimension) $$('pmarginBottom').setValue('px');
             var marginLeft = item[0].style.marginLeft;
             $$('marginLeft').setValue(parseInt(marginLeft));
-            $$('pmarginLeft').setValue(((marginLeft && parseInt(marginLeft)) ? marginLeft : 'px').match(/\D+$/)[0]);
+            if (marginLeft !== '') $$('pmarginLeft').setValue((marginLeft.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+            else if (resetDimension) $$('pmarginLeft').setValue('px');
             var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth;
             $$('width').setValue(parseInt(width));
-            $$('pwidth').setValue(((width && parseInt(width)) ? width : 'px').match(/\D+$/)[0]);
+            if (width !== '') $$('pwidth').setValue((width.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+            else if (resetDimension) $$('pwidth').setValue('px');
             var marginRight = item[0].style.marginRight;
             $$('marginRight').setValue(parseInt(marginRight));
-            $$('pmarginRight').setValue(((marginRight && parseInt(marginRight)) ? marginRight : 'px').match(/\D+$/)[0]);
+            if (marginRight !== '') $$('pmarginRight').setValue((marginRight.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+            else if (resetDimension) $$('pmarginRight').setValue('px');
             $$('borderTopLeftRadius').setValue(parseInt(item[0].style.borderTopLeftRadius));
             $$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
             $$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
