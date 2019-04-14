@@ -4,6 +4,9 @@ export default class TemplateView extends JetView {
         return {
             id: "templateAccordion",
             view: "accordion",
+            on: {
+                "onAfterCollapse": id => { if (id === 'tools') this._makeSelection(this) }
+            },
             cols: [{
                     view: "accordionitem",
                     header: "<span class='mdi mdi-postage-stamp'></span> Template",
@@ -30,6 +33,7 @@ export default class TemplateView extends JetView {
                 {
                     view: "accordionitem",
                     collapsed: true,
+                    id: "tools",
                     header: "<span class='mdi mdi-wrench-outline'></span> Tools",
                     body: {
                         id: "accordionRight",
@@ -142,7 +146,7 @@ export default class TemplateView extends JetView {
                 canvas.on('object:modified', options => {
                     var layer = $$("layers").getItem(options.target.id);
                     this._updateDND({ top: layer.top, left: layer.left, angle: layer.angle, oCoords: layer.oCoords }, { top: options.target.top, left: options.target.left, angle: options.target.angle, oCoords: options.target.oCoords });
-                    //this._redraw();
+                    this._redraw();
                 });
             });
 
@@ -303,10 +307,15 @@ export default class TemplateView extends JetView {
         if (borderBottomLeftRadius !== '') item.css("border-bottom-left-radius", borderBottomLeftRadius + 'px');
         var borderBottomRightRadius = $$('borderBottomRightRadius').getValue();
         if (borderBottomRightRadius !== '') item.css("border-bottom-right-radius", borderBottomRightRadius + 'px');
-        var shadowResult = [];
-        $.each($$('shadows').serialize(), (index, value) => shadowResult.push((value.inset ? 'inset ' : '') + value.x + 'px ' + value.y + 'px ' + value.blur + 'px ' + value.spread + 'px ' + value.color));
-        console.log(shadowResult.join());
-        item.css("box-shadow", shadowResult.join());
+        var shadows = [];
+        $.each($$('shadows').serialize(), (index, value) => shadows.push((value.inset ? 'inset ' : '') + Number(value.x) + 'px ' + Number(value.y) + 'px ' + Number(value.blur) + 'px ' + Number(value.spread) + 'px ' + value.color));
+        item.css("box-shadow", shadows.join());
+        var classes = [];
+        $.each($$('class').serialize(), (index, value) => classes.push(value.class));
+        item.addClass(classes.join(" "));
+        $.each($$('data').serialize(), (index, value) => {
+            if (value.data) item.data(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value).attr(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value);
+        });
 
         /*
 				if (this._pageAppearance.getTextColorCheck()) {
@@ -364,6 +373,7 @@ export default class TemplateView extends JetView {
     _updateDND(oldRect, newRect) {
         var deltaAngle = oldRect.angle - newRect.angle;
         if (deltaAngle !== 0) {
+            console.log(1);
             deltaAngle = Math.round($$('angle').getValue() - deltaAngle);
             if (deltaAngle > 180) {
                 deltaAngle = deltaAngle - 360;
@@ -371,6 +381,7 @@ export default class TemplateView extends JetView {
             $$('angle').setValue(deltaAngle);
         }
         else {
+            console.log(2);
             var oldOrigin = new fabric.Point(oldRect.left, oldRect.top),
                 newOrigin = new fabric.Point(newRect.left, newRect.top),
                 angle = -fabric.util.degreesToRadians(newRect.angle),
@@ -391,106 +402,124 @@ export default class TemplateView extends JetView {
                 dY = 100 / fabricDocument[0].body.scrollHeight;
             var marginTop = $$('marginTop').getValue(),
                 pmarginTop = $$('pmarginTop').getValue();
-            if (marginTop !== '') $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
+            if (marginTop !== '') {
+                console.log('marginTop = ', Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
+                $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
+            }
             var marginBottom = $$('marginBottom').getValue(),
                 pmarginBottom = $$('pmarginBottom').getValue();
-            if (marginBottom !== '') $$('marginBottom').setValue(Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
+            if (marginBottom !== '') {
+                console.log('marginBottom = ', Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
+                $$('marginBottom').setValue(Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
+            }
             var height = $$('height').getValue(),
                 pheight = $$('height').getValue();
-            if ((marginTop === '' || marginBottom === '') && height !== '') $$('height').setValue(Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
+            if ((marginTop === '' || marginBottom === '') && height !== '') {
+                console.log('height = ', Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
+                $$('height').setValue(Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
+            }
             var marginLeft = $$('marginLeft').getValue(),
                 pmarginLeft = $$('pmarginLeft').getValue();
-            if (marginLeft !== '') $$('marginLeft').setValue(Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
+            if (marginLeft !== '') {
+                console.log('marginLeft', Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
+                $$('marginLeft').setValue(Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
+            }
             var marginRight = $$('marginRight').getValue(),
                 pmarginRight = $$('pmarginRight').getValue();
-            if (marginRight !== '') $$('marginRight').setValue(Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
+            if (marginRight !== '') {
+                console.log('marginRight = ', Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
+                $$('marginRight').setValue(Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
+            }
             var width = $$('width').getValue(),
                 pwidth = $$('width').getValue();
-            if ((marginLeft === '' || marginRight === '') && width !== '') $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
+            if ((marginLeft === '' || marginRight === '') && width !== '') {
+                console.log('width = ', Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
+                $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
+            }
         }
     }
     _makeSelection(that, resetDimension = false) {
         that = that ? that : this;
-        if (!that.lockSelect) {
+
+        function swap(elem, options, callback, args) {
+            var ret, name,
+                old = {};
+            for (name in options) {
+                old[name] = elem.style[name];
+                elem.style[name] = options[name];
+            }
+            ret = callback.apply(elem, args || []);
+            for (name in options) {
+                elem.style[name] = old[name];
+            }
+            return ret;
+        }
+
+        function doLayers() {
             var id = $$("layers").getFirstId(),
                 layer = null,
                 map = null,
                 rect = null,
                 selObj = null,
                 style = null,
-                isHidden = $($$("fabric").getIframe()).parents(':hidden'),
                 fabricDocument = $($$("fabric").getIframe()).contents();
-
-            function swap(elem, options, callback, args) {
-                var ret, name,
-                    old = {};
-                for (name in options) {
-                    old[name] = elem.style[name];
-                    elem.style[name] = options[name];
-                }
-                ret = callback.apply(elem, args || []);
-                for (name in options) {
-                    elem.style[name] = old[name];
-                }
-                return ret;
-            }
-
-            function doLayers() {
-                do {
-                    layer = $$("layers").getItem(id);
-                    rect = layer.rect;
-                    layer.left = 0;
-                    layer.top = 0;
-                    layer.angle = 0;
-                    selObj = fabricDocument.find("#" + id);
-                    if (selObj.length) {
-                        if (selObj.attr("hidden")) {
-                            rect.set({
-                                hasBorders: false,
-                                hasControls: false,
-                                selectable: false,
-                                evented: false
-                            });
-                        }
-                        else {
-                            map = selObj[0].getBoundingClientRect();
-                            style = selObj.attr("style");
-                            rect.set({
-                                left: Math.round((map.right + map.left) / 2),
-                                top: Math.round((map.bottom + map.top) / 2),
-                                width: selObj.outerWidth(),
-                                height: selObj.outerHeight(),
-                                scaleX: 1,
-                                scaleY: 1,
-                                angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
-                                hasBorders: true,
-                                hasControls: true,
-                                selectable: true,
-                                evented: true
-                            });
-                            layer.left = rect.left;
-                            layer.top = rect.top;
-                            layer.angle = rect.angle;
-                        }
-                    }
-                    else {
+            do {
+                layer = $$("layers").getItem(id);
+                rect = layer.rect;
+                layer.left = 0;
+                layer.top = 0;
+                layer.angle = 0;
+                selObj = fabricDocument.find("#" + id);
+                if (selObj.length) {
+                    if (selObj.attr("hidden")) {
                         rect.set({
-                            left: 0,
-                            top: 0,
-                            width: 0,
-                            height: 0,
-                            scaleX: 1,
-                            scaleY: 1,
-                            angle: 0
+                            hasBorders: false,
+                            hasControls: false,
+                            selectable: false,
+                            evented: false
                         });
                     }
-                    rect.setCoords();
-                    layer.oCoords = rect.oCoords;
-                    id = $$("layers").getNextId(id);
-                } while (id);
-                $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
-                $$('fabric').getCanvas().requestRenderAll();
-            }
+                    else {
+                        map = selObj[0].getBoundingClientRect();
+                        style = selObj.attr("style");
+                        rect.set({
+                            left: Math.round((map.right + map.left) / 2),
+                            top: Math.round((map.bottom + map.top) / 2),
+                            width: selObj.outerWidth(),
+                            height: selObj.outerHeight(),
+                            scaleX: 1,
+                            scaleY: 1,
+                            angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
+                            hasBorders: true,
+                            hasControls: true,
+                            selectable: true,
+                            evented: true
+                        });
+                        layer.left = rect.left;
+                        layer.top = rect.top;
+                        layer.angle = rect.angle;
+                    }
+                }
+                else {
+                    rect.set({
+                        left: 0,
+                        top: 0,
+                        width: 0,
+                        height: 0,
+                        scaleX: 1,
+                        scaleY: 1,
+                        angle: 0
+                    });
+                }
+                rect.setCoords();
+                layer.oCoords = rect.oCoords;
+                id = $$("layers").getNextId(id);
+            } while (id);
+            $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
+            $$('fabric').getCanvas().requestRenderAll();
+        }
+        if ($$('tools').config.collapsed || (!$$('tools').config.collapsed && resetDimension)) {
+            var isHidden = $($$("fabric").getIframe()).parents(':hidden');
             if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
             else doLayers();
             var item = that._body.find("#" + $$('layers').getSelectedId());
@@ -517,27 +546,27 @@ export default class TemplateView extends JetView {
                 $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
                 var marginTop = item[0].style.marginTop;
                 $$('marginTop').setValue(parseInt(marginTop));
-                if (marginTop !== '') $$('pmarginTop').setValue((marginTop.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                if (marginTop !== '' && marginTop !== 'auto') $$('pmarginTop').setValue((marginTop.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginTop').setValue('px');
                 var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
                 $$('height').setValue(parseInt(height));
-                if (height !== '') $$('pheight').setValue((height.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                if (height !== '' && height !== 'auto') $$('pheight').setValue((height.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pheight').setValue('px');
                 var marginBottom = item[0].style.marginBottom;
                 $$('marginBottom').setValue(parseInt(marginBottom));
-                if (marginBottom !== '') $$('pmarginBottom').setValue((marginBottom.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                if (marginBottom !== '' && marginBottom !== 'auto') $$('pmarginBottom').setValue((marginBottom.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginBottom').setValue('px');
                 var marginLeft = item[0].style.marginLeft;
                 $$('marginLeft').setValue(parseInt(marginLeft));
-                if (marginLeft !== '') $$('pmarginLeft').setValue((marginLeft.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                if (marginLeft !== '' && marginLeft !== 'auto') $$('pmarginLeft').setValue((marginLeft.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginLeft').setValue('px');
                 var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth;
                 $$('width').setValue(parseInt(width));
-                if (width !== '') $$('pwidth').setValue((width.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                if (width !== '' && width !== 'auto') $$('pwidth').setValue((width.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pwidth').setValue('px');
                 var marginRight = item[0].style.marginRight;
                 $$('marginRight').setValue(parseInt(marginRight));
-                if (marginRight !== '') $$('pmarginRight').setValue((marginRight.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                if (marginRight !== '' && marginRight !== 'auto') $$('pmarginRight').setValue((marginRight.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginRight').setValue('px');
                 $$('borderTopLeftRadius').setValue(parseInt(item[0].style.borderTopLeftRadius));
                 $$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));

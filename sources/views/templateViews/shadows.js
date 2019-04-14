@@ -21,11 +21,7 @@ export default class ShadowView extends JetView {
                 { id: "color", editor: "color", header: "<span class='mdi mdi-palette'></span> color", fillspace: true, template: "<span style='background:#color#; border-radius:4px;padding-right:10px;'>&nbsp;&nbsp;</span> #color#" }
             ],
             editable: true,
-            on: {
-                "onBeforeEditStart": _ => this.getParentView().lockSelect = true,
-                "data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()),
-                "onAfterEditStop": _ => this.getParentView().lockSelect = false
-            }
+            on: { "data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) }
         };
     }
 }

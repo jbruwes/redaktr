@@ -9,7 +9,8 @@ export default class DataView extends JetView {
                 { id: "data", editor: "text", header: "data-", fillspace: true },
                 { id: "value", editor: "text", header: "value", fillspace: true }
             ],
-            editable: true
+            editable: true,
+            on: { "data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) }
         };
     }
 }

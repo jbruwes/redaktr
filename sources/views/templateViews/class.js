@@ -8,7 +8,8 @@ export default class ClassView extends JetView {
             columns: [
                 { id: "class", editor: "text", header: "class", fillspace: true }
             ],
-            editable: true
+            editable: true,
+            on: { "data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) }
         };
     }
 }
