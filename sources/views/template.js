@@ -307,6 +307,24 @@ export default class TemplateView extends JetView {
         if (borderBottomLeftRadius !== '') item.css("border-bottom-left-radius", borderBottomLeftRadius + 'px');
         var borderBottomRightRadius = $$('borderBottomRightRadius').getValue();
         if (borderBottomRightRadius !== '') item.css("border-bottom-right-radius", borderBottomRightRadius + 'px');
+        var textColor = $$('textColor').getValue();
+        if (textColor !== '') item.css("color", textColor);
+        item.css("opacity", (100 - $$('transparency').getValue()) / 100);
+        var backgroundColor = $$('backgroundColor').getValue();
+        if (backgroundColor !== '') item.css("background-color", backgroundColor);
+
+        var backgroundPositionH = $$('backgroundPositionH').getValue(),
+            pbackgroundPositionH = $$('pbackgroundPositionH').getValue(),
+            backgroundPositionV = $$('backgroundPositionV').getValue(),
+            pbackgroundPositionV = $$('pbackgroundPositionV').getValue();
+        if (backgroundPositionH !== '' || backgroundPositionV !== '') item.css("background-position", Number(backgroundPositionH) + pbackgroundPositionH + " " + Number(backgroundPositionV) + pbackgroundPositionV);
+        var repeat = null,
+            repeatX = $$('repeatX').getValue(),
+            repeatY = $$('repeatY').getValue();
+        if (repeatX === repeatY) repeat = (repeatX && repeatY) ? 'repeat' : 'no-repeat';
+        else repeat = repeatX ? 'repeat-x' : 'repeat-y';
+        item.css("background-repeat", repeat);
+        item.css("background-attachment", $$('fixed').getValue() ? 'fixed' : 'scroll');
         var shadows = [];
         $.each($$('shadows').serialize(), (index, value) => shadows.push((value.inset ? 'inset ' : '') + Number(value.x) + 'px ' + Number(value.y) + 'px ' + Number(value.blur) + 'px ' + Number(value.spread) + 'px ' + value.color));
         item.css("box-shadow", shadows.join());
@@ -316,64 +334,16 @@ export default class TemplateView extends JetView {
         $.each($$('data').serialize(), (index, value) => {
             if (value.data) item.data(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value).attr(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value);
         });
-
         /*
-				if (this._pageAppearance.getTextColorCheck()) {
-					item.setStyle("color", this._pageAppearance.getTextColorLabel());
-				}
-				else {
-					item.setStyle("color", null);
-				}
 				if (this._pageAppearance.getBackground()) {
 					var backgroundImage = this._pageAppearance.getBackgroundImageTextField();
 					item.setStyle("background-image", (backgroundImage === null || backgroundImage === '') ? null : 'url(' + backgroundImage + ')');
-					item.setStyle("background-position", this._pageAppearance.getBackgroundPositionXTextField().getValue() + this._pageAppearance.getBackgroundPositionXTextField().getUnit() + " " + this._pageAppearance.getBackgroundPositionYTextField().getValue() + this._pageAppearance.getBackgroundPositionYTextField().getUnit());
-					var repeatX = this._pageAppearance.getBackgroundRepeatXCheckBox();
-					var repeatY = this._pageAppearance.getBackgroundRepeatYCheckBox();
-					var repeat = null;
-					if (repeatX === repeatY) {
-						repeat = (repeatX && repeatY) ? 'repeat' : 'no-repeat';
-					}
-					else {
-						repeat = repeatX ? 'repeat-x' : 'repeat-y';
-					}
-					item.setStyle("background-repeat", repeat);
-					item.setStyle("background-attachment", this._pageAppearance.getBackgroundFixedCheckBox() ? 'fixed' : 'scroll');
-					item.setStyle("background-color", this._pageAppearance.getBackgroundColorLabel());
 				}
-				else {
-					item.setStyle("background", null);
-				}
-				if (this._pageAppearance.getOpacityCheck()) {
-					item.setStyle("opacity", (100 - this._pageAppearance.getOpacitySlider()) / 100);
-				}
-				else {
-					item.setStyle("opacity", null);
-				}
-				//var hidden = !Boolean(String(item.getAttribute("hidden")));
-				item.removeAttribute("class");
-				var classSimpleData = this._pageCss.getClassSimple().getData();
-				item.addClasses(classSimpleData.toString().split(','));
-				//if (hidden) {
-				//	item.setAttribute("hidden", "");
-				//if (fixed) {
-				//	item.getAncestorsUntil(body, "div:not([id])").setAttribute("hidden", "");
-				//}
-				//}
-				var data = item.getAllData();
-				for (var x in data) {
-					if (data.hasOwnProperty(x)) {
-						item.removeData(qxWeb.string.hyphenate(x));
-					}
-				}
-				this._item = item;
-				this._pageData.getDataSimple().getData().forEach(this._itemSetData, this);
 				*/
     }
     _updateDND(oldRect, newRect) {
         var deltaAngle = oldRect.angle - newRect.angle;
         if (deltaAngle !== 0) {
-            console.log(1);
             deltaAngle = Math.round($$('angle').getValue() - deltaAngle);
             if (deltaAngle > 180) {
                 deltaAngle = deltaAngle - 360;
@@ -381,7 +351,6 @@ export default class TemplateView extends JetView {
             $$('angle').setValue(deltaAngle);
         }
         else {
-            console.log(2);
             var oldOrigin = new fabric.Point(oldRect.left, oldRect.top),
                 newOrigin = new fabric.Point(newRect.left, newRect.top),
                 angle = -fabric.util.degreesToRadians(newRect.angle),
@@ -402,40 +371,22 @@ export default class TemplateView extends JetView {
                 dY = 100 / fabricDocument[0].body.scrollHeight;
             var marginTop = $$('marginTop').getValue(),
                 pmarginTop = $$('pmarginTop').getValue();
-            if (marginTop !== '') {
-                console.log('marginTop = ', Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
-                $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
-            }
+            if (marginTop !== '') $$('marginTop').setValue(Math.round(Number(marginTop) + (pmarginTop === '%' ? dY : 1) * delta.top));
             var marginBottom = $$('marginBottom').getValue(),
                 pmarginBottom = $$('pmarginBottom').getValue();
-            if (marginBottom !== '') {
-                console.log('marginBottom = ', Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
-                $$('marginBottom').setValue(Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
-            }
+            if (marginBottom !== '') $$('marginBottom').setValue(Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
             var height = $$('height').getValue(),
                 pheight = $$('height').getValue();
-            if ((marginTop === '' || marginBottom === '') && height !== '') {
-                console.log('height = ', Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
-                $$('height').setValue(Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
-            }
+            if ((marginTop === '' || marginBottom === '') && height !== '') $$('height').setValue(Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
             var marginLeft = $$('marginLeft').getValue(),
                 pmarginLeft = $$('pmarginLeft').getValue();
-            if (marginLeft !== '') {
-                console.log('marginLeft', Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
-                $$('marginLeft').setValue(Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
-            }
+            if (marginLeft !== '') $$('marginLeft').setValue(Math.round(Number(marginLeft) + (pmarginLeft === '%' ? dX : 1) * delta.left));
             var marginRight = $$('marginRight').getValue(),
                 pmarginRight = $$('pmarginRight').getValue();
-            if (marginRight !== '') {
-                console.log('marginRight = ', Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
-                $$('marginRight').setValue(Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
-            }
+            if (marginRight !== '') $$('marginRight').setValue(Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
             var width = $$('width').getValue(),
                 pwidth = $$('width').getValue();
-            if ((marginLeft === '' || marginRight === '') && width !== '') {
-                console.log('width = ', Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
-                $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
-            }
+            if ((marginLeft === '' || marginRight === '') && width !== '') $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
         }
     }
     _makeSelection(that, resetDimension = false) {
@@ -544,29 +495,35 @@ export default class TemplateView extends JetView {
                 $$('borderRightColor').setValue(item[0].style.borderRightColor ? webix.color.rgbToHex(item[0].style.borderRightColor) : '#000000');
                 $$('borderTopColor').setValue(item[0].style.borderTopColor ? webix.color.rgbToHex(item[0].style.borderTopColor) : '#000000');
                 $$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
-                var marginTop = item[0].style.marginTop;
-                $$('marginTop').setValue(parseInt(marginTop));
-                if (marginTop !== '' && marginTop !== 'auto') $$('pmarginTop').setValue((marginTop.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                var marginTop = item[0].style.marginTop,
+                    parseMarginTop = parseInt(marginTop);
+                $$('marginTop').setValue(parseMarginTop);
+                if (parseMarginTop) $$('pmarginTop').setValue((marginTop.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginTop').setValue('px');
-                var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight;
-                $$('height').setValue(parseInt(height));
-                if (height !== '' && height !== 'auto') $$('pheight').setValue((height.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight,
+                    parseHeight = parseInt(height);
+                $$('height').setValue(parseHeight);
+                if (parseHeight) $$('pheight').setValue((height.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pheight').setValue('px');
-                var marginBottom = item[0].style.marginBottom;
-                $$('marginBottom').setValue(parseInt(marginBottom));
-                if (marginBottom !== '' && marginBottom !== 'auto') $$('pmarginBottom').setValue((marginBottom.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                var marginBottom = item[0].style.marginBottom,
+                    parseMarginBottom = parseInt(marginBottom);
+                $$('marginBottom').setValue(parseMarginBottom);
+                if (parseMarginBottom) $$('pmarginBottom').setValue((marginBottom.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginBottom').setValue('px');
-                var marginLeft = item[0].style.marginLeft;
-                $$('marginLeft').setValue(parseInt(marginLeft));
-                if (marginLeft !== '' && marginLeft !== 'auto') $$('pmarginLeft').setValue((marginLeft.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                var marginLeft = item[0].style.marginLeft,
+                    parseMarginLeft = parseInt(marginLeft);
+                $$('marginLeft').setValue(parseMarginLeft);
+                if (parseMarginLeft) $$('pmarginLeft').setValue((marginLeft.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginLeft').setValue('px');
-                var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth;
-                $$('width').setValue(parseInt(width));
-                if (width !== '' && width !== 'auto') $$('pwidth').setValue((width.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth,
+                    parseWidth = parseInt(width);
+                $$('width').setValue(parseWidth);
+                if (parseWidth) $$('pwidth').setValue((width.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pwidth').setValue('px');
-                var marginRight = item[0].style.marginRight;
-                $$('marginRight').setValue(parseInt(marginRight));
-                if (marginRight !== '' && marginRight !== 'auto') $$('pmarginRight').setValue((marginRight.match(/\D+$/)[0] === 'px') ? 'px' : '%');
+                var marginRight = item[0].style.marginRight,
+                    parseMarginRight = parseInt(marginRight);
+                $$('marginRight').setValue(parseMarginRight);
+                if (parseMarginRight) $$('pmarginRight').setValue((marginRight.match(/\D+$/)[0] === 'px') ? 'px' : '%');
                 else if (resetDimension) $$('pmarginRight').setValue('px');
                 $$('borderTopLeftRadius').setValue(parseInt(item[0].style.borderTopLeftRadius));
                 $$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
@@ -586,8 +543,10 @@ export default class TemplateView extends JetView {
                 $$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
                 $$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
                 var backgroundRepeat = item[0].style.backgroundRepeat;
-                $$('repeatX').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-x') ? true : false);
-                $$('repeatY').setValue((!backgroundRepeat || /\brepeat(?![\w-])/.test(backgroundRepeat) || backgroundRepeat === 'repeat-y') ? true : false);
+                console.log(item[0].style.backgroundRepeat);
+                console.log(/\brepeat(?![\w-])/.test(backgroundRepeat));
+                $$('repeatX').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-x') ? true : false);
+                $$('repeatY').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-y') ? true : false);
                 var backgroundFixed = item[0].style.backgroundAttachment;
                 $$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
                 $$('backgroundColor').setValue(item[0].style.backgroundColor ? webix.color.rgbToHex(item[0].style.backgroundColor) : '');
