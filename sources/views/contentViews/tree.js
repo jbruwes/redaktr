@@ -21,7 +21,7 @@ export default class TreeView extends JetView {
                         ace.setReadOnly(false);
                     }
                     lastXHRPostTree = this.app.S3.putObject({
-                        Bucket: 'res.redaktr.com',
+                        Bucket: 'base.redaktr.com',
                         Key: AWS.config.credentials.identityId + '.json',
                         ContentType: 'application/json',
                         Body: webix.ajax().stringify(tree)
@@ -44,7 +44,7 @@ export default class TreeView extends JetView {
             editor: "text",
             editValue: "value",
             editaction: "dblclick",
-            url: "https://res.redaktr.com/" + AWS.config.credentials.identityId + ".json",
+            url: "https://base.redaktr.com/" + AWS.config.credentials.identityId + ".json",
             on: {
                 "onAfterLoad": function() {
                     $$("tinymce").getEditor(true).then(editor => { this.select(this.getFirstId()) });

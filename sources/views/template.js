@@ -190,7 +190,7 @@ export default class TemplateView extends JetView {
             '<script src="//cdn.redaktr.com/jquery.min.js"></script>' +
             '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.js' : '//cdn.redaktr.com/index.min.js') + '"></script>' +
             '<link rel="shortcut icon" href="//favicon.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
-            '<base href="' + (identity ? '//media.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
+            '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
             dynamicHeader +
             '</head><body>' +
             this._body.find('#body').html() +
@@ -312,7 +312,6 @@ export default class TemplateView extends JetView {
         item.css("opacity", (100 - $$('transparency').getValue()) / 100);
         var backgroundColor = $$('backgroundColor').getValue();
         if (backgroundColor !== '') item.css("background-color", backgroundColor);
-
         var backgroundPositionH = $$('backgroundPositionH').getValue(),
             pbackgroundPositionH = $$('pbackgroundPositionH').getValue(),
             backgroundPositionV = $$('backgroundPositionV').getValue(),
@@ -543,8 +542,6 @@ export default class TemplateView extends JetView {
                 $$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
                 $$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
                 var backgroundRepeat = item[0].style.backgroundRepeat;
-                console.log(item[0].style.backgroundRepeat);
-                console.log(/\brepeat(?![\w-])/.test(backgroundRepeat));
                 $$('repeatX').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-x') ? true : false);
                 $$('repeatY').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-y') ? true : false);
                 var backgroundFixed = item[0].style.backgroundAttachment;

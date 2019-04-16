@@ -268,7 +268,30 @@ export default class AppearanceView extends JetView {
                                     autosend: false,
                                     name: "files",
                                     link: "bglist",
-                                    accept: "image/png, image/gif, image/jpeg"
+                                    accept: "image/png, image/gif, image/jpeg",
+                                    on: {
+                                        "onAfterFileAdd": file => {
+                                            console.log(file);
+                                            /*
+                                            this.app.S3.headObject({
+                                                Bucket: 'base.redaktr.com',
+                                                Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
+                                            }, (err, data) => {
+                                                var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
+                                                this.app.S3.putObject({
+                                                    Bucket: 'base.redaktr.com',
+                                                    Key: AWS.config.credentials.identityId + '/' + filePath,
+                                                    ContentType: mime,
+                                                    StorageClass: "REDUCED_REDUNDANCY",
+                                                    Body: blobInfo.blob()
+                                                }, (err, data) => {
+                                                    if (err) failure(err.message);
+                                                    else success(filePath);
+                                                });
+                                            });
+                                            */
+                                        }
+                                    }
                                 },
                                 {
                                     view: "list",

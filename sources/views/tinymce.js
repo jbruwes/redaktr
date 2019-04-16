@@ -60,12 +60,12 @@ export default class TinymceView extends JetView {
                     mime = "image";
             }
             this.app.S3.headObject({
-                Bucket: 'media.redaktr.com',
+                Bucket: 'base.redaktr.com',
                 Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
             }, (err, data) => {
                 var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
                 this.app.S3.putObject({
-                    Bucket: 'media.redaktr.com',
+                    Bucket: 'base.redaktr.com',
                     Key: AWS.config.credentials.identityId + '/' + filePath,
                     ContentType: mime,
                     StorageClass: "REDUCED_REDUNDANCY",
@@ -258,12 +258,12 @@ export default class TinymceView extends JetView {
                             var blobInfo = blobCache.create(id, file, base64);
                             blobCache.add(blobInfo);
                             this.app.S3.headObject({
-                                Bucket: 'media.redaktr.com',
+                                Bucket: 'base.redaktr.com',
                                 Key: AWS.config.credentials.identityId + '/' + file.name
                             }, (err, data) => {
                                 var filePath = (err ? '' : webix.uid() + '/') + file.name;
                                 this.app.S3.putObject({
-                                    Bucket: 'media.redaktr.com',
+                                    Bucket: 'base.redaktr.com',
                                     Key: AWS.config.credentials.identityId + '/' + filePath,
                                     ContentType: file.type,
                                     StorageClass: "REDUCED_REDUNDANCY",
@@ -292,7 +292,7 @@ export default class TinymceView extends JetView {
                 importcss_append: true,
                 images_reuse_filename: true,
                 images_upload_handler: images_upload_handler,
-                document_base_url: "//www.redaktr.com/" + AWS.config.credentials.identityId + "/",
+                document_base_url: "//base.redaktr.com/" + AWS.config.credentials.identityId + "/",
                 statusbar: false,
                 resize: false,
                 spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",
