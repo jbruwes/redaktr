@@ -1,100 +1,25 @@
 import { JetView } from "webix-jet";
 export default class TinymceView extends JetView {
     config() {
-        var images_upload_handler = (blobInfo, success, failure) => {
-            var fileext = blobInfo.filename().split('.').pop(),
-                mime = 'image/';
-            switch (fileext) {
-                case 'jpeg':
-                case 'jpg':
-                case 'jpe':
-                case 'jif':
-                case 'jfif':
-                case 'jfi':
-                    mime += "jpeg";
-                    break;
-                case 'jp2':
-                case 'j2k':
-                case 'jpf':
-                    mime += "jp2";
-                    break;
-                case 'jpx':
-                    mime += "jpx";
-                    break;
-                case 'jpm':
-                    mime += "jpm";
-                    break;
-                case 'jxr':
-                case 'hdp':
-                case 'wdp':
-                    mime += "jxr";
-                    break;
-                case 'webp':
-                    mime += "webp";
-                    break;
-                case 'gif':
-                    mime += "gif";
-                    break;
-                case 'png':
-                    mime += "png";
-                    break;
-                case 'tiff':
-                case 'tif':
-                    mime += "tiff";
-                    break;
-                case 'svg':
-                case 'svgz':
-                    mime += "svg+xml";
-                    break;
-                case 'xbm':
-                    mime += "x-xbitmap";
-                    break;
-                case 'bmp':
-                case 'dib':
-                    mime += "bmp";
-                    break;
-                case 'ico':
-                    mime += "x-icon";
-                    break;
-                default:
-                    mime = "image";
-            }
-            this.app.S3.headObject({
-                Bucket: 'base.redaktr.com',
-                Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
-            }, (err, data) => {
-                var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
-                this.app.S3.putObject({
-                    Bucket: 'base.redaktr.com',
-                    Key: AWS.config.credentials.identityId + '/' + filePath,
-                    ContentType: mime,
-                    StorageClass: "REDUCED_REDUNDANCY",
-                    Body: blobInfo.blob()
-                }, (err, data) => {
-                    if (err) failure(err.message);
-                    else success(filePath);
-                });
-            });
-        };
         return {
             id: "tinymce",
             view: "tinymce-editor",
             config: {
                 init_instance_callback: (editor) => {
-                //editor.serializer.addNodeFilter('script,style', (nodes, name) => {
-                //	var i = nodes.length,
-                //		node, value;
-                //	while (i--) {
-                //		node = nodes[i];
-                //		value = node.firstChild ? node.firstChild.value : '';
-                //		if (value.length > 0) {
-                //			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
-                //				.replace(/^[\r\n]*|[\r\n]*$/g, '')
-                //				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
-                //				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
-                //		}
-                //	}
-                //});
+                    //editor.serializer.addNodeFilter('script,style', (nodes, name) => {
+                    //	var i = nodes.length,
+                    //		node, value;
+                    //	while (i--) {
+                    //		node = nodes[i];
+                    //		value = node.firstChild ? node.firstChild.value : '';
+                    //		if (value.length > 0) {
+                    //			node.firstChild.value = value.replace(/(<!--\[CDATA\[|\]\]-->)/g, '\n')
+                    //				.replace(/^[\r\n]*|[\r\n]*$/g, '')
+                    //				.replace(/^\s*((<!--)?(\s*\/\/)?\s*<!\[CDATA\[|(<!--\s*)?\/\*\s*<!\[CDATA\[\s*\*\/|(\/\/)?\s*<!--|\/\*\s*<!--\s*\*\/)\s*[\r\n]*/gi, '')
+                    //				.replace(/\s*(\/\*\s*\]\]>\s*\*\/(-->)?|\s*\/\/\s*\]\]>(-->)?|\/\/\s*(-->)?|\]\]>|\/\*\s*-->\s*\*\/|\s*-->\s*)\s*$/g, '');
+                    //		}
+                    //	}
+                    //});
                 },
                 plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
                 //toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
@@ -237,9 +162,7 @@ export default class TinymceView extends JetView {
                     editor.ui.registry.addMenuButton('rlink', {
                         icon: 'link',
                         tooltip: 'Insert/edit link',
-                        fetch: callback => {
-                            callback(eval(getSubmenuItems($$("tree").getFirstId(), '/')));
-                        }
+                        fetch: callback => callback(eval(getSubmenuItems($$("tree").getFirstId(), '/')))
                     });
                 },
                 file_picker_types: "image media file",
@@ -291,7 +214,24 @@ export default class TinymceView extends JetView {
                 paste_data_images: true,
                 importcss_append: true,
                 images_reuse_filename: true,
-                images_upload_handler: images_upload_handler,
+                images_upload_handler: (blobInfo, success, failure) => {
+                    this.app.S3.headObject({
+                        Bucket: 'base.redaktr.com',
+                        Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
+                    }, (err, data) => {
+                        var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
+                        this.app.S3.putObject({
+                            Bucket: 'base.redaktr.com',
+                            Key: AWS.config.credentials.identityId + '/' + filePath,
+                            ContentType: blobInfo.blob().type,
+                            StorageClass: "REDUCED_REDUNDANCY",
+                            Body: blobInfo.blob()
+                        }, (err, data) => {
+                            if (err) failure(err.message);
+                            else success(filePath);
+                        });
+                    });
+                },
                 document_base_url: "//base.redaktr.com/" + AWS.config.credentials.identityId + "/",
                 statusbar: false,
                 resize: false,

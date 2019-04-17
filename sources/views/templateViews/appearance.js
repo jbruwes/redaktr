@@ -272,24 +272,23 @@ export default class AppearanceView extends JetView {
                                     on: {
                                         "onAfterFileAdd": file => {
                                             console.log(file);
-                                            /*
                                             this.app.S3.headObject({
                                                 Bucket: 'base.redaktr.com',
-                                                Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
+                                                Key: AWS.config.credentials.identityId + '/' + file.name
                                             }, (err, data) => {
-                                                var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
+                                                //var filePath = (err ? '' : webix.uid() + '/') + file.name;
+                                                file.sname = (err ? '' : webix.uid() + '/') + file.name;
                                                 this.app.S3.putObject({
                                                     Bucket: 'base.redaktr.com',
-                                                    Key: AWS.config.credentials.identityId + '/' + filePath,
-                                                    ContentType: mime,
+                                                    Key: AWS.config.credentials.identityId + '/' + file.sname,
+                                                    ContentType: file.file.type,
                                                     StorageClass: "REDUCED_REDUNDANCY",
-                                                    Body: blobInfo.blob()
+                                                    Body: file.file
                                                 }, (err, data) => {
-                                                    if (err) failure(err.message);
-                                                    else success(filePath);
+                                                    if (err) webix.message({ text: err.message, type: "error" });
+                                                    //else $$('bglist').add({ fileName: filePath });
                                                 });
                                             });
-                                            */
                                         }
                                     }
                                 },
@@ -297,6 +296,7 @@ export default class AppearanceView extends JetView {
                                     view: "list",
                                     id: "bglist",
                                     type: "uploader",
+                                    template:"{common.removeIcon()}{common.percent()}{common.fileName()}",
                                     autoheight: true,
                                     borderless: true
                                 }, {
@@ -392,3 +392,5 @@ export default class AppearanceView extends JetView {
     }
 }
 /* global webix */
+/* global AWS */
+/* global $$ */

@@ -533,7 +533,7 @@ export default class TemplateView extends JetView {
                 backgroundImage = backgroundImage ? backgroundImage : '';
                 backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
                 $$("uploader").files.data.clearAll();
-                if (backgroundImage) $$("uploader").addFile(backgroundImage, 0);
+                if (backgroundImage) $$("uploader").addFile({name:backgroundImage.split("/").pop(), sname:backgroundImage}, 0);
                 var backgroundPosition = item[0].style.backgroundPosition;
                 backgroundPosition = backgroundPosition ? backgroundPosition : 'px px';
                 backgroundPosition = backgroundPosition.split(" ");

@@ -5,6 +5,7 @@ export default class TopView extends JetView {
 			rows: [{
 					view: "toolbar",
 					height: 56,
+					//css: "webix_dark",
 					elements: [{
 							view: "icon",
 							icon: "mdi mdi-menu",
@@ -27,6 +28,7 @@ export default class TopView extends JetView {
 							view: "sidebar",
 							collapsed: true,
 							id: "sidebar",
+							//css: "webix_dark",
 							data: [],
 							click: (id) => {
 								if (id === "signout") {
