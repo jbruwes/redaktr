@@ -15,10 +15,29 @@ export default class LayersView extends JetView {
                 }
             },
             onClick: {
-                "check": function(e, id) {
-                    var item = this.getItem(id);
+                "check": (e, id) => {
+                    var item = $$('layers').getItem(id),
+                        item1 = this.getParentView()._body.find("#" + item.title),
+                        item2 = $($$("fabric").getIframe()).contents().find("#" + item.title);
                     item.markCheckbox = item.markCheckbox ? 0 : 1;
-                    this.updateItem(id, item);
+                    $$('layers').updateItem(id, item);
+                    if (item.markCheckbox) {
+                        item1.removeAttr("hidden");
+                        item2.removeAttr("hidden");
+                        item1.parents("div:not([id])").removeAttr("hidden");
+                        item2.parents("div:not([id])").removeAttr("hidden");
+                    }
+                    else {
+                        item1.attr("hidden", "");
+                        item2.attr("hidden", "");
+                        item1.parents("div:not([id])").attr("hidden", "");
+                        item2.parents("div:not([id])").attr("hidden", "");
+                    }
+                }
+            },
+            onChange: {
+                "check": function(e, id) {
+                    console.log(e, id);
                 }
             },
             template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}",
@@ -26,3 +45,5 @@ export default class LayersView extends JetView {
         };
     }
 }
+/* global $$ */
+/* global $ */
