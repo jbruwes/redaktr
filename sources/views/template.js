@@ -333,7 +333,8 @@ export default class TemplateView extends JetView {
             if (value.data) item.data(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value).attr(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value);
         });
         var backgroundImage = $$('bglist').getItem($$('bglist').getFirstId());
-        if (backgroundImage && backgroundImage.sname) item.css("background-image", 'url(' + backgroundImage.sname + ')');
+        console.log(backgroundImage);
+        if (backgroundImage && backgroundImage.file.sname) item.css("background-image", 'url(' + backgroundImage.file.sname + ')');
     }
     _updateDND(oldRect, newRect) {
         var deltaAngle = oldRect.angle - newRect.angle;

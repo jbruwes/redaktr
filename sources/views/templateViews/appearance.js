@@ -277,10 +277,10 @@ export default class AppearanceView extends JetView {
                                                     Key: AWS.config.credentials.identityId + '/' + file.name
                                                 }, (err, data) => {
                                                     //var filePath = (err ? '' : webix.uid() + '/') + file.name;
-                                                    file.sname = (err ? '' : webix.uid() + '/') + file.name;
+                                                    file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
                                                     this.app.S3.putObject({
                                                         Bucket: 'base.redaktr.com',
-                                                        Key: AWS.config.credentials.identityId + '/' + file.sname,
+                                                        Key: AWS.config.credentials.identityId + '/' + file.file.sname,
                                                         ContentType: file.file.type,
                                                         StorageClass: "REDUCED_REDUNDANCY",
                                                         Body: file.file
