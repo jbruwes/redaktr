@@ -284,7 +284,7 @@ export default class AppearanceView extends JetView {
                                                         ContentType: file.file.type,
                                                         StorageClass: "REDUCED_REDUNDANCY",
                                                         Body: file.file
-                                                    }, (err, data) => { if (err) webix.message({ text: err.message, type: "error" })
+                                                    }, (err, data) => { if (err) webix.message({ text: err.message, type: "error" });
                                                         else this.getParentView()._redraw(this.getParentView()) });
                                                 });
                                             }

@@ -171,7 +171,6 @@ export default class TemplateView extends JetView {
         if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 4;
         if (item.parents('div[data-absolute]:not([id])').parents('#body').length) return 1;
         if (item.parents('div[data-fixed]:not([id])').parents('#body').length) return 2;
-        //if (item.parents('div[data-static]:not([id])').parents('#body').length || item.parents('div[data-static]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 3;
         return 3;
     }
     _loadSite() {
@@ -417,14 +416,7 @@ export default class TemplateView extends JetView {
                 layer.angle = 0;
                 selObj = fabricDocument.find("#" + id);
                 if (selObj.length) {
-                    if (selObj.attr("hidden")) {
-                        rect.set({
-                            hasBorders: false,
-                            hasControls: false,
-                            selectable: false,
-                            evented: false
-                        });
-                    }
+                    if (selObj.attr("hidden")) rect.set({ hasBorders: false, hasControls: false, selectable: false, evented: false });
                     else {
                         map = selObj[0].getBoundingClientRect();
                         style = selObj.attr("style");
@@ -446,17 +438,7 @@ export default class TemplateView extends JetView {
                         layer.angle = rect.angle;
                     }
                 }
-                else {
-                    rect.set({
-                        left: 0,
-                        top: 0,
-                        width: 0,
-                        height: 0,
-                        scaleX: 1,
-                        scaleY: 1,
-                        angle: 0
-                    });
-                }
+                else rect.set({ left: 0, top: 0, width: 0, height: 0, scaleX: 1, scaleY: 1, angle: 0 });
                 rect.setCoords();
                 layer.oCoords = rect.oCoords;
                 id = $$("layers").getNextId(id);
