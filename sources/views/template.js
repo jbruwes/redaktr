@@ -199,7 +199,7 @@ export default class TemplateView extends JetView {
     }
     _redraw(that) {
         that = that ? that : this;
-        if (!that._lockRedraw) {
+        if (!that._lockRedraw && this._body) {
             /*
                 this._redo = [];
                 this._undo.push([this.getBody().find('#body').getHtml(), qxWeb(this.getSiteDocument()).find('body').getHtml()]);
@@ -333,12 +333,8 @@ export default class TemplateView extends JetView {
         $.each($$('data').serialize(), (index, value) => {
             if (value.data) item.data(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value).attr(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value);
         });
-        /*
-				if (this._pageAppearance.getBackground()) {
-					var backgroundImage = this._pageAppearance.getBackgroundImageTextField();
-					item.setStyle("background-image", (backgroundImage === null || backgroundImage === '') ? null : 'url(' + backgroundImage + ')');
-				}
-				*/
+        var backgroundImage = $$('bglist').getItem($$('bglist').getFirstId());
+        if (backgroundImage && backgroundImage.sname) item.css("background-image", 'url(' + backgroundImage.sname + ')');
     }
     _updateDND(oldRect, newRect) {
         var deltaAngle = oldRect.angle - newRect.angle;
@@ -533,7 +529,7 @@ export default class TemplateView extends JetView {
                 backgroundImage = backgroundImage ? backgroundImage : '';
                 backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
                 $$("uploader").files.data.clearAll();
-                if (backgroundImage) $$("uploader").addFile({name:backgroundImage.split("/").pop(), sname:backgroundImage}, 0);
+                if (backgroundImage) $$("uploader").addFile({ name: backgroundImage.split("/").pop(), sname: backgroundImage }, 0);
                 var backgroundPosition = item[0].style.backgroundPosition;
                 backgroundPosition = backgroundPosition ? backgroundPosition : 'px px';
                 backgroundPosition = backgroundPosition.split(" ");

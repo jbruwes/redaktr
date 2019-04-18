@@ -271,24 +271,23 @@ export default class AppearanceView extends JetView {
                                     accept: "image/png, image/gif, image/jpeg",
                                     on: {
                                         "onAfterFileAdd": file => {
-                                            console.log(file);
-                                            this.app.S3.headObject({
-                                                Bucket: 'base.redaktr.com',
-                                                Key: AWS.config.credentials.identityId + '/' + file.name
-                                            }, (err, data) => {
-                                                //var filePath = (err ? '' : webix.uid() + '/') + file.name;
-                                                file.sname = (err ? '' : webix.uid() + '/') + file.name;
-                                                this.app.S3.putObject({
+                                            if (!this.getParentView()._lockRedraw) {
+                                                this.app.S3.headObject({
                                                     Bucket: 'base.redaktr.com',
-                                                    Key: AWS.config.credentials.identityId + '/' + file.sname,
-                                                    ContentType: file.file.type,
-                                                    StorageClass: "REDUCED_REDUNDANCY",
-                                                    Body: file.file
+                                                    Key: AWS.config.credentials.identityId + '/' + file.name
                                                 }, (err, data) => {
-                                                    if (err) webix.message({ text: err.message, type: "error" });
-                                                    //else $$('bglist').add({ fileName: filePath });
+                                                    //var filePath = (err ? '' : webix.uid() + '/') + file.name;
+                                                    file.sname = (err ? '' : webix.uid() + '/') + file.name;
+                                                    this.app.S3.putObject({
+                                                        Bucket: 'base.redaktr.com',
+                                                        Key: AWS.config.credentials.identityId + '/' + file.sname,
+                                                        ContentType: file.file.type,
+                                                        StorageClass: "REDUCED_REDUNDANCY",
+                                                        Body: file.file
+                                                    }, (err, data) => { if (err) webix.message({ text: err.message, type: "error" })
+                                                        else this.getParentView()._redraw(this.getParentView()) });
                                                 });
-                                            });
+                                            }
                                         }
                                     }
                                 },
@@ -296,9 +295,10 @@ export default class AppearanceView extends JetView {
                                     view: "list",
                                     id: "bglist",
                                     type: "uploader",
-                                    template:"{common.removeIcon()}{common.percent()}{common.fileName()}",
+                                    template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
                                     autoheight: true,
-                                    borderless: true
+                                    borderless: true,
+                                    on: { "data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) }
                                 }, {
                                     cols: [{
                                             view: "toggle",
