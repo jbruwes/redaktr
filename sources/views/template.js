@@ -196,23 +196,43 @@ export default class TemplateView extends JetView {
             '</body></html>';
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
+
+    _zIndex(body, prefix, that) {
+        var i = $$('layers').count() + 1;
+        $.each($$('layers').serialize(), (index, value) => {
+            body.find("#" + value.title).css("z-index", i - (value.title === 'button' ? 1 : 0));
+            i -= value.title === 'button' ? 2 : 1;
+        });
+        body.find(prefix + 'body>div[data-fixed]:not([id])>div[id],' + prefix + 'body>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-static]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-static]:not([id])>div[id]').each(function() {
+            $(this).parents().css("z-index", $(this).css("z-index"));
+        });
+        body.find(prefix + 'body>div[data-fixed]:not([id])>div[id]').each(function() {
+            $(this).parents().css("z-index", $(this).css("z-index"));
+        });
+        body.find(prefix + 'body').append(body.find(prefix + 'body>div[data-fixed]:not([id]),' + prefix + 'body>div[data-absolute]:not([id]),' + prefix + 'body>div[data-static]:not([id]),' + prefix + 'body>div[data-relative]:not([id])').sort(function(a, b) {
+            var a1 = $(a).children('div[data-static]:not([id])').children('div[id]');
+            var b1 = $(b).children('div[data-static]:not([id])').children('div[id]');
+            a1 = ($(a).attr('data-relative') !== null && a1.length) ? a1.css('z-index') : $(a).children('div[id]').css('z-index');
+            b1 = ($(b).attr('data-relative') !== null && b1.length) ? b1.css('z-index') : $(b).children('div[id]').css('z-index');
+            return b1 - a1;
+        }));
+    }
+
     _redraw(that) {
         that = that ? that : this;
-        if (!that._lockRedraw && this._body) {
+        if (!that._lockRedraw && that._body) {
             /*
                 this._redo = [];
                 this._undo.push([this.getBody().find('#body').getHtml(), qxWeb(this.getSiteDocument()).find('body').getHtml()]);
                 */
             var fabricDocument = $($$("fabric").getIframe()).contents(),
                 id = $$("layers").getSelectedId();
-            that._saveStage(this._body.find("#" + id), '#body', this._body);
-            that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
-            /*
-            this.getController().zIndex();
-            if (this.getId() === 'menu') {
-                this.getSite().getWindow().jQuery('.k-menu-scroll-wrapper').resize();
+            if (id) {
+                that._saveStage(that._body.find("#" + id), '#body', that._body);
+                that._zIndex(that._body, '#', that);
+                that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
+                that._zIndex(fabricDocument, '', that);
             }
-        */
         }
     }
     _saveStage(item, body, object) {
@@ -333,7 +353,6 @@ export default class TemplateView extends JetView {
             if (value.data) item.data(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value).attr(value.data.replace(/[A-Z]/g, '-$&').toLowerCase(), value.value);
         });
         var backgroundImage = $$('bglist').getItem($$('bglist').getFirstId());
-        console.log(backgroundImage);
         if (backgroundImage && backgroundImage.file.sname) item.css("background-image", 'url(' + backgroundImage.file.sname + ')');
     }
     _updateDND(oldRect, newRect) {
