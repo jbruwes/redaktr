@@ -5,11 +5,11 @@ export default class TreeView extends JetView {
         var lastXHRPostTree = null,
             //lastXHRGetContent = null,
             onChangeFnc = id => {
-                webix.delay(() => {
-                    if (lastXHRPostTree) { lastXHRPostTree.abort(); }
-                    var tree = $$("tree").data.serialize(),
-                        tinymce = $$("tinymce").getEditor(),
-                        ace = $$("ace").getEditor();
+                //webix.delay(() => {
+                var tree = $$("tree").data.serialize(),
+                    tinymce = $$("tinymce").getEditor(),
+                    ace = $$("ace").getEditor();
+                if (tinymce && ace) {
                     if (!tree.length) {
                         $$("tinymce").$scope.setValue('');
                         tinymce.setMode('readonly');
@@ -20,6 +20,7 @@ export default class TreeView extends JetView {
                         tinymce.setMode('design');
                         ace.setReadOnly(false);
                     }
+                    if (lastXHRPostTree) lastXHRPostTree.abort();
                     lastXHRPostTree = this.app.S3.putObject({
                         Bucket: 'base.redaktr.com',
                         Key: AWS.config.credentials.identityId + '.json',
@@ -29,7 +30,8 @@ export default class TreeView extends JetView {
                         if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
                         else webix.message("Tree save complete");
                     });
-                });
+                }
+                //});
             };
 
         return {
@@ -46,16 +48,17 @@ export default class TreeView extends JetView {
             editaction: "dblclick",
             url: "https://base.redaktr.com/" + AWS.config.credentials.identityId + ".json",
             on: {
-                "onAfterLoad": function() {
-                    $$("tinymce").getEditor(true).then(editor => { this.select(this.getFirstId()) });
+                "onAfterLoad": _ => {
+                    $$('tree').data.attachEvent("onStoreUpdated", onChangeFnc);
+                    $$("tinymce").getEditor(true).then(editor => { $$('tree').select($$('tree').getFirstId()) });
                 },
-                "data->onAfterAdd": onChangeFnc,
-                "data->onAfterDelete": onChangeFnc,
-                "data->onDataUpdate": onChangeFnc,
-                "data->onDataMove": onChangeFnc,
-                //"data->onStoreUpdated":onChangeFnc,
+                //"data->onAfterAdd": onChangeFnc,
+                //"data->onAfterDelete": onChangeFnc,
+                //"data->onDataUpdate": onChangeFnc,
+                //"data->onDataMove": onChangeFnc,
+                //"data->onStoreUpdated": onChangeFnc,
                 "onItemCheck": onChangeFnc,
-                "onAfterSelect": (id) => {
+                "onAfterSelect": id => {
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
                             try { $$("tinymce").$scope.setValue(text) }

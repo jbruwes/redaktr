@@ -77,6 +77,8 @@ export default class TemplateView extends JetView {
         };
     }
     init() {
+        this._undo = [];
+        this._redo = [];
         $$('fabric').attachEvent("onAfterLoad", _ => {
             $$('fabric').getCanvas().setWidth($$('fabric').getWindow().document.documentElement.clientWidth);
             $$('fabric').getCanvas().setHeight($$('fabric').getWindow().document.documentElement.clientHeight);
@@ -196,7 +198,6 @@ export default class TemplateView extends JetView {
             '</body></html>';
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
-
     _zIndex(body, prefix, that) {
         var i = $$('layers').count() + 1;
         $.each($$('layers').serialize(), (index, value) => {
@@ -204,7 +205,7 @@ export default class TemplateView extends JetView {
             i -= value.title === 'button' ? 2 : 1;
         });
         body.find(prefix + 'body>div[data-fixed]:not([id])>div[id],' + prefix + 'body>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-static]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-static]:not([id])>div[id]').each(function() {
-            $(this).parents().css("z-index", $(this).css("z-index"));
+            $(this).parents().removeAttr("style");
         });
         body.find(prefix + 'body>div[data-fixed]:not([id])>div[id]').each(function() {
             $(this).parents().css("z-index", $(this).css("z-index"));
@@ -217,21 +218,29 @@ export default class TemplateView extends JetView {
             return b1 - a1;
         }));
     }
-
     _redraw(that) {
         that = that ? that : this;
         if (!that._lockRedraw && that._body) {
-            /*
-                this._redo = [];
-                this._undo.push([this.getBody().find('#body').getHtml(), qxWeb(this.getSiteDocument()).find('body').getHtml()]);
-                */
             var fabricDocument = $($$("fabric").getIframe()).contents(),
                 id = $$("layers").getSelectedId();
             if (id) {
+                that._redo = [];
+                that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
                 that._saveStage(that._body.find("#" + id), '#body', that._body);
                 that._zIndex(that._body, '#', that);
                 that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
                 that._zIndex(fabricDocument, '', that);
+                that._genHtml(false);
+                if (that._lastXHRPostTree) that._lastXHRPostTree.abort();
+                that._lastXHRPostTree = that.app.S3.putObject({
+                    Bucket: 'template.redaktr.com',
+                    Key: AWS.config.credentials.identityId + '.htm',
+                    ContentType: 'text/html',
+                    Body:that._html
+                }, (err, data) => {
+                    if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+                    else webix.message("Template save complete");
+                });
             }
         }
     }
@@ -390,7 +399,7 @@ export default class TemplateView extends JetView {
                 pmarginBottom = $$('pmarginBottom').getValue();
             if (marginBottom !== '') $$('marginBottom').setValue(Math.round(Number(marginBottom) - (pmarginBottom === '%' ? dY : 1) * delta.bottom));
             var height = $$('height').getValue(),
-                pheight = $$('height').getValue();
+                pheight = $$('pheight').getValue();
             if ((marginTop === '' || marginBottom === '') && height !== '') $$('height').setValue(Math.round(Number(height) - (pheight === '%' ? dY : 1) * (delta.top - delta.bottom)));
             var marginLeft = $$('marginLeft').getValue(),
                 pmarginLeft = $$('pmarginLeft').getValue();
@@ -399,7 +408,7 @@ export default class TemplateView extends JetView {
                 pmarginRight = $$('pmarginRight').getValue();
             if (marginRight !== '') $$('marginRight').setValue(Math.round(Number(marginRight) - (pmarginRight === '%' ? dX : 1) * delta.right));
             var width = $$('width').getValue(),
-                pwidth = $$('width').getValue();
+                pwidth = $$('pwidth').getValue();
             if ((marginLeft === '' || marginRight === '') && width !== '') $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
         }
     }

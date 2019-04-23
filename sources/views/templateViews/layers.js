@@ -35,12 +35,6 @@ export default class LayersView extends JetView {
                     }
                 }
             },
-            /*
-            onChange: {
-                "check": function(e, id) {
-                    console.log(e, id);
-                }
-            },*/
             template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}",
             on: {
                 'onSelectChange': _ => this.getParentView()._makeSelection(this.getParentView(), true),
