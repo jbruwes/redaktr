@@ -1,4 +1,4 @@
-@import url("//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css");
+@import url("//cdn.materialdesignicons.com/3.6.95/css/materialdesignicons.min.css");
 
 .webixappstart {
     opacity: 0;
@@ -147,11 +147,6 @@ div[view_id="tinymce"]>div {
 
 .mce-edit-area {
     display: table-row!important
-}
-
-.canvas-container {
-    position: absolute!important;
-    top: 0;
 }
 
 .check {

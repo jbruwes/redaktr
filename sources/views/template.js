@@ -15,12 +15,49 @@ export default class TemplateView extends JetView {
                                 id: "views",
                                 animate: false,
                                 keepViews: true,
-                                cells: [{ id: "fabric", view: "fabric", canvas: "fabric" }, { $subview: "tinymce", id: "tinymce" }, { $subview: "ace", id: "ace" }]
+                                cells: [{
+                                        id: "fabricCnt",
+                                        rows: [{
+                                            view: "toolbar",
+                                            cols: [{
+                                                view: "icon",
+                                                icon: "mdi mdi-undo",
+                                                click: _ => {
+                                                    var pop = this._undo.pop();
+                                                    if (pop) {
+                                                        var fabricDocument = $($$("fabric").getIframe()).contents();
+                                                        console.log('undo');
+                                                        this._redo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
+                                                        this._body.find('#body').html(pop[0]);
+                                                        fabricDocument.find('body').html(pop[1]);
+                                                        this._save();
+                                                    }
+                                                }
+                                            }, {
+                                                view: "icon",
+                                                icon: "mdi mdi-redo",
+                                                click: _ => {
+                                                    var pop = this._redo.pop();
+                                                    if (pop) {
+                                                        var fabricDocument = $($$("fabric").getIframe()).contents();
+                                                        console.log('redo');
+                                                        this._undo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
+                                                        this._body.find('#body').html(pop[0]);
+                                                        fabricDocument.find('body').html(pop[1]);
+                                                        this._save();
+                                                    }
+                                                }
+                                            }, {}]
+                                        }, { id: "fabric", view: "fabric", canvas: "fabric" }]
+                                    },
+                                    { $subview: "tinymce", id: "tinymce" },
+                                    { $subview: "ace", id: "ace" }
+                                ]
                             },
                             {
                                 view: "tabbar",
                                 id: "tabbar",
-                                options: [{ value: "Layout", id: "fabric", icon: "mdi mdi-ungroup" },
+                                options: [{ value: "Layout", id: "fabricCnt", icon: "mdi mdi-ungroup" },
                                     { value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
                                     { value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
                                 ],
@@ -151,7 +188,6 @@ export default class TemplateView extends JetView {
                     this._redraw();
                 });
             });
-
             this._header = $('<div/>').html(head);
             this._header.find('meta[charset]').remove();
             this._header.find('meta[name="viewport"]').remove();
@@ -168,6 +204,8 @@ export default class TemplateView extends JetView {
     }
     ready() {
         $('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
+        $('[view_id="fabric"]').css("position", "absolute");
+        $($$("fabric").getIframe()).css('position', 'absolute');
     }
     _getMode(item) {
         if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 4;
@@ -225,24 +263,29 @@ export default class TemplateView extends JetView {
                 id = $$("layers").getSelectedId();
             if (id) {
                 that._redo = [];
+                console.log('save undo stack');
                 that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
                 that._saveStage(that._body.find("#" + id), '#body', that._body);
                 that._zIndex(that._body, '#', that);
                 that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
                 that._zIndex(fabricDocument, '', that);
                 that._genHtml(false);
-                if (that._lastXHRPostTree) that._lastXHRPostTree.abort();
-                that._lastXHRPostTree = that.app.S3.putObject({
-                    Bucket: 'template.redaktr.com',
-                    Key: AWS.config.credentials.identityId + '.htm',
-                    ContentType: 'text/html',
-                    Body:that._html
-                }, (err, data) => {
-                    if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-                    else webix.message("Template save complete");
-                });
+                that._save(that);
             }
         }
+    }
+    _save(that) {
+        that = that ? that : this;
+        if (that._lastXHRPostTempl) that._lastXHRPostTempl.abort();
+        that._lastXHRPostTempl = that.app.S3.putObject({
+            Bucket: 'template.redaktr.com',
+            Key: AWS.config.credentials.identityId + '.htm',
+            ContentType: 'text/html',
+            Body: that._html
+        }, (err, data) => {
+            if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+            else webix.message("Template save complete");
+        });
     }
     _saveStage(item, body, object) {
         item.attr('style', '');
@@ -365,6 +408,7 @@ export default class TemplateView extends JetView {
         if (backgroundImage && backgroundImage.file.sname) item.css("background-image", 'url(' + backgroundImage.file.sname + ')');
     }
     _updateDND(oldRect, newRect) {
+        this._lockRedraw = true;
         var deltaAngle = oldRect.angle - newRect.angle;
         if (deltaAngle !== 0) {
             deltaAngle = Math.round($$('angle').getValue() - deltaAngle);
@@ -411,6 +455,7 @@ export default class TemplateView extends JetView {
                 pwidth = $$('pwidth').getValue();
             if ((marginLeft === '' || marginRight === '') && width !== '') $$('width').setValue(Math.round(Number(width) - (pwidth === '%' ? dX : 1) * (delta.left - delta.right)));
         }
+        this._lockRedraw = false;
     }
     _makeSelection(that, resetDimension = false) {
         that = that ? that : this;

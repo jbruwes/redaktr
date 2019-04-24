@@ -181,7 +181,7 @@ if (!BUILD_AS_MODULE) {
 				return;
 			}
 
-			var cdn = this.config.cdn ? this.config.cdn : "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.6.0";
+			var cdn = this.config.cdn ? this.config.cdn : "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.7.0";
 			webix.require([
 					cdn + "/fabric.min.js"
 				])
@@ -205,13 +205,14 @@ if (!BUILD_AS_MODULE) {
 				this.config.ready.call(this, this._canvas);
 		},
 		$setSize: function(x, y) {
-			if (webix.ui.view.prototype.$setSize.call(this, x, y)) {
-				this._waitCanvas.then(_ => {
-					var de = this.getWindow().document.documentElement;
-					this._canvas.setWidth(de.clientWidth);
-					this._canvas.setHeight(de.clientHeight);
-				});
-			}
+			webix.ui.view.prototype.$setSize.call(this, x, y);
+			//			if (webix.ui.view.prototype.$setSize.call(this, x, y)) {
+			this._waitCanvas.then(_ => {
+				var de = this.getWindow().document.documentElement;
+				this._canvas.setWidth(de.clientWidth);
+				this._canvas.setHeight(de.clientHeight);
+			});
+			//			}
 		},
 		getCanvas: function(waitCanvas) {
 			return waitCanvas ? this._waitCanvas : this._canvas;
