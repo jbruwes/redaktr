@@ -26,7 +26,6 @@ export default class TemplateView extends JetView {
                                                     var pop = this._undo.pop();
                                                     if (pop) {
                                                         var fabricDocument = $($$("fabric").getIframe()).contents();
-                                                        console.log('undo');
                                                         this._redo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
                                                         this._body.find('#body').html(pop[0]);
                                                         fabricDocument.find('body').html(pop[1]);
@@ -40,7 +39,6 @@ export default class TemplateView extends JetView {
                                                     var pop = this._redo.pop();
                                                     if (pop) {
                                                         var fabricDocument = $($$("fabric").getIframe()).contents();
-                                                        console.log('redo');
                                                         this._undo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
                                                         this._body.find('#body').html(pop[0]);
                                                         fabricDocument.find('body').html(pop[1]);
@@ -208,9 +206,9 @@ export default class TemplateView extends JetView {
         $($$("fabric").getIframe()).css('position', 'absolute');
     }
     _getMode(item) {
-        if (item.parents('div[data-absolute]:not([id])').parents('div[data-relative]:not([id])').parents('#body').length) return 4;
-        if (item.parents('div[data-absolute]:not([id])').parents('#body').length) return 1;
-        if (item.parents('div[data-fixed]:not([id])').parents('#body').length) return 2;
+        if (item.parent('div[data-absolute]:not([id])').parent('div[data-relative]:not([id])').parent('#body').length) return 4;
+        if (item.parent('div[data-absolute]:not([id])').parent('#body').length) return 1;
+        if (item.parent('div[data-fixed]:not([id])').parent('#body').length) return 2;
         return 3;
     }
     _loadSite() {
@@ -243,10 +241,10 @@ export default class TemplateView extends JetView {
             i -= value.title === 'button' ? 2 : 1;
         });
         body.find(prefix + 'body>div[data-fixed]:not([id])>div[id],' + prefix + 'body>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-static]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-static]:not([id])>div[id]').each(function() {
-            $(this).parents().removeAttr("style");
+            $(this).parent().removeAttr("style");
         });
         body.find(prefix + 'body>div[data-fixed]:not([id])>div[id]').each(function() {
-            $(this).parents().css("z-index", $(this).css("z-index"));
+            $(this).parent().css("z-index", $(this).css("z-index"));
         });
         body.find(prefix + 'body').append(body.find(prefix + 'body>div[data-fixed]:not([id]),' + prefix + 'body>div[data-absolute]:not([id]),' + prefix + 'body>div[data-static]:not([id]),' + prefix + 'body>div[data-relative]:not([id])').sort(function(a, b) {
             var a1 = $(a).children('div[data-static]:not([id])').children('div[id]');
@@ -263,7 +261,6 @@ export default class TemplateView extends JetView {
                 id = $$("layers").getSelectedId();
             if (id) {
                 that._redo = [];
-                console.log('save undo stack');
                 that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
                 that._saveStage(that._body.find("#" + id), '#body', that._body);
                 that._zIndex(that._body, '#', that);
@@ -275,6 +272,7 @@ export default class TemplateView extends JetView {
         }
     }
     _save(that) {
+        /*
         that = that ? that : this;
         if (that._lastXHRPostTempl) that._lastXHRPostTempl.abort();
         that._lastXHRPostTempl = that.app.S3.putObject({
@@ -286,6 +284,7 @@ export default class TemplateView extends JetView {
             if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
             else webix.message("Template save complete");
         });
+        */
     }
     _saveStage(item, body, object) {
         item.attr('style', '');
@@ -521,14 +520,14 @@ export default class TemplateView extends JetView {
             $$('fabric').getCanvas().requestRenderAll();
         }
         if ($$('tools').config.collapsed || (!$$('tools').config.collapsed && resetDimension)) {
-            var isHidden = $($$("fabric").getIframe()).parents(':hidden');
+            var isHidden = $($$("fabric").getIframe()).parent(':hidden');
             if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
             else doLayers();
             var item = that._body.find("#" + $$('layers').getSelectedId());
             if (item.length) {
                 that._lockRedraw = true;
                 $$('mode').setValue(that._getMode(item));
-                $$('dock').setValue((!item.parents('div.container:not([id])').length) + 1);
+                $$('dock').setValue((!item.parent('div.container:not([id])').length) + 1);
                 $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
                 $$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
                 $$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
@@ -650,7 +649,7 @@ export default class TemplateView extends JetView {
                 if (data.length) $$("data").select($$("data").getFirstId());
                 $$("class").clearAll();
                 var classRow = item.attr("class");
-                classRow = classRow ? classRow.split(/\s+/) : classRow;
+                classRow = classRow ? classRow.split(/\s+/) : [];
                 for (var x in classRow)
                     $$("class").add({ class: classRow[x] });
                 if (classRow.length) $$("class").select($$("class").getFirstId());

@@ -24,14 +24,14 @@ export default class LayersView extends JetView {
                     if (item.markCheckbox) {
                         item1.removeAttr("hidden");
                         item2.removeAttr("hidden");
-                        item1.parents("div:not([id])").removeAttr("hidden");
-                        item2.parents("div:not([id])").removeAttr("hidden");
+                        item1.parent("div:not([id])").removeAttr("hidden");
+                        item2.parent("div:not([id])").removeAttr("hidden");
                     }
                     else {
                         item1.attr("hidden", "");
                         item2.attr("hidden", "");
-                        item1.parents("div:not([id])").attr("hidden", "");
-                        item2.parents("div:not([id])").attr("hidden", "");
+                        item1.parent("div:not([id])").attr("hidden", "");
+                        item2.parent("div:not([id])").attr("hidden", "");
                     }
                 }
             },
