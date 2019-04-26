@@ -506,6 +506,7 @@ export default class TemplateView extends JetView {
                             selectable: true,
                             evented: true
                         });
+                        rect.sendToBack();
                         layer.left = rect.left;
                         layer.top = rect.top;
                         layer.angle = rect.angle;
