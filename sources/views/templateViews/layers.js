@@ -38,7 +38,9 @@ export default class LayersView extends JetView {
             template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}",
             on: {
                 'onSelectChange': _ => this.getParentView()._makeSelection(this.getParentView(), true),
-                'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView())
+                'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView()),
+                'onAfterEdit': function(id) {console.log('onAfterEdit', id)},
+                'onBeforeEdit': function(id) {console.log('onBeforeEdit', id)}
             }
         };
     }
