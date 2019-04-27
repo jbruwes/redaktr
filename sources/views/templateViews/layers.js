@@ -39,8 +39,8 @@ export default class LayersView extends JetView {
             on: {
                 'onSelectChange': _ => this.getParentView()._makeSelection(this.getParentView(), true),
                 'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView()),
-                'onAfterEdit': function(id) {console.log('onAfterEdit', id)},
-                'onBeforeEdit': function(id) {console.log('onBeforeEdit', id)}
+                'onAfterEditStop': function(id) {console.log('onAfterEditStop', id)},
+                'onBeforeEditStart': function(id) {console.log('onBeforeEditStart', id)}
             }
         };
     }
