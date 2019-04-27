@@ -517,6 +517,7 @@ export default class TemplateView extends JetView {
                 layer.oCoords = rect.oCoords;
                 id = $$("layers").getNextId(id);
             } while (id);
+            $$('fabric').getCanvas().bringToFront($$('layers').getSelectedItem().rect);
             $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
             $$('fabric').getCanvas().requestRenderAll();
         }

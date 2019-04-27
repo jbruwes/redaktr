@@ -34,37 +34,8 @@ export default class LayersToolbarView extends JetView {
                         fabricDocument.find("body").append($('<div data-fixed><div id="' + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
                         that._zIndex(fabricDocument, '', that);
                         $$("fabric").getCanvas().add(rect);
-
                         $$("layers").select(id);
                         $$("layers").edit(id);
-
-                        /*   
-					var selection = this._list.getSelection().getItem(0);
-					var newNode = qx.data.marshal.Json.createModel({
-						rect: null,
-						title: id,
-						visible: true,
-						icon: 'redaktr/icon/037-file-empty.svg'
-					});
-					var rect = new fabric.Rect({
-						opacity: 0,
-						borderColor: 'rgba(102,153,255,1)',
-						cornerColor: 'rgba(102,153,255,1)',
-						cornerStyle: 'circle',
-						originX: 'center',
-						originY: 'center',
-						lockScalingFlip: true,
-						parentItem: newNode
-					});
-					newNode.setRect(rect);
-					this._canvas.add(rect);
-					this._model.insertAfter(selection, newNode);
-					this._list.getSelection().push(newNode);
-					this.zIndex();
-                    */
-
-
-
                     }
                 },
                 {
@@ -78,12 +49,25 @@ export default class LayersToolbarView extends JetView {
                     view: "icon",
                     icon: "mdi mdi-delete-outline",
                     click: () => {
-                        var id = $$("layers").getSelectedId();
+                        var id = $$("layers").getSelectedId(),
+                            rect = $$("layers").getSelectedItem().rect,
+                            that = this.getParentView(),
+                            fabricDocument = $($$("fabric").getIframe()).contents();
                         if (id) {
-                            var newId = $$("layers").getPrevId(id);
-                            if (!newId) newId = $$("layers").getNextId(id);
-                            $$("layers").remove(id);
-                            if (newId) $$("layers").select(newId);
+                            if (id === 'content' || id === 'menu' || id === 'button') webix.message("Delete is prohibited", "debug");
+                            else {
+                                var newId = $$("layers").getPrevId(id);
+                                if (!newId) newId = $$("layers").getNextId(id);
+                                that._body.find("#" + id).remove();
+                                that._body.find('#body>div:not([data-relative]):not([id]):empty,#body>div[data-relative]:not(:first):not([id]):empty').remove();
+                                that._zIndex(that._body, '#', that);
+                                fabricDocument.find("#" + id).remove();
+                                fabricDocument.find('body>div:not([id]):empty').remove();
+                                that._zIndex(fabricDocument, '', that);
+                                if (newId) $$("layers").select(newId);
+                                $$("fabric").getCanvas().remove(rect);
+                                $$("layers").remove(id);
+                            }
                         }
                     }
                 }, {

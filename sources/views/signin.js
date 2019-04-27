@@ -119,11 +119,13 @@ export default class SignInView extends JetView {
                     }, {}, {
                         padding: 2,
                         cols: [{}, {
+                            id: "www",
                             view: "button",
+                            css:"webix_transparent",
                             type: "icon",
                             width: 300,
                             label: "𝔚𝔬𝔩𝔨𝔢𝔫 𝔚𝔢𝔯𝔨𝔰𝔱𝔞𝔱𝔱 𝔚𝔢𝔟𝔞𝔤𝔢𝔫𝔱𝔲𝔯",
-                            icon: "mdi mdi-dark mdi-cursor-default-click-outline",
+                            icon: "mdi mdi-cursor-default-click-outline",
                             click: () => {
                                 window.open("https://w--w--w.com", "_blank");
                             }
