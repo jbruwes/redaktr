@@ -272,7 +272,6 @@ export default class TemplateView extends JetView {
         }
     }
     _save(that) {
-        /*
         that = that ? that : this;
         if (that._lastXHRPostTempl) that._lastXHRPostTempl.abort();
         that._lastXHRPostTempl = that.app.S3.putObject({
@@ -284,7 +283,6 @@ export default class TemplateView extends JetView {
             if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
             else webix.message("Template save complete");
         });
-        */
     }
     _saveStage(item, body, object) {
         item.attr('style', '');
@@ -458,7 +456,6 @@ export default class TemplateView extends JetView {
     }
     _makeSelection(that, resetDimension = false) {
         that = that ? that : this;
-
         function swap(elem, options, callback, args) {
             var ret, name,
                 old = {};
