@@ -35,20 +35,20 @@ export default class LayersView extends JetView {
                     }
                 }
             },
-            template: "<span class='mdi mdi-18px mdi-#icon#'></span> #title#{common.markCheckbox()}",
+            template: "<span class='mdi mdi-dark mdi-inactive mdi-18px mdi-#icon#'></span> {common.markCheckbox()} #title#",
             on: {
                 'onSelectChange': _ => this.getParentView()._makeSelection(this.getParentView(), true),
                 'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView()),
                 'onBeforeEditStop': (state, editor, ignore) => {
                     var that = this.getParentView(),
                         fabricDocument = $($$("fabric").getIframe()).contents();
-                    if (!ignore) {
-                        if (!/^[A-Za-z][-A-Za-z0-9_]+$/g.test(state.value)) {
+                    if (!(ignore && state.old)) {
+                        if (!/^[A-Za-z][-A-Za-z0-9_]+$/.test(state.value)) {
                             webix.message("Prohibited symbols are used", "debug");
                             return false;
                         }
                         if (!state.value || ((state.old !== state.value) && that._body.find("#" + state.value).length !== 0)) {
-                            webix.message(state.value ? "The id is already exists" : "The id is empty", "debug");
+                            webix.message(state.value ? "The id is already exists" : "Can't be empty", "debug");
                             return false;
                         }
                         that._body.find("#" + state.old).attr('id', state.value);

@@ -39,7 +39,19 @@ export default class TreeView extends JetView {
             id: "tree",
             select: true,
             activeTitle: true,
-            template: "{common.icon()} {common.checkbox()} {common.folder()} #value#",
+            type: {
+                visible: function(obj) {
+                    return "<span class='check mdi mdi-18px mdi-checkbox-" + (obj.visible ? "marked-" : "blank-") + "outline'></span>";
+                }
+            },
+            onClick: {
+                "check": function(e, id) {
+                    var item = this.getItem(id);
+                    item.visible = item.visible ? false : true;
+                    this.updateItem(id, item);
+                }
+            },
+            template: "{common.icon()} {common.visible()} {common.folder()} #value#",
             checkboxRefresh: true,
             editable: true,
             onContext: {},
@@ -52,11 +64,6 @@ export default class TreeView extends JetView {
                     $$('tree').data.attachEvent("onStoreUpdated", onChangeFnc);
                     $$("tinymce").getEditor(true).then(editor => { $$('tree').select($$('tree').getFirstId()) });
                 },
-                //"data->onAfterAdd": onChangeFnc,
-                //"data->onAfterDelete": onChangeFnc,
-                //"data->onDataUpdate": onChangeFnc,
-                //"data->onDataMove": onChangeFnc,
-                //"data->onStoreUpdated": onChangeFnc,
                 "onItemCheck": onChangeFnc,
                 "onAfterSelect": id => {
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
@@ -73,6 +80,19 @@ export default class TreeView extends JetView {
                             catch (e) {}
                         }
                     });
+                },
+                'onBeforeEditStop': (state, editor, ignore) => {
+                    if (!(ignore && state.old)) {
+                        if (/[;,//?:@&=+$_]/.test(state.value)) {
+                            webix.message("Prohibited symbols are used", "debug");
+                            return false;
+                        }
+                        if (!state.value) {
+                            webix.message("Can't be empty", "debug");
+                            return false;
+                        }
+                    }
+                    return true;
                 }
             }
         };

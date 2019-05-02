@@ -6,15 +6,11 @@ export default class ToolbarView extends JetView {
             cols: [{
                     view: "icon",
                     icon: "mdi mdi-file-document-outline",
-                    click: () => {
+                    click: _ => {
                         var sel = $$("tree").getSelectedId();
                         var item = null;
-                        if (sel) {
-                            item = $$("tree").add({ checked: true, value: "" }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
-                        }
-                        else {
-                            item = $$("tree").add({ checked: true, value: "" });
-                        }
+                        if (sel) item = $$("tree").add({ checked: true, value: "article-" + webix.uid() }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
+                        else item = $$("tree").add({ checked: true, value: "article-" + webix.uid() });
                         $$("tree").select(item);
                         $$("tree").edit(item);
                     }
@@ -22,14 +18,14 @@ export default class ToolbarView extends JetView {
                 {
                     view: "icon",
                     icon: "mdi mdi-pencil",
-                    click: () => { $$("tree").edit($$("tree").getSelectedId()) }
+                    click: _ => $$("tree").edit($$("tree").getSelectedId())
                 }, {
                     view: "icon",
                     icon: "mdi mdi-delete-outline",
-                    click: () => {
+                    click: _ => {
                         var sel = $$("tree").getSelectedId();
                         var sel2 = $$("tree").getNextSiblingId(sel) || $$("tree").getPrevSiblingId(sel) || $$("tree").getParentId(sel);
-                        webix.confirm("Are you sure?", function(result) {
+                        webix.confirm("Are you sure?", result => {
                             if (result) {
                                 $$("tree").remove(sel);
                                 $$("tree").select(sel2);
@@ -39,38 +35,29 @@ export default class ToolbarView extends JetView {
                 }, {
                     view: "icon",
                     icon: "mdi mdi-arrow-up-bold-box-outline",
-                    click: () => {
-                        var sel = $$("tree").getSelectedId(),
-                            par = $$("tree").getParentId(sel);
-                        if ($$("tree").getPrevSiblingId(sel)) {
-                            $$("tree").move(sel, $$("tree").getBranchIndex(sel) - 1, null, { parent: par });
-                        }
+                    click: _ => {
+                        var sel = $$("tree").getSelectedId();
+                        if ($$("tree").getPrevSiblingId(sel)) $$("tree").move(sel, $$("tree").getBranchIndex(sel) - 1, null, { parent: $$("tree").getParentId(sel) });
                     }
                 }, {
                     view: "icon",
                     icon: "mdi mdi-arrow-down-bold-box-outline",
-                    click: () => {
-                        var sel = $$("tree").getSelectedId(),
-                            par = $$("tree").getParentId(sel);
-                        if ($$("tree").getNextSiblingId(sel)) {
-                            $$("tree").move(sel, $$("tree").getBranchIndex(sel) + 1, null, { parent: par });
-                        }
+                    click: _ => {
+                        var sel = $$("tree").getSelectedId();
+                        if ($$("tree").getNextSiblingId(sel)) $$("tree").move(sel, $$("tree").getBranchIndex(sel) + 1, null, { parent: $$("tree").getParentId(sel) });
                     }
                 }, {
                     view: "icon",
                     icon: "mdi mdi-arrow-left-bold-box-outline",
-                    click: () => {
+                    click: _ => {
                         var sel = $$("tree").getSelectedId(),
                             par = $$("tree").getParentId(sel);
-                        if (par) {
-                            var parpar = $$("tree").getParentId(par);
-                            $$("tree").move(sel, $$("tree").getBranchIndex(par) + 1, null, { parent: parpar });
-                        }
+                        if (par) $$("tree").move(sel, $$("tree").getBranchIndex(par) + 1, null, { parent: $$("tree").getParentId(par) });
                     }
                 }, {
                     view: "icon",
                     icon: "mdi mdi-arrow-right-bold-box-outline",
-                    click: () => {
+                    click: _ => {
                         var sel = $$("tree").getSelectedId(),
                             sib = $$("tree").getPrevSiblingId(sel);
                         if (sib) {

@@ -6,7 +6,7 @@ export default class LayersToolbarView extends JetView {
             cols: [{
                     view: "icon",
                     icon: "mdi mdi-file-document-outline",
-                    click: () => {
+                    click: _ => {
                         var id = "layer-" + webix.uid(),
                             that = this.getParentView(),
                             fabricDocument = $($$("fabric").getIframe()).contents(),
@@ -41,14 +41,14 @@ export default class LayersToolbarView extends JetView {
                 {
                     view: "icon",
                     icon: "mdi mdi-pencil",
-                    click: () => {
+                    click: _ => {
                         var id = $$("layers").getSelectedId();
                         if (id) $$("layers").edit(id);
                     }
                 }, {
                     view: "icon",
                     icon: "mdi mdi-delete-outline",
-                    click: () => {
+                    click: _ => {
                         var id = $$("layers").getSelectedId(),
                             rect = $$("layers").getSelectedItem().rect,
                             that = this.getParentView(),
@@ -73,14 +73,14 @@ export default class LayersToolbarView extends JetView {
                 }, {
                     view: "icon",
                     icon: "mdi mdi-arrow-up-bold-box-outline",
-                    click: () => {
+                    click: _ => {
                         var id = $$("layers").getSelectedId();
                         if (id) $$("layers").moveUp(id);
                     }
                 }, {
                     view: "icon",
                     icon: "mdi mdi-arrow-down-bold-box-outline",
-                    click: () => {
+                    click: _ => {
                         var id = $$("layers").getSelectedId();
                         if (id) $$("layers").moveDown(id);
                     }

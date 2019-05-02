@@ -31,17 +31,13 @@ export default class TopView extends JetView {
 							//css: "webix_dark",
 							data: [],
 							click: (id) => {
-								if (id === "signout") {
+								if (id === "signout") webix.delay(_ => {
 									delete AWS.config.credentials.params.Logins['accounts.google.com'];
 									delete AWS.config.credentials.params.Logins['graph.facebook.com'];
 									this.show('signin');
 									this._resetSidebar();
-								}
-								else {
-									//webix.delay(_ => {
-										this.show(id);
-									//});
-								}
+								});
+								else this.show(id);
 							}
 						},
 						{
@@ -70,5 +66,6 @@ export default class TopView extends JetView {
 		this._resetSidebar();
 	}
 }
+/* global webix */
 /* global AWS */
 /* global $$ */
