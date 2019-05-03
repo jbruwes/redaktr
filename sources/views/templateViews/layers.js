@@ -20,7 +20,6 @@ export default class LayersView extends JetView {
                         item1 = this.getParentView()._body.find("#" + item.title),
                         item2 = $($$("fabric").getIframe()).contents().find("#" + item.title);
                     item.markCheckbox = item.markCheckbox ? 0 : 1;
-                    $$('layers').updateItem(id, item);
                     if (item.markCheckbox) {
                         item1.removeAttr("hidden");
                         item2.removeAttr("hidden");
@@ -33,6 +32,7 @@ export default class LayersView extends JetView {
                         item1.parent("div:not([id])").attr("hidden", "");
                         item2.parent("div:not([id])").attr("hidden", "");
                     }
+                    $$('layers').updateItem(id, item);
                 }
             },
             template: "<span class='mdi mdi-dark mdi-inactive mdi-18px mdi-#icon#'></span> {common.markCheckbox()} #title#",
