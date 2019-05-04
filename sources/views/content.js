@@ -4,6 +4,9 @@ export default class ContentView extends JetView {
 		return {
 			id: "accordion",
 			view: "accordion",
+			on: {
+				"onAfterCollapse": id => { if (id === 'treeItem') $$("ace").getEditor().resize() }
+			},
 			cols: [{
 				view: "accordionitem",
 				header: "<span class='mdi mdi-file-document-outline'></span> Content",
@@ -36,6 +39,7 @@ export default class ContentView extends JetView {
 			}, {
 				view: "accordionitem",
 				collapsed: true,
+				id: "treeItem",
 				header: "<span class='mdi mdi-file-tree'></span> Tree",
 				body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
 			}]

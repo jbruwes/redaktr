@@ -5,7 +5,12 @@ export default class TemplateView extends JetView {
             id: "templateAccordion",
             view: "accordion",
             on: {
-                "onAfterCollapse": id => { if (id === 'tools') this._makeSelection(this) }
+                "onAfterCollapse": id => {
+                    if (id === 'tools') {
+                        $$("ace").getEditor().resize();
+                        this._makeSelection(this);
+                    }
+                }
             },
             cols: [{
                     view: "accordionitem",
@@ -456,6 +461,7 @@ export default class TemplateView extends JetView {
     }
     _makeSelection(that, resetDimension = false) {
         that = that ? that : this;
+
         function swap(elem, options, callback, args) {
             var ret, name,
                 old = {};
@@ -519,12 +525,32 @@ export default class TemplateView extends JetView {
             $$('fabric').getCanvas().requestRenderAll();
         }
         if ($$('tools').config.collapsed || (!$$('tools').config.collapsed && resetDimension)) {
-            var isHidden = $($$("fabric").getIframe()).parent(':hidden');
+            var isHidden = $($$("fabric").getIframe()).parent(':hidden'),
+                selectedId = $$('layers').getSelectedId(),
+                item = that._body.find("#" + selectedId);
             if (isHidden.length) swap(isHidden[isHidden.length - 1], { position: "absolute", visibility: "hidden", display: "block" }, doLayers);
             else doLayers();
-            var item = that._body.find("#" + $$('layers').getSelectedId());
             if (item.length) {
                 that._lockRedraw = true;
+
+
+
+                if (selectedId === 'menu' || selectedId === 'content') {
+                    $$('tinymce').$scope.setValue('');
+                    $$('tinymce').disable();
+                    $$("ace").$scope.setValue('');
+                    $$('ace').disable();
+                }
+                else {
+                    $$('tinymce').$scope.setValue(item.html());
+                    $$('tinymce').enable();
+                    $$("ace").$scope.setValue(item.html());
+                    $$('ace').enable();
+                }
+
+
+
+
                 $$('mode').setValue(that._getMode(item));
                 $$('dock').setValue((!item.parent('div.container:not([id])').length) + 1);
                 $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));

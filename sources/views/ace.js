@@ -5,7 +5,7 @@ export default class AceView extends JetView {
 			view: "ace-editor",
 			theme: "tomorrow",
 			mode: "html",
-			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.3"
+			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
 		};
 	}
 	init(ace) {
@@ -18,7 +18,7 @@ export default class AceView extends JetView {
 	}
 	_aceChange(e, session) {
 		var that = session.that.getParentView();
-		$$("tinymce").setValue('<!DOCTYPE html><html><head>' + session.that.header + '</head><body>' + session.that.getRoot().getEditor().getValue() + '</body></html>');
+		$$("tinymce").$scope.setValue('<!DOCTYPE html><html><head>' + session.that.header + '</head><body>' + session.that.getRoot().getEditor().getValue() + '</body></html>');
 		that.save(null, that);
 	}
 	setValue(text) {
