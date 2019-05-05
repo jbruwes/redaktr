@@ -382,7 +382,7 @@ export default class TinymceView extends JetView {
         tinymce.setContent(val);
         tinymce.undoManager.clear();
         tinymce.nodeChanged();
-        tinymce.on("Change", this.getParentView().save);
+        tinymce.on("Change", this.getParentView()._save);
     }
 }
 /* global tinymce */

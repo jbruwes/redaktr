@@ -19,7 +19,7 @@ export default class AceView extends JetView {
 	_aceChange(e, session) {
 		var that = session.that.getParentView();
 		$$("tinymce").$scope.setValue('<!DOCTYPE html><html><head>' + session.that.header + '</head><body>' + session.that.getRoot().getEditor().getValue() + '</body></html>');
-		that.save(null, that);
+		that._save(null, that);
 	}
 	setValue(text) {
 		this.getRoot().getEditor(true).then((editor) => {

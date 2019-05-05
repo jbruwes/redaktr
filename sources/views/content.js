@@ -63,7 +63,7 @@ export default class ContentView extends JetView {
 			if ($$("tinymce")) $$("tinymce").getEditor(true).then(editor => { tinyMCE.activeEditor.dom.loadCSS(content_css) });
 		});
 	}
-	save(e, self) {
+	_save(e, self) {
 		var that = e ? this.that.getParentView() : self;
 		if (that.lastXHRPostContent) that.lastXHRPostContent.abort();
 		that.lastXHRPostContent = that.app.S3.putObject({

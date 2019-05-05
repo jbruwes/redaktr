@@ -34,7 +34,7 @@ export default class TemplateView extends JetView {
                                                         this._redo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
                                                         this._body.find('#body').html(pop[0]);
                                                         fabricDocument.find('body').html(pop[1]);
-                                                        this._save();
+                                                        this._save2();
                                                     }
                                                 }
                                             }, {
@@ -47,7 +47,7 @@ export default class TemplateView extends JetView {
                                                         this._undo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
                                                         this._body.find('#body').html(pop[0]);
                                                         fabricDocument.find('body').html(pop[1]);
-                                                        this._save();
+                                                        this._save2();
                                                     }
                                                 }
                                             }, {}]
@@ -65,7 +65,14 @@ export default class TemplateView extends JetView {
                                     { value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
                                 ],
                                 multiview: "true",
-                                type: "bottom"
+                                type: "bottom",
+                                on: {
+                                    onChange: _ => {
+                                        if ($$("tabbar").getValue() === 'ace') {
+                                            $$("ace").$scope.setValue($$("tinymce").getValue());
+                                        }
+                                    }
+                                }
                             }
                         ]
                     }
@@ -272,11 +279,24 @@ export default class TemplateView extends JetView {
                 that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
                 that._zIndex(fabricDocument, '', that);
                 that._genHtml(false);
-                that._save(that);
+                that._save2(that);
             }
         }
     }
-    _save(that) {
+    _save(e, self) {
+        var that = e ? this.that.getParentView() : self,
+            fabricDocument = $($$("fabric").getIframe()).contents(),
+            id = $$("layers").getSelectedId();
+        if (id) {
+            that._body.find("#" + id).html($$("tinymce").getValue());
+            fabricDocument.find("#" + id).html($$("tinymce").getValue());
+            that._redo = [];
+            that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
+            that._genHtml(false);
+            that._save2(that);
+        }
+    }
+    _save2(that) {
         that = that ? that : this;
         if (that._lastXHRPostTempl) that._lastXHRPostTempl.abort();
         that._lastXHRPostTempl = that.app.S3.putObject({
@@ -524,7 +544,7 @@ export default class TemplateView extends JetView {
             $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
             $$('fabric').getCanvas().requestRenderAll();
         }
-        if ($$('tools').config.collapsed || (!$$('tools').config.collapsed && resetDimension)) {
+        if (($$('tools').config.collapsed && $$("tabbar").getValue() === 'fabricCnt') || (!$$('tools').config.collapsed && resetDimension)) {
             var isHidden = $($$("fabric").getIframe()).parent(':hidden'),
                 selectedId = $$('layers').getSelectedId(),
                 item = that._body.find("#" + selectedId);
@@ -532,9 +552,6 @@ export default class TemplateView extends JetView {
             else doLayers();
             if (item.length) {
                 that._lockRedraw = true;
-
-
-
                 if (selectedId === 'menu' || selectedId === 'content') {
                     $$('tinymce').$scope.setValue('');
                     $$('tinymce').disable();
@@ -547,10 +564,6 @@ export default class TemplateView extends JetView {
                     $$("ace").$scope.setValue(item.html());
                     $$('ace').enable();
                 }
-
-
-
-
                 $$('mode').setValue(that._getMode(item));
                 $$('dock').setValue((!item.parent('div.container:not([id])').length) + 1);
                 $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
