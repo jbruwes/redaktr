@@ -189,7 +189,6 @@ export default class TinymceView extends JetView {
                                     Bucket: 'base.redaktr.com',
                                     Key: AWS.config.credentials.identityId + '/' + filePath,
                                     ContentType: file.type,
-                                    StorageClass: "REDUCED_REDUNDANCY",
                                     Body: blobInfo.blob()
                                 }, (err, data) => {
                                     if (err) webix.message({ text: err.message, type: "error" });
@@ -224,7 +223,6 @@ export default class TinymceView extends JetView {
                             Bucket: 'base.redaktr.com',
                             Key: AWS.config.credentials.identityId + '/' + filePath,
                             ContentType: blobInfo.blob().type,
-                            StorageClass: "REDUCED_REDUNDANCY",
                             Body: blobInfo.blob()
                         }, (err, data) => {
                             if (err) failure(err.message);

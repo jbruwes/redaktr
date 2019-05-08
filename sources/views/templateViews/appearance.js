@@ -282,7 +282,6 @@ export default class AppearanceView extends JetView {
                                                         Bucket: 'base.redaktr.com',
                                                         Key: AWS.config.credentials.identityId + '/' + file.file.sname,
                                                         ContentType: file.file.type,
-                                                        StorageClass: "REDUCED_REDUNDANCY",
                                                         Body: file.file
                                                     }, (err, data) => { if (err) webix.message({ text: err.message, type: "error" });
                                                         else this.getParentView()._redraw(this.getParentView()) });
