@@ -138,7 +138,7 @@ export default class TinymceView extends JetView {
                         var newPath = null;
                         do {
                             item = $$("tree").getItem(id);
-                            if (item.checked) {
+                            if (item.visible) {
                                 child = $$("tree").getFirstChildId(id);
                                 value = item.value.replace(/[\""]/g, '\\"');
                                 newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
