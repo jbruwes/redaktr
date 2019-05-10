@@ -33,7 +33,7 @@ export default class TopView extends JetView {
 							click: (id) => {
 								if (id === "signout") webix.delay(_ => {
 									delete AWS.config.credentials.params.Logins['accounts.google.com'];
-									delete AWS.config.credentials.params.Logins['graph.facebook.com'];
+									//delete AWS.config.credentials.params.Logins['graph.facebook.com'];
 									this.show('signin');
 									this._resetSidebar();
 								});
