@@ -276,7 +276,6 @@ export default class AppearanceView extends JetView {
                                                     Bucket: 'base.redaktr.com',
                                                     Key: AWS.config.credentials.identityId + '/' + file.name
                                                 }, (err, data) => {
-                                                    //var filePath = (err ? '' : webix.uid() + '/') + file.name;
                                                     file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
                                                     this.app.S3.putObject({
                                                         Bucket: 'base.redaktr.com',
@@ -392,4 +391,3 @@ export default class AppearanceView extends JetView {
 }
 /* global webix */
 /* global AWS */
-/* global $$ */

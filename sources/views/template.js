@@ -205,7 +205,9 @@ export default class TemplateView extends JetView {
             this._header.find('link[rel="stylesheet"][href="//cdn.redaktr.com/index.min.css"]').remove();
             this._header.find('script[src="//cdn.redaktr.com/jquery.min.js"]').remove();
             this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/index.js"]').remove();
+            this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/redaktr.js"]').remove();
             this._header.find('script[src="//cdn.redaktr.com/index.min.js"]').remove();
+            this._header.find('script[src="//cdn.redaktr.com/redaktr.min.js"]').remove();
             this._header.find('link[rel="shortcut icon"][href*="' + AWS.config.credentials.identityId + '"]').remove();
             this._header.find('base[href*="' + AWS.config.credentials.identityId + '"]').remove();
             this._genHtml(true);
@@ -237,8 +239,12 @@ export default class TemplateView extends JetView {
             '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
             '<link rel="stylesheet" href="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.css' : '//cdn.redaktr.com/index.min.css') + '">' +
             '<script src="//cdn.redaktr.com/jquery.min.js"></script>' +
-            '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.js' : '//cdn.redaktr.com/index.min.js') + '"></script>' +
-            '<link rel="shortcut icon" href="//favicon.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
+            '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '"></script>' +
+            '<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
+
+            '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
+            '<script src="//base.redaktr.com/' + AWS.config.credentials.identityId + '.js"></script>' +
+
             '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
             dynamicHeader +
             '</head><body>' +

@@ -18,15 +18,24 @@ export default class SignInView extends JetView {
                 webix.message({ text: "Something goes wrong", type: "error" });
             });
         };
-        var signIn = (err) => {
-            if (err) {
-                webix.message({ text: err, type: "error" });
-            }
-            else {
-                if (AWS.config.credentials.identityId) appShow();
-                else AWS.config.credentials.refresh(() => { appShow() });
-            }
-        };
+        var check = _ => {
+                this.app.S3.getObject({
+                    Bucket: 'base.redaktr.com',
+                    Key: AWS.config.credentials.identityId + '.json'
+                }, (err, data) => {
+                    if(err) webix.message({ text: "Registration is Temporarily Unavailable", type: "error" });
+                    else appShow();
+                });
+            },
+            signIn = (err) => {
+                if (err) {
+                    webix.message({ text: err, type: "error" });
+                }
+                else {
+                    if (AWS.config.credentials.identityId) check();
+                    else AWS.config.credentials.refresh(_ => check());
+                }
+            };
         return {
             css: "signInView",
             cols: [{ gravity: 0.38 }, {
@@ -83,19 +92,11 @@ export default class SignInView extends JetView {
                                         window.gapi.load('auth2', () => {
                                             var auth2 = window.gapi.auth2.init({
                                                 client_id: '1098421926055-ss56dm06c6fuupnjdrjj7er0l7b705on.apps.' +
-                                                    'googleusercontent.com' //,
-                                                //cookiepolicy: 'single_host_origin'
+                                                    'googleusercontent.com'
                                             });
                                             auth2.signIn({
                                                 prompt: 'select_account'
                                             }).then((value) => {
-                                                //var profile = value.getBasicProfile();
-                                                //var username = profile.getName();
-                                                //var userimage = profile.getImageUrl();
-                                                //var useremail = profile.getEmail();
-                                                
-                                                //delete AWS.config.credentials.params.Logins['graph.facebook.com'];
-                                                
                                                 AWS.config.credentials.params.Logins['accounts.google.com'] = value.getAuthResponse().id_token;
                                                 AWS.config.credentials.clearCachedId();
                                                 AWS.config.credentials.expired = false;

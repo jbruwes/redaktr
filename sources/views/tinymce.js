@@ -159,7 +159,7 @@ export default class TinymceView extends JetView {
                         items = items.join();
                         return '[' + items + ']';
                     };
-                    editor.ui.registry.addMenuButton('rlink', {
+                    if (!$$('sidebar').getSelectedItem() || $$('sidebar').getSelectedItem().id === 'content') editor.ui.registry.addMenuButton('rlink', {
                         icon: 'link',
                         tooltip: 'Insert/edit link',
                         fetch: callback => callback(eval(getSubmenuItems($$("tree").getFirstId(), '/')))

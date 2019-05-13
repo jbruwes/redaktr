@@ -8,41 +8,67 @@ export default class ContentView extends JetView {
 				"onAfterCollapse": id => { if (id === 'treeItem') $$("ace").getEditor().resize() }
 			},
 			cols: [{
-				view: "accordionitem",
-				header: "<span class='mdi mdi-file-document-outline'></span> Content",
-				body: {
-					rows: [{
-							id: "views",
-							animate: false,
-							keepViews: true,
-							cells: [{ $subview: "tinymce" }, { $subview: "ace", id: "ace" }]
-						},
-						{
-							view: "tabbar",
-							id: "tabbar",
-							options: [
-								{ value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
-								{ value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
-							],
-							multiview: "true",
-							type: "bottom",
-							on: {
-								onChange: _ => {
-									if ($$("tabbar").getValue() === 'ace') {
-										$$("ace").$scope.setValue($$("tinymce").getValue());
+					view: "accordionitem",
+					header: "<span class='mdi mdi-file-document-outline'></span> Content",
+					body: {
+						rows: [{
+								id: "views",
+								animate: false,
+								keepViews: true,
+								cells: [{ $subview: "tinymce" }, { $subview: "ace", id: "ace" }]
+							},
+							{
+								view: "tabbar",
+								id: "tabbar",
+								options: [
+									{ value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
+									{ value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
+								],
+								multiview: "true",
+								type: "bottom",
+								on: {
+									onChange: _ => {
+										if ($$("tabbar").getValue() === 'ace') {
+											$$("ace").$scope.setValue($$("tinymce").getValue());
+										}
 									}
 								}
 							}
-						}
-					]
+						]
+					}
+				},
+				{
+					view: "accordionitem",
+					collapsed: true,
+					id: "tools",
+					header: "<span class='mdi mdi-wrench-outline'></span> Tools",
+					body: {
+						id: "accordionRight",
+						view: "accordion",
+						type: "line",
+						rows: [{
+							view: "accordionitem",
+							header: "<span class='mdi mdi-file-tree'></span> Tree",
+							body: {
+								rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }]
+							}
+						}, {
+							view: "accordionitem",
+							header: "<span class='mdi mdi-card-bulleted-settings-outline'></span> Properties",
+							collapsed: true,
+							body: { $subview: "contentViews.properties" }
+						}]
+					}
 				}
-			}, {
-				view: "accordionitem",
-				collapsed: true,
-				id: "treeItem",
-				header: "<span class='mdi mdi-file-tree'></span> Tree",
-				body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
-			}]
+
+				/*{
+					view: "accordionitem",
+					collapsed: true,
+					id: "treeItem",
+					header: "<span class='mdi mdi-file-tree'></span> Tree",
+					body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
+				}*/
+			]
 		};
 	}
 	init() {
