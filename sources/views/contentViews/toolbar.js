@@ -9,8 +9,8 @@ export default class ToolbarView extends JetView {
                     click: _ => {
                         var sel = $$("tree").getSelectedId();
                         var item = null;
-                        if (sel) item = $$("tree").add({ checked: true, value: "article-" + webix.uid() }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
-                        else item = $$("tree").add({ checked: true, value: "article-" + webix.uid() });
+                        if (sel) item = $$("tree").add({ link: '', text: '', date: '', image: '', visible: true, value: "article-" + webix.uid() }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
+                        else item = $$("tree").add({ link: '', text: '', date: '', image: '', visible: true, value: "article-" + webix.uid() });
                         $$("tree").select(item);
                         $$("tree").edit(item);
                     }

@@ -282,8 +282,10 @@ export default class AppearanceView extends JetView {
                                                         Key: AWS.config.credentials.identityId + '/' + file.file.sname,
                                                         ContentType: file.file.type,
                                                         Body: file.file
-                                                    }, (err, data) => { if (err) webix.message({ text: err.message, type: "error" });
-                                                        else this.getParentView()._redraw(this.getParentView()) });
+                                                    }, (err, data) => {
+                                                        if (err) webix.message({ text: err.message, type: "error" });
+                                                        else this.getParentView()._redraw(this.getParentView());
+                                                    });
                                                 });
                                             }
                                         }
@@ -296,7 +298,10 @@ export default class AppearanceView extends JetView {
                                     template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
                                     autoheight: true,
                                     borderless: true,
-                                    on: { "data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) }
+                                    on: {
+                                        //"data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) 
+                                        "onAfterDelete": _ => this.getParentView()._redraw(this.getParentView())
+                                    }
                                 }, {
                                     cols: [{
                                             view: "toggle",

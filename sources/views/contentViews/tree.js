@@ -66,26 +66,30 @@ export default class TreeView extends JetView {
                 },
                 "onItemCheck": onChangeFnc,
                 "onAfterSelect": id => {
+
+                    var item = $$('tree').getItem(id);
+
+                    this.getParentView()._lockProperties = true;
+
+                    $$('link').setValue(item.link);
+                    $$('date').setValue(item.date);
+                    $$('text').setValue(item.text);
+
+
+                    $$("uploader").files.data.clearAll();
+                    if (item.image) $$("uploader").addFile({ name: item.image.split("/").pop(), sname: item.image }, 0);
+
+
+                    this.getParentView()._lockProperties = false;
+
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
-                            //try { 
                             $$("tinymce").$scope.setValue(text);
-                            //}
-                            //catch (e) {}
-                            //try { 
                             $$("ace").$scope.setValue(text);
-                            //    }
-                            //catch (e) {}
                         },
                         error: (text, data, XmlHttpRequest) => {
-                            //try { 
                             $$("tinymce").$scope.setValue("");
-                            //}
-                            //catch (e) {}
-                            //try {
                             $$("ace").$scope.setValue("");
-                            //}
-                            //catch (e) {}
                         }
                     });
                 },

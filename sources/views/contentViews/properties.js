@@ -16,7 +16,7 @@ export default class PropertiesView extends JetView {
                     on: {
                         onChange: value => {
                             var id, item;
-                            if ($$('propForm').validate()) {
+                            if (!this.getParentView()._lockProperties && $$('propForm').validate()) {
                                 id = $$("tree").getSelectedId();
                                 item = $$("tree").getItem(id);
                                 item.link = value;
@@ -31,26 +31,32 @@ export default class PropertiesView extends JetView {
                     labelWidth: 33,
                     on: {
                         onChange: value => {
-                            var id = $$("tree").getSelectedId(),
+                            var id, item;
+                            if (!this.getParentView()._lockProperties) {
+                                id = $$("tree").getSelectedId();
                                 item = $$("tree").getItem(id);
-                            item.date = value;
-                            $$("tree").updateItem(id, item);
+                                item.date = value;
+                                $$("tree").updateItem(id, item);
+                            }
                         }
                     }
                 }, { template: "Description", type: "section", css: "webix_section" }, {
                     view: "textarea",
-                    id: "descr",
+                    id: "text",
                     label: "<span class='mdi mdi-dark mdi-24px mdi-card-text-outline'></span>",
                     labelWidth: 33,
                     on: {
                         onChange: value => {
-                            var id = $$("tree").getSelectedId(),
+                            var id, item;
+                            if (!this.getParentView()._lockProperties) {
+                                id = $$("tree").getSelectedId();
                                 item = $$("tree").getItem(id);
-                            item.description = value;
-                            $$("tree").updateItem(id, item);
+                                item.text = value;
+                                $$("tree").updateItem(id, item);
+                            }
                         }
                     }
-                }, {
+                }, { template: "Image", type: "section", css: "webix_section" }, {
                     view: "uploader",
                     id: "uploader",
                     value: 'Upload Image',
@@ -61,31 +67,39 @@ export default class PropertiesView extends JetView {
                     accept: "image/png, image/gif, image/jpeg",
                     on: {
                         "onAfterFileAdd": file => {
-                            this.app.S3.headObject({
-                                Bucket: 'base.redaktr.com',
-                                Key: AWS.config.credentials.identityId + '/' + file.name
-                            }, (err, data) => {
-                                file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
-                                this.app.S3.putObject({
+                            if (!this.getParentView()._lockProperties) {
+                                this.app.S3.headObject({
                                     Bucket: 'base.redaktr.com',
-                                    Key: AWS.config.credentials.identityId + '/' + file.file.sname,
-                                    ContentType: file.file.type,
-                                    Body: file.file
+                                    Key: AWS.config.credentials.identityId + '/' + file.name
                                 }, (err, data) => {
-                                    if (err) webix.message({ text: err.message, type: "error" });
-                                    //else this.getParentView()._redraw(this.getParentView())
+                                    file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
+                                    this.app.S3.putObject({
+                                        Bucket: 'base.redaktr.com',
+                                        Key: AWS.config.credentials.identityId + '/' + file.file.sname,
+                                        ContentType: file.file.type,
+                                        Body: file.file
+                                    }, (err, data) => {
+                                        if (err) webix.message({ text: err.message, type: "error" });
+                                        else this._image();
+                                    });
                                 });
-                            });
+                            }
                         }
                     }
-                }, { template: "Image", type: "section", css: "webix_section" }, {
+                }, {
                     view: "list",
                     id: "bglist",
                     type: "uploader",
                     template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
                     autoheight: true,
                     borderless: true,
-                    on: { /*"data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView())*/ }
+                    on: {
+                        //"data->onStoreUpdated": _ => this._image()
+                        "onBeforeDelete": _ => {
+                            console.log("onBeforeDelete");
+                            this._image();
+                        }
+                    }
                 }]
             }, {}],
             rules: {
@@ -95,6 +109,24 @@ export default class PropertiesView extends JetView {
             },
 
         };
+    }
+    _image() {
+
+
+        var id, item, image;
+        id = $$("tree").getSelectedId();
+        item = $$("tree").getItem(id);
+        if (!this.getParentView()._lockProperties && item) {
+            image = $$('bglist').getItem($$('bglist').getFirstId());
+            if (image && image.file.sname) item.image = image.file.sname;
+            else item.image = "";
+
+
+            $$("tree").updateItem(id, item);
+        }
+
+
+
     }
 }
 /* global webix */
