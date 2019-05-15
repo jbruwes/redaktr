@@ -5,7 +5,7 @@ export default class ContentView extends JetView {
 			id: "accordion",
 			view: "accordion",
 			on: {
-				"onAfterCollapse": id => { if (id === 'treeItem') $$("ace").getEditor().resize() }
+				"onAfterCollapse": id => { if (id === 'treeItem') $$("ace-content").getEditor().resize() }
 			},
 			cols: [{
 					view: "accordionitem",
@@ -15,21 +15,21 @@ export default class ContentView extends JetView {
 								id: "views",
 								animate: false,
 								keepViews: true,
-								cells: [{ $subview: "tinymce" }, { $subview: "ace", id: "ace" }]
+								cells: [{ $subview: "tinymce" }, { $subview: "ace", id: "ace-content" }]
 							},
 							{
 								view: "tabbar",
 								id: "tabbar",
 								options: [
 									{ value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
-									{ value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
+									{ value: "Source", id: "ace-content", icon: "mdi mdi-code-tags" }
 								],
 								multiview: "true",
 								type: "bottom",
 								on: {
 									onChange: _ => {
-										if ($$("tabbar").getValue() === 'ace') {
-											$$("ace").$scope.setValue($$("tinymce").getValue());
+										if ($$("tabbar").getValue() === 'ace-content') {
+											$$("ace-content").$scope.setValue($$("tinymce").getValue());
 										}
 									}
 								}

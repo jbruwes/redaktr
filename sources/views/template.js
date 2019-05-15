@@ -7,7 +7,7 @@ export default class TemplateView extends JetView {
             on: {
                 "onAfterCollapse": id => {
                     if (id === 'tools') {
-                        $$("ace").getEditor().resize();
+                        $$("ace-template").getEditor().resize();
                         this._makeSelection(this);
                     }
                 }
@@ -54,7 +54,7 @@ export default class TemplateView extends JetView {
                                         }, { id: "fabric", view: "fabric", canvas: "fabric" }]
                                     },
                                     { $subview: "tinymce", id: "tinymce" },
-                                    { $subview: "ace", id: "ace" }
+                                    { $subview: "ace", id: "ace-template" }
                                 ]
                             },
                             {
@@ -62,14 +62,14 @@ export default class TemplateView extends JetView {
                                 id: "tabbar",
                                 options: [{ value: "Layout", id: "fabricCnt", icon: "mdi mdi-ungroup" },
                                     { value: "Visual", id: "tinymce", icon: "mdi mdi-eye-outline" },
-                                    { value: "Source", id: "ace", icon: "mdi mdi-code-tags" }
+                                    { value: "Source", id: "ace-template", icon: "mdi mdi-code-tags" }
                                 ],
                                 multiview: "true",
                                 type: "bottom",
                                 on: {
                                     onChange: _ => {
-                                        if ($$("tabbar").getValue() === 'ace') {
-                                            $$("ace").$scope.setValue($$("tinymce").getValue());
+                                        if ($$("tabbar").getValue() === 'ace-template') {
+                                            $$("ace-template").$scope.setValue($$("tinymce").getValue());
                                         }
                                     }
                                 }
@@ -561,14 +561,14 @@ export default class TemplateView extends JetView {
                 if (selectedId === 'menu' || selectedId === 'content') {
                     $$('tinymce').$scope.setValue('');
                     $$('tinymce').disable();
-                    $$("ace").$scope.setValue('');
-                    $$('ace').disable();
+                    $$("ace-template").$scope.setValue('');
+                    $$('ace-template').disable();
                 }
                 else {
                     $$('tinymce').$scope.setValue(item.html());
                     $$('tinymce').enable();
-                    $$("ace").$scope.setValue(item.html());
-                    $$('ace').enable();
+                    $$("ace-template").$scope.setValue(item.html());
+                    $$('ace-template').enable();
                 }
                 $$('mode').setValue(that._getMode(item));
                 $$('dock').setValue((!item.parent('div.container:not([id])').length) + 1);

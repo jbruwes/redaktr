@@ -45,6 +45,7 @@ export default class PropertiesView extends JetView {
                     id: "text",
                     label: "<span class='mdi mdi-dark mdi-24px mdi-card-text-outline'></span>",
                     labelWidth: 33,
+                    height: 200,
                     on: {
                         onChange: value => {
                             var id, item;
@@ -84,7 +85,8 @@ export default class PropertiesView extends JetView {
                                     });
                                 });
                             }
-                        }
+                        },
+                        "files->onAfterDelete": file => this._image()
                     }
                 }, {
                     view: "list",
@@ -92,14 +94,7 @@ export default class PropertiesView extends JetView {
                     type: "uploader",
                     template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
                     autoheight: true,
-                    borderless: true,
-                    on: {
-                        //"data->onStoreUpdated": _ => this._image()
-                        "onBeforeDelete": _ => {
-                            console.log("onBeforeDelete");
-                            this._image();
-                        }
-                    }
+                    borderless: true
                 }]
             }, {}],
             rules: {
@@ -110,6 +105,15 @@ export default class PropertiesView extends JetView {
 
         };
     }
+    //init(view, url) {
+    // click behavior for the cell with a button styled with 'delbtn' class
+    //    $$('bglist').on_click.webix_remove_upload = (e, id, trg) => {
+    //        this._image();
+    //        return true;
+    //webix.message("Delete row: " + id);
+    //return false; //here it blocks default behavior
+    //    };
+    //}
     _image() {
 
 

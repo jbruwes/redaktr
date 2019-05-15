@@ -288,7 +288,8 @@ export default class AppearanceView extends JetView {
                                                     });
                                                 });
                                             }
-                                        }
+                                        },
+                                        "files->onAfterDelete": file => this.getParentView()._redraw(this.getParentView())
                                     }
                                 },
                                 {
@@ -297,11 +298,7 @@ export default class AppearanceView extends JetView {
                                     type: "uploader",
                                     template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
                                     autoheight: true,
-                                    borderless: true,
-                                    on: {
-                                        //"data->onStoreUpdated": _ => this.getParentView()._redraw(this.getParentView()) 
-                                        "onAfterDelete": _ => this.getParentView()._redraw(this.getParentView())
-                                    }
+                                    borderless: true
                                 }, {
                                     cols: [{
                                             view: "toggle",
