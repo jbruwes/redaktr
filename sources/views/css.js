@@ -2,14 +2,11 @@ import { JetView } from "webix-jet";
 export default class CssView extends JetView {
     config() {
         return {
-            
-                    view: "ace-editor",
-                    id: "ace-css",
-                    theme: "tomorrow",
-                    mode: "css",
-                    cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
-            
-            
+            view: "ace-editor",
+            id: "ace-css",
+            theme: "tomorrow",
+            mode: "css",
+            cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
         };
     }
     init() {
@@ -27,17 +24,17 @@ export default class CssView extends JetView {
         webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".css", { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
     }
     _aceChange(e, session) {
-		var that = session.that.getParentView();
-		if (that.lastXHRPostContent) that.lastXHRPostContent.abort();
-		that.lastXHRPostContent = that.app.S3.putObject({
-			Bucket: 'base.redaktr.com',
-			ContentType: 'text/css',
-			Key: AWS.config.credentials.identityId + ".css",
-			Body: session.that.getRoot().getEditor().getValue()
-		}, (err, data) => {
-			if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-			else webix.message("CSS save complete");
-		});
+        var that = session.that.getParentView();
+        if (that.lastXHRPostContent) that.lastXHRPostContent.abort();
+        that.lastXHRPostContent = that.app.S3.putObject({
+            Bucket: 'base.redaktr.com',
+            ContentType: 'text/css',
+            Key: AWS.config.credentials.identityId + ".css",
+            Body: session.that.getRoot().getEditor().getValue()
+        }, (err, data) => {
+            if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+            else webix.message("CSS save complete");
+        });
 
     }
     //_saveAce(session){
