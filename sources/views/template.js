@@ -140,78 +140,80 @@ export default class TemplateView extends JetView {
             ResponseContentType: 'text/html',
             ResponseCacheControl: 'no-cache'
         }, (err, data) => {
-            var body = '';
-            var head = '';
-            if (!err) {
-                head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
-                head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
-                body = data.Body.toString().match(/<body[^>]*>[\s\S]*<\/body>/gi);
-                body = body ? body[0].replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '') : '';
-            }
-            this._body = $('<div/>').append($('<div/>').attr('id', 'body').html(body));
-            var list = this._body.find('#body>div:not([id])>div[id],#body>div[data-relative]:not([id])>div:not([id])>div[id]');
-            list.sort((val1, val2) => { return $(val2).css("z-index") - $(val1).css("z-index") });
-            list.each((i, e) => {
-                var icon = 'mdi mdi-monitor-off',
-                    id = $(e).attr("id"),
-                    visible = !$(e).attr("hidden");
-                switch (this._getMode($(e))) {
-                    case 1:
-                        icon = 'mdi mdi-monitor-multiple';
-                        break;
-                    case 2:
-                        icon = 'mdi mdi-monitor-lock';
-                        break;
-                    case 3:
-                        icon = 'mdi mdi-monitor-star';
-                        break;
-                    case 4:
-                        icon = 'mdi mdi-monitor-dashboard';
-                        break;
+            if ($$('sidebar').getSelectedId() === 'template') {
+                var body = '';
+                var head = '';
+                if (!err) {
+                    head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
+                    head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
+                    body = data.Body.toString().match(/<body[^>]*>[\s\S]*<\/body>/gi);
+                    body = body ? body[0].replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '') : '';
                 }
-                $$("layers").add({
-                    id: id,
-                    title: id,
-                    markCheckbox: visible,
-                    icon: icon,
-                    rect: new fabric.Rect({
-                        hasControls: visible,
-                        hasBorders: visible,
-                        opacity: 0,
-                        borderColor: 'rgba(102,153,255,1)',
-                        cornerColor: 'rgba(102,153,255,1)',
-                        cornerStyle: 'circle',
-                        originX: 'center',
-                        originY: 'center',
-                        lockScalingFlip: true,
-                        id: id
-                    })
+                this._body = $('<div/>').append($('<div/>').attr('id', 'body').html(body));
+                var list = this._body.find('#body>div:not([id])>div[id],#body>div[data-relative]:not([id])>div:not([id])>div[id]');
+                list.sort((val1, val2) => { return $(val2).css("z-index") - $(val1).css("z-index") });
+                list.each((i, e) => {
+                    var icon = 'mdi mdi-monitor-off',
+                        id = $(e).attr("id"),
+                        visible = !$(e).attr("hidden");
+                    switch (this._getMode($(e))) {
+                        case 1:
+                            icon = 'mdi mdi-monitor-multiple';
+                            break;
+                        case 2:
+                            icon = 'mdi mdi-monitor-lock';
+                            break;
+                        case 3:
+                            icon = 'mdi mdi-monitor-star';
+                            break;
+                        case 4:
+                            icon = 'mdi mdi-monitor-dashboard';
+                            break;
+                    }
+                    $$("layers").add({
+                        id: id,
+                        title: id,
+                        markCheckbox: visible,
+                        icon: icon,
+                        rect: new fabric.Rect({
+                            hasControls: visible,
+                            hasBorders: visible,
+                            opacity: 0,
+                            borderColor: 'rgba(102,153,255,1)',
+                            cornerColor: 'rgba(102,153,255,1)',
+                            cornerStyle: 'circle',
+                            originX: 'center',
+                            originY: 'center',
+                            lockScalingFlip: true,
+                            id: id
+                        })
+                    });
                 });
-            });
-            $$("fabric").getCanvas(true).then(canvas => {
-                $(list.toArray().reverse()).each((i, e) => { canvas.add($$("layers").getItem($(e).attr("id")).rect) });
-                canvas.on('selection:updated', options => { $$("layers").select(options.target.id) });
-                canvas.on('selection:cleared', options => { canvas.setActiveObject(options.deselected[0]) });
-                canvas.on('object:modified', options => {
-                    var layer = $$("layers").getItem(options.target.id);
-                    this._updateDND({ top: layer.top, left: layer.left, angle: layer.angle, oCoords: layer.oCoords }, { top: options.target.top, left: options.target.left, angle: options.target.angle, oCoords: options.target.oCoords });
-                    this._redraw();
+                $$("fabric").getCanvas(true).then(canvas => {
+                    $(list.toArray().reverse()).each((i, e) => { canvas.add($$("layers").getItem($(e).attr("id")).rect) });
+                    canvas.on('selection:updated', options => { $$("layers").select(options.target.id) });
+                    canvas.on('selection:cleared', options => { canvas.setActiveObject(options.deselected[0]) });
+                    canvas.on('object:modified', options => {
+                        var layer = $$("layers").getItem(options.target.id);
+                        this._updateDND({ top: layer.top, left: layer.left, angle: layer.angle, oCoords: layer.oCoords }, { top: options.target.top, left: options.target.left, angle: options.target.angle, oCoords: options.target.oCoords });
+                        this._redraw();
+                    });
                 });
-            });
-            this._header = $('<div/>').html(head);
-            this._header.find('meta[charset]').remove();
-            this._header.find('meta[name="viewport"]').remove();
-            this._header.find('link[rel="stylesheet"][href="//s3.amazonaws.com/cdn.redaktr.com/index.css"]').remove();
-            this._header.find('link[rel="stylesheet"][href="//cdn.redaktr.com/index.min.css"]').remove();
-            this._header.find('script[src="//cdn.redaktr.com/jquery.min.js"]').remove();
-            this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/index.js"]').remove();
-            this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/redaktr.js"]').remove();
-            this._header.find('script[src="//cdn.redaktr.com/index.min.js"]').remove();
-            this._header.find('script[src="//cdn.redaktr.com/redaktr.min.js"]').remove();
-            this._header.find('link[rel="shortcut icon"][href*="' + AWS.config.credentials.identityId + '"]').remove();
-            this._header.find('base[href*="' + AWS.config.credentials.identityId + '"]').remove();
-            this._genHtml(true);
-            this._loadSite();
+                this._header = $('<div/>').html(head);
+                this._header.find('meta[charset]').remove();
+                this._header.find('meta[name="viewport"]').remove();
+                this._header.find('link[rel="stylesheet"][href="//s3.amazonaws.com/cdn.redaktr.com/index.css"]').remove();
+                this._header.find('link[rel="stylesheet"][href="//cdn.redaktr.com/index.min.css"]').remove();
+                this._header.find('script[src="//cdn.redaktr.com/jquery.min.js"]').remove();
+                this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/index.js"]').remove();
+                this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/redaktr.js"]').remove();
+                this._header.find('script[src="//cdn.redaktr.com/index.min.js"]').remove();
+                this._header.find('script[src="//cdn.redaktr.com/redaktr.min.js"]').remove();
+                this._header.find('link[rel="shortcut icon"][href*="' + AWS.config.credentials.identityId + '"]').remove();
+                this._header.find('base[href*="' + AWS.config.credentials.identityId + '"]').remove();
+                this._genHtml(true);
+                this._loadSite();
+            }
         });
     }
     ready() {

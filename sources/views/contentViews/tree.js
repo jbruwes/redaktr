@@ -1,11 +1,8 @@
 import { JetView } from "webix-jet";
 export default class TreeView extends JetView {
     config() {
-
         var lastXHRPostTree = null,
-            //lastXHRGetContent = null,
             onChangeFnc = id => {
-                //webix.delay(() => {
                 var tree = $$("tree").data.serialize(),
                     tinymce = $$("tinymce").getEditor(),
                     ace = $$("ace-content").getEditor();
@@ -31,9 +28,7 @@ export default class TreeView extends JetView {
                         else webix.message("Tree save complete");
                     });
                 }
-                //});
             };
-
         return {
             view: "edittree",
             id: "tree",
@@ -61,35 +56,33 @@ export default class TreeView extends JetView {
             url: "https://base.redaktr.com/" + AWS.config.credentials.identityId + ".json",
             on: {
                 "onAfterLoad": _ => {
-                    $$('tree').data.attachEvent("onStoreUpdated", onChangeFnc);
-                    $$("tinymce").getEditor(true).then(editor => { $$('tree').select($$('tree').getFirstId()) });
+                    if (!$$('sidebar').getSelectedId() || $$('sidebar').getSelectedId() === 'content') {
+                        $$('tree').data.attachEvent("onStoreUpdated", onChangeFnc);
+                        $$("tinymce").getEditor(true).then(editor => { $$('tree').select($$('tree').getFirstId()) });
+                    }
                 },
                 "onItemCheck": onChangeFnc,
                 "onAfterSelect": id => {
-
                     var item = $$('tree').getItem(id);
-
                     this.getParentView()._lockProperties = true;
-
                     $$('link').setValue(item.link);
                     $$('date').setValue(item.date);
                     $$('text').setValue(item.text);
-
-
                     $$("uploader").files.data.clearAll();
                     if (item.image) $$("uploader").addFile({ name: item.image.split("/").pop(), sname: item.image }, 0);
-
-
                     this.getParentView()._lockProperties = false;
-
                     webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
                         success: (text, data, XmlHttpRequest) => {
-                            if($$("tinymce"))$$("tinymce").$scope.setValue(text);
-                            if($$("ace-content"))$$("ace-content").$scope.setValue(text);
+                            if ($$('sidebar').getSelectedId() === 'content') {
+                                $$("tinymce").$scope.setValue(text);
+                                $$("ace-content").$scope.setValue(text);
+                            }
                         },
                         error: (text, data, XmlHttpRequest) => {
-                            if($$("tinymce"))$$("tinymce").$scope.setValue("");
-                            if($$("ace-content"))$$("ace-content").$scope.setValue("");
+                            if ($$('sidebar').getSelectedId() === 'content') {
+                                $$("tinymce").$scope.setValue("");
+                                $$("ace-content").$scope.setValue("");
+                            }
                         }
                     });
                 },
@@ -108,16 +101,6 @@ export default class TreeView extends JetView {
                 }
             }
         };
-    }
-    init() {
-        //this.app.attachEvent("onBeforeAjax", (mode, url, params, xhr) => {
-        //    if (mode === 'GET' && !url.indexOf('https://content.redaktr.com')) {
-        //        this.lastXHRGetContent = xhr;
-        //    }
-        //});
-    }
-    destroy() {
-        //this.app.detachEvent("onBeforeAjax");
     }
 }
 /* global webix */

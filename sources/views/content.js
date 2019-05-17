@@ -60,33 +60,25 @@ export default class ContentView extends JetView {
 						}]
 					}
 				}
-
-				/*{
-					view: "accordionitem",
-					collapsed: true,
-					id: "treeItem",
-					header: "<span class='mdi mdi-file-tree'></span> Tree",
-					body: { rows: [{ $subview: "contentViews.toolbar" }, { $subview: "contentViews.tree" }] }
-				}*/
 			]
 		};
 	}
 	init() {
-		//this.S3 = new AWS.S3({ apiVersion: '2006-03-01', correctClockSkew: true });
-		//this.lastXHRPostContent = null;
 		this.app.S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
 		}, (err, data) => {
-			var head = '';
-			if (!err) {
-				head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
-				head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
+			if ($$('sidebar').getSelectedId() === 'content') {
+				var head = '';
+				if (!err) {
+					head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
+					head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
+				}
+				var content_css = [];
+				$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
+				content_css = content_css.join(",");
+				$$("tinymce").getEditor(true).then(editor => { tinyMCE.activeEditor.dom.loadCSS(content_css) });
 			}
-			var content_css = [];
-			$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
-			content_css = content_css.join(",");
-			if ($$("tinymce")) $$("tinymce").getEditor(true).then(editor => { tinyMCE.activeEditor.dom.loadCSS(content_css) });
 		});
 	}
 	_save(e, self) {
