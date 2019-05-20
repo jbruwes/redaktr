@@ -6,7 +6,7 @@ export default class CdnView extends JetView {
             view: "datatable",
             select: "row",
             columns: [
-                { id: "csspath", editor: "text", header: "CSS path", fillspace: true }
+                { id: "csspath", editor: "text", header: "JS path", fillspace: true }
             ],
             editable: true,
             on: {

@@ -7,8 +7,14 @@ export default class TemplateView extends JetView {
             on: {
                 "onAfterCollapse": id => {
                     if (id === 'tools') {
-                        $$("ace-template").getEditor().resize();
-                        this._makeSelection(this);
+                        switch ($$("tabbar").getValue()) {
+                            case 'ace-template':
+                                $$("ace-template").getEditor().resize();
+                                break;
+                            case 'fabricCnt':
+                                this._makeSelection(this);
+                                break;
+                        }
                     }
                 }
             },
@@ -68,8 +74,13 @@ export default class TemplateView extends JetView {
                                 type: "bottom",
                                 on: {
                                     onChange: _ => {
-                                        if ($$("tabbar").getValue() === 'ace-template') {
-                                            $$("ace-template").$scope.setValue($$("tinymce").getValue());
+                                        switch ($$("tabbar").getValue()) {
+                                            case 'ace-template':
+                                                $$("ace-template").$scope.setValue($$("tinymce").getValue());
+                                                break;
+                                            case 'fabricCnt':
+                                                this._makeSelection(this);
+                                                break;
                                         }
                                     }
                                 }
@@ -130,6 +141,7 @@ export default class TemplateView extends JetView {
             $$('fabric').getCanvas().setWidth($$('fabric').getWindow().document.documentElement.clientWidth);
             $$('fabric').getCanvas().setHeight($$('fabric').getWindow().document.documentElement.clientHeight);
             $($$('fabric').getWindow()).scroll(_ => this._makeSelection(this));
+            $($$('fabric').getWindow()).resize(_ => this._makeSelection(this));
             var observer = new MutationObserver(_ => this._makeSelection(this));
             observer.observe($$("fabric").getWindow().document.body, { 'attributes': true, 'childList': true, 'characterData': true, 'subtree': true });
             $$("layers").select($$("layers").getFirstId());
@@ -142,10 +154,7 @@ export default class TemplateView extends JetView {
         }, (err, data) => {
             if ($$('sidebar').getSelectedId() === 'template') {
                 var body = '';
-                var head = '';
                 if (!err) {
-                    head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
-                    head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
                     body = data.Body.toString().match(/<body[^>]*>[\s\S]*<\/body>/gi);
                     body = body ? body[0].replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '') : '';
                 }
@@ -199,18 +208,6 @@ export default class TemplateView extends JetView {
                         this._redraw();
                     });
                 });
-                this._header = $('<div/>').html(head);
-                this._header.find('meta[charset]').remove();
-                this._header.find('meta[name="viewport"]').remove();
-                this._header.find('link[rel="stylesheet"][href="//s3.amazonaws.com/cdn.redaktr.com/index.css"]').remove();
-                this._header.find('link[rel="stylesheet"][href="//cdn.redaktr.com/index.min.css"]').remove();
-                this._header.find('script[src="//cdn.redaktr.com/jquery.min.js"]').remove();
-                this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/index.js"]').remove();
-                this._header.find('script[src="//s3.amazonaws.com/cdn.redaktr.com/redaktr.js"]').remove();
-                this._header.find('script[src="//cdn.redaktr.com/index.min.js"]').remove();
-                this._header.find('script[src="//cdn.redaktr.com/redaktr.min.js"]').remove();
-                this._header.find('link[rel="shortcut icon"][href*="' + AWS.config.credentials.identityId + '"]').remove();
-                this._header.find('base[href*="' + AWS.config.credentials.identityId + '"]').remove();
                 this._genHtml(true);
                 this._loadSite();
             }
@@ -234,21 +231,19 @@ export default class TemplateView extends JetView {
         document.close();
     }
     _genHtml(identity) {
-        var dynamicHeader = this._header.html();
-        dynamicHeader = dynamicHeader ? dynamicHeader : '';
         this._html =
             '<!DOCTYPE html><html><head>' +
             '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
-            '<link rel="stylesheet" href="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/index.css' : '//cdn.redaktr.com/index.min.css') + '">' +
+            '<link rel="stylesheet" href="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css' : '//cdn.redaktr.com/redaktr.min.css') + '">' +
             '<script src="//cdn.redaktr.com/jquery.min.js"></script>' +
-            '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '"></script>' +
             '<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
-
+            '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css">' +
             '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
+            '<script src="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.js"></script>' +
+            '<script src="//base.redaktr.com/' + AWS.config.credentials.identityId + '.redaktr.js"></script>' +
             '<script src="//base.redaktr.com/' + AWS.config.credentials.identityId + '.js"></script>' +
-
+            //'<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '"></script>' +
             '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
-            dynamicHeader +
             '</head><body>' +
             this._body.find('#body').html() +
             '</body></html>';
@@ -302,6 +297,7 @@ export default class TemplateView extends JetView {
             that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
             that._genHtml(false);
             that._save2(that);
+            //that._makeSelection(that);
         }
     }
     _save2(that) {

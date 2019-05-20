@@ -63,7 +63,7 @@ export default class ContentView extends JetView {
 			]
 		};
 	}
-	init() {
+/*	init() {
 		this.app.S3.getObject({
 			Bucket: 'template.redaktr.com',
 			Key: AWS.config.credentials.identityId + '.htm'
@@ -80,7 +80,7 @@ export default class ContentView extends JetView {
 				$$("tinymce").getEditor(true).then(editor => { tinyMCE.activeEditor.dom.loadCSS(content_css) });
 			}
 		});
-	}
+	}*/
 	_save(e, self) {
 		var that = e ? this.that.getParentView() : self;
 		if (that.lastXHRPostContent) that.lastXHRPostContent.abort();
@@ -95,8 +95,6 @@ export default class ContentView extends JetView {
 		});
 	}
 }
-/* global tinyMCE */
 /* global webix */
 /* global AWS */
 /* global $$ */
-/* global $ */
