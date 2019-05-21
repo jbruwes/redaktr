@@ -12,9 +12,9 @@ export default class JsView extends JetView {
                     view: "tabbar",
                     id: "tabbar",
                     options: [
-                        { value: "Document Ready", id: "doc-js", icon: "mdi mdi-file-multiple" },
-                        { value: "Content Ready", id: "con-js", icon: "mdi mdi-file" },
-                        { value: "External Js", id: "cdn-js", icon: "mdi mdi-folder-network-outline" }
+                        { value: "Ready", id: "doc-js", icon: "mdi mdi-file" },
+                        { value: "State", id: "con-js", icon: "mdi mdi-file-multiple" },
+                        { value: "External", id: "cdn-js", icon: "mdi mdi-folder-network-outline" }
                     ],
                     multiview: "true",
                     type: "bottom"

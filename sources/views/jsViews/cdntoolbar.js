@@ -6,7 +6,7 @@ export default class CdnToolbarView extends JetView {
             cols: [{
                     view: "icon",
                     icon: "mdi mdi-file-document-outline",
-                    click: _ => { $$("cdn").select($$('cdn').add({ csspath: '' })) }
+                    click: _ => { $$("cdn").select($$('cdn').add({ url: '' })) }
                 },
                 {
                     view: "icon",

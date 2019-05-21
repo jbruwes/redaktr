@@ -5,7 +5,7 @@ export default class AceView extends JetView {
 			view: "ace-editor",
 			id:"con-js",
 			theme: "tomorrow",
-			mode: "js",
+			mode: "javascript",
 			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
 		};
 	}
@@ -17,13 +17,13 @@ export default class AceView extends JetView {
 					session.that = this;
 					session.setUseWorker(false);
 					session.setUseWrapMode(true);
-					session.setValue(text, -1);
+					session.setValue(text.replace(/^function state\(\){try{/, '').replace(/}catch\(e\){}}$/, ''), -1);
 					session.on('change', this._aceChange, this);
 					editor.resize();
 				});
 			}
 		};
-		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".redaktr.js", { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
+		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".state.js", { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
 	}
 	_aceChange(e, session) {
 		var that = session.that;
@@ -31,11 +31,11 @@ export default class AceView extends JetView {
 		that.lastXHRPost = that.app.S3.putObject({
 			Bucket: 'base.redaktr.com',
 			ContentType: 'application/javascript',
-			Key: AWS.config.credentials.identityId + "redaktr.js",
-			Body: $$('doc-js').getEditor().getValue()
+			Key: AWS.config.credentials.identityId + ".state.js",
+			Body: 'function state(){try{' + $$('con-js').getEditor().getValue() + '}catch(e){}}'
 		}, (err, data) => {
 			if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-			else webix.message("Content ready JS save complete");
+			else webix.message("State JS save complete");
 		});
 	}
 }

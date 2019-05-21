@@ -12,8 +12,8 @@ export default class CssView extends JetView {
                     view: "tabbar",
                     id: "tabbar",
                     options: [
-                        { value: "Internal CSS", id: "ace-css", icon: "mdi mdi-language-css3" },
-                        { value: "External CSS", id: "cdn-css", icon: "mdi mdi-folder-network-outline" }
+                        { value: "CSS", id: "ace-css", icon: "mdi mdi-language-css3" },
+                        { value: "External", id: "cdn-css", icon: "mdi mdi-folder-network-outline" }
                     ],
                     multiview: "true",
                     type: "bottom"
