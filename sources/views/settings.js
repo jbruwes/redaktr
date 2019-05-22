@@ -1,67 +1,62 @@
 import { JetView } from "webix-jet";
 export default class SettingsView extends JetView {
-    config() {
+	config() {
 
-        return {
-            rows: [
-
-
-                {
-                    view: "form",
-                    autoheight: false,
-                    elements: [{
-                            rows: [
-                                { template: "Project name", type: "section" },
-                                { view: "text", label: "<span class='mdi mdi-dark mdi-24px mdi-account-edit'></span>", labelWidth: 33 }
-                            ]
-                        },
-                        {
-                            rows: [
-                                { template: "Domain", type: "section", css: "webix_section" },
-                                { view: "text", label: "<span class='mdi mdi-dark mdi-24px mdi-web'></span>", labelWidth: 33 }
-                            ]
-                        },
-                        {
-                            rows: [
-                                { template: "Constant URLs", type: "section", css: "webix_section" },
-                                {
-                                    rows: [{
-                                            view: "toolbar",
-                                            cols: [{
-                                                view: "icon",
-                                                icon: "mdi mdi-file-document-outline",
-                                                click: () => {}
-                                            }, {
-                                                view: "icon",
-                                                icon: "mdi mdi-delete-outline",
-                                                click: () => {}
-                                            }, {}]
-                                        },
-                                        {
-                                            id: "hardlinks",
-                                            view: "datatable",
-                                            select: "row",
-                                            columns: [
-                                                { id: "hlink", editor: "text", header: "Custom URL", fillspace: true },
-                                                { id: "hvalue", editor: "text", header: "Page URL", fillspace: true }
-                                            ],
-                                            editable: true,
-                                            data: [
-                                                { hlink: "/CPU", hvalue: "/микропроцессор/новый" },
-                                                { hlink: "/news", hvalue: "/main/mews" }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    elementsConfig: { "labelAlign": "right" }
-                }
-            ]
-        };
-    }
-    init() {
-        $$("hardlinks").select($$("hardlinks").getFirstId());
-    }
+		return {
+			rows: [{
+				view: "form",
+				autoheight: false,
+				elements: [
+					{ template: "Project name", type: "section" }, { view: "label", label: "https://redaktr.com/help" },
+					{ template: "Domain", type: "section" }, { view: "label", label: "-", labelWidth: 33 },
+					{ template: "Verification", type: "section" },
+					{ view: "text", label: "Yandex", labelWidth: 56 }, { view: "text", label: "Google", labelWidth: 56 },
+					{ template: "Icon", type: "section", css: "webix_section" }, {
+						view: "uploader",
+						id: "uploader",
+						value: 'Upload Icon',
+						multiple: false,
+						autosend: false,
+						name: "files",
+						link: "bglist",
+						accept: "image/vnd.microsoft.icon",
+						on: {
+							"onAfterFileAdd": file => {
+								file.file.sname = 'favicon.ico';
+								this.app.S3.putObject({
+									Bucket: 'base.redaktr.com',
+									Key: AWS.config.credentials.identityId + '.ico',
+									ContentType: file.file.type,
+									Body: file.file
+								}, (err, data) => {
+									if (err) webix.message({ text: err.message, type: "error" });
+									//else this._image();
+								});
+							},
+							"files->onAfterDelete": file => {
+								this.app.S3.deleteObject({
+									Bucket: 'base.redaktr.com',
+									Key: AWS.config.credentials.identityId + '.ico'
+								}, (err, data) => {
+									if (err) webix.message({ text: err.message, type: "error" });
+									//else this._image();
+								});
+							}
+						}
+					}, {
+						view: "list",
+						id: "bglist",
+						type: "uploader",
+						template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
+						autoheight: true,
+						borderless: true
+					}
+				],
+				elementsConfig: { "labelAlign": "right" }
+			}]
+		};
+	}
 }
+/* global webix */
+/* global AWS */
+/* global $$ */
