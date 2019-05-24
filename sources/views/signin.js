@@ -22,7 +22,7 @@ export default class SignInView extends JetView {
 				this.app.DocumentClient.get({
 					TableName: "redaktr",
 					Key: { "id": AWS.config.credentials.identityId }
-				}, function(err, data) {
+				}, (err, data) => {
 					if (err) webix.message({ text: err, type: "error" });
 					else if (data.Item) appShow();
 					else webix.message({ text: "Registration is Temporarily Unavailable", type: "error" });

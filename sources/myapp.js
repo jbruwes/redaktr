@@ -224,4 +224,4 @@ if (!BUILD_AS_MODULE) {
 /* global webix */
 /* global fabric */
 /* global AWS */
-/* global $ */
+/* global tinymce */
