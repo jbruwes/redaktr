@@ -23,7 +23,7 @@ export default class AceView extends JetView {
 				});
 			}
 		};
-		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".css", { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
+		webix.ajax().get("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".css", { uid:webix.uid() }, { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
 	}
 	_aceChange(e, session) {
 		var that = session.that;

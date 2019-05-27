@@ -10,21 +10,8 @@ export default class SettingsView extends JetView {
 					{ template: "Project name", type: "section" }, { id: "title", view: "label", label: "-" },
 					{ template: "Domain", type: "section" }, { id: "domain", view: "label", label: "-", labelWidth: 33 },
 					{ template: "Verification", type: "section" },
-					{
-						id: "yandex",
-						view: "text",
-						label: "Yandex",
-						labelWidth: 56
-						/*,
-												on: { onChange: _ => this._save() }*/
-					}, {
-						id: "google",
-						view: "text",
-						label: "Google",
-						labelWidth: 56
-						/*,
-												on: { onChange: _ => this._save() }*/
-					},
+					{ id: "yandex", view: "text", label: "Yandex", labelWidth: 56 },
+					{ id: "google", view: "text", label: "Google", labelWidth: 56 },
 					{ template: "Icon", type: "section", css: "webix_section" }, {
 						view: "uploader",
 						id: "uploader",
@@ -33,30 +20,7 @@ export default class SettingsView extends JetView {
 						autosend: false,
 						name: "files",
 						link: "bglist",
-						accept: "image/vnd.microsoft.icon",
-						on: {
-							"onAfterFileAdd": file => {
-								file.file.sname = 'favicon.ico';
-								this.app.S3.putObject({
-									Bucket: 'base.redaktr.com',
-									Key: AWS.config.credentials.identityId + '.ico',
-									ContentType: file.file.type,
-									Body: file.file
-								}, (err, data) => {
-									if (err) webix.message({ text: err.message, type: "error" });
-									//else this._image();
-								});
-							},
-							"files->onAfterDelete": file => {
-								this.app.S3.deleteObject({
-									Bucket: 'base.redaktr.com',
-									Key: AWS.config.credentials.identityId + '.ico'
-								}, (err, data) => {
-									if (err) webix.message({ text: err.message, type: "error" });
-									//else this._image();
-								});
-							}
-						}
+						accept: "image/vnd.microsoft.icon"
 					}, {
 						view: "list",
 						id: "bglist",
@@ -71,12 +35,33 @@ export default class SettingsView extends JetView {
 		};
 	}
 	init() {
-		/*webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".ico", (text, data, XmlHttpRequest) => {
+		webix.ajax().get("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".ico", { uid: webix.uid() }, (text, data, XmlHttpRequest) => {
 			if ($$('sidebar').getSelectedId() === 'settings') {
 				$$("uploader").files.data.clearAll();
 				$$("uploader").addFile({ name: 'favicon.ico', sname: AWS.config.credentials.identityId + ".ico" }, 0);
+				$$("uploader").attachEvent("onAfterFileAdd", file => {
+					file.file.sname = 'favicon.ico';
+					this.app.S3.putObject({
+						Bucket: 'base.redaktr.com',
+						Key: AWS.config.credentials.identityId + '.ico',
+						ContentType: file.file.type,
+						Body: file.file
+					}, (err, data) => {
+						if (err) webix.message({ text: err.message, type: "error" });
+						else webix.message("Settings save complete");
+					});
+				});
+				$$("uploader").files.attachEvent("onAfterDelete", file => {
+					this.app.S3.deleteObject({
+						Bucket: 'base.redaktr.com',
+						Key: AWS.config.credentials.identityId + '.ico'
+					}, (err, data) => {
+						if (err) webix.message({ text: err.message, type: "error" });
+						else webix.message("Settings save complete");
+					});
+				});
 			}
-		});*/
+		});
 		this.app.DocumentClient.get({
 			TableName: "redaktr",
 			Key: { "id": AWS.config.credentials.identityId }
@@ -103,18 +88,22 @@ export default class SettingsView extends JetView {
 			params = {
 				TableName: "redaktr",
 				Key: { "id": AWS.config.credentials.identityId },
-				ExpressionAttributeValues: {
-					":g": g,
-					":y": y
-				},
+				//ExpressionAttributeValues: {},
 				ReturnValues: "UPDATED_NEW"
 			};
-		if (y) UpdateExpressionSet = 'set yandex = :y';
-		else UpdateExpressionRemove = ' remove yandex';
-		if (g) UpdateExpressionSet = UpdateExpressionSet + ', google = :g';
-		else UpdateExpressionRemove = UpdateExpressionRemove + ', google';
-		params.UpdateExpression = (UpdateExpressionSet ? UpdateExpressionSet : "") + (UpdateExpressionRemove ? UpdateExpressionRemove : "");
-		console.log(params.UpdateExpression);
+		if (y) {
+			UpdateExpressionSet = 'yandex = :y';
+			if (!params.ExpressionAttributeValues) params.ExpressionAttributeValues = {};
+			params.ExpressionAttributeValues[":y"] = y;
+		}
+		else UpdateExpressionRemove = 'yandex';
+		if (g) {
+			UpdateExpressionSet = UpdateExpressionSet + (UpdateExpressionSet ? ", " : "") + 'google = :g';
+			if (!params.ExpressionAttributeValues) params.ExpressionAttributeValues = {};
+			params.ExpressionAttributeValues[":g"] = g;
+		}
+		else UpdateExpressionRemove = UpdateExpressionRemove + (UpdateExpressionRemove ? ", " : "") + 'google';
+		params.UpdateExpression = (UpdateExpressionSet ? "set " + UpdateExpressionSet : "") + (UpdateExpressionRemove ? " remove " + UpdateExpressionRemove : "");
 		this.app.DocumentClient.update(params, function(err, data) {
 			if (err) webix.message({ text: err, type: "error" });
 			else webix.message("Settings save complete");

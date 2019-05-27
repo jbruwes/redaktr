@@ -31,7 +31,7 @@ export default class CdnView extends JetView {
         };
     }
     init() {
-        webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css", (text, data, XmlHttpRequest) => {
+        webix.ajax().get("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css", { uid: webix.uid() }, (text, data, XmlHttpRequest) => {
             if ($$('sidebar').getSelectedId() === 'css') {
                 $$("cdn").clearAll();
                 var url = text ? text.split("\n") : [];

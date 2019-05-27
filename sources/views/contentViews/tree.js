@@ -71,7 +71,7 @@ export default class TreeView extends JetView {
                     $$("uploader").files.data.clearAll();
                     if (item.image) $$("uploader").addFile({ name: item.image.split("/").pop(), sname: item.image }, 0);
                     this.getParentView()._lockProperties = false;
-                    webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {
+                    webix.ajax().get("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", { uid: webix.uid() }, {
                         success: (text, data, XmlHttpRequest) => {
                             if ($$('sidebar').getSelectedId() === 'content') {
                                 $$("tinymce").$scope.setValue(text);

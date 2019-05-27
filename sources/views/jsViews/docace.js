@@ -3,7 +3,7 @@ export default class AceView extends JetView {
 	config() {
 		return {
 			view: "ace-editor",
-			id:"doc-js",
+			id: "doc-js",
 			theme: "tomorrow",
 			mode: "javascript",
 			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
@@ -23,7 +23,7 @@ export default class AceView extends JetView {
 				});
 			}
 		};
-		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".ready.js", { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
+		webix.ajax().get("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".ready.js", { uid: webix.uid() }, { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
 	}
 	_aceChange(e, session) {
 		var that = session.that;
