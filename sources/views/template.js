@@ -234,13 +234,13 @@ export default class TemplateView extends JetView {
         this._html =
             '<!DOCTYPE html><html><head>' +
             '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
-            '<script src="//cdn.redaktr.com/jquery.min.js"></script>' +
-            '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '"></script>' +
             '<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
             '<link rel="stylesheet" href="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css' : '//cdn.redaktr.com/redaktr.min.css') + '">' +
             '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css">' +
             '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
             '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
+            '<script src="//cdn.redaktr.com/jquery.min.js" defer></script>' +
+            '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" defer></script>' +
             '</head><body>' + this._body.find('#body').html() + '</body></html>';
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
