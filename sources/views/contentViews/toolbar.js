@@ -7,13 +7,19 @@ export default class ToolbarView extends JetView {
                     view: "icon",
                     icon: "mdi mdi-file-document-outline",
                     click: _ => {
-                        var sel = $$("tree").getSelectedId();
-                        var item = null;
-                        if (sel) item = $$("tree").add({ link: '', text: '', date: '', image: '', visible: true, value: "article-" + webix.uid() }, $$("tree").getBranchIndex(sel) + 1, $$("tree").getParentId(sel) || 0);
+                        var sel = $$("tree").getSelectedId(),
+                            item = null;
+                        if (sel) {
+                            var parent = $$("tree").getParentId(sel);
+                            if (!parent) parent = sel;
+                            item = $$("tree").add({ link: '', text: '', date: '', image: '', visible: true, value: "article-" + webix.uid() }, parent === sel ? 0 : $$("tree").getBranchIndex(sel) + 1, parent);
+                            $$("tree").open(parent);
+                        }
                         else item = $$("tree").add({ link: '', text: '', date: '', image: '', visible: true, value: "article-" + webix.uid() });
                         $$("tree").select(item);
                         $$("tree").edit(item);
                     }
+
                 },
                 {
                     view: "icon",
@@ -23,12 +29,12 @@ export default class ToolbarView extends JetView {
                     view: "icon",
                     icon: "mdi mdi-delete-outline",
                     click: _ => {
-                        var sel = $$("tree").getSelectedId();
-                        var sel2 = $$("tree").getNextSiblingId(sel) || $$("tree").getPrevSiblingId(sel) || $$("tree").getParentId(sel);
+                        var sel = $$("tree").getSelectedId(),
+                            sel2 = $$("tree").getNextSiblingId(sel) || $$("tree").getPrevSiblingId(sel) || $$("tree").getParentId(sel);
                         webix.confirm("Are you sure?", result => {
                             if (result) {
                                 $$("tree").remove(sel);
-                                $$("tree").select(sel2);
+                                if (sel2) $$("tree").select(sel2);
                             }
                         });
                     }
@@ -52,7 +58,10 @@ export default class ToolbarView extends JetView {
                     click: _ => {
                         var sel = $$("tree").getSelectedId(),
                             par = $$("tree").getParentId(sel);
-                        if (par) $$("tree").move(sel, $$("tree").getBranchIndex(par) + 1, null, { parent: $$("tree").getParentId(par) });
+                        if (par) {
+                            var parent = $$("tree").getParentId(par);
+                            if (parent) $$("tree").move(sel, $$("tree").getBranchIndex(par) + 1, null, { parent: parent });
+                        }
                     }
                 }, {
                     view: "icon",

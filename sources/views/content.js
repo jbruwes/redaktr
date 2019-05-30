@@ -83,8 +83,8 @@ export default class ContentView extends JetView {
 	}*/
 	_save(e, self) {
 		var that = e ? this.that.getParentView() : self;
-		if (that.lastXHRPostContent) that.lastXHRPostContent.abort();
-		that.lastXHRPostContent = that.app.S3.putObject({
+		if (that.app.lastXHRPostContent) that.app.lastXHRPostContent.abort();
+		that.app.lastXHRPostContent = that.app.S3.putObject({
 			Bucket: 'content.redaktr.com',
 			ContentType: 'text/html',
 			Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",

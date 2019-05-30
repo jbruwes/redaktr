@@ -9,29 +9,10 @@ export default class CdnView extends JetView {
                 { id: "url", editor: "text", header: "CSS path", fillspace: true }
             ],
             editable: true
-            /*,
-                        on: {
-                            "data->onStoreUpdated": _ => {
-                                if (!this._lockurl) {
-                                    var url = [];
-                                    $.each($$('cdn').serialize(), (index, value) => url.push('@import url(' + value.url + ');'));
-                                    if (this._lastXHRPost) this._lastXHRPost.abort();
-                                    this._lastXHRPost = this.app.S3.putObject({
-                                        Bucket: 'base.redaktr.com',
-                                        Key: AWS.config.credentials.identityId + '.cdn.css',
-                                        ContentType: 'text/css',
-                                        Body: url.join('\n')
-                                    }, (err, data) => {
-                                        if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-                                        else webix.message("CSS cdn list save complete");
-                                    });
-                                }
-                            }
-                        }*/
         };
     }
     init() {
-        webix.ajax().get("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css", { uid: webix.uid() }, (text, data, XmlHttpRequest) => {
+        webix.ajax().get("https://s3.amazonaws.com/base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css", {}, (text, data, XmlHttpRequest) => {
             if ($$('sidebar').getSelectedId() === 'css') {
                 $$("cdn").clearAll();
                 var url = text ? text.split("\n") : [];
@@ -40,8 +21,8 @@ export default class CdnView extends JetView {
                 $$("cdn").data.attachEvent("onStoreUpdated", _ => {
                     var url = [];
                     $.each($$('cdn').serialize(), (index, value) => url.push('@import url(' + value.url + ');'));
-                    if (this._lastXHRPost) this._lastXHRPost.abort();
-                    this._lastXHRPost = this.app.S3.putObject({
+                    if (this.app.lastXHRPostCdnCss) this.app.lastXHRPostCdnCss.abort();
+                    this.app.lastXHRPostCdnCss = this.app.S3.putObject({
                         Bucket: 'base.redaktr.com',
                         Key: AWS.config.credentials.identityId + '.cdn.css',
                         ContentType: 'text/css',

@@ -13,8 +13,8 @@ export default class CdnView extends JetView {
             on: {
                 onAfterLoad: _ => {
                     $$("cdn").data.attachEvent("onStoreUpdated", _ => {
-                        if (this._lastXHRPost) this._lastXHRPost.abort();
-                        this._lastXHRPost = this.app.S3.putObject({
+                        if (this.app.lastXHRPostCdnJs) this.app.lastXHRPostCdnJs.abort();
+                        this.app.lastXHRPostCdnJs = this.app.S3.putObject({
                             Bucket: 'base.redaktr.com',
                             Key: AWS.config.credentials.identityId + '.cdn.json',
                             ContentType: 'application/json',
@@ -25,21 +25,6 @@ export default class CdnView extends JetView {
                         });
                     });
                 }
-
-                /*"data->onStoreUpdated": _ => {
-                    if (!this._lockCSSPath) {
-                        if (this._lastXHRPost) this._lastXHRPost.abort();
-                        this._lastXHRPost = this.app.S3.putObject({
-                            Bucket: 'base.redaktr.com',
-                            Key: AWS.config.credentials.identityId + '.cdn.json',
-                            ContentType: 'application/json',
-                            Body: webix.ajax().stringify($$('cdn').serialize())
-                        }, (err, data) => {
-                            if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-                            else webix.message("CSS cdn list save complete");
-                        });
-                    }
-                }*/
             }
         };
     }

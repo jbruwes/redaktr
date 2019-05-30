@@ -1,34 +1,34 @@
 import { JetView } from "webix-jet";
 export default class TreeView extends JetView {
     config() {
-        var lastXHRPostTree = null,
-            onChangeFnc = id => {
-                var tree = $$("tree").data.serialize(),
-                    tinymce = $$("tinymce").getEditor(),
-                    ace = $$("ace-content").getEditor();
-                if (tinymce && ace) {
-                    if (!tree.length) {
-                        $$("tinymce").$scope.setValue('');
-                        tinymce.setMode('readonly');
-                        ace.setValue("");
-                        ace.setReadOnly(true);
-                    }
-                    else {
-                        tinymce.setMode('design');
-                        ace.setReadOnly(false);
-                    }
-                    if (lastXHRPostTree) lastXHRPostTree.abort();
-                    lastXHRPostTree = this.app.S3.putObject({
-                        Bucket: 'base.redaktr.com',
-                        Key: AWS.config.credentials.identityId + '.json',
-                        ContentType: 'application/json',
-                        Body: webix.ajax().stringify(tree)
-                    }, (err, data) => {
-                        if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-                        else webix.message("Tree save complete");
-                    });
+        var onChangeFnc = id => {
+            var tree = $$("tree").data.serialize();
+            Promise.all([
+                $$("tinymce").getEditor(true),
+                $$("ace-content").getEditor(true)
+            ]).then(editors => {
+                if (!tree.length) {
+                    $$("tinymce").$scope.setValue('');
+                    editors[0].setMode('readonly');
+                    editors[1].setValue("");
+                    editors[1].setReadOnly(true);
                 }
-            };
+                else {
+                    editors[0].setMode('design');
+                    editors[1].setReadOnly(false);
+                }
+            });
+            if (this.app.lastXHRPostTree) this.app.lastXHRPostTree.abort();
+            this.app.lastXHRPostTree = this.app.S3.putObject({
+                Bucket: 'base.redaktr.com',
+                Key: AWS.config.credentials.identityId + '.json',
+                ContentType: 'application/json',
+                Body: webix.ajax().stringify(tree)
+            }, (err, data) => {
+                if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
+                else webix.message("Tree save complete");
+            });
+        };
         return {
             view: "edittree",
             id: "tree",
@@ -53,12 +53,19 @@ export default class TreeView extends JetView {
             editor: "text",
             editValue: "value",
             editaction: "dblclick",
-            url: "https://base.redaktr.com/" + AWS.config.credentials.identityId + ".json",
+            url: "https://s3.amazonaws.com/base.redaktr.com/" + AWS.config.credentials.identityId + ".json",
             on: {
                 "onAfterLoad": _ => {
                     if (!$$('sidebar').getSelectedId() || $$('sidebar').getSelectedId() === 'content') {
                         $$('tree').data.attachEvent("onStoreUpdated", onChangeFnc);
-                        $$("tinymce").getEditor(true).then(editor => { $$('tree').select($$('tree').getFirstId()) });
+                        $$("tinymce").getEditor(true).then(tinymce => {
+                            var id = $$('tree').getFirstId();
+                            if (id) $$('tree').select(id);
+                            else {
+                                tinymce.setMode('readonly');
+                                $$("ace-content").getEditor(true).then(ace => ace.setReadOnly(true));
+                            }
+                        });
                     }
                 },
                 "onItemCheck": onChangeFnc,
@@ -71,7 +78,7 @@ export default class TreeView extends JetView {
                     $$("uploader").files.data.clearAll();
                     if (item.image) $$("uploader").addFile({ name: item.image.split("/").pop(), sname: item.image }, 0);
                     this.getParentView()._lockProperties = false;
-                    webix.ajax().get("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", { uid: webix.uid() }, {
+                    webix.ajax().get("https://s3.amazonaws.com/content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm", {}, {
                         success: (text, data, XmlHttpRequest) => {
                             if ($$('sidebar').getSelectedId() === 'content') {
                                 $$("tinymce").$scope.setValue(text);
@@ -79,6 +86,17 @@ export default class TreeView extends JetView {
                             }
                         },
                         error: (text, data, XmlHttpRequest) => {
+                            if (XmlHttpRequest.status === 403) {
+                                if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
+                                this.app.lastXHRPostContent = this.app.S3.putObject({
+                                    Bucket: 'content.redaktr.com',
+                                    ContentType: 'text/html',
+                                    Key: AWS.config.credentials.identityId + "/" + id + ".htm",
+                                    Body: ''
+                                }, (err, data) => {
+                                    if (err);
+                                });
+                            }
                             if ($$('sidebar').getSelectedId() === 'content') {
                                 $$("tinymce").$scope.setValue("");
                                 $$("ace-content").$scope.setValue("");

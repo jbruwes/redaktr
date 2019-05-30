@@ -297,8 +297,8 @@ export default class TemplateView extends JetView {
     }
     _save2(that) {
         that = that ? that : this;
-        if (that._lastXHRPostTempl) that._lastXHRPostTempl.abort();
-        that._lastXHRPostTempl = that.app.S3.putObject({
+        if (that.app.lastXHRPostTempl) that.app.lastXHRPostTempl.abort();
+        that.app.lastXHRPostTempl = that.app.S3.putObject({
             Bucket: 'template.redaktr.com',
             Key: AWS.config.credentials.identityId + '.htm',
             ContentType: 'text/html',

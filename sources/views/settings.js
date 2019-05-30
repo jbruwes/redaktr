@@ -35,7 +35,7 @@ export default class SettingsView extends JetView {
 		};
 	}
 	init() {
-		webix.ajax().get("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".ico", { uid: webix.uid() }, (text, data, XmlHttpRequest) => {
+		webix.ajax().get("https://s3.amazonaws.com/base.redaktr.com/" + AWS.config.credentials.identityId + ".ico", {}, (text, data, XmlHttpRequest) => {
 			if ($$('sidebar').getSelectedId() === 'settings') {
 				$$("uploader").files.data.clearAll();
 				$$("uploader").addFile({ name: 'favicon.ico', sname: AWS.config.credentials.identityId + ".ico" }, 0);
