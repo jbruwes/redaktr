@@ -21,7 +21,7 @@ export default class CdnView extends JetView {
                             Body: webix.ajax().stringify($$('cdn').serialize())
                         }, (err, data) => {
                             if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-                            else webix.message("CSS cdn list save complete");
+                            else webix.message("JS cdn list save complete");
                         });
                     });
                 }
