@@ -167,7 +167,8 @@ export default class TemplateView extends JetView {
                         visible = !$(e).attr("hidden");
                     switch (this._getMode($(e))) {
                         case 1:
-                            icon = 'mdi mdi-monitor-multiple';
+                            //icon = 'mdi mdi-monitor-multiple';
+                            icon = 'mdi mdi-monitor-dashboard';
                             break;
                         case 2:
                             icon = 'mdi mdi-monitor-lock';
@@ -175,9 +176,9 @@ export default class TemplateView extends JetView {
                         case 3:
                             icon = 'mdi mdi-monitor-star';
                             break;
-                        case 4:
-                            icon = 'mdi mdi-monitor-dashboard';
-                            break;
+//                        case 4:
+//                            icon = 'mdi mdi-monitor-dashboard';
+//                            break;
                     }
                     $$("layers").add({
                         id: id,
@@ -219,7 +220,7 @@ export default class TemplateView extends JetView {
         $($$("fabric").getIframe()).css('position', 'absolute');
     }
     _getMode(item) {
-        if (item.parent('div[data-absolute]:not([id])').parent('div[data-relative]:not([id])').parent('#body').length) return 4;
+        //if (item.parent('div[data-absolute]:not([id])').parent('div[data-relative]:not([id])').parent('#body').length) return 4;
         if (item.parent('div[data-absolute]:not([id])').parent('#body').length) return 1;
         if (item.parent('div[data-fixed]:not([id])').parent('#body').length) return 2;
         return 3;
@@ -313,12 +314,13 @@ export default class TemplateView extends JetView {
         var id = $$('layers').getSelectedId(),
             fixed = $$('mode').getValue(),
             dock = $$('dock').getValue() - 1;
-        if (((fixed === 3) && (id === 'content')) || (fixed === 4)) object.find(body + '>div[data-relative]:not([id])').append(item);
+        //if (((fixed === 3) && (id === 'content')) || (fixed === 4)) object.find(body + '>div[data-relative]:not([id])').append(item);
+        if (fixed === 3 && id === 'content') object.find(body + '>div[data-relative]:not([id])').append(item);
         else object.find(body).append(item);
         if (dock) {
             switch (fixed) {
                 case 1:
-                case 4:
+                //case 4:
                     item.wrap('<div data-absolute>');
                     break;
                 case 2:
@@ -332,7 +334,7 @@ export default class TemplateView extends JetView {
         else {
             switch (fixed) {
                 case 1:
-                case 4:
+                //case 4:
                     item.wrap('<div data-absolute class="ui container">');
                     break;
                 case 2:
