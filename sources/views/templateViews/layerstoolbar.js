@@ -54,7 +54,7 @@ export default class LayersToolbarView extends JetView {
                             that = this.getParentView(),
                             fabricDocument = $($$("fabric").getIframe()).contents();
                         if (id) {
-                            if (id === 'content' || id === 'menu' || id === 'button') webix.message("Delete is prohibited", "debug");
+                            if (id === 'content') webix.message("Delete is prohibited", "debug");
                             else {
                                 var newId = $$("layers").getPrevId(id);
                                 if (!newId) newId = $$("layers").getNextId(id);

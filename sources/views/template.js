@@ -553,7 +553,7 @@ export default class TemplateView extends JetView {
             else doLayers();
             if (item.length) {
                 that._lockRedraw = true;
-                if (selectedId === 'menu' || selectedId === 'content') {
+                if (selectedId === 'content') {
                     $$('tinymce').$scope.setValue('');
                     $$('tinymce').disable();
                     $$("ace-template").$scope.setValue('');

@@ -61,7 +61,7 @@ export default class LayersView extends JetView {
                     return true;
                 },
                 'onBeforeEditStart': id => {
-                    if (id === 'content' || id === 'menu' || id === 'button') {
+                    if (id === 'content') {
                         webix.message("Rename is prohibited", "debug");
                         return false;
                     }
