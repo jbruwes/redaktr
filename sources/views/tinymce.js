@@ -163,7 +163,15 @@ export default class TinymceView extends JetView {
                     if (!$$('sidebar').getSelectedItem() || $$('sidebar').getSelectedItem().id === 'content') editor.ui.registry.addMenuButton('rlink', {
                         icon: 'link',
                         tooltip: 'Insert/edit link',
-                        fetch: callback => callback(eval(getSubmenuItems($$("tree").getFirstId(), '/')))
+                        //fetch: callback => callback(eval(getSubmenuItems($$("tree").getFirstChildId($$("tree").getFirstId()), '/')))
+                        fetch: callback => {
+                            var item = $$("tree").getFirstId(),
+                                firstChild = null;
+                            if (item) {
+                                firstChild = $$("tree").getFirstChildId(item);
+                                if (firstChild) callback(eval(getSubmenuItems(firstChild, '/')));
+                            }
+                        }
                     });
                 },
                 file_picker_types: "image media file",
