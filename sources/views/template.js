@@ -159,6 +159,17 @@ export default class TemplateView extends JetView {
                     body = body ? body[0].replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '') : '';
                 }
                 this._body = $('<div/>').append($('<div/>').attr('id', 'body').html(body));
+                
+
+                this._body1 = $('<div/>').append($('<div/>').attr('id', 'body').html(body));
+                var pusher = this._body1.find('#body>.pusher');
+                if(!pusher.length) {
+                    console.log(this._body1.html());
+                    pusher = $("<div/>").addClass('pusher').append(this._body1.find('#body').html());
+                    this._body1.find('#body').empty().append(pusher);
+                    console.log(this._body1.html());
+                }
+                
                 var list = this._body.find('#body>div:not([id])>div[id],#body>div[data-relative]:not([id])>div:not([id])>div[id]');
                 list.sort((val1, val2) => { return $(val2).css("z-index") - $(val1).css("z-index") });
                 list.each((i, e) => {
@@ -232,6 +243,7 @@ export default class TemplateView extends JetView {
         document.close();
     }
     _genHtml(identity) {
+        /*
         this._html =
             '<!DOCTYPE html><html><head>' +
             '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
@@ -243,7 +255,7 @@ export default class TemplateView extends JetView {
             '<script src="//cdn.redaktr.com/require.min.js"></script>' +
             '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" async></script>' +
             '</head><body>' + this._body.find('#body').html() + '</body></html>';
-            /*
+            */
         this._html =
             '<!DOCTYPE html><html><head>' +
             '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
@@ -257,11 +269,10 @@ export default class TemplateView extends JetView {
             '</head><body>' +
             '<div class="ui left vertical menu sidebar"></div>' +
             '<div class="ui main top menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
-            '<div class="pusher">' +
+            //'<div class="pusher">' +
             this._body.find('#body').html() +
-            '</div>' +
+            //'</div>' +
             '</body></html>';
-            */
         this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
     }
     _zIndex(body, prefix, that) {
