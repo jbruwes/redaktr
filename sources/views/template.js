@@ -336,7 +336,7 @@ export default class TemplateView extends JetView {
       '<script src="//cdn.redaktr.com/require.min.js"></script>' +
       '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" async></script>' +
       '</head><body>' +
-      '<div class="ui sidebar vertical accordion menu"></div>' +
+      '<div class="ui sidebar very wide vertical accordion menu"></div>' +
       '<div class="ui main menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
       '<div class="pusher">' + this._body.find('#body:first>.pusher').html() + '</div>' +
       '</body></html>';
