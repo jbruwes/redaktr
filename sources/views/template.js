@@ -39,9 +39,9 @@ export default class TemplateView extends JetView {
                           var pop = this._undo.pop();
                           if (pop) {
                             var fabricDocument = $($$("fabric").getIframe()).contents();
-                            this._redo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
-                            this._body.find('#body').html(pop[0]);
-                            fabricDocument.find('body').html(pop[1]);
+                            this._redo.push([this._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+                            this._body.find('#body:first>.pusher').html(pop[0]);
+                            fabricDocument.find('body:first>.pusher').html(pop[1]);
                             this._save2();
                           }
                         }
@@ -52,9 +52,9 @@ export default class TemplateView extends JetView {
                           var pop = this._redo.pop();
                           if (pop) {
                             var fabricDocument = $($$("fabric").getIframe()).contents();
-                            this._undo.push([this._body.find('#body').html(), fabricDocument.find('body').html()]);
-                            this._body.find('#body').html(pop[0]);
-                            fabricDocument.find('body').html(pop[1]);
+                            this._undo.push([this._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+                            this._body.find('#body:first>.pusher').html(pop[0]);
+                            fabricDocument.find('body:first>.pusher').html(pop[1]);
                             this._save2();
                           }
                         }
@@ -214,18 +214,12 @@ export default class TemplateView extends JetView {
           body = body ? body[0].replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '') : '';
         }
         this._body = $('<div/>').append($('<div/>').attr('id', 'body').html(body));
-
-
-        this._body1 = $('<div/>').append($('<div/>').attr('id', 'body').html(body));
-        var pusher = this._body1.find('#body>.pusher');
+        var pusher = this._body.find('#body:first>.pusher');
         if (!pusher.length) {
-          console.log(this._body1.html());
-          pusher = $("<div/>").addClass('pusher').append(this._body1.find('#body').html());
-          this._body1.find('#body').empty().append(pusher);
-          console.log(this._body1.html());
+          pusher = $("<div/>").addClass('pusher').append(this._body.find('#body:first').html());
+          this._body.find('#body:first').empty().append(pusher);
         }
-
-        var list = this._body.find('#body>div:not([id])>div[id],#body>div[data-relative]:not([id])>div:not([id])>div[id]');
+        var list = this._body.find('#body:first>.pusher>div:not([id])>div[id],#body:first>.pusher>div[data-relative]:not([id])>div:not([id])>div[id]');
         list.sort((val1, val2) => {
           return $(val2).css("z-index") - $(val1).css("z-index")
         });
@@ -305,8 +299,10 @@ export default class TemplateView extends JetView {
   }
   _getMode(item) {
     //if (item.parent('div[data-absolute]:not([id])').parent('div[data-relative]:not([id])').parent('#body').length) return 4;
-    if (item.parent('div[data-absolute]:not([id])').parent('#body').length) return 1;
-    if (item.parent('div[data-fixed]:not([id])').parent('#body').length) return 2;
+    //if (item.parent('div[data-absolute]:not([id])').parent('#body').length) return 1;
+    //if (item.parent('div[data-fixed]:not([id])').parent('#body').length) return 2;
+    if (item.parent('div[data-absolute]:not([id])').parent('.pusher').length) return 1;
+    if (item.parent('div[data-fixed]:not([id])').parent('.pusher').length) return 2;
     return 3;
   }
   _loadSite() {
@@ -340,11 +336,9 @@ export default class TemplateView extends JetView {
       '<script src="//cdn.redaktr.com/require.min.js"></script>' +
       '<script src="' + (window.location.hostname === 'private-jbruwes.c9users.io' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" async></script>' +
       '</head><body>' +
-      '<div class="ui left vertical menu sidebar"></div>' +
-      '<div class="ui main top menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
-      //'<div class="pusher">' +
-      this._body.find('#body').html() +
-      //'</div>' +
+      '<div class="ui sidebar vertical accordion menu"></div>' +
+      '<div class="ui main menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
+      '<div class="pusher">' + this._body.find('#body:first>.pusher').html() + '</div>' +
       '</body></html>';
     this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
   }
@@ -354,13 +348,13 @@ export default class TemplateView extends JetView {
       body.find("#" + value.title).css("z-index", i - (value.title === 'button' ? 1 : 0));
       i -= value.title === 'button' ? 2 : 1;
     });
-    body.find(prefix + 'body>div[data-fixed]:not([id])>div[id],' + prefix + 'body>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-static]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-absolute]:not([id])>div[id],' + prefix + 'body>div[data-relative]:not([id])>div[data-static]:not([id])>div[id]').each(function() {
+    body.find(prefix + 'body:first>.pusher>div[data-fixed]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-absolute]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-static]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-relative]:not([id])>div[data-absolute]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-relative]:not([id])>div[data-static]:not([id])>div[id]').each(function() {
       $(this).parent().removeAttr("style");
     });
-    body.find(prefix + 'body>div[data-fixed]:not([id])>div[id]').each(function() {
+    body.find(prefix + 'body:first>.pusher>div[data-fixed]:not([id])>div[id]').each(function() {
       $(this).parent().css("z-index", $(this).css("z-index"));
     });
-    body.find(prefix + 'body').append(body.find(prefix + 'body>div[data-fixed]:not([id]),' + prefix + 'body>div[data-absolute]:not([id]),' + prefix + 'body>div[data-static]:not([id]),' + prefix + 'body>div[data-relative]:not([id])').sort(function(a, b) {
+    body.find(prefix + 'body:first>.pusher').append(body.find(prefix + 'body:first>.pusher>div[data-fixed]:not([id]),' + prefix + 'body:first>.pusher>div[data-absolute]:not([id]),' + prefix + 'body:first>.pusher>div[data-static]:not([id]),' + prefix + 'body:first>.pusher>div[data-relative]:not([id])').sort(function(a, b) {
       var a1 = $(a).children('div[data-static]:not([id])').children('div[id]');
       var b1 = $(b).children('div[data-static]:not([id])').children('div[id]');
       a1 = ($(a).attr('data-relative') !== null && a1.length) ? a1.css('z-index') : $(a).children('div[id]').css('z-index');
@@ -375,10 +369,10 @@ export default class TemplateView extends JetView {
         id = $$("layers").getSelectedId();
       if (id) {
         that._redo = [];
-        that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
-        that._saveStage(that._body.find("#" + id), '#body', that._body);
+        that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+        that._saveStage(that._body.find("#" + id), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
-        that._saveStage(fabricDocument.find("#" + id), 'body', fabricDocument);
+        that._saveStage(fabricDocument.find("#" + id), 'body:first>.pusher', fabricDocument);
         that._zIndex(fabricDocument, '', that);
         that._genHtml(false);
         that._save2(that);
@@ -393,7 +387,7 @@ export default class TemplateView extends JetView {
       that._body.find("#" + id).html($$("tinymce").getValue());
       fabricDocument.find("#" + id).html($$("tinymce").getValue());
       that._redo = [];
-      that._undo.push([that._body.find('#body').html(), fabricDocument.find('body').html()]);
+      that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
       that._genHtml(false);
       that._save2(that);
       //that._makeSelection(that);

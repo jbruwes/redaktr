@@ -29,9 +29,9 @@ export default class LayersToolbarView extends JetView {
                             icon: 'mdi mdi-monitor-lock',
                             rect: rect
                         });
-                        that._body.find("#body").append($('<div data-fixed><div id="' + id + '" style=margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
+                        that._body.find("#body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style=margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
                         that._zIndex(that._body, '#', that);
-                        fabricDocument.find("body").append($('<div data-fixed><div id="' + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
+                        fabricDocument.find("body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
                         that._zIndex(fabricDocument, '', that);
                         $$("fabric").getCanvas().add(rect);
                         $$("layers").select(id);
@@ -59,10 +59,10 @@ export default class LayersToolbarView extends JetView {
                                 var newId = $$("layers").getPrevId(id);
                                 if (!newId) newId = $$("layers").getNextId(id);
                                 that._body.find("#" + id).remove();
-                                that._body.find('#body>div:not([data-relative]):not([id]):empty,#body>div[data-relative]:not(:first):not([id]):empty').remove();
+                                that._body.find('#body:first>.pusher>div:not([data-relative]):not([id]):empty,#body:first>.pusher>div[data-relative]:not(:first):not([id]):empty').remove();
                                 that._zIndex(that._body, '#', that);
                                 fabricDocument.find("#" + id).remove();
-                                fabricDocument.find('body>div:not([id]):empty').remove();
+                                fabricDocument.find('body:first>.pusher>div:not([id]):empty').remove();
                                 that._zIndex(fabricDocument, '', that);
                                 if (newId) $$("layers").select(newId);
                                 $$("fabric").getCanvas().remove(rect);
