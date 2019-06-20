@@ -36,6 +36,7 @@ export default class TemplateView extends JetView {
                         view: "icon",
                         icon: "mdi mdi-undo",
                         click: _ => {
+                          console.log(JSON.stringify(this._undo));
                           var pop = this._undo.pop();
                           if (pop) {
                             var fabricDocument = $($$("fabric").getIframe()).contents();
@@ -62,7 +63,8 @@ export default class TemplateView extends JetView {
                     }, {
                       id: "fabric",
                       view: "fabric",
-                      canvas: "fabric"
+                      canvas: "fabric",
+                      cdn: "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.1.0"
                     }]
                   },
                   {
@@ -229,10 +231,8 @@ export default class TemplateView extends JetView {
           list.push(o[0]);
           pusher.append(o);
           o.wrap('<div data-static></div>')
-          console.log(pusher.html());
         } else o.empty().append('<main></main>');
         this._body.find('#body:first').empty().append(pusher);
-        console.log(this._body.html());
 
         list.sort((val1, val2) => {
           return $(val2).css("z-index") - $(val1).css("z-index")
@@ -367,7 +367,9 @@ export default class TemplateView extends JetView {
         id = $$("layers").getSelectedId();
       if (id) {
         that._redo = [];
+        console.log("redraw push start");
         that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+        console.log("redraw push end");
         that._saveStage(that._body.find("#" + id), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
         that._saveStage(fabricDocument.find("#" + id), 'body:first>.pusher', fabricDocument);
@@ -385,7 +387,9 @@ export default class TemplateView extends JetView {
       that._body.find("#" + id).html($$("tinymce").getValue());
       fabricDocument.find("#" + id).html($$("tinymce").getValue());
       that._redo = [];
+      console.log("save push start");
       that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+      console.log("save push end");
       that._genHtml(false);
       that._save2(that);
     }

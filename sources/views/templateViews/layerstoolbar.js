@@ -22,7 +22,6 @@ export default class LayersToolbarView extends JetView {
                                 lockScalingFlip: true,
                                 id: id
                             });
-                      console.log(that._body.html());
                         that._body.find("#body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style=margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
                         that._zIndex(that._body, '#', that);
                         fabricDocument.find("body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
