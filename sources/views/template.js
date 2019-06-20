@@ -219,7 +219,21 @@ export default class TemplateView extends JetView {
           pusher = $("<div/>").addClass('pusher').append(this._body.find('#body:first').html());
           this._body.find('#body:first').empty().append(pusher);
         }
-        var list = this._body.find('#body:first>.pusher>div:not([id])>div[id],#body:first>.pusher>div[data-relative]:not([id])>div:not([id])>div[id]');
+
+        var list = this._body.find('#body:first>.pusher>div[data-fixed]:not([id])>div[id],#body:first>.pusher>div[data-absolute]:not([id])>div[id],#body:first>.pusher>div[data-static]:not([id])>div[id]').not('div[id=""]');
+        pusher = $("<div/>").addClass('pusher');
+        list.each((index, element) => pusher.append($(element).parentsUntil(".pusher").clone()));
+        var o = pusher.find('#content');
+        if (!o.length) {
+          o = $('<div id="content"><main></main></div>');
+          list.push(o[0]);
+          pusher.append(o);
+          o.wrap('<div data-static></div>')
+          console.log(pusher.html());
+        } else o.empty().append('<main></main>');
+        this._body.find('#body:first').empty().append(pusher);
+        console.log(this._body.html());
+
         list.sort((val1, val2) => {
           return $(val2).css("z-index") - $(val1).css("z-index")
         });
@@ -229,7 +243,6 @@ export default class TemplateView extends JetView {
             visible = !$(e).attr("hidden");
           switch (this._getMode($(e))) {
             case 1:
-              //icon = 'mdi mdi-monitor-multiple';
               icon = 'mdi mdi-monitor-dashboard';
               break;
             case 2:
@@ -238,9 +251,6 @@ export default class TemplateView extends JetView {
             case 3:
               icon = 'mdi mdi-monitor-star';
               break;
-              //                        case 4:
-              //                            icon = 'mdi mdi-monitor-dashboard';
-              //                            break;
           }
           $$("layers").add({
             id: id,
@@ -298,9 +308,6 @@ export default class TemplateView extends JetView {
     $($$("fabric").getIframe()).css('position', 'absolute');
   }
   _getMode(item) {
-    //if (item.parent('div[data-absolute]:not([id])').parent('div[data-relative]:not([id])').parent('#body').length) return 4;
-    //if (item.parent('div[data-absolute]:not([id])').parent('#body').length) return 1;
-    //if (item.parent('div[data-fixed]:not([id])').parent('#body').length) return 2;
     if (item.parent('div[data-absolute]:not([id])').parent('.pusher').length) return 1;
     if (item.parent('div[data-fixed]:not([id])').parent('.pusher').length) return 2;
     return 3;
@@ -312,31 +319,16 @@ export default class TemplateView extends JetView {
     document.close();
   }
   _genHtml(identity) {
-    /*
-    this._html =
-        '<!DOCTYPE html><html><head>' +
-        '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
-        '<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
-        '<link rel="stylesheet" href="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css' : '//cdn.redaktr.com/redaktr.min.css') + '">' +
-        '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css">' +
-        '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
-        '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
-        '<script src="//cdn.redaktr.com/require.min.js"></script>' +
-        '<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" async></script>' +
-        '</head><body>' + this._body.find('#body').html() + '</body></html>';
-        */
     this._html =
       '<!DOCTYPE html><html><head>' +
       '<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
       '<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
       '<link rel="stylesheet" href="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css' : '//cdn.redaktr.com/redaktr.min.css') + '">' +
-      //'<link rel="stylesheet" href="//cdn.redaktr.com/redaktr.min.css">' +
       '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css">' +
       '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
       '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
       '<script src="//cdn.redaktr.com/require.min.js"></script>' +
       '<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" async></script>' +
-      //'<script src="//cdn.redaktr.com/redaktr.min.js" async></script>' +
       '</head><body>' +
       '<div class="ui sidebar very wide vertical accordion menu"></div>' +
       '<div class="ui main menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
@@ -345,23 +337,27 @@ export default class TemplateView extends JetView {
     this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
   }
   _zIndex(body, prefix, that) {
-    var i = $$('layers').count() + 1;
+    var i = $$('layers').count();
     $.each($$('layers').serialize(), (index, value) => {
-      body.find("#" + value.title).css("z-index", i - (value.title === 'button' ? 1 : 0));
-      i -= value.title === 'button' ? 2 : 1;
+      body.find("#" + value.title).css("z-index", i);
+      i -= 1;
     });
-    body.find(prefix + 'body:first>.pusher>div[data-fixed]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-absolute]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-static]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-relative]:not([id])>div[data-absolute]:not([id])>div[id],' + prefix + 'body:first>.pusher>div[data-relative]:not([id])>div[data-static]:not([id])>div[id]').each(function() {
+    body.find(
+      prefix + 'body:first>.pusher>div[data-fixed]:not([id])>div[id],' +
+      prefix + 'body:first>.pusher>div[data-absolute]:not([id])>div[id],' +
+      prefix + 'body:first>.pusher>div[data-static]:not([id])>div[id]'
+    ).each(function() {
       $(this).parent().removeAttr("style");
     });
     body.find(prefix + 'body:first>.pusher>div[data-fixed]:not([id])>div[id]').each(function() {
       $(this).parent().css("z-index", $(this).css("z-index"));
     });
-    body.find(prefix + 'body:first>.pusher').append(body.find(prefix + 'body:first>.pusher>div[data-fixed]:not([id]),' + prefix + 'body:first>.pusher>div[data-absolute]:not([id]),' + prefix + 'body:first>.pusher>div[data-static]:not([id]),' + prefix + 'body:first>.pusher>div[data-relative]:not([id])').sort(function(a, b) {
-      var a1 = $(a).children('div[data-static]:not([id])').children('div[id]');
-      var b1 = $(b).children('div[data-static]:not([id])').children('div[id]');
-      a1 = ($(a).attr('data-relative') !== null && a1.length) ? a1.css('z-index') : $(a).children('div[id]').css('z-index');
-      b1 = ($(b).attr('data-relative') !== null && b1.length) ? b1.css('z-index') : $(b).children('div[id]').css('z-index');
-      return b1 - a1;
+    body.find(prefix + 'body:first>.pusher').append(body.find(
+      prefix + 'body:first>.pusher>div[data-fixed]:not([id]),' +
+      prefix + 'body:first>.pusher>div[data-absolute]:not([id]),' +
+      prefix + 'body:first>.pusher>div[data-static]:not([id])'
+    ).sort((a, b) => {
+      return $(b).children('div[id]').css('z-index') - $(a).children('div[id]').css('z-index');
     }));
   }
   _redraw(that) {
@@ -392,7 +388,6 @@ export default class TemplateView extends JetView {
       that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
       that._genHtml(false);
       that._save2(that);
-      //that._makeSelection(that);
     }
   }
   _save2(that) {
@@ -417,13 +412,10 @@ export default class TemplateView extends JetView {
     var id = $$('layers').getSelectedId(),
       fixed = $$('mode').getValue(),
       dock = $$('dock').getValue() - 1;
-    //if (((fixed === 3) && (id === 'content')) || (fixed === 4)) object.find(body + '>div[data-relative]:not([id])').append(item);
-    if (fixed === 3 && id === 'content') object.find(body + '>div[data-relative]:not([id])').append(item);
-    else object.find(body).append(item);
+    object.find(body).append(item);
     if (dock) {
       switch (fixed) {
         case 1:
-          //case 4:
           item.wrap('<div data-absolute>');
           break;
         case 2:
@@ -436,7 +428,6 @@ export default class TemplateView extends JetView {
     } else {
       switch (fixed) {
         case 1:
-          //case 4:
           item.wrap('<div data-absolute class="ui container">');
           break;
         case 2:
@@ -447,8 +438,7 @@ export default class TemplateView extends JetView {
           break;
       }
     }
-    object.find(body + '>div:not([data-relative]):not([id]):empty,' + body + '>div[data-relative]:not([id])>div:not([id]):empty').remove();
-    object.find(body + '>div[data-relative]:not([id])').removeAttr('style');
+    object.find(body + '>div:not([id]):empty').remove();
     var marginLeft = $$('marginLeft').getValue(),
       width = $$('width').getValue(),
       marginRight = $$('marginRight').getValue();
@@ -622,7 +612,7 @@ export default class TemplateView extends JetView {
           });
           else {
             map = selObj[0].getBoundingClientRect();
-            style = selObj.attr("style");
+            style = selObj.attr("style") || "";
             rect.set({
               left: Math.round((map.right + map.left) / 2),
               top: Math.round((map.bottom + map.top) / 2),
@@ -683,7 +673,7 @@ export default class TemplateView extends JetView {
         }
         $$('mode').setValue(that._getMode(item));
         $$('dock').setValue((!item.parent('div.container:not([id])').length) + 1);
-        $$('angle').setValue((item.attr('style').match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
+        $$('angle').setValue(((item.attr('style') || "").match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
         $$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
         $$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
         $$('paddingTop').setValue(parseInt(item[0].style.paddingTop));

@@ -14,9 +14,7 @@ export default class GeometryView extends JetView {
                             options: [
                                 { id: 3, value: "Static", icon: "mdi mdi-monitor-star" },
                                 { id: 2, value: "Fixed", icon: "mdi mdi-monitor-lock" },
-                                { id: 1, value: "Relative", icon: "mdi mdi-monitor-dashboard" }
-                                //{ id: 1, value: "Relative", icon: "mdi mdi-monitor-multiple" }
-                                //,{ id: 4, value: "Content Relative", icon: "mdi mdi-monitor-dashboard" }
+                                { id: 1, value: "Absolute", icon: "mdi mdi-monitor-dashboard" }
                             ],
                             on: { onChange: _ => this.getParentView()._redraw(this.getParentView()) }
                         }, {

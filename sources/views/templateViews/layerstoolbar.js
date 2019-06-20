@@ -22,6 +22,11 @@ export default class LayersToolbarView extends JetView {
                                 lockScalingFlip: true,
                                 id: id
                             });
+                      console.log(that._body.html());
+                        that._body.find("#body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style=margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
+                        that._zIndex(that._body, '#', that);
+                        fabricDocument.find("body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
+                        that._zIndex(fabricDocument, '', that);
                         $$("layers").add({
                             id: id,
                             title: id,
@@ -29,10 +34,6 @@ export default class LayersToolbarView extends JetView {
                             icon: 'mdi mdi-monitor-lock',
                             rect: rect
                         });
-                        that._body.find("#body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style=margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
-                        that._zIndex(that._body, '#', that);
-                        fabricDocument.find("body:first>.pusher").append($('<div data-fixed><div id="' + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
-                        that._zIndex(fabricDocument, '', that);
                         $$("fabric").getCanvas().add(rect);
                         $$("layers").select(id);
                         $$("layers").edit(id);
@@ -59,7 +60,7 @@ export default class LayersToolbarView extends JetView {
                                 var newId = $$("layers").getPrevId(id);
                                 if (!newId) newId = $$("layers").getNextId(id);
                                 that._body.find("#" + id).remove();
-                                that._body.find('#body:first>.pusher>div:not([data-relative]):not([id]):empty,#body:first>.pusher>div[data-relative]:not(:first):not([id]):empty').remove();
+                                that._body.find('#body:first>.pusher>div:not([id]):empty').remove();
                                 that._zIndex(that._body, '#', that);
                                 fabricDocument.find("#" + id).remove();
                                 fabricDocument.find('body:first>.pusher>div:not([id]):empty').remove();
