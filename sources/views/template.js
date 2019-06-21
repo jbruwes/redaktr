@@ -43,6 +43,7 @@ export default class TemplateView extends JetView {
                             this._redo.push([this._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
                             this._body.find('#body:first>.pusher').html(pop[0]);
                             fabricDocument.find('body:first>.pusher').html(pop[1]);
+                            $$('fabric').getCanvas().loadFromJSON(pop[2], _ => $$('fabric').getCanvas().requestRenderAll());
                             this._save2();
                           }
                         }
@@ -53,9 +54,14 @@ export default class TemplateView extends JetView {
                           var pop = this._redo.pop();
                           if (pop) {
                             var fabricDocument = $($$("fabric").getIframe()).contents();
-                            this._undo.push([this._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+                            this._undo.push([
+                              this._body.find('#body:first>.pusher').html(),
+                              fabricDocument.find('body:first>.pusher').html(),
+                              webix.ajax().stringify($$('fabric').getCanvas())
+                            ]);
                             this._body.find('#body:first>.pusher').html(pop[0]);
                             fabricDocument.find('body:first>.pusher').html(pop[1]);
+                            $$('fabric').getCanvas().loadFromJSON(pop[2], _ => $$('fabric').getCanvas().requestRenderAll());
                             this._save2();
                           }
                         }
@@ -368,7 +374,11 @@ export default class TemplateView extends JetView {
       if (id) {
         that._redo = [];
         console.log("redraw push start");
-        that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+        that._undo.push([
+          that._body.find('#body:first>.pusher').html(),
+          fabricDocument.find('body:first>.pusher').html(),
+          webix.ajax().stringify($$('fabric').getCanvas())
+        ]);
         console.log("redraw push end");
         that._saveStage(that._body.find("#" + id), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
@@ -388,7 +398,11 @@ export default class TemplateView extends JetView {
       fabricDocument.find("#" + id).html($$("tinymce").getValue());
       that._redo = [];
       console.log("save push start");
-      that._undo.push([that._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+      that._undo.push([
+        that._body.find('#body:first>.pusher').html(),
+        fabricDocument.find('body:first>.pusher').html(),
+        webix.ajax().stringify($$('fabric').getCanvas())
+      ]);
       console.log("save push end");
       that._genHtml(false);
       that._save2(that);
