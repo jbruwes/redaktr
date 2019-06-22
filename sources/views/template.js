@@ -607,13 +607,14 @@ export default class TemplateView extends JetView {
     }
 
     function doLayers() {
-      var id = $$("layers").getFirstId(),
+      var //id = $$("layers").getFirstId(),
         layer = null,
         map = null,
-        rect = null,
+        //rect = null,
         selObj = null,
         style = null,
         fabricDocument = $($$("fabric").getIframe()).contents();
+      /*
       do {
         layer = $$("layers").getItem(id);
         rect = layer.rect;
@@ -662,6 +663,57 @@ export default class TemplateView extends JetView {
         layer.oCoords = rect.oCoords;
         id = $$("layers").getNextId(id);
       } while (id);
+      */
+      
+      $$('fabric').getCanvas().forEachObject(rect => {
+        layer = $$("layers").getItem(rect.id);
+        layer.left = 0;
+        layer.top = 0;
+        layer.angle = 0;
+        selObj = fabricDocument.find("#" + rect.id);
+        if (selObj.length) {
+          if (selObj.attr("hidden")) rect.set({
+            hasBorders: false,
+            hasControls: false,
+            selectable: false,
+            evented: false
+          });
+          else {
+            map = selObj[0].getBoundingClientRect();
+            style = selObj.attr("style") || "";
+            rect.set({
+              left: Math.round((map.right + map.left) / 2),
+              top: Math.round((map.bottom + map.top) / 2),
+              width: selObj.outerWidth(),
+              height: selObj.outerHeight(),
+              scaleX: 1,
+              scaleY: 1,
+              angle: +(style.match(/rotate\(-?\d+deg\)/g) || ['0'])[0].replace('rotate(', '').replace('deg)', ''),
+              hasBorders: true,
+              hasControls: true,
+              selectable: true,
+              evented: true
+            });
+            rect.sendToBack();
+            layer.left = rect.left;
+            layer.top = rect.top;
+            layer.angle = rect.angle;
+          }
+        } else rect.set({
+          left: 0,
+          top: 0,
+          width: 0,
+          height: 0,
+          scaleX: 1,
+          scaleY: 1,
+          angle: 0
+        });
+        rect.setCoords();
+        layer.oCoords = rect.oCoords;        
+      });
+
+      
+      
       $$('fabric').getCanvas().bringToFront($$('layers').getSelectedItem().rect);
       $$('fabric').getCanvas().setActiveObject($$('layers').getSelectedItem().rect);
       $$('fabric').getCanvas().requestRenderAll();
