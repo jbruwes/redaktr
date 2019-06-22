@@ -370,19 +370,17 @@ export default class TemplateView extends JetView {
     that = that ? that : this;
     if (!that._lockRedraw && that._body) {
       var fabricDocument = $($$("fabric").getIframe()).contents(),
-        id = $$("layers").getSelectedId();
-      if (id) {
+        item = $$("layers").getSelectedItem();
+      if (item) {
         that._redo = [];
-        console.log("redraw push start");
         that._undo.push([
           that._body.find('#body:first>.pusher').html(),
           fabricDocument.find('body:first>.pusher').html(),
           webix.ajax().stringify($$('fabric').getCanvas())
         ]);
-        console.log("redraw push end");
-        that._saveStage(that._body.find("#" + id), '#body:first>.pusher', that._body);
+        that._saveStage(that._body.find("#" + item.value), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
-        that._saveStage(fabricDocument.find("#" + id), 'body:first>.pusher', fabricDocument);
+        that._saveStage(fabricDocument.find("#" + item.value), 'body:first>.pusher', fabricDocument);
         that._zIndex(fabricDocument, '', that);
         that._genHtml(false);
         that._save2(that);
@@ -392,18 +390,16 @@ export default class TemplateView extends JetView {
   _save(e, self) {
     var that = e ? this.that.getParentView() : self,
       fabricDocument = $($$("fabric").getIframe()).contents(),
-      id = $$("layers").getSelectedId();
+      item = $$("layers").getSelectedItem();
     if (id) {
-      that._body.find("#" + id).html($$("tinymce").getValue());
-      fabricDocument.find("#" + id).html($$("tinymce").getValue());
+      that._body.find("#" + item.value).html($$("tinymce").getValue());
+      fabricDocument.find("#" + item.value).html($$("tinymce").getValue());
       that._redo = [];
-      console.log("save push start");
       that._undo.push([
         that._body.find('#body:first>.pusher').html(),
         fabricDocument.find('body:first>.pusher').html(),
         webix.ajax().stringify($$('fabric').getCanvas())
       ]);
-      console.log("save push end");
       that._genHtml(false);
       that._save2(that);
     }
@@ -427,8 +423,7 @@ export default class TemplateView extends JetView {
   }
   _saveStage(item, body, object) {
     item.attr('style', '');
-    var id = $$('layers').getSelectedId(),
-      fixed = $$('mode').getValue(),
+    var fixed = $$('mode').getValue(),
       dock = $$('dock').getValue() - 1;
     object.find(body).append(item);
     if (dock) {
@@ -664,8 +659,8 @@ export default class TemplateView extends JetView {
     }
     if (($$('tools').config.collapsed && $$("tabbar").getValue() === 'fabricCnt') || (!$$('tools').config.collapsed && resetDimension)) {
       var isHidden = $($$("fabric").getIframe()).parent(':hidden'),
-        selectedId = $$('layers').getSelectedId(),
-        item = that._body.find("#" + selectedId);
+        selectedItem = $$('layers').getSelectedItem(),
+        item = that._body.find("#" + selectedItem.value);
       if (isHidden.length) swap(isHidden[isHidden.length - 1], {
         position: "absolute",
         visibility: "hidden",
@@ -674,7 +669,7 @@ export default class TemplateView extends JetView {
       else doLayers();
       if (item.length) {
         that._lockRedraw = true;
-        if (selectedId === 'content') {
+        if (selectedItem.value === 'content') {
           $$('tinymce').$scope.setValue('');
           $$('tinymce').disable();
           $$("ace-template").$scope.setValue('');
