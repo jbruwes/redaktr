@@ -256,7 +256,7 @@ export default class TemplateView extends JetView {
           }
           $$("layers").add({
             id: webix.uid(),
-            title: $(e).attr("id"),
+            value: $(e).attr("id"),
             markCheckbox: !$(e).attr("hidden"),
             icon: icon
           });
@@ -340,7 +340,7 @@ export default class TemplateView extends JetView {
   _zIndex(body, prefix, that) {
     var i = $$('layers').count();
     $.each($$('layers').serialize(), (index, value) => {
-      body.find("#" + value.title).css("z-index", i);
+      body.find("#" + value.value).css("z-index", i);
       i -= 1;
     });
     body.find(
@@ -373,9 +373,9 @@ export default class TemplateView extends JetView {
           fabricDocument.find('body:first>.pusher').html(),
           webix.ajax().stringify($$('fabric').getCanvas())
         ]);
-        that._saveStage(that._body.find("#" + item.title), '#body:first>.pusher', that._body);
+        that._saveStage(that._body.find("#" + item.value), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
-        that._saveStage(fabricDocument.find("#" + item.title), 'body:first>.pusher', fabricDocument);
+        that._saveStage(fabricDocument.find("#" + item.value), 'body:first>.pusher', fabricDocument);
         that._zIndex(fabricDocument, '', that);
         that._genHtml(false);
         that._save2(that);
@@ -387,8 +387,8 @@ export default class TemplateView extends JetView {
       fabricDocument = $($$("fabric").getIframe()).contents(),
       item = $$("layers").getSelectedItem();
     if (id) {
-      that._body.find("#" + item.title).html($$("tinymce").getValue());
-      fabricDocument.find("#" + item.title).html($$("tinymce").getValue());
+      that._body.find("#" + item.value).html($$("tinymce").getValue());
+      fabricDocument.find("#" + item.value).html($$("tinymce").getValue());
       that._redo = [];
       that._undo.push([
         that._body.find('#body:first>.pusher').html(),
@@ -608,7 +608,7 @@ export default class TemplateView extends JetView {
         layer.left = 0;
         layer.top = 0;
         layer.angle = 0;
-        selObj = fabricDocument.find("#" + layer.title);
+        selObj = fabricDocument.find("#" + layer.value);
         if (selObj.length) {
           if (selObj.attr("hidden")) rect.set({
             hasBorders: false,
@@ -661,7 +661,7 @@ export default class TemplateView extends JetView {
     if (($$('tools').config.collapsed && $$("tabbar").getValue() === 'fabricCnt') || (!$$('tools').config.collapsed && resetDimension)) {
       var isHidden = $($$("fabric").getIframe()).parent(':hidden'),
         selectedItem = $$('layers').getSelectedItem(),
-        item = that._body.find("#" + selectedItem.title);
+        item = that._body.find("#" + selectedItem.value);
       if (isHidden.length) swap(isHidden[isHidden.length - 1], {
         position: "absolute",
         visibility: "hidden",
@@ -670,7 +670,7 @@ export default class TemplateView extends JetView {
       else doLayers();
       if (item.length) {
         that._lockRedraw = true;
-        if (selectedItem.title === 'content') {
+        if (selectedItem.value === 'content') {
           $$('tinymce').$scope.setValue('');
           $$('tinymce').disable();
           $$("ace-template").$scope.setValue('');

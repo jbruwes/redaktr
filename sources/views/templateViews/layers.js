@@ -8,7 +8,7 @@ export default class LayersView extends JetView {
             editable: true,
             editaction: "dblclick",
             editor: "text",
-            editValue: "title",
+            editValue: "value",
             type: {
                 markCheckbox: function(obj) {
                     return "<span class='check mdi mdi-18px mdi-checkbox-" + (obj.markCheckbox ? "marked-" : "blank-") + "outline'></span>";
@@ -17,8 +17,8 @@ export default class LayersView extends JetView {
             onClick: {
                 "check": (e, id) => {
                     var item = $$('layers').getItem(id),
-                        item1 = this.getParentView()._body.find("#" + item.title),
-                        item2 = $($$("fabric").getIframe()).contents().find("#" + item.title);
+                        item1 = this.getParentView()._body.find("#" + item.value),
+                        item2 = $($$("fabric").getIframe()).contents().find("#" + item.value);
                     item.markCheckbox = item.markCheckbox ? 0 : 1;
                     if (item.markCheckbox) {
                         item1.removeAttr("hidden");
@@ -35,7 +35,7 @@ export default class LayersView extends JetView {
                     $$('layers').updateItem(id, item);
                 }
             },
-            template: "<span class='mdi mdi-dark mdi-inactive mdi-18px mdi-#icon#'></span> {common.markCheckbox()} #title#",
+            template: "<span class='mdi mdi-dark mdi-inactive mdi-18px mdi-#icon#'></span> {common.markCheckbox()} #value#",
             on: {
                 'onSelectChange': _ => this.getParentView()._makeSelection(this.getParentView(), true),
                 'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView()),
@@ -61,7 +61,7 @@ export default class LayersView extends JetView {
                     return true;
                 },
                 'onBeforeEditStart': id => {
-                    if ($$("layers").getItem(id).title === 'content') {
+                    if ($$("layers").getItem(id).value === 'content') {
                         webix.message("Rename is prohibited", "debug");
                         return false;
                     }
