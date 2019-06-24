@@ -22,7 +22,31 @@ export default class LayersToolbarView extends JetView {
               markCheckbox: true,
               icon: 'mdi mdi-monitor-lock'
             });
-            $$("fabric").getCanvas().add(new fabric.Rect({
+
+
+
+            var rect = new fabric.Rect({
+              hasControls: true,
+              hasBorders: true,
+              opacity: 0,
+              borderColor: 'rgba(102,153,255,1)',
+              cornerColor: 'rgba(102,153,255,1)',
+              cornerStyle: 'circle',
+              originX: 'center',
+              originY: 'center',
+              lockScalingFlip: true
+            });
+            rect.toObject = (function(toObject) {
+              return function() {
+                return fabric.util.object.extend(toObject.call(this), {
+                  id: this.id
+                });
+              };
+            })(rect.toObject);
+            $$("fabric").getCanvas().add(rect);
+            rect.id = id;
+
+            /*$$("fabric").getCanvas().add(new fabric.Rect({
               hasControls: true,
               hasBorders: true,
               opacity: 0,
@@ -33,7 +57,10 @@ export default class LayersToolbarView extends JetView {
               originY: 'center',
               lockScalingFlip: true,
               id: id
-            }));
+            }));*/
+
+
+
             $$("layers").select(id);
             $$("layers").edit(id);
           }

@@ -36,14 +36,28 @@ export default class TemplateView extends JetView {
                         view: "icon",
                         icon: "mdi mdi-undo",
                         click: _ => {
-                          console.log(JSON.stringify(this._undo));
+                          //console.log(JSON.stringify(this._undo));
                           var pop = this._undo.pop();
                           if (pop) {
                             var fabricDocument = $($$("fabric").getIframe()).contents();
-                            this._redo.push([this._body.find('#body:first>.pusher').html(), fabricDocument.find('body:first>.pusher').html()]);
+                            this._redo.push([
+                              this._body.find('#body:first>.pusher').html(),
+                              fabricDocument.find('body:first>.pusher').html(),
+                              webix.ajax().stringify($$('fabric').getCanvas()),
+                              $$('layers').serialize(),
+                              $$("layers").getSelectedId()
+                            ]);
                             this._body.find('#body:first>.pusher').html(pop[0]);
                             fabricDocument.find('body:first>.pusher').html(pop[1]);
-                            $$('fabric').getCanvas().loadFromJSON(pop[2], _ => $$('fabric').getCanvas().requestRenderAll());
+                            $$('fabric').getCanvas().loadFromJSON(pop[2], _ => $$('fabric').getCanvas().requestRenderAll(), (o, rect) => {
+                              rect.toObject = (function(toObject) {
+                                return function() {
+                                  return fabric.util.object.extend(toObject.call(this), {
+                                    id: this.id
+                                  });
+                                };
+                              })(rect.toObject);
+                            });
                             this._save2();
                           }
                         }
@@ -57,11 +71,21 @@ export default class TemplateView extends JetView {
                             this._undo.push([
                               this._body.find('#body:first>.pusher').html(),
                               fabricDocument.find('body:first>.pusher').html(),
-                              webix.ajax().stringify($$('fabric').getCanvas())
+                              webix.ajax().stringify($$('fabric').getCanvas()),
+                              $$('layers').serialize(),
+                              $$("layers").getSelectedId()
                             ]);
                             this._body.find('#body:first>.pusher').html(pop[0]);
                             fabricDocument.find('body:first>.pusher').html(pop[1]);
-                            $$('fabric').getCanvas().loadFromJSON(pop[2], _ => $$('fabric').getCanvas().requestRenderAll());
+                            $$('fabric').getCanvas().loadFromJSON(pop[2], _ => $$('fabric').getCanvas().requestRenderAll(), (o, rect) => {
+                              rect.toObject = (function(toObject) {
+                                return function() {
+                                  return fabric.util.object.extend(toObject.call(this), {
+                                    id: this.id
+                                  });
+                                };
+                              })(rect.toObject);
+                            });
                             this._save2();
                           }
                         }
@@ -263,7 +287,33 @@ export default class TemplateView extends JetView {
         });
         $$("fabric").getCanvas(true).then(canvas => {
           $.each($$('layers').serialize().reverse(), (index, value) => {
-            canvas.add(new fabric.Rect({
+
+
+
+
+            var rect = new fabric.Rect({
+              hasControls: value.markCheckbox,
+              hasBorders: value.markCheckbox,
+              opacity: 0,
+              borderColor: 'rgba(102,153,255,1)',
+              cornerColor: 'rgba(102,153,255,1)',
+              cornerStyle: 'circle',
+              originX: 'center',
+              originY: 'center',
+              lockScalingFlip: true
+            });
+            rect.toObject = (function(toObject) {
+              return function() {
+                return fabric.util.object.extend(toObject.call(this), {
+                  id: this.id
+                });
+              };
+            })(rect.toObject);
+            canvas.add(rect);
+            rect.id = value.id;
+
+
+            /*canvas.add(new fabric.Rect({
               hasControls: value.markCheckbox,
               hasBorders: value.markCheckbox,
               opacity: 0,
@@ -274,7 +324,7 @@ export default class TemplateView extends JetView {
               originY: 'center',
               lockScalingFlip: true,
               id: value.id
-            }));
+            }));*/
           });
           canvas.on('selection:updated', options => {
             $$("layers").select(options.target.id)
@@ -371,7 +421,9 @@ export default class TemplateView extends JetView {
         that._undo.push([
           that._body.find('#body:first>.pusher').html(),
           fabricDocument.find('body:first>.pusher').html(),
-          webix.ajax().stringify($$('fabric').getCanvas())
+          webix.ajax().stringify($$('fabric').getCanvas()),
+          $$('layers').serialize(),
+          $$("layers").getSelectedId()
         ]);
         that._saveStage(that._body.find("#" + item.value), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
@@ -393,7 +445,9 @@ export default class TemplateView extends JetView {
       that._undo.push([
         that._body.find('#body:first>.pusher').html(),
         fabricDocument.find('body:first>.pusher').html(),
-        webix.ajax().stringify($$('fabric').getCanvas())
+        webix.ajax().stringify($$('fabric').getCanvas()),
+        $$('layers').serialize(),
+        $$("layers").getSelectedId()
       ]);
       that._genHtml(false);
       that._save2(that);
@@ -604,6 +658,7 @@ export default class TemplateView extends JetView {
         fabricDocument = $($$("fabric").getIframe()).contents(),
         selectedId = null;
       $$('fabric').getCanvas().forEachObject(rect => {
+        //console.log(rect);
         layer = $$("layers").getItem(rect.id);
         layer.left = 0;
         layer.top = 0;
