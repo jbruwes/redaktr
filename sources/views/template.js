@@ -58,6 +58,9 @@ export default class TemplateView extends JetView {
                                 };
                               })(rect.toObject);
                             });
+                            $$("layers").clearAll();
+                            $$("layers").parse(pop[3]);
+                            $$("layers").select(pop[4]);
                             this._save2();
                           }
                         }
@@ -86,6 +89,9 @@ export default class TemplateView extends JetView {
                                 };
                               })(rect.toObject);
                             });
+                            $$("layers").clearAll();
+                            $$("layers").parse(pop[3]);
+                            $$("layers").select(pop[4]);
                             this._save2();
                           }
                         }
@@ -279,7 +285,7 @@ export default class TemplateView extends JetView {
               break;
           }
           $$("layers").add({
-            id: webix.uid(),
+            id: webix.uid().toString(),
             value: $(e).attr("id"),
             markCheckbox: !$(e).attr("hidden"),
             icon: icon
@@ -287,10 +293,6 @@ export default class TemplateView extends JetView {
         });
         $$("fabric").getCanvas(true).then(canvas => {
           $.each($$('layers').serialize().reverse(), (index, value) => {
-
-
-
-
             var rect = new fabric.Rect({
               hasControls: value.markCheckbox,
               hasBorders: value.markCheckbox,
@@ -311,23 +313,9 @@ export default class TemplateView extends JetView {
             })(rect.toObject);
             canvas.add(rect);
             rect.id = value.id;
-
-
-            /*canvas.add(new fabric.Rect({
-              hasControls: value.markCheckbox,
-              hasBorders: value.markCheckbox,
-              opacity: 0,
-              borderColor: 'rgba(102,153,255,1)',
-              cornerColor: 'rgba(102,153,255,1)',
-              cornerStyle: 'circle',
-              originX: 'center',
-              originY: 'center',
-              lockScalingFlip: true,
-              id: value.id
-            }));*/
           });
           canvas.on('selection:updated', options => {
-            $$("layers").select(options.target.id)
+            $$("layers").select(options.target.id);
           });
           canvas.on('selection:cleared', options => {
             canvas.setActiveObject(options.deselected[0])
@@ -335,10 +323,10 @@ export default class TemplateView extends JetView {
           canvas.on('object:modified', options => {
             var layer = $$("layers").getItem(options.target.id);
             this._updateDND({
-              top: layer.top,
-              left: layer.left,
-              angle: layer.angle,
-              oCoords: layer.oCoords
+              top: this._top,
+              left: this._left,
+              angle: this._angle,
+              oCoords: this._oCoords
             }, {
               top: options.target.top,
               left: options.target.left,
@@ -411,20 +399,22 @@ export default class TemplateView extends JetView {
       return $(b).children('div[id]').css('z-index') - $(a).children('div[id]').css('z-index');
     }));
   }
-  _redraw(that) {
+  _redraw(that, layers) {
     that = that ? that : this;
     if (!that._lockRedraw && that._body) {
       var fabricDocument = $($$("fabric").getIframe()).contents(),
         item = $$("layers").getSelectedItem();
       if (item) {
-        that._redo = [];
-        that._undo.push([
-          that._body.find('#body:first>.pusher').html(),
-          fabricDocument.find('body:first>.pusher').html(),
-          webix.ajax().stringify($$('fabric').getCanvas()),
-          $$('layers').serialize(),
-          $$("layers").getSelectedId()
-        ]);
+        if (!layers) {
+          that._redo = [];
+          that._undo.push([
+            that._body.find('#body:first>.pusher').html(),
+            fabricDocument.find('body:first>.pusher').html(),
+            webix.ajax().stringify($$('fabric').getCanvas()),
+            $$("layers").serialize(),
+            $$("layers").getSelectedId()
+          ]);
+        }
         that._saveStage(that._body.find("#" + item.value), '#body:first>.pusher', that._body);
         that._zIndex(that._body, '#', that);
         that._saveStage(fabricDocument.find("#" + item.value), 'body:first>.pusher', fabricDocument);
@@ -439,16 +429,16 @@ export default class TemplateView extends JetView {
       fabricDocument = $($$("fabric").getIframe()).contents(),
       item = $$("layers").getSelectedItem();
     if (id) {
-      that._body.find("#" + item.value).html($$("tinymce").getValue());
-      fabricDocument.find("#" + item.value).html($$("tinymce").getValue());
-      that._redo = [];
+      /*that._redo = [];
       that._undo.push([
         that._body.find('#body:first>.pusher').html(),
         fabricDocument.find('body:first>.pusher').html(),
         webix.ajax().stringify($$('fabric').getCanvas()),
         $$('layers').serialize(),
         $$("layers").getSelectedId()
-      ]);
+      ]);*/
+      that._body.find("#" + item.value).html($$("tinymce").getValue());
+      fabricDocument.find("#" + item.value).html($$("tinymce").getValue());
       that._genHtml(false);
       that._save2(that);
     }
@@ -643,26 +633,25 @@ export default class TemplateView extends JetView {
         old[name] = elem.style[name];
         elem.style[name] = options[name];
       }
-      ret = callback.apply(elem, args || []);
+      ret = callback.call(elem, args);
       for (name in options) {
         elem.style[name] = old[name];
       }
       return ret;
     }
 
-    function doLayers() {
+    function doLayers(those) {
       var layer = null,
         map = null,
         selObj = null,
         style = null,
         fabricDocument = $($$("fabric").getIframe()).contents(),
-        selectedId = null;
+        selectedId = $$('layers').getSelectedId();
       $$('fabric').getCanvas().forEachObject(rect => {
-        //console.log(rect);
         layer = $$("layers").getItem(rect.id);
-        layer.left = 0;
-        layer.top = 0;
-        layer.angle = 0;
+        //layer.left = 0;
+        //layer.top = 0;
+        //layer.angle = 0;
         selObj = fabricDocument.find("#" + layer.value);
         if (selObj.length) {
           if (selObj.attr("hidden")) rect.set({
@@ -702,13 +691,14 @@ export default class TemplateView extends JetView {
           angle: 0
         });
         rect.setCoords();
-        layer.oCoords = rect.oCoords;
-      });
-      selectedId = $$('layers').getSelectedId();
-      $$('fabric').getCanvas().forEachObject(obj => {
-        if (obj.id && obj.id === selectedId) {
-          $$('fabric').getCanvas().bringToFront(obj);
-          $$('fabric').getCanvas().setActiveObject(obj);
+        //layer.oCoords = rect.oCoords;
+        if (rect.id && rect.id === selectedId) {
+          $$('fabric').getCanvas().bringToFront(rect);
+          $$('fabric').getCanvas().setActiveObject(rect);
+          those._oCoords = rect.oCoords;
+          those._top = rect.top;
+          those._left = rect.left;
+          those._angle = rect.angle;
         }
       });
       $$('fabric').getCanvas().requestRenderAll();
@@ -721,8 +711,8 @@ export default class TemplateView extends JetView {
         position: "absolute",
         visibility: "hidden",
         display: "block"
-      }, doLayers);
-      else doLayers();
+      }, doLayers, that);
+      else doLayers(that);
       if (item.length) {
         that._lockRedraw = true;
         if (selectedItem.value === 'content') {

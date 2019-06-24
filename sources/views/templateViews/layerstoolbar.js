@@ -9,9 +9,10 @@ export default class LayersToolbarView extends JetView {
           view: "icon",
           icon: "mdi mdi-file-document-outline",
           click: _ => {
-            var id = webix.uid(),
+            var id = webix.uid().toString(),
               that = this.getParentView(),
               fabricDocument = $($$("fabric").getIframe()).contents();
+            this._undo();
             that._body.find("#body:first>.pusher").append($('<div data-fixed><div id="' + "layer-" + id + '" style=margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
             that._zIndex(that._body, '#', that);
             fabricDocument.find("body:first>.pusher").append($('<div data-fixed><div id="' + "layer-" + id + '" style="margin-left:0;margin-right:0;margin-top:0;height:100px;"></div></div>'));
@@ -22,9 +23,6 @@ export default class LayersToolbarView extends JetView {
               markCheckbox: true,
               icon: 'mdi mdi-monitor-lock'
             });
-
-
-
             var rect = new fabric.Rect({
               hasControls: true,
               hasBorders: true,
@@ -45,22 +43,6 @@ export default class LayersToolbarView extends JetView {
             })(rect.toObject);
             $$("fabric").getCanvas().add(rect);
             rect.id = id;
-
-            /*$$("fabric").getCanvas().add(new fabric.Rect({
-              hasControls: true,
-              hasBorders: true,
-              opacity: 0,
-              borderColor: 'rgba(102,153,255,1)',
-              cornerColor: 'rgba(102,153,255,1)',
-              cornerStyle: 'circle',
-              originX: 'center',
-              originY: 'center',
-              lockScalingFlip: true,
-              id: id
-            }));*/
-
-
-
             $$("layers").select(id);
             $$("layers").edit(id);
           }
@@ -70,7 +52,10 @@ export default class LayersToolbarView extends JetView {
           icon: "mdi mdi-pencil",
           click: _ => {
             var id = $$("layers").getSelectedId();
-            if (id) $$("layers").edit(id);
+            if (id) {
+              this._undo();
+              $$("layers").edit(id);
+            }
           }
         }, {
           view: "icon",
@@ -82,6 +67,7 @@ export default class LayersToolbarView extends JetView {
             if (item) {
               if (item.value === 'content') webix.message("Delete is prohibited", "debug");
               else {
+                this._undo();
                 var newId = $$("layers").getPrevId(item.id);
                 if (!newId) newId = $$("layers").getNextId(item.id);
                 that._body.find("#" + item.value).remove();
@@ -103,18 +89,36 @@ export default class LayersToolbarView extends JetView {
           icon: "mdi mdi-arrow-up-bold-box-outline",
           click: _ => {
             var id = $$("layers").getSelectedId();
-            if (id) $$("layers").moveUp(id);
+            if (id) {
+              this._undo();
+              $$("layers").moveUp(id);
+            }
           }
         }, {
           view: "icon",
           icon: "mdi mdi-arrow-down-bold-box-outline",
           click: _ => {
             var id = $$("layers").getSelectedId();
-            if (id) $$("layers").moveDown(id);
+            if (id) {
+              this._undo();
+              $$("layers").moveDown(id);
+            }
           }
         }, {}
       ]
     };
+  }
+  _undo() {
+    var that = this.getParentView(),
+      fabricDocument = $($$("fabric").getIframe()).contents();
+    that._redo = [];
+    that._undo.push([
+      that._body.find('#body:first>.pusher').html(),
+      fabricDocument.find('body:first>.pusher').html(),
+      webix.ajax().stringify($$('fabric').getCanvas()),
+      $$("layers").serialize(),
+      $$("layers").getSelectedId()
+    ]);
   }
 }
 /* global fabric */

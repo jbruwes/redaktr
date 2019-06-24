@@ -38,7 +38,7 @@ export default class LayersView extends JetView {
             template: "<span class='mdi mdi-dark mdi-inactive mdi-18px mdi-#icon#'></span> {common.markCheckbox()} #value#",
             on: {
                 'onSelectChange': _ => this.getParentView()._makeSelection(this.getParentView(), true),
-                'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView()),
+                'data->onStoreUpdated': _ => this.getParentView()._redraw(this.getParentView(), true),
                 'onBeforeEditStop': (state, editor, ignore) => {
                     var that = this.getParentView(),
                         fabricDocument = $($$("fabric").getIframe()).contents();
