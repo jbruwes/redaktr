@@ -366,8 +366,8 @@ export default class TemplateView extends JetView {
       '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css">' +
       '<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
       '<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
-      '<script src="//cdn.redaktr.com/require.min.js"></script>' +
-      '<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" async></script>' +
+      '<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
+      '<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" defer></script>' +
       '</head><body>' +
       '<div class="ui sidebar very wide vertical accordion menu"></div>' +
       '<div class="ui main menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
