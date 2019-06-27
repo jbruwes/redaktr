@@ -1,50 +1,114 @@
 import $script from "scriptjs";
-import { JetView } from "webix-jet";
+import {
+	JetView
+} from "webix-jet";
 export default class SignInView extends JetView {
 	config() {
-		var appShow = () => {
+		var appShow = item => {
 			$$("sidebar").clearAll();
+			$$("toolbar").addView({
+				id: "play",
+				view: "icon",
+				icon: "mdi mdi-play-circle",
+				click: _ => {
+					window.open("https://redaktr.com/" + item.title + "/?" + webix.uid(), "_blank");
+				}
+			});
 			this.show("content").then(function(value) {
 				$$("tinymce").getEditor(true).then(editor => {
-					$$("sidebar").add({ id: "content", icon: "mdi mdi-book-open-page-variant", value: "Content" }, 0);
-					$$("sidebar").add({ id: "template", icon: "mdi mdi-language-html5", value: "Template" }, 1);
-					$$("sidebar").add({ id: "css", icon: "mdi mdi-language-css3", value: "CSS" }, 2);
-					$$("sidebar").add({ id: "js", icon: "mdi mdi-language-javascript", value: "JavaScript" }, 3);
-					$$("sidebar").add({ id: "settings", icon: "mdi mdi-settings", value: "Settings" }, 4);
-					$$("sidebar").add({ id: "signout", icon: "mdi mdi-logout-variant", value: "Sign Out" });
+					$$("sidebar").add({
+						id: "content",
+						icon: "mdi mdi-book-open-page-variant",
+						value: "Content"
+					}, 0);
+					$$("sidebar").add({
+						id: "template",
+						icon: "mdi mdi-language-html5",
+						value: "Template"
+					}, 1);
+					$$("sidebar").add({
+						id: "css",
+						icon: "mdi mdi-language-css3",
+						value: "CSS"
+					}, 2);
+					$$("sidebar").add({
+						id: "js",
+						icon: "mdi mdi-language-javascript",
+						value: "JavaScript"
+					}, 3);
+					$$("sidebar").add({
+						id: "settings",
+						icon: "mdi mdi-settings",
+						value: "Settings"
+					}, 4);
+					$$("sidebar").add({
+						id: "signout",
+						icon: "mdi mdi-logout-variant",
+						value: "Sign Out"
+					});
 					$$("sidebar").select("content");
 				});
 			}, function(reason) {
-				webix.message({ text: "Something goes wrong", type: "error" });
+				webix.message({
+					text: "Something goes wrong",
+					type: "error"
+				});
 			});
 		};
 		var check = _ => {
 				this.app.DocumentClient.get({
 					TableName: "redaktr",
-					Key: { "id": AWS.config.credentials.identityId }
+					Key: {
+						"id": AWS.config.credentials.identityId
+					}
 				}, (err, data) => {
-					if (err) webix.message({ text: err, type: "error" });
-					else if (data.Item) appShow();
-					else webix.message({ text: "Registration is Temporarily Unavailable", type: "error" });
+					if (err) webix.message({
+						text: err,
+						type: "error"
+					});
+					else if (data.Item) appShow(data.Item);
+					else webix.message({
+						text: "Registration is Temporarily Unavailable",
+						type: "error"
+					});
 				});
 			},
 			signIn = (err) => {
 				if (err) {
-					webix.message({ text: err, type: "error" });
-				}
-				else {
+					webix.message({
+						text: err,
+						type: "error"
+					});
+				} else {
 					if (AWS.config.credentials.identityId) check();
 					else AWS.config.credentials.refresh(_ => check());
 				}
 			};
 		return {
 			css: "signInView",
-			cols: [{ gravity: 0.38 }, {
+			cols: [{
+				gravity: 0.38
+			}, {
 				css: "signInViewRight",
-				rows: [
-					{ paddingX: 10, cols: [{}, { view: "label", label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>', height: 152, width: 152 }] },
-					{ gravity: 2 },
-					{ id: "header_template", view: "template", template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website creator</div></h1>", minHeight: 150, type: "clean" },
+				rows: [{
+						paddingX: 10,
+						cols: [{}, {
+							view: "label",
+							label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>',
+							height: 152,
+							width: 152
+						}]
+					},
+					{
+						gravity: 2
+					},
+					{
+						id: "header_template",
+						view: "template",
+						template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website creator</div></h1>",
+						minHeight: 150,
+						type: "clean"
+					},
 					{
 						css: "signInViewField",
 						padding: 30,
@@ -103,7 +167,10 @@ export default class SignInView extends JetView {
 												AWS.config.credentials.expired = false;
 												AWS.config.credentials.get(signIn);
 											}, (reason) => {
-												webix.message({ text: reason.error, type: "error" });
+												webix.message({
+													text: reason.error,
+													type: "error"
+												});
 											});
 										});
 									});

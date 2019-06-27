@@ -5,26 +5,20 @@ export default class TopView extends JetView {
   config() {
     var ui = {
       rows: [{
+          id: "toolbar",
           view: "toolbar",
           height: 56,
           //css: "webix_dark",
-          elements: [{
+          cols: [{
               view: "icon",
               icon: "mdi mdi-menu",
-              click: () => {
+              click: _ => {
                 $$("sidebar").toggle();
               }
             },
             {
               view: "label",
               label: "<span class='mdi mdi-36px mdi-glassdoor logoRedaktr'></span> <span class='mdi mdi-dark mdi-24px mdi-alpha-r'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-e'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-d'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-a'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-k'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-t'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-r'></span>"
-            },
-            {
-              view: "icon",
-              icon: "mdi mdi-help-circle-outline",
-              click: () => {
-                window.open("https://redaktr.com/spravka/", "_blank");
-              }
             }
           ]
         },
@@ -62,6 +56,7 @@ export default class TopView extends JetView {
   }
   _resetSidebar() {
     $$("sidebar").clearAll();
+    if($$("play"))$$("toolbar").removeView("play");
     $$("sidebar").add({
       id: "signin",
       icon: "mdi mdi-login-variant",
