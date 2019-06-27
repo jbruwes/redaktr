@@ -370,7 +370,7 @@ export default class TemplateView extends JetView {
                         '<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" defer></script>' +
                         '</head><body>' +
                         '<div class="ui sidebar very wide vertical accordion menu"></div>' +
-                        '<div class="ui main menu fixed"><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
+                        '<div class="ui main menu fixed" hidden><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
                         '<div class="pusher">' + this._body.find('#body:first>.pusher').html() + '</div>' +
                         '</body></html>';
                 this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
@@ -724,7 +724,7 @@ export default class TemplateView extends JetView {
                                 } else {
                                         //$$('tinymce').$scope.setValue(item.html());
                                         $$("tinymce").getEditor(true).then(_ => $$('tinymce').$scope.setValue(item.html()));
-                                        
+
                                         $$('tinymce').enable();
                                         $$("ace-template").$scope.setValue(item.html());
                                         $$('ace-template').enable();
