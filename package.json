@@ -2,7 +2,7 @@
   "name": "webix-jet-app",
   "version": "1.1.0",
   "description": "Webix Jet App",
-  "main": "sources/myapp.js",
+  "main": "sources/redaktr.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint sources/",
