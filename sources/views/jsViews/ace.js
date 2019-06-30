@@ -1,4 +1,6 @@
-import { JetView } from "webix-jet";
+import {
+	JetView
+} from "webix-jet";
 export default class AceView extends JetView {
 	config() {
 		return {
@@ -23,7 +25,10 @@ export default class AceView extends JetView {
 				});
 			}
 		};
-		webix.ajax().get("https://s3.amazonaws.com/base.redaktr.com/" + AWS.config.credentials.identityId + ".js", { }, { error: (text, data, XmlHttpRequest) => cb(''), success: (text, data, XmlHttpRequest) => cb(text) });
+		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".js?" + webix.uid(), {
+			error: (text, data, XmlHttpRequest) => cb(''),
+			success: (text, data, XmlHttpRequest) => cb(text)
+		});
 	}
 	_aceChange(e, session) {
 		var that = session.that;
@@ -34,8 +39,12 @@ export default class AceView extends JetView {
 			Key: AWS.config.credentials.identityId + ".js",
 			Body: 'function ready(){try{' + $$('ace-js').getEditor().getValue() + '}catch(e){}}'
 		}, (err, data) => {
-			if (err) { if (err.code !== "RequestAbortedError") webix.message({ text: err.message, type: "error" }) }
-			else webix.message("JS save complete");
+			if (err) {
+				if (err.code !== "RequestAbortedError") webix.message({
+					text: err.message,
+					type: "error"
+				})
+			} else webix.message("JS save complete");
 		});
 	}
 }
