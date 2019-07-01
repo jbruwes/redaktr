@@ -85,24 +85,6 @@ export default class ContentView extends JetView {
 			]
 		};
 	}
-	/*	init() {
-			this.app.S3.getObject({
-				Bucket: 'template.redaktr.com',
-				Key: AWS.config.credentials.identityId + '.htm'
-			}, (err, data) => {
-				if ($$('sidebar').getSelectedId() === 'content') {
-					var head = '';
-					if (!err) {
-						head = data.Body.toString().match(/<head[^>]*>[\s\S]*<\/head>/gi);
-						head = head ? head[0].replace(/^<head[^>]*>/, '').replace(/<\/head>$/, '') : '';
-					}
-					var content_css = [];
-					$('<div>' + head + '</div>').find("link[href][rel='stylesheet']").each((i, val) => { content_css.push($(val).attr("href")) });
-					content_css = content_css.join(",");
-					$$("tinymce").getEditor(true).then(editor => { tinyMCE.activeEditor.dom.loadCSS(content_css) });
-				}
-			});
-		}*/
 	_save(e, self) {
 		var that = e ? this.that.getParentView() : self;
 		if (that.app.lastXHRPostContent) that.app.lastXHRPostContent.abort();
