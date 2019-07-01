@@ -363,8 +363,6 @@ export default class TemplateView extends JetView {
 			'<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
 			'<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
 			'<link rel="stylesheet" href="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css' : '//cdn.redaktr.com/redaktr.min.css') + '">' +
-			//'<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css">' +
-			//'<link rel="stylesheet" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.css">' +
 			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
 			'<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" defer></script>' +
