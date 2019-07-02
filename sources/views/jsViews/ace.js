@@ -19,7 +19,7 @@ export default class AceView extends JetView {
 					session.that = this;
 					session.setUseWorker(false);
 					session.setUseWrapMode(true);
-					session.setValue(text.replace(/^function ready\(\){try{/, '').replace(/}catch\(e\){}}$/, ''), -1);
+					session.setValue(text.replace(/^function redaktr\(\){try{/, '').replace(/}catch\(e\){}}$/, ''), -1);
 					session.on('change', this._aceChange, this);
 					editor.resize();
 				});
@@ -37,7 +37,7 @@ export default class AceView extends JetView {
 			Bucket: 'base.redaktr.com',
 			ContentType: 'application/javascript',
 			Key: AWS.config.credentials.identityId + ".js",
-			Body: 'function ready(){try{' + $$('ace-js').getEditor().getValue() + '}catch(e){}}'
+			Body: 'function redaktr(){try{' + $$('ace-js').getEditor().getValue() + '}catch(e){}}'
 		}, (err, data) => {
 			if (err) {
 				if (err.code !== "RequestAbortedError") webix.message({
