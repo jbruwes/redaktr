@@ -12,7 +12,7 @@ export default class SettingsView extends JetView {
 						template: "Project name",
 						type: "section"
 					}, {
-						id: "title",
+						id: "name",
 						view: "label",
 						label: "-"
 					},
@@ -118,7 +118,7 @@ export default class SettingsView extends JetView {
 					type: "error"
 				});
 				else if (data.Item) {
-					if (data.Item.title) $$("title").setValue("http://redaktr.com/" + data.Item.title);
+					if (data.Item.name) $$("name").setValue("http://redaktr.com/" + data.Item.name);
 					if (data.Item.domain) $$("domain").setValue(data.Item.domain);
 					if (data.Item.google) $$("google").setValue(data.Item.google);
 					if (data.Item.yandex) $$("yandex").setValue(data.Item.yandex);
