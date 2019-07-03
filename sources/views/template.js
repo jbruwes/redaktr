@@ -366,8 +366,8 @@ export default class TemplateView extends JetView {
 
 
 			'<script>' +
-			'document.write("<link rel=\"stylesheet\" href=\"//base.redaktr.com/' + AWS.config.credentials.identityId + '.cdn.css"+window.location.search+"\">");' +
-			'document.write("<link rel=\"stylesheet\" href=\"//base.redaktr.com/' + AWS.config.credentials.identityId + '.css"+window.location.search+"\">");' +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+window.location.search+'\">');" +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+window.location.search+'\">');" +
 			'</script>' +
 
 			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
