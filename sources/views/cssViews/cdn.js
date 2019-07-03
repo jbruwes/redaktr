@@ -17,10 +17,10 @@ export default class CdnView extends JetView {
 		};
 	}
 	init() {
-		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css?" + webix.uid()).then((text) => {
+		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css?" + webix.uid()).then((data) => {
 			if ($$('sidebar').getSelectedId() === 'css') {
 				$$("cdn").clearAll();
-				var url = text ? text.split("\n") : [];
+				var url = data.text() ? data.text().split("\n") : [];
 				for (var x in url) $$("cdn").add({
 					url: url[x].replace(/^@import url\(/, '').replace(/\);$/, '')
 				});
