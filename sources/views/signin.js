@@ -11,7 +11,7 @@ export default class SignInView extends JetView {
 				view: "icon",
 				icon: "mdi mdi-play-circle",
 				click: _ => {
-					window.open("https://redaktr.com/" + item.name + "/?" + webix.uid(), "_blank");
+					window.open("https://redaktr.com/" + item.name + "/?" + webix.uid(), "_tab");
 				}
 			});
 			this.show("content").then(function(value) {
