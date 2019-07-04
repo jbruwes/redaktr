@@ -657,9 +657,6 @@ export default class TemplateView extends JetView {
 				selectedId = $$('layers').getSelectedId();
 			$$('fabric').getCanvas().forEachObject(rect => {
 				layer = $$("layers").getItem(rect.id);
-				
-				console.log(layer.value);
-				
 				selObj = fabricDocument.find("#" + layer.value);
 				if (selObj.length) {
 					if (selObj.attr("hidden")) rect.set({
