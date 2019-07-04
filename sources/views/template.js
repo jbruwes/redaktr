@@ -572,7 +572,7 @@ export default class TemplateView extends JetView {
 		item.css("box-shadow", shadows.join());
 		var classes = [];
 		$.each($$('class').serialize(), (index, value) => classes.push(value.class));
-		item.addClass(classes.join(" "));
+		item.removeClass().addClass(classes.join(" "));
 		$.each(item.data(), i => item.removeAttr("data-" + i));
 		$.each($$('data').serialize(), (index, value) => {
 			if (value.data) item.data(value.data.toLowerCase().replace(/-([a-z])/g, function(g) {
