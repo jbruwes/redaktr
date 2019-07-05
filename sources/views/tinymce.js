@@ -25,7 +25,7 @@ export default class TinymceView extends JetView {
                 //toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
                 toolbar: "fullpage |undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
                 content_style: ".mce-content-body{padding:8px;}",
-                content_css: (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css,' : '//cdn.redaktr.com/redaktr.min.css,') +
+                content_css: '//cdn.redaktr.com/redaktr.min.css,' +
                     "//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css," +
                     "//base.redaktr.com/" + AWS.config.credentials.identityId + ".css",
                 templates: [

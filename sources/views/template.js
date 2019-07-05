@@ -362,17 +362,21 @@ export default class TemplateView extends JetView {
 			'<!DOCTYPE html><html><head>' +
 			'<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
 			'<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
-			'<link rel="stylesheet" href="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.css' : '//cdn.redaktr.com/redaktr.min.css') + '">' +
-
-
+			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
+			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
+				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+window.location.search+'\">');</script>" :
+				'<link rel="stylesheet" href="//cdn.redaktr.com/redaktr.min.css">'
+			) +
 			'<script>' +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+window.location.search+'\">');" +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+window.location.search+'\">');" +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+window.location.search+'\">');" +
 			'</script>' +
-
-			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
-			'<script src="' + (window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ? '//s3.amazonaws.com/cdn.redaktr.com/redaktr.js' : '//cdn.redaktr.com/redaktr.min.js') + '" defer></script>' +
+			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
+				"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+window.location.search+'\" defer><\\/script>');</script>" :
+				'<script src="//cdn.redaktr.com/redaktr.min.js" defer></script>'
+			) +
 			'</head><body>' +
 			'<div class="ui sidebar very wide vertical accordion menu"></div>' +
 			'<div class="ui main menu fixed" hidden><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
