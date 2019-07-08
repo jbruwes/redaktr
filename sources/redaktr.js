@@ -84,7 +84,7 @@ if (!BUILD_AS_MODULE) {
 				return;
 			}
 
-			var cdn = this.config.cdn ? this.config.cdn : "//cloud.tinymce.com/5";
+			var cdn = this.config.cdn ? this.config.cdn : "https://cdn.tiny.cloud/1/r2lw5k8fd0gyrwrhztc4ie6zdmanh9ovn6c38xwh8ujjimpw/tinymce/5";
 
 			//path to tinymce codebase
 			window.tinyMCEPreInit = {
@@ -94,7 +94,7 @@ if (!BUILD_AS_MODULE) {
 			};
 
 			webix.require([
-					cdn + "/tinymce.min.js?apiKey=r2lw5k8fd0gyrwrhztc4ie6zdmanh9ovn6c38xwh8ujjimpw"
+					cdn + "/tinymce.min.js"
 				])
 				.then(webix.bind(this._init_tinymce_once, this))
 				.catch(function(e) {
