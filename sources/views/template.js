@@ -9,6 +9,9 @@ export default class TemplateView extends JetView {
 			on: {
 				"onAfterCollapse": id => {
 					if (id === 'tools') {
+						$$("data").editCancel();
+						$$("shadows").editCancel();
+						$$("class").editCancel();
 						switch ($$("tabbar").getValue()) {
 							case 'ace-template':
 								$$("ace-template").getEditor().resize();
@@ -22,7 +25,8 @@ export default class TemplateView extends JetView {
 			},
 			cols: [{
 					view: "accordionitem",
-					header: "<span class='mdi mdi-postage-stamp'></span> Template",
+					id: "templateItem",
+					header: "<span class='mdi mdi-postage-stamp'></span>",
 					body: {
 						rows: [{
 								id: "views",
@@ -715,6 +719,8 @@ export default class TemplateView extends JetView {
 			var isHidden = $($$("fabric").getIframe()).parent(':hidden'),
 				selectedItem = $$('layers').getSelectedItem(),
 				item = that._body.find("#" + selectedItem.value);
+			$$("templateItem").define("header", "<span class='mdi mdi-postage-stamp'></span> " + selectedItem.value);
+			$$("templateItem").refresh();
 			if (isHidden.length) swap(isHidden[isHidden.length - 1], {
 				position: "absolute",
 				visibility: "hidden",

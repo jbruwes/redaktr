@@ -13,7 +13,8 @@ export default class ContentView extends JetView {
 			},
 			cols: [{
 					view: "accordionitem",
-					header: "<span class='mdi mdi-file-document-outline'></span> Content",
+					id: "contentItem",
+					header: "<span class='mdi mdi-file-document-outline'></span>",
 					body: {
 						rows: [{
 								id: "views",

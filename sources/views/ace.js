@@ -1,18 +1,28 @@
-import { JetView } from "webix-jet";
+import {
+	JetView
+} from "webix-jet";
 export default class AceView extends JetView {
 	config() {
 		return {
 			view: "ace-editor",
 			theme: "tomorrow",
 			mode: "html",
-			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
+			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5"
 		};
 	}
 	init(ace) {
 		ace.getEditor(true).then(editor => {
 			var session = editor.getSession();
 			session.that = this;
-			session.setUseWorker(false);
+			//session.setUseWorker(false);
+			session.on("changeAnnotation", function() {
+				var annotations = session.getAnnotations() || [],
+					len = annotations.length,
+					i = len;
+						while (i--)
+							if (/doctype first\. Expected/.test(annotations[i].text)) annotations.splice(i, 1);
+						if (len > annotations.length) session.setAnnotations(annotations);
+			});
 			session.setUseWrapMode(true);
 		});
 	}

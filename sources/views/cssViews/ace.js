@@ -8,7 +8,7 @@ export default class AceView extends JetView {
 			id: "ace-css",
 			theme: "tomorrow",
 			mode: "css",
-			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4"
+			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5"
 		};
 	}
 	init(ace) {
@@ -17,7 +17,6 @@ export default class AceView extends JetView {
 				$$("ace-css").getEditor(true).then(editor => {
 					var session = editor.getSession();
 					session.that = this;
-					session.setUseWorker(false);
 					session.setUseWrapMode(true);
 					session.setValue(text, -1);
 					session.on('change', this._aceChange, this);
