@@ -388,12 +388,14 @@ export default class TinymceView extends JetView {
     }
     setValue(val) {
         var tinymce = $$("tinymce").getEditor();
+        tinymce.off("SetContent");
         tinymce.off("Change");
         tinymce.getWin().scrollTo(0, 0);
         tinymce.setContent(val);
         tinymce.undoManager.clear();
         tinymce.nodeChanged();
         tinymce.on("Change", this.getParentView()._save);
+	   tinymce.on("SetContent", this.getParentView()._save);
     }
 }
 /* global tinymce */
