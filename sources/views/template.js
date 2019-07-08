@@ -364,17 +364,17 @@ export default class TemplateView extends JetView {
 			'<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
 			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
 			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
-				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+(window.location.search?\"?\"+btoa(Math.random()):\"\")+'\">');</script>" :
+				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');</script>" :
 				'<link rel="stylesheet" href="//cdn.redaktr.com/redaktr.min.css">'
 			) +
 			'<script>' +
-			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.search?\"?\"+btoa(Math.random()):\"\")+'\">');" +
-			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.search?\"?\"+btoa(Math.random()):\"\")+'\">');" +
-			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.search?\"?\"+btoa(Math.random()):\"\")+'\">');" +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');" +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');" +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');" +
 			'</script>' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
 			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
-				"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+(window.location.search?\"?\"+btoa(Math.random()):\"\")+'\" defer><\\/script>');</script>" :
+				"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\" defer><\\/script>');</script>" :
 				'<script src="//cdn.redaktr.com/redaktr.min.js" defer></script>'
 			) +
 			'</head><body>' +
