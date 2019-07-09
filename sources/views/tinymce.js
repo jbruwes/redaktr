@@ -200,9 +200,9 @@ export default class TinymceView extends JetView {
 							blobCache.add(blobInfo);
 							this.app.S3.headObject({
 								Bucket: 'base.redaktr.com',
-								Key: AWS.config.credentials.identityId + '/' + file.name
+								Key: AWS.config.credentials.identityId + '/' + decodeURI(file.name)
 							}, (err, data) => {
-								var filePath = (err ? '' : webix.uid() + '/') + file.name;
+								var filePath = (err ? '' : webix.uid() + '/') + decodeURI(file.name);
 								this.app.S3.putObject({
 									Bucket: 'base.redaktr.com',
 									Key: AWS.config.credentials.identityId + '/' + filePath,
@@ -214,7 +214,7 @@ export default class TinymceView extends JetView {
 										type: "error"
 									});
 									else cb(filePath, {
-										title: file.name
+										title: decodeURI(file.name)
 									});
 								});
 							});
@@ -239,9 +239,9 @@ export default class TinymceView extends JetView {
 				images_upload_handler: (blobInfo, success, failure) => {
 					this.app.S3.headObject({
 						Bucket: 'base.redaktr.com',
-						Key: AWS.config.credentials.identityId + '/' + blobInfo.filename()
+						Key: AWS.config.credentials.identityId + '/' + decodeURI(blobInfo.filename())
 					}, (err, data) => {
-						var filePath = (err ? '' : webix.uid() + '/') + blobInfo.filename();
+						var filePath = (err ? '' : webix.uid() + '/') + decodeURI(blobInfo.filename());
 						this.app.S3.putObject({
 							Bucket: 'base.redaktr.com',
 							Key: AWS.config.credentials.identityId + '/' + filePath,
