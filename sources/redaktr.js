@@ -84,7 +84,7 @@ if (!BUILD_AS_MODULE) {
 				return;
 			}
 
-			var cdn = this.config.cdn ? this.config.cdn : "https://cdn.tiny.cloud/1/r2lw5k8fd0gyrwrhztc4ie6zdmanh9ovn6c38xwh8ujjimpw/tinymce/5";
+			var cdn = this.config.cdn ? this.config.cdn : "//cdn.tiny.cloud/1/r2lw5k8fd0gyrwrhztc4ie6zdmanh9ovn6c38xwh8ujjimpw/tinymce/5";
 
 			//path to tinymce codebase
 			window.tinyMCEPreInit = {
