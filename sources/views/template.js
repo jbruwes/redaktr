@@ -339,6 +339,44 @@ export default class TemplateView extends JetView {
 						});
 						this._redraw();
 					});
+					fabric.util.addListener(document.body, 'keydown', options => {
+						var key = options.which || options.keyCode,
+							activeObject = canvas.getActiveObject();
+						if (options.target === document.body && activeObject) switch (key) {
+							case 38:
+								activeObject.top -= 1;
+								activeObject.setCoords();
+								canvas.requestRenderAll();
+								canvas.trigger('object:modified', {
+									target: activeObject
+								});
+								break;
+							case 40:
+								activeObject.top += 1;
+								activeObject.setCoords();
+								canvas.requestRenderAll();
+								canvas.trigger('object:modified', {
+									target: activeObject
+								});
+								break;
+							case 37:
+								activeObject.left -= 1;
+								activeObject.setCoords();
+								canvas.requestRenderAll();
+								canvas.trigger('object:modified', {
+									target: activeObject
+								});
+								break;
+							case 39:
+								activeObject.left += 1;
+								activeObject.setCoords();
+								canvas.requestRenderAll();
+								canvas.trigger('object:modified', {
+									target: activeObject
+								});
+								break;
+						}
+					});
 				});
 				this._genHtml(true);
 				this._loadSite();
@@ -369,21 +407,16 @@ export default class TemplateView extends JetView {
 			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
 			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
 				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');</script>" :
-				//"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');</script>" :
 				'<link rel="stylesheet" href="//cdn.redaktr.com/redaktr.min.css">'
 			) +
 			'<script>' +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
-			//"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');" +
-			//"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');" +
-			//"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\">');" +
 			'</script>' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
 			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
 				"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\" defer><\\/script>');</script>" :
-				//"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+(window.location.search?\"?\"+window.btoa(unescape(encodeURIComponent(window.location.search))):\"\")+'\" defer><\\/script>');</script>" :
 				'<script src="//cdn.redaktr.com/redaktr.min.js" defer></script>'
 			) +
 			'</head><body>' +
@@ -514,7 +547,9 @@ export default class TemplateView extends JetView {
 			marginRight = $$('marginRight').getValue();
 		if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
 		if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
-		item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
+		//item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
+		item.css('min-width', ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
+		item.css('width', marginLeft === '' && marginRight === '' ? '100%' : 'auto');
 		var bunit = $$('pmarginBottom').getValue(),
 			tunit = $$('pmarginTop').getValue(),
 			hunit = $$('pheight').getValue(),
@@ -523,7 +558,9 @@ export default class TemplateView extends JetView {
 			marginBottom = $$('marginBottom').getValue();
 		if (marginTop !== '') item.css("margin-top", marginTop + ((fixed === 2 && tunit === '%') ? "vh" : tunit));
 		if (marginBottom !== '') item.css("margin-bottom", marginBottom + ((fixed === 2 && bunit === '%') ? "vh" : bunit));
-		item.css(((marginTop !== '' && marginBottom !== '') ? 'min-height' : 'height'), ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
+		//item.css(((marginTop !== '' && marginBottom !== '') ? 'min-height' : 'height'), ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
+		item.css('min-height', ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
+		item.css('height', marginTop === '' && marginBottom === '' ? '100%' : 'auto');
 		if (marginTop !== '' && marginBottom !== '' && fixed === 3) item.css("flex", "1 1 auto");
 		var angle = $$('angle').getValue();
 		if (angle) item.css("transform", 'rotate(' + angle + 'deg)');
@@ -586,7 +623,7 @@ export default class TemplateView extends JetView {
 		var classes = [];
 		$.each($$('class').serialize(), (index, value) => classes.push(value.class));
 		item.removeClass().addClass(classes.join(" "));
-		$.each(item.data(), i => item.removeAttr("data-" + i));
+		$.each(item.data(), i => item.removeAttr("data-" + i.replace(/[A-Z]/g, '-$&').toLowerCase()));
 		$.each($$('data').serialize(), (index, value) => {
 			if (value.data) item.data(value.data.toLowerCase().replace(/-([a-z])/g, function(g) {
 				return g[1].toUpperCase()
@@ -772,7 +809,8 @@ export default class TemplateView extends JetView {
 				$$('marginTop').setValue(parseMarginTop);
 				if (parseMarginTop) $$('pmarginTop').setValue((marginTop.match(/\D+$/)[0] === 'px') ? 'px' : '%');
 				else if (resetDimension) $$('pmarginTop').setValue('px');
-				var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight,
+				//var height = item[0].style.height ? item[0].style.height : item[0].style.minHeight,
+				var height = item[0].style.minHeight ? item[0].style.minHeight : item[0].style.height,
 					parseHeight = parseInt(height);
 				$$('height').setValue(parseHeight);
 				if (parseHeight) $$('pheight').setValue((height.match(/\D+$/)[0] === 'px') ? 'px' : '%');
@@ -787,7 +825,8 @@ export default class TemplateView extends JetView {
 				$$('marginLeft').setValue(parseMarginLeft);
 				if (parseMarginLeft) $$('pmarginLeft').setValue((marginLeft.match(/\D+$/)[0] === 'px') ? 'px' : '%');
 				else if (resetDimension) $$('pmarginLeft').setValue('px');
-				var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth,
+				//var width = item[0].style.width ? item[0].style.width : item[0].style.minWidth,
+				var width = item[0].style.minWidth ? item[0].style.minWidth : item[0].style.width,
 					parseWidth = parseInt(width);
 				$$('width').setValue(parseWidth);
 				if (parseWidth) $$('pwidth').setValue((width.match(/\D+$/)[0] === 'px') ? 'px' : '%');
