@@ -345,6 +345,9 @@ export default class TemplateView extends JetView {
 						if (options.target === document.body && activeObject) switch (key) {
 							case 38:
 								activeObject.top -= 1;
+								if (options.shiftKey) 
+									if (options.altKey) activeObject.height -= 2;
+									else activeObject.height += 2;
 								activeObject.setCoords();
 								canvas.requestRenderAll();
 								canvas.trigger('object:modified', {
@@ -353,6 +356,9 @@ export default class TemplateView extends JetView {
 								break;
 							case 40:
 								activeObject.top += 1;
+								if (options.shiftKey) 
+									if (options.altKey) activeObject.height -= 2;
+									else activeObject.height += 2;
 								activeObject.setCoords();
 								canvas.requestRenderAll();
 								canvas.trigger('object:modified', {
@@ -361,6 +367,9 @@ export default class TemplateView extends JetView {
 								break;
 							case 37:
 								activeObject.left -= 1;
+								if (options.shiftKey)
+									if (options.altKey) activeObject.width -= 2;
+									else activeObject.width += 2;
 								activeObject.setCoords();
 								canvas.requestRenderAll();
 								canvas.trigger('object:modified', {
@@ -369,6 +378,9 @@ export default class TemplateView extends JetView {
 								break;
 							case 39:
 								activeObject.left += 1;
+								if (options.shiftKey)
+									if (options.altKey) activeObject.width -= 2;
+									else activeObject.width += 2;
 								activeObject.setCoords();
 								canvas.requestRenderAll();
 								canvas.trigger('object:modified', {
@@ -547,21 +559,27 @@ export default class TemplateView extends JetView {
 			marginRight = $$('marginRight').getValue();
 		if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
 		if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
+		if (width !== '') item.css("min-width", width + $$('pwidth').getValue());
 		//item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
-		item.css('min-width', ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
-		item.css('width', marginLeft === '' && marginRight === '' ? '100%' : 'auto');
-		var bunit = $$('pmarginBottom').getValue(),
-			tunit = $$('pmarginTop').getValue(),
-			hunit = $$('pheight').getValue(),
+		//item.css('min-width', ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
+		//item.css('width', marginLeft !== '' && marginRight !== '' ? '100%' : 'auto');
+		var //bunit = $$('pmarginBottom').getValue(),
+			//tunit = $$('pmarginTop').getValue(),
+			//hunit = $$('pheight').getValue(),
 			marginTop = $$('marginTop').getValue(),
 			height = $$('height').getValue(),
 			marginBottom = $$('marginBottom').getValue();
-		if (marginTop !== '') item.css("margin-top", marginTop + ((fixed === 2 && tunit === '%') ? "vh" : tunit));
-		if (marginBottom !== '') item.css("margin-bottom", marginBottom + ((fixed === 2 && bunit === '%') ? "vh" : bunit));
+		if (marginTop !== '') item.css("margin-top", marginTop + $$('pmarginTop').getValue());
+		if (marginBottom !== '') item.css("margin-bottom", marginBottom + $$('pmarginBottom').getValue());
+		if (height !== '') item.css("min-height", height + $$('pheight').getValue());
+		//if (marginTop !== '') item.css("margin-top", marginTop + ((fixed === 2 && tunit === '%') ? "vh" : tunit));
+		//if (marginBottom !== '') item.css("margin-bottom", marginBottom + ((fixed === 2 && bunit === '%') ? "vh" : bunit));
 		//item.css(((marginTop !== '' && marginBottom !== '') ? 'min-height' : 'height'), ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
-		item.css('min-height', ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
-		item.css('height', marginTop === '' && marginBottom === '' ? '100%' : 'auto');
-		if (marginTop !== '' && marginBottom !== '' && fixed === 3) item.css("flex", "1 1 auto");
+		//item.css('min-height', ((height !== '') ? (height + ((fixed === 2 && hunit === '%') ? "vh" : hunit)) : 'auto'));
+		//item.css('min-height', ((height !== '') ? (height + $$('pheight').getValue()) : 'auto'));
+		//item.css('height', marginTop !== '' && marginBottom !== '' ? '100%' : 'auto');
+		//if (marginTop !== '' && marginBottom !== '' && fixed === 3) item.css("flex", "1 1 auto");
+		if (marginTop !== '' && marginBottom !== '') item.css("flex", "1 1 auto");
 		var angle = $$('angle').getValue();
 		if (angle) item.css("transform", 'rotate(' + angle + 'deg)');
 		var paddingLeft = $$('paddingLeft').getValue();
