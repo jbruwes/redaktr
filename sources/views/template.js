@@ -273,7 +273,7 @@ export default class TemplateView extends JetView {
 				} else o.empty().append('<main></main>');
 				this._body.find('#body:first').empty().append(pusher);
 				list.sort((val1, val2) => {
-					//return $(val2).css("z-index") - $(val1).css("z-index")
+					// После переноса сайтов можно восстановить
 					//return $(val2).parent().css("z-index") - $(val1).parent().css("z-index")
 					return $(val2).parent().get(0).style.zIndex ? $(val2).parent().css("z-index") : $(val2).css("z-index") -
 						$(val1).parent().get(0).style.zIndex ? $(val1).parent().css("z-index") : $(val1).css("z-index")
