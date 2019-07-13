@@ -273,7 +273,10 @@ export default class TemplateView extends JetView {
 				} else o.empty().append('<main></main>');
 				this._body.find('#body:first').empty().append(pusher);
 				list.sort((val1, val2) => {
-					return $(val2).css("z-index") - $(val1).css("z-index")
+					//return $(val2).css("z-index") - $(val1).css("z-index")
+					//return $(val2).parent().css("z-index") - $(val1).parent().css("z-index")
+					return $(val2).parent().get(0).style.zIndex ? $(val2).parent().css("z-index") : $(val2).css("z-index") -
+						$(val1).parent().get(0).style.zIndex ? $(val1).parent().css("z-index") : $(val1).css("z-index")
 				});
 				list.each((i, e) => {
 					var icon = 'mdi mdi-monitor-off';
@@ -345,7 +348,7 @@ export default class TemplateView extends JetView {
 						if (options.target === document.body && activeObject) switch (key) {
 							case 38:
 								activeObject.top -= 1;
-								if (options.shiftKey) 
+								if (options.shiftKey)
 									if (options.altKey) activeObject.height -= 2;
 									else activeObject.height += 2;
 								activeObject.setCoords();
@@ -356,7 +359,7 @@ export default class TemplateView extends JetView {
 								break;
 							case 40:
 								activeObject.top += 1;
-								if (options.shiftKey) 
+								if (options.shiftKey)
 									if (options.altKey) activeObject.height -= 2;
 									else activeObject.height += 2;
 								activeObject.setCoords();
@@ -441,6 +444,19 @@ export default class TemplateView extends JetView {
 	_zIndex(body, prefix, that) {
 		var i = $$('layers').count();
 		$.each($$('layers').serialize(), (index, value) => {
+			body.find("#" + value.value).parent().css("z-index", i);
+			i -= 1;
+		});
+		body.find(prefix + 'body:first>.pusher').append(body.find(
+			prefix + 'body:first>.pusher>div[data-fixed]:not([id]),' +
+			prefix + 'body:first>.pusher>div[data-absolute]:not([id]),' +
+			prefix + 'body:first>.pusher>div[data-static]:not([id])'
+		).sort((a, b) => {
+			return $(b).css('z-index') - $(a).css('z-index');
+		}));
+		/*
+		var i = $$('layers').count();
+		$.each($$('layers').serialize(), (index, value) => {
 			body.find("#" + value.value).css("z-index", i);
 			i -= 1;
 		});
@@ -461,6 +477,7 @@ export default class TemplateView extends JetView {
 		).sort((a, b) => {
 			return $(b).children('div[id]').css('z-index') - $(a).children('div[id]').css('z-index');
 		}));
+		*/
 	}
 	_redraw(that, layers) {
 		that = that ? that : this;
