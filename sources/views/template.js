@@ -426,7 +426,6 @@ export default class TemplateView extends JetView {
 			) +
 			'<script>' +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
-			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
 			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
 			'</script>' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
