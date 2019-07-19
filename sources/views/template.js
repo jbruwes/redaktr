@@ -576,6 +576,7 @@ export default class TemplateView extends JetView {
 		if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
 		if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
 		if (width !== '') item.css("min-width", width + $$('pwidth').getValue());
+		if (!(marginLeft !== '' && marginRight !== '')) item.css("align-self", "center").css('-ms-flex-item-align','center');
 		//item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
 		//item.css('min-width', ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
 		//item.css('width', marginLeft !== '' && marginRight !== '' ? '100%' : 'auto');
