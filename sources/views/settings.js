@@ -29,6 +29,7 @@ export default class SettingsView extends JetView {
 						template: "Verification",
 						type: "section"
 					},
+					/*
 					{
 						id: "yandex",
 						view: "text",
@@ -41,6 +42,7 @@ export default class SettingsView extends JetView {
 						label: "Google",
 						labelWidth: 56
 					},
+					*/
 					{
 						template: "Icon",
 						type: "section",
@@ -120,17 +122,18 @@ export default class SettingsView extends JetView {
 				else if (data.Item) {
 					if (data.Item.name) $$("name").setValue("http://redaktr.com/" + data.Item.name);
 					if (data.Item.domain) $$("domain").setValue(data.Item.domain);
-					if (data.Item.google) $$("google").setValue(data.Item.google);
-					if (data.Item.yandex) $$("yandex").setValue(data.Item.yandex);
+					//if (data.Item.google) $$("google").setValue(data.Item.google);
+					//if (data.Item.yandex) $$("yandex").setValue(data.Item.yandex);
 				} else webix.message({
 					text: "Something went wrong",
 					type: "error"
 				});
-				$$("google").attachEvent("onChange", _ => this._save());
-				$$("yandex").attachEvent("onChange", _ => this._save());
+				//$$("google").attachEvent("onChange", _ => this._save());
+				//$$("yandex").attachEvent("onChange", _ => this._save());
 			}
 		});
 	}
+	/*
 	_save() {
 		var y = $$("yandex").getValue(),
 			g = $$("google").getValue(),
@@ -163,6 +166,7 @@ export default class SettingsView extends JetView {
 			else webix.message("Settings save complete");
 		});
 	}
+	*/
 }
 /* global webix */
 /* global AWS */
