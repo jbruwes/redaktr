@@ -99,7 +99,7 @@ export default class PropertiesView extends JetView {
 			}, {}],
 			rules: {
 				link: value => {
-					return !value || !/[;,//?:@&=+$_]/.test(value);
+					return !value || !/[;,?:@&=+$]/.test(value);
 				}
 			},
 
