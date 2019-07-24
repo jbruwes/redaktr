@@ -25,11 +25,11 @@ export default class SettingsView extends JetView {
 						label: "-",
 						labelWidth: 33
 					},
+					/*
 					{
 						template: "Verification",
 						type: "section"
 					},
-					/*
 					{
 						id: "yandex",
 						view: "text",

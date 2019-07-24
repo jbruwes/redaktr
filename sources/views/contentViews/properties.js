@@ -26,7 +26,8 @@ export default class PropertiesView extends JetView {
 					}
 				}, { template: "Date", type: "section", css: "webix_section" }, {
 					view: "datepicker",
-					id: "date",
+					id: "lastmod",
+					stringResult:true,
 					label: "<span class='mdi mdi-dark mdi-24px mdi-calendar'></span>",
 					labelWidth: 33,
 					on: {
@@ -35,7 +36,7 @@ export default class PropertiesView extends JetView {
 							if (!this.getParentView()._lockProperties) {
 								id = $$("tree").getSelectedId();
 								item = $$("tree").getItem(id);
-								item.date = value;
+								item.lastmod = value;
 								$$("tree").updateItem(id, item);
 							}
 						}
