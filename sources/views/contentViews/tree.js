@@ -80,7 +80,9 @@ export default class TreeView extends JetView {
 					$$("contentItem").define("header", "<span class='mdi mdi-file-document-outline'></span> " + item.value);
 					$$("contentItem").refresh();
 					$$('link').setValue(item.link);
-					$$('lastmod').setValue(item.lastmod);
+					$$('lastmod').setValue(item.lastmod ? item.lastmod : new Date());
+					$$('changefreq').setValue(item.changefreq ? item.changefreq : 'always');
+					$$('priority').setValue(item.priority ? item.priority : 0.5);
 					$$('text').setValue(item.text);
 					$$("uploader").files.data.clearAll();
 					if (item.image) $$("uploader").addFile({

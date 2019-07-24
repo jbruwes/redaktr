@@ -1,4 +1,6 @@
-import { JetView } from "webix-jet";
+import {
+	JetView
+} from "webix-jet";
 export default class PropertiesView extends JetView {
 	config() {
 		return {
@@ -6,7 +8,11 @@ export default class PropertiesView extends JetView {
 			id: "propForm",
 			scroll: true,
 			elements: [{
-				rows: [{ template: "Hard Link", type: "section", css: "webix_section" }, {
+				rows: [{
+					template: "Hard Link",
+					type: "section",
+					css: "webix_section"
+				}, {
 					view: "text",
 					id: "link",
 					name: "link",
@@ -24,10 +30,13 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, { template: "Date", type: "section", css: "webix_section" }, {
+				}, {
+					template: "Last Modification",
+					type: "section",
+					css: "webix_section"
+				}, {
 					view: "datepicker",
 					id: "lastmod",
-					stringResult:true,
 					label: "<span class='mdi mdi-dark mdi-24px mdi-calendar'></span>",
 					labelWidth: 33,
 					on: {
@@ -41,7 +50,57 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, { template: "Description", type: "section", css: "webix_section" }, {
+				}, {
+					template: "Change Frequency",
+					type: "section",
+					css: "webix_section"
+				}, {
+					view: "richselect",
+					id: "changefreq",
+					label: "<span class='mdi mdi-dark mdi-24px mdi-current-ac'></span>",
+					labelWidth: 33,
+					options: ["always","hourly","daily","weekly","monthly","yearly","never"],
+					on: {
+						onChange: value => {
+							var id, item;
+							if (!this.getParentView()._lockProperties) {
+								id = $$("tree").getSelectedId();
+								item = $$("tree").getItem(id);
+								item.changefreq = value;
+								$$("tree").updateItem(id, item);
+							}
+						}
+					}
+				}, {
+					template: "Priority",
+					type: "section",
+					css: "webix_section"
+				}, {
+					view: "slider",
+					id: "priority",
+					label: '<span class="mdi mdi-dark mdi-24px mdi-flag-variant-outline"></span>',
+					labelWidth: 33,
+					min: 0,
+					max: 1,
+					step: 0.1,
+					value: 0.5,
+					type:"alt",
+					on: {
+						onChange: value => {
+							var id, item;
+							if (!this.getParentView()._lockProperties) {
+								id = $$("tree").getSelectedId();
+								item = $$("tree").getItem(id);
+								item.priority = value;
+								$$("tree").updateItem(id, item);
+							}
+						}
+					}
+				}, {
+					template: "Description",
+					type: "section",
+					css: "webix_section"
+				}, {
 					view: "textarea",
 					id: "text",
 					label: "<span class='mdi mdi-dark mdi-24px mdi-card-text-outline'></span>",
@@ -58,7 +117,11 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, { template: "Image", type: "section", css: "webix_section" }, {
+				}, {
+					template: "Image",
+					type: "section",
+					css: "webix_section"
+				}, {
 					view: "uploader",
 					id: "uploader",
 					value: 'Upload Image',
@@ -81,7 +144,10 @@ export default class PropertiesView extends JetView {
 										ContentType: file.file.type,
 										Body: file.file
 									}, (err, data) => {
-										if (err) webix.message({ text: err.message, type: "error" });
+										if (err) webix.message({
+											text: err.message,
+											type: "error"
+										});
 										else this._image();
 									});
 								});
