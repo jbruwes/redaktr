@@ -80,10 +80,10 @@ export default class PropertiesView extends JetView {
 					id: "priority",
 					label: '<span class="mdi mdi-dark mdi-24px mdi-flag-variant-outline"></span>',
 					labelWidth: 33,
-					min: 0,
-					max: 1,
-					step: 0.1,
-					value: 0.5,
+					min: "0",
+					max: "1",
+					step: "0.1",
+					value: "0.5",
 					type:"alt",
 					on: {
 						onChange: value => {
@@ -91,7 +91,7 @@ export default class PropertiesView extends JetView {
 							if (!this.getParentView()._lockProperties) {
 								id = $$("tree").getSelectedId();
 								item = $$("tree").getItem(id);
-								item.priority = value;
+								item.priority = value.toFixed(1);
 								$$("tree").updateItem(id, item);
 							}
 						}
