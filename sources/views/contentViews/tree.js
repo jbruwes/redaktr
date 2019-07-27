@@ -90,7 +90,8 @@ export default class TreeView extends JetView {
 						sname: item.image
 					}, 0);
 					this.getParentView()._lockProperties = false;
-					webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
+					//webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
+					webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
 						success: (text, data, XmlHttpRequest) => {
 							if ($$('sidebar').getSelectedId() === 'content') {
 								$$("tinymce").$scope.setValue(text);
@@ -101,7 +102,8 @@ export default class TreeView extends JetView {
 							if (XmlHttpRequest.status === 403) {
 								if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
 								this.app.lastXHRPostContent = this.app.S3.putObject({
-									Bucket: 'content.redaktr.com',
+									//Bucket: 'content.redaktr.com',
+									Bucket: 'base.redaktr.com',
 									ContentType: 'text/html',
 									Key: AWS.config.credentials.identityId + "/" + id + ".htm",
 									Body: ''
