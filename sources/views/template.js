@@ -420,23 +420,23 @@ export default class TemplateView extends JetView {
 			'<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
 			'<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
 			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
-			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
-				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');</script>" :
+			(window.location.hostname === 'dev.redaktr.com' ?
+				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');</script>" :
 				'<link rel="stylesheet" href="//cdn.redaktr.com/redaktr.cdn.min.css">'
 			) +
 			'<script>' +
-			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
 			'</script>' +
-			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
-				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');</script>" :
+			(window.location.hostname === 'dev.redaktr.com' ?
+				"<script>document.write('<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');</script>" :
 				'<link rel="stylesheet" href="//cdn.redaktr.com/redaktr.min.css">'
 			) +
 			'<script>' +
-			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
+			"document.write('<link rel=\"stylesheet\" href=\"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">');" +
 			'</script>' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
-			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
-				"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"redaktr-jbruwes.codeanyapp.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\" defer><\\/script>');</script>" :
+			(window.location.hostname === 'dev.redaktr.com' ?
+				"<script>document.write('<script src=\"//cdn.redaktr.com/redaktr.js'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\" defer><\\/script>');</script>" :
 				'<script src="//cdn.redaktr.com/redaktr.min.js" defer></script>'
 			) +
 			'</head><body>' +
