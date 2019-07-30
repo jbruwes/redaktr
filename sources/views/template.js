@@ -417,7 +417,7 @@ export default class TemplateView extends JetView {
 	_genHtml(identity) {
 		this._html =
 			'<!DOCTYPE html><html><head>' +
-			'<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
+			'<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
 			'<link rel="shortcut icon" href="//base.redaktr.com/' + AWS.config.credentials.identityId + '.ico">' +
 			'<base href="' + (identity ? '//base.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
 			(window.location.hostname === 'redaktr-jbruwes.codeanyapp.com' ?
