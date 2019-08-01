@@ -441,7 +441,8 @@ export default class TemplateView extends JetView {
 			) +
 			'</head><body>' +
 			'<div class="ui sidebar very wide vertical accordion menu"></div>' +
-			'<div class="ui main menu fixed" hidden><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
+			//'<div class="ui main menu fixed" hidden><div class="ui container"><a class="launch icon item"><i class="content icon"></i></a></div></div>' +
+			'<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a></div>' +
 			'<div class="pusher">' + this._body.find('#body:first>.pusher').html() + '</div>' +
 			'</body></html>';
 		this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
