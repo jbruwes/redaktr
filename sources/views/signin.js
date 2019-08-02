@@ -105,7 +105,7 @@ export default class SignInView extends JetView {
 					{
 						id: "header_template",
 						view: "template",
-						template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website creator</div></h1>",
+						template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website control&nbsp;panel</div></h1>",
 						minHeight: 150,
 						type: "clean"
 					},

@@ -83,7 +83,7 @@ export default class TreeView extends JetView {
 					$$('lastmod').setValue(item.lastmod ? item.lastmod : new Date());
 					$$('changefreq').setValue(item.changefreq ? item.changefreq : 'always');
 					$$('priority').setValue(item.priority ? Number(item.priority).toFixed(1) : "0.5");
-					$$('text').setValue(item.text);
+					//$$('text').setValue(item.text);
 					$$("uploader").files.data.clearAll();
 					if (item.image) $$("uploader").addFile({
 						name: item.image.split("/").pop(),

@@ -45,7 +45,8 @@ export default class PropertiesView extends JetView {
 							if (!this.getParentView()._lockProperties) {
 								id = $$("tree").getSelectedId();
 								item = $$("tree").getItem(id);
-								item.lastmod = value;
+								var format = webix.Date.dateToStr("%Y-%m-%d");
+								item.lastmod = format(value);
 								$$("tree").updateItem(id, item);
 							}
 						}
@@ -96,7 +97,7 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, {
+				}, /*{
 					template: "Description",
 					type: "section",
 					css: "webix_section"
@@ -117,7 +118,7 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, {
+				},*/ {
 					template: "Image",
 					type: "section",
 					css: "webix_section"
