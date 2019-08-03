@@ -30,7 +30,7 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, {
+				}, /*{
 					template: "Last Modification",
 					type: "section",
 					css: "webix_section"
@@ -51,7 +51,7 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, {
+				},*/ {
 					template: "Change Frequency",
 					type: "section",
 					css: "webix_section"

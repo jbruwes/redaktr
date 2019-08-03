@@ -79,8 +79,10 @@ export default class TreeView extends JetView {
 					this.getParentView()._lockProperties = true;
 					$$("contentItem").define("header", "<span class='mdi mdi-file-document-outline'></span> " + item.value);
 					$$("contentItem").refresh();
+					item.lastmod = new Date().toISOString();
+					$$("tree").updateItem(id, item);	
 					$$('link').setValue(item.link);
-					$$('lastmod').setValue(item.lastmod ? item.lastmod : new Date());
+					//$$('lastmod').setValue(item.lastmod ? item.lastmod : new Date());
 					$$('changefreq').setValue(item.changefreq ? item.changefreq : 'always');
 					$$('priority').setValue(item.priority ? Number(item.priority).toFixed(1) : "0.5");
 					//$$('text').setValue(item.text);
