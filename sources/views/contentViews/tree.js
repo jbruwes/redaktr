@@ -58,7 +58,7 @@ export default class TreeView extends JetView {
 			editor: "text",
 			editValue: "value",
 			editaction: "dblclick",
-			url: "https://base.redaktr.com/" + AWS.config.credentials.identityId + ".json?" + webix.uid(),
+			url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".json?" + webix.uid(),
 			on: {
 				"onAfterLoad": _ => {
 					if (!$$('sidebar').getSelectedId() || $$('sidebar').getSelectedId() === 'content') {
@@ -81,11 +81,13 @@ export default class TreeView extends JetView {
 					$$("contentItem").refresh();
 					item.lastmod = new Date().toISOString();
 					$$("tree").updateItem(id, item);	
-					$$('link').setValue(item.link);
+					$$('url').setValue(item.url);
 					//$$('lastmod').setValue(item.lastmod ? item.lastmod : new Date());
 					$$('changefreq').setValue(item.changefreq ? item.changefreq : 'always');
 					$$('priority').setValue(item.priority ? Number(item.priority).toFixed(1) : "0.5");
-					//$$('text').setValue(item.text);
+					$$('description').setValue(item.description);
+					$$('keywords').setValue(item.keywords);
+					$$('title').setValue(item.title);
 					$$("uploader").files.data.clearAll();
 					if (item.image) $$("uploader").addFile({
 						name: item.image.split("/").pop(),
@@ -93,7 +95,7 @@ export default class TreeView extends JetView {
 					}, 0);
 					this.getParentView()._lockProperties = false;
 					//webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
-					webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
+					webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
 						success: (text, data, XmlHttpRequest) => {
 							if ($$('sidebar').getSelectedId() === 'content') {
 								$$("tinymce").$scope.setValue(text);

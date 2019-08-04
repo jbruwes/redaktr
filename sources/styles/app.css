@@ -77,7 +77,7 @@
 
 .signInView {
     /*background: url(https://source.unsplash.com/3-z95RCNGmc) 100% 100% no-repeat;*/
-    background: url(//cdn.redaktr.com/bg/2019.08.02.jpg) 100% 100% no-repeat;
+    background: url(//cdn.redaktr.com/bg/2019.08.04.jpg) 100% 100% no-repeat;
     background-size: cover;
 }
 
@@ -178,4 +178,8 @@ div[view_id=fabric]>iframe::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: rgba(0,0,0,.5);
     box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.ace_editor {
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
 }

@@ -7,13 +7,13 @@ export default class TinymceView extends JetView {
 			id: "tinymce",
 			view: "tinymce-editor",
 			config: {
-				plugins: 'print preview fullpage paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
+				plugins: 'print preview paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern save importcss quickbars spellchecker tabfocus',
 				//toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-				toolbar: "fullpage |undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
+				toolbar: "undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
 				content_style: ".mce-content-body{padding:8px;}",
 				content_css: '//cdn.redaktr.com/redaktr.min.css,' +
-					"//base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css?" + webix.uid() + "," +
-					"//base.redaktr.com/" + AWS.config.credentials.identityId + ".css?" + webix.uid(),
+					"//www.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css?" + webix.uid() + "," +
+					"//www.redaktr.com/" + AWS.config.credentials.identityId + ".css?" + webix.uid(),
 				templates: [
 					/*                    { title: 'Social Share1', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
 					                    { title: 'Social Share2', description: 'facebook,<br>gplus, twitter, linkedin, skype, facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },

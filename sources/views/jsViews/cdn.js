@@ -7,7 +7,7 @@ export default class CdnView extends JetView {
 			id: "cdn",
 			view: "datatable",
 			select: "row",
-			url: "https://base.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.json?" + webix.uid(),
+			url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.json?" + webix.uid(),
 			columns: [{
 				id: "url",
 				editor: "text",

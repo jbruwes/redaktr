@@ -59,7 +59,7 @@ if (!BUILD_AS_MODULE) {
 	webix.protoUI({
 		name: "tinymce-editor",
 		defaults: {
-			config: { theme: "modern", statusbar: false },
+			config: { },
 			barHeight: 72,
 			value: ""
 		},

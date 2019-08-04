@@ -9,13 +9,75 @@ export default class PropertiesView extends JetView {
 			scroll: true,
 			elements: [{
 				rows: [{
+					template: "Title",
+					type: "section",
+					css: "webix_section"
+				}, {
+					view: "text",
+					id: "title",
+					label: "<span class='mdi mdi-dark mdi-24px mdi-window-maximize'></span>",
+					labelWidth: 33,
+					on: {
+						onChange: value => {
+							var id, item;
+							if (!this.getParentView()._lockProperties) {
+								id = $$("tree").getSelectedId();
+								item = $$("tree").getItem(id);
+								item.title = value;
+								$$("tree").updateItem(id, item);
+							}
+						}
+					}
+				}, {
+					template: "Description",
+					type: "section",
+					css: "webix_section"
+				}, {
+					view: "textarea",
+					id: "description",
+					label: "<span class='mdi mdi-dark mdi-24px mdi-card-text-outline'></span>",
+					labelWidth: 33,
+					height: 100,
+					on: {
+						onChange: value => {
+							var id, item;
+							if (!this.getParentView()._lockProperties) {
+								id = $$("tree").getSelectedId();
+								item = $$("tree").getItem(id);
+								item.description = value;
+								$$("tree").updateItem(id, item);
+							}
+						}
+					}
+				}, {
+					template: "Keywords",
+					type: "section",
+					css: "webix_section"
+				}, {
+					view: "textarea",
+					id: "keywords",
+					label: "<span class='mdi mdi-dark mdi-24px mdi-key-change'></span>",
+					labelWidth: 33,
+					height: 100,
+					on: {
+						onChange: value => {
+							var id, item;
+							if (!this.getParentView()._lockProperties) {
+								id = $$("tree").getSelectedId();
+								item = $$("tree").getItem(id);
+								item.keywords = value;
+								$$("tree").updateItem(id, item);
+							}
+						}
+					}
+				},{
 					template: "Hard Link",
 					type: "section",
 					css: "webix_section"
 				}, {
 					view: "text",
-					id: "link",
-					name: "link",
+					id: "url",
+					name: "url",
 					label: "<span class='mdi mdi-dark mdi-24px mdi-link-variant'></span>",
 					invalidMessage: "Prohibited symbols are used",
 					labelWidth: 33,
@@ -25,7 +87,7 @@ export default class PropertiesView extends JetView {
 							if (!this.getParentView()._lockProperties && $$('propForm').validate()) {
 								id = $$("tree").getSelectedId();
 								item = $$("tree").getItem(id);
-								item.link = value;
+								item.url = value;
 								$$("tree").updateItem(id, item);
 							}
 						}
@@ -97,28 +159,7 @@ export default class PropertiesView extends JetView {
 							}
 						}
 					}
-				}, /*{
-					template: "Description",
-					type: "section",
-					css: "webix_section"
 				}, {
-					view: "textarea",
-					id: "text",
-					label: "<span class='mdi mdi-dark mdi-24px mdi-card-text-outline'></span>",
-					labelWidth: 33,
-					height: 200,
-					on: {
-						onChange: value => {
-							var id, item;
-							if (!this.getParentView()._lockProperties) {
-								id = $$("tree").getSelectedId();
-								item = $$("tree").getItem(id);
-								item.text = value;
-								$$("tree").updateItem(id, item);
-							}
-						}
-					}
-				},*/ {
 					template: "Image",
 					type: "section",
 					css: "webix_section"
@@ -166,7 +207,7 @@ export default class PropertiesView extends JetView {
 				}]
 			}, {}],
 			rules: {
-				link: value => {
+				url: value => {
 					return !value || !/[\s;,?:@&=+$]/.test(value);
 				}
 			},

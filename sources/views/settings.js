@@ -72,7 +72,7 @@ export default class SettingsView extends JetView {
 		};
 	}
 	init() {
-		webix.ajax("https://base.redaktr.com/" + AWS.config.credentials.identityId + ".ico?" + webix.uid(), (text, data, XmlHttpRequest) => {
+		webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + ".ico?" + webix.uid(), (text, data, XmlHttpRequest) => {
 			if ($$('sidebar').getSelectedId() === 'settings') {
 				$$("uploader").files.data.clearAll();
 				$$("uploader").addFile({

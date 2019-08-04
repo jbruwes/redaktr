@@ -28,19 +28,11 @@ export default class AceView extends JetView {
 	}
 	_aceChange(e, session) {
 		var that = session.that.getParentView();
-		$$("tinymce").$scope.setValue('<!DOCTYPE html><html><head>' + session.that.header + '</head><body>' + session.that.getRoot().getEditor().getValue() + '</body></html>');
+		$$("tinymce").$scope.setValue(session.that.getRoot().getEditor().getValue());
 		that._save(null, that);
 	}
-	setValue(text) {
+	setValue(html) {
 		this.getRoot().getEditor(true).then((editor) => {
-			var html = text;
-			this.header = '';
-			if (html.match(/<html[^>]*>[\s\S]*<\/html>/gi)) {
-				this.header = html.match(/<head[^>]*>[\s\S]*<\/head>/gi);
-				this.header = this.header ? this.header[0].replace(/^<head>/, '').replace(/<\/head>$/, '') : '';
-				html = html.match(/<body[^>]*>[\s\S]*<\/body>/gi);
-				html = html ? html[0].replace(/^<body>/, '').replace(/<\/body>$/, '').trim() : '';
-			}
 			var session = editor.getSession();
 			session.off('change', this._aceChange, this);
 			session.setValue(html, -1);
