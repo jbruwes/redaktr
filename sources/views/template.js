@@ -245,7 +245,7 @@ export default class TemplateView extends JetView {
 		});
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.htm',
+			Key: AWS.config.credentials.identityId + '.html',
 			ResponseContentType: 'text/html',
 			ResponseCacheControl: 'no-cache'
 		}, (err, data) => {
@@ -534,7 +534,7 @@ export default class TemplateView extends JetView {
 		if (that.app.lastXHRPostTempl) that.app.lastXHRPostTempl.abort();
 		that.app.lastXHRPostTempl = that.app.S3.putObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.htm',
+			Key: AWS.config.credentials.identityId + '.html',
 			ContentType: 'text/html',
 			Body: that._html
 		}, (err, data) => {
