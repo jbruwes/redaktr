@@ -91,7 +91,7 @@ export default class ContentView extends JetView {
 		if (that.app.lastXHRPostContent) that.app.lastXHRPostContent.abort();
 		that.app.lastXHRPostContent = that.app.S3.putObject({
 			//Bucket: 'content.redaktr.com',
-			Bucket: 'base.redaktr.com',			
+			Bucket: 'redaktr',
 			ContentType: 'text/html',
 			Key: AWS.config.credentials.identityId + "/" + $$("tree").getSelectedId() + ".htm",
 			Body: $$("tinymce").getValue()

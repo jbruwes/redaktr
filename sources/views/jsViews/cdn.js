@@ -20,7 +20,7 @@ export default class CdnView extends JetView {
 					$$("cdn").data.attachEvent("onStoreUpdated", _ => {
 						if (this.app.lastXHRPostCdnJs) this.app.lastXHRPostCdnJs.abort();
 						this.app.lastXHRPostCdnJs = this.app.S3.putObject({
-							Bucket: 'base.redaktr.com',
+							Bucket: 'redaktr',
 							Key: AWS.config.credentials.identityId + '.cdn.json',
 							ContentType: 'application/json',
 							Body: webix.ajax().stringify($$('cdn').serialize())

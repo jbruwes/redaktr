@@ -3,7 +3,6 @@ import {
 } from "webix-jet";
 export default class SettingsView extends JetView {
 	config() {
-
 		return {
 			rows: [{
 				view: "form",
@@ -72,6 +71,46 @@ export default class SettingsView extends JetView {
 		};
 	}
 	init() {
+		this.app.S3.headObject({
+			Bucket: 'redaktr',
+			Key: AWS.config.credentials.identityId + '.ico'
+		}, (err, data) => {
+			if (!err && $$('sidebar').getSelectedId() === 'settings') {
+				$$("uploader").files.data.clearAll();
+				$$("uploader").addFile({
+					name: 'favicon.ico',
+					sname: AWS.config.credentials.identityId + ".ico"
+				}, 0);
+			}
+			$$("uploader").attachEvent("onAfterFileAdd", file => {
+				file.file.sname = 'favicon.ico';
+				this.app.S3.putObject({
+					Bucket: 'redaktr',
+					Key: AWS.config.credentials.identityId + '.ico',
+					ContentType: file.file.type,
+					Body: file.file
+				}, (err, data) => {
+					if (err) webix.message({
+						text: err.message,
+						type: "error"
+					});
+					else webix.message("Settings save complete");
+				});
+			});
+			$$("uploader").files.attachEvent("onAfterDelete", file => {
+				this.app.S3.deleteObject({
+					Bucket: 'redaktr',
+					Key: AWS.config.credentials.identityId + '.ico'
+				}, (err, data) => {
+					if (err) webix.message({
+						text: err.message,
+						type: "error"
+					});
+					else webix.message("Settings save complete");
+				});
+			});
+		});
+		/*
 		webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + ".ico?" + webix.uid(), (text, data, XmlHttpRequest) => {
 			if ($$('sidebar').getSelectedId() === 'settings') {
 				$$("uploader").files.data.clearAll();
@@ -82,7 +121,7 @@ export default class SettingsView extends JetView {
 				$$("uploader").attachEvent("onAfterFileAdd", file => {
 					file.file.sname = 'favicon.ico';
 					this.app.S3.putObject({
-						Bucket: 'base.redaktr.com',
+						Bucket: 'redaktr',
 						Key: AWS.config.credentials.identityId + '.ico',
 						ContentType: file.file.type,
 						Body: file.file
@@ -96,7 +135,7 @@ export default class SettingsView extends JetView {
 				});
 				$$("uploader").files.attachEvent("onAfterDelete", file => {
 					this.app.S3.deleteObject({
-						Bucket: 'base.redaktr.com',
+						Bucket: 'redaktr',
 						Key: AWS.config.credentials.identityId + '.ico'
 					}, (err, data) => {
 						if (err) webix.message({
@@ -108,6 +147,7 @@ export default class SettingsView extends JetView {
 				});
 			}
 		});
+		*/
 		this.app.DocumentClient.get({
 			TableName: "redaktr",
 			Key: {

@@ -21,7 +21,7 @@ export default class TreeView extends JetView {
 			});
 			if (this.app.lastXHRPostTree) this.app.lastXHRPostTree.abort();
 			this.app.lastXHRPostTree = this.app.S3.putObject({
-				Bucket: 'base.redaktr.com',
+				Bucket: 'redaktr',
 				Key: AWS.config.credentials.identityId + '.json',
 				ContentType: 'application/json',
 				Body: webix.ajax().stringify(tree)
@@ -80,7 +80,7 @@ export default class TreeView extends JetView {
 					$$("contentItem").define("header", "<span class='mdi mdi-file-document-outline'></span> " + item.value);
 					$$("contentItem").refresh();
 					item.lastmod = new Date().toISOString();
-					$$("tree").updateItem(id, item);	
+					$$("tree").updateItem(id, item);
 					$$('url').setValue(item.url);
 					//$$('lastmod').setValue(item.lastmod ? item.lastmod : new Date());
 					$$('changefreq').setValue(item.changefreq ? item.changefreq : 'always');
@@ -94,7 +94,35 @@ export default class TreeView extends JetView {
 						sname: item.image
 					}, 0);
 					this.getParentView()._lockProperties = false;
+					this.app.S3.getObject({
+						Bucket: 'redaktr',
+						Key: AWS.config.credentials.identityId + '/' + id + '.htm'
+					}, (err, data) => {
+						if (err) {
+							if (err.code === 'NotFound') {
+								if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
+								this.app.lastXHRPostContent = this.app.S3.putObject({
+									Bucket: 'redaktr',
+									ContentType: 'text/html',
+									Key: AWS.config.credentials.identityId + "/" + id + ".htm",
+									Body: ''
+								}, (err, data) => {
+									if (err) webix.message({ text: err.message, type: "error" });
+								});
+							}
+							if ($$('sidebar').getSelectedId() === 'content') {
+								$$("tinymce").$scope.setValue("");
+								$$("ace-content").$scope.setValue("");
+							}
+						} else {
+							if ($$('sidebar').getSelectedId() === 'content') {
+								$$("tinymce").$scope.setValue(data.Body.toString());
+								$$("ace-content").$scope.setValue(data.Body.toString());
+							}
+						}
+					});
 					//webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
+					/*
 					webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
 						success: (text, data, XmlHttpRequest) => {
 							if ($$('sidebar').getSelectedId() === 'content') {
@@ -107,7 +135,7 @@ export default class TreeView extends JetView {
 								if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
 								this.app.lastXHRPostContent = this.app.S3.putObject({
 									//Bucket: 'content.redaktr.com',
-									Bucket: 'base.redaktr.com',
+									Bucket: 'redaktr',
 									ContentType: 'text/html',
 									Key: AWS.config.credentials.identityId + "/" + id + ".htm",
 									Body: ''
@@ -121,6 +149,7 @@ export default class TreeView extends JetView {
 							}
 						}
 					});
+					*/
 				},
 				'onBeforeEditStop': (state, editor, ignore) => {
 					if (!(ignore && state.old)) {

@@ -11,8 +11,9 @@ export default class TinymceView extends JetView {
 				//toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
 				toolbar: "undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
 				content_style: ".mce-content-body{padding:8px;}",
-				content_css: '//cdn.redaktr.com/redaktr.min.css,' +
+				content_css: '//cdn.redaktr.com/redaktr.cdn.min.css,' +
 					"//www.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css?" + webix.uid() + "," +
+					'//cdn.redaktr.com/redaktr.min.css,' +
 					"//www.redaktr.com/" + AWS.config.credentials.identityId + ".css?" + webix.uid(),
 				templates: [
 					/*                    { title: 'Social Share1', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
@@ -183,12 +184,12 @@ export default class TinymceView extends JetView {
 							var blobInfo = blobCache.create(id, file, base64);
 							blobCache.add(blobInfo);
 							this.app.S3.headObject({
-								Bucket: 'base.redaktr.com',
+								Bucket: 'redaktr',
 								Key: AWS.config.credentials.identityId + '/' + decodeURI(file.name)
 							}, (err, data) => {
 								var filePath = (err ? '' : webix.uid() + '/') + decodeURI(file.name);
 								this.app.S3.putObject({
-									Bucket: 'base.redaktr.com',
+									Bucket: 'redaktr',
 									Key: AWS.config.credentials.identityId + '/' + filePath,
 									ContentType: file.type,
 									Body: blobInfo.blob()
@@ -222,12 +223,12 @@ export default class TinymceView extends JetView {
 				images_reuse_filename: true,
 				images_upload_handler: (blobInfo, success, failure) => {
 					this.app.S3.headObject({
-						Bucket: 'base.redaktr.com',
+						Bucket: 'redaktr',
 						Key: AWS.config.credentials.identityId + '/' + decodeURI(blobInfo.filename())
 					}, (err, data) => {
 						var filePath = (err ? '' : webix.uid() + '/') + decodeURI(blobInfo.filename());
 						this.app.S3.putObject({
-							Bucket: 'base.redaktr.com',
+							Bucket: 'redaktr',
 							Key: AWS.config.credentials.identityId + '/' + filePath,
 							ContentType: blobInfo.blob().type,
 							Body: blobInfo.blob()

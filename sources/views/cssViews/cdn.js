@@ -17,6 +17,44 @@ export default class CdnView extends JetView {
 		};
 	}
 	init() {
+		this.app.S3.getObject({
+			Bucket: 'redaktr',
+			Key: AWS.config.credentials.identityId + '.cdn.css'
+		}, (err, data) => {
+			if (err) webix.message({
+				text: err.message,
+				type: "error"
+			});
+			else if ($$('sidebar').getSelectedId() === 'css') {
+				$$("cdn").clearAll();
+				var url = data.Body.toString() ? data.Body.toString().split("\n") : [];
+				for (var x in url) $$("cdn").add({
+					url: url[x].replace(/^@import url\(/, '').replace(/\);$/, '')
+				});
+				if (url.length) $$("cdn").select($$("cdn").getFirstId());
+			}
+			if ($$('sidebar').getSelectedId() === 'css') {
+				$$("cdn").data.attachEvent("onStoreUpdated", _ => {
+					var url = [];
+					$.each($$('cdn').serialize(), (index, value) => url.push('@import url(' + value.url + ');'));
+					if (this.app.lastXHRPostCdnCss) this.app.lastXHRPostCdnCss.abort();
+					this.app.lastXHRPostCdnCss = this.app.S3.putObject({
+						Bucket: 'redaktr',
+						Key: AWS.config.credentials.identityId + '.cdn.css',
+						ContentType: 'text/css',
+						Body: url.join('\n')
+					}, (err, data) => {
+						if (err) {
+							if (err.code !== "RequestAbortedError") webix.message({
+								text: err.message,
+								type: "error"
+							})
+						} else webix.message("CSS cdn list save complete");
+					});
+				});
+			}
+		});
+		/*
 		webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.css?" + webix.uid()).then((data) => {
 			if ($$('sidebar').getSelectedId() === 'css') {
 				$$("cdn").clearAll();
@@ -33,7 +71,7 @@ export default class CdnView extends JetView {
 					$.each($$('cdn').serialize(), (index, value) => url.push('@import url(' + value.url + ');'));
 					if (this.app.lastXHRPostCdnCss) this.app.lastXHRPostCdnCss.abort();
 					this.app.lastXHRPostCdnCss = this.app.S3.putObject({
-						Bucket: 'base.redaktr.com',
+						Bucket: 'redaktr',
 						Key: AWS.config.credentials.identityId + '.cdn.css',
 						ContentType: 'text/css',
 						Body: url.join('\n')
@@ -48,6 +86,7 @@ export default class CdnView extends JetView {
 				});
 			}
 		});
+		*/
 	}
 }
 /* global webix */

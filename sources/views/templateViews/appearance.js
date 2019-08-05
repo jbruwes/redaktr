@@ -273,12 +273,12 @@ export default class AppearanceView extends JetView {
                                         "onAfterFileAdd": file => {
                                             if (!this.getParentView()._lockRedraw) {
                                                 this.app.S3.headObject({
-                                                    Bucket: 'base.redaktr.com',
+                                                    Bucket: 'redaktr',
                                                     Key: AWS.config.credentials.identityId + '/' + file.name
                                                 }, (err, data) => {
                                                     file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
                                                     this.app.S3.putObject({
-                                                        Bucket: 'base.redaktr.com',
+                                                        Bucket: 'redaktr',
                                                         Key: AWS.config.credentials.identityId + '/' + file.file.sname,
                                                         ContentType: file.file.type,
                                                         Body: file.file

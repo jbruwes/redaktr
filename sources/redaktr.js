@@ -43,7 +43,7 @@ if (!BUILD_AS_MODULE) {
 	webix.ready(() => {
 		webix.ui.fullScreen();
 		var app = new MyApp();
-		app.S3 = new AWS.S3({ correctClockSkew: true });
+		app.S3 = new AWS.S3({ correctClockSkew: true, useAccelerateEndpoint: true});
 		app.DocumentClient = new AWS.DynamoDB.DocumentClient({ correctClockSkew: true });
 		app.render();
 	});
