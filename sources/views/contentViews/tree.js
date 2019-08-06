@@ -178,7 +178,7 @@ export default class TreeView extends JetView {
 				text: err.message,
 				type: "error"
 			});
-			else if (!$$('sidebar').getSelectedId()) {
+			else if (!$$('sidebar').getSelectedId() || $$('sidebar').getSelectedId() === 'content') {
 				$$("tree").clearAll();
 				$$("tree").parse(data.Body.toString());
 			}
