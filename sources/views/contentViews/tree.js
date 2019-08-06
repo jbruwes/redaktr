@@ -58,7 +58,7 @@ export default class TreeView extends JetView {
 			editor: "text",
 			editValue: "value",
 			editaction: "dblclick",
-			url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".json?" + webix.uid(),
+			//url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".json?" + webix.uid(),
 			on: {
 				"onAfterLoad": _ => {
 					if (!$$('sidebar').getSelectedId() || $$('sidebar').getSelectedId() === 'content') {
@@ -168,6 +168,21 @@ export default class TreeView extends JetView {
 				}
 			}
 		};
+	}
+	init() {
+		this.app.S3.getObject({
+			Bucket: 'redaktr',
+			Key: AWS.config.credentials.identityId + '.json'
+		}, (err, data) => {
+			if (err) webix.message({
+				text: err.message,
+				type: "error"
+			});
+			else if (!$$('sidebar').getSelectedId()) {
+				$$("tree").clearAll();
+				$$("tree").parse(data.Body.toString());
+			}
+		});
 	}
 }
 /* global webix */

@@ -7,14 +7,14 @@ export default class CdnView extends JetView {
 			id: "cdn",
 			view: "datatable",
 			select: "row",
-			url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.json?" + webix.uid(),
+			//url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".cdn.json?" + webix.uid(),
 			columns: [{
 				id: "url",
 				editor: "text",
 				header: "JS path",
 				fillspace: true
 			}],
-			editable: true,
+			editable: true/*,
 			on: {
 				onAfterLoad: _ => {
 					$$("cdn").data.attachEvent("onStoreUpdated", _ => {
@@ -34,8 +34,41 @@ export default class CdnView extends JetView {
 						});
 					});
 				}
-			}
+			}*/
 		};
+	}
+	init() {
+		this.app.S3.getObject({
+			Bucket: 'redaktr',
+			Key: AWS.config.credentials.identityId + '.cdn.json'
+		}, (err, data) => {
+			if (err) webix.message({
+				text: err.message,
+				type: "error"
+			});
+			else if ($$('sidebar').getSelectedId() === 'js') {
+				$$("cdn").clearAll();
+				$$("cdn").parse(data.Body.toString());
+			}
+			if ($$('sidebar').getSelectedId() === 'js') {
+				$$("cdn").data.attachEvent("onStoreUpdated", _ => {
+					if (this.app.lastXHRPostCdnJs) this.app.lastXHRPostCdnJs.abort();
+					this.app.lastXHRPostCdnJs = this.app.S3.putObject({
+						Bucket: 'redaktr',
+						Key: AWS.config.credentials.identityId + '.cdn.json',
+						ContentType: 'application/json',
+						Body: webix.ajax().stringify($$('cdn').serialize())
+					}, (err, data) => {
+						if (err) {
+							if (err.code !== "RequestAbortedError") webix.message({
+								text: err.message,
+								type: "error"
+							})
+						} else webix.message("JS cdn list save complete");
+					});
+				});
+			}
+		});
 	}
 }
 /* global webix */
