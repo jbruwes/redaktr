@@ -31,12 +31,6 @@ export default class AceView extends JetView {
 			if (err) cb('');
 			else cb(data.Body.toString());
 		});
-		/*
-		webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + ".css?" + webix.uid(), {
-			error: (text, data, XmlHttpRequest) => cb(''),
-			success: (text, data, XmlHttpRequest) => cb(text)
-		});
-		*/
 	}
 	_aceChange(e, session) {
 		var that = session.that;

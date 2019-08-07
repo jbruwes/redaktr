@@ -19,27 +19,6 @@ if (!BUILD_AS_MODULE) {
 		IdentityPoolId: 'us-east-1:92faa262-cf0e-4586-98d5-2f74fa89baec',
 		Logins: {}
 	});
-	/*
-	webix.attachEvent("onBeforeAjax",
-		function(mode, url, data, request, headers, files, promise) {
-			var httpRequest = new AWS.HttpRequest(url, "us-east-1");
-			//REQUIRED
-			//Host & content type headers must be set
-			httpRequest.headers.host = "api.redaktr.com"; //Host of the API being called
-			httpRequest.headers['Content-Type'] = "application/json";
-			//OPTIONAL
-			httpRequest.method = mode; //Default is POST
-			if (data) { httpRequest.body = data; }
-			var v4signer = new AWS.Signers.V4(httpRequest, "execute-api", true);
-			v4signer.addAuthorization(AWS.config.credentials, AWS.util.date.getDate());
-			headers["Authorization"] = httpRequest.headers["Authorization"];
-			headers["Content-Type"] = httpRequest.headers["Content-Type"];
-			headers["X-Amz-Date"] = httpRequest.headers["X-Amz-Date"];
-			headers["X-Amz-User-Agent"] = httpRequest.headers["X-Amz-User-Agent"];
-			headers["x-amz-security-token"] = httpRequest.headers["x-amz-security-token"];
-		}
-	);
-	*/
 	webix.ready(() => {
 		webix.ui.fullScreen();
 		var app = new MyApp();

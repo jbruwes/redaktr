@@ -58,7 +58,6 @@ export default class TreeView extends JetView {
 			editor: "text",
 			editValue: "value",
 			editaction: "dblclick",
-			//url: "//www.redaktr.com/" + AWS.config.credentials.identityId + ".json?" + webix.uid(),
 			on: {
 				"onAfterLoad": _ => {
 					if (!$$('sidebar').getSelectedId() || $$('sidebar').getSelectedId() === 'content') {
@@ -121,35 +120,6 @@ export default class TreeView extends JetView {
 							}
 						}
 					});
-					//webix.ajax("https://content.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
-					/*
-					webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + "/" + id + ".htm?" + webix.uid(), {
-						success: (text, data, XmlHttpRequest) => {
-							if ($$('sidebar').getSelectedId() === 'content') {
-								$$("tinymce").$scope.setValue(text);
-								$$("ace-content").$scope.setValue(text);
-							}
-						},
-						error: (text, data, XmlHttpRequest) => {
-							if (XmlHttpRequest.status === 403) {
-								if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
-								this.app.lastXHRPostContent = this.app.S3.putObject({
-									//Bucket: 'content.redaktr.com',
-									Bucket: 'redaktr',
-									ContentType: 'text/html',
-									Key: AWS.config.credentials.identityId + "/" + id + ".htm",
-									Body: ''
-								}, (err, data) => {
-									if (err);
-								});
-							}
-							if ($$('sidebar').getSelectedId() === 'content') {
-								$$("tinymce").$scope.setValue("");
-								$$("ace-content").$scope.setValue("");
-							}
-						}
-					});
-					*/
 				},
 				'onBeforeEditStop': (state, editor, ignore) => {
 					if (!(ignore && state.old)) {

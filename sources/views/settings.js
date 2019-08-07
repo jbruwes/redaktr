@@ -110,44 +110,6 @@ export default class SettingsView extends JetView {
 				});
 			});
 		});
-		/*
-		webix.ajax("//www.redaktr.com/" + AWS.config.credentials.identityId + ".ico?" + webix.uid(), (text, data, XmlHttpRequest) => {
-			if ($$('sidebar').getSelectedId() === 'settings') {
-				$$("uploader").files.data.clearAll();
-				$$("uploader").addFile({
-					name: 'favicon.ico',
-					sname: AWS.config.credentials.identityId + ".ico"
-				}, 0);
-				$$("uploader").attachEvent("onAfterFileAdd", file => {
-					file.file.sname = 'favicon.ico';
-					this.app.S3.putObject({
-						Bucket: 'redaktr',
-						Key: AWS.config.credentials.identityId + '.ico',
-						ContentType: file.file.type,
-						Body: file.file
-					}, (err, data) => {
-						if (err) webix.message({
-							text: err.message,
-							type: "error"
-						});
-						else webix.message("Settings save complete");
-					});
-				});
-				$$("uploader").files.attachEvent("onAfterDelete", file => {
-					this.app.S3.deleteObject({
-						Bucket: 'redaktr',
-						Key: AWS.config.credentials.identityId + '.ico'
-					}, (err, data) => {
-						if (err) webix.message({
-							text: err.message,
-							type: "error"
-						});
-						else webix.message("Settings save complete");
-					});
-				});
-			}
-		});
-		*/
 		this.app.DocumentClient.get({
 			TableName: "redaktr",
 			Key: {
