@@ -294,7 +294,7 @@ export default class TemplateView extends JetView {
 					$$("layers").add({
 						id: webix.uid().toString(),
 						value: $(e).attr("id"),
-						markCheckbox: !$(e).attr("hidden"),
+						markCheckbox: !$(e).parent().attr("hidden"),
 						icon: icon
 					});
 				});
@@ -422,15 +422,15 @@ export default class TemplateView extends JetView {
 			'<link rel="shortcut icon" href="/' + AWS.config.credentials.identityId + '.ico">' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
 			"<script>" +
- 			"[" +
-			"'<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "": ".min") + ".css'," +
+			"[" +
+			"'<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
 			"'<link rel=\"stylesheet\" href=\"/" + AWS.config.credentials.identityId + ".cdn.css'," +
-			"'<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "": ".min") + ".css'," +
+			"'<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
 			"'<link rel=\"stylesheet\" href=\"/" + AWS.config.credentials.identityId + ".css'" +
 			"]" +
 			".forEach(function(e){document.write(e+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">')});" +
-			"document.write('" + 
-			"<script src=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "": ".min") + ".js" +
+			"document.write('" +
+			"<script src=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".js" +
 			"'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\"" +
 			" defer><\\/script>" +
 			"');" +
@@ -544,7 +544,8 @@ export default class TemplateView extends JetView {
 	_saveStage(item, body, object) {
 		item.attr('style', '');
 		var fixed = $$('mode').getValue(),
-			dock = $$('dock').getValue() - 1;
+			dock = $$('dock').getValue() - 1,
+			hidden = item.parent().attr("hidden");
 		object.find(body).append(item);
 		if (dock) {
 			switch (fixed) {
@@ -571,6 +572,7 @@ export default class TemplateView extends JetView {
 					break;
 			}
 		}
+		item.parent().attr("hidden", hidden);
 		object.find(body + '>div:not([id]):empty').remove();
 		var marginLeft = $$('marginLeft').getValue(),
 			width = $$('width').getValue(),
@@ -578,7 +580,7 @@ export default class TemplateView extends JetView {
 		if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
 		if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
 		if (width !== '') item.css("min-width", width + $$('pwidth').getValue());
-		if (!(marginLeft !== '' && marginRight !== '')) item.css("align-self", "center").css('-ms-flex-item-align','center');
+		if (!(marginLeft !== '' && marginRight !== '')) item.css("align-self", "center").css('-ms-flex-item-align', 'center');
 		//item.css(((marginLeft !== '' && marginRight !== '') ? 'min-width' : 'width'), ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
 		//item.css('min-width', ((width !== '') ? (width + $$('pwidth').getValue()) : 'auto'));
 		//item.css('width', marginLeft !== '' && marginRight !== '' ? '100%' : 'auto');
@@ -746,7 +748,7 @@ export default class TemplateView extends JetView {
 				layer = $$("layers").getItem(rect.id);
 				selObj = fabricDocument.find("#" + layer.value);
 				if (selObj.length) {
-					if (selObj.attr("hidden")) rect.set({
+					if (selObj.parent().attr("hidden")) rect.set({
 						hasBorders: false,
 						hasControls: false,
 						selectable: false,
