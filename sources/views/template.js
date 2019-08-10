@@ -422,17 +422,17 @@ export default class TemplateView extends JetView {
 			'<link rel="shortcut icon" href="/' + AWS.config.credentials.identityId + '.ico">' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
 			"<script>" +
+			"var $=window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search)));" +
 			"[" +
-			"'<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
-			"'<link rel=\"stylesheet\" href=\"/" + AWS.config.credentials.identityId + ".cdn.css'," +
-			"'<link rel=\"stylesheet\" href=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
-			"'<link rel=\"stylesheet\" href=\"/" + AWS.config.credentials.identityId + ".css'" +
+			"'//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
+			"'/" + AWS.config.credentials.identityId + ".cdn.css'," +
+			"'//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
+			"'/" + AWS.config.credentials.identityId + ".css'" +
 			"]" +
-			".forEach(function(e){document.write(e+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\">')});" +
+			".forEach(function(_){document.write('<link rel=\"stylesheet\" href=\"'+_+$+'\">')});" +
 			"document.write('" +
 			"<script src=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".js" +
-			"'+(window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search))))+'\"" +
-			" defer><\\/script>" +
+			"'+$+'\" defer><\\/script>" +
 			"');" +
 			"</script>" +
 			'</head><body>' +
