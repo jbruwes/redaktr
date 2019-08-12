@@ -142,6 +142,7 @@ export default class SignInView extends JetView {
 														Username: $$('username').getValue(),
 														Password: $$('password').getValue(),
 													},
+													AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
 													authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData),
 													poolData = {
 														UserPoolId: 'us-east-1_isPFINeJO',
