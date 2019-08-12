@@ -2,6 +2,7 @@ import $script from "scriptjs";
 import {
 	JetView
 } from "webix-jet";
+import PasswordView from "./signinViews/password";
 export default class SignInView extends JetView {
 	config() {
 		var appShow = item => {
@@ -112,75 +113,101 @@ export default class SignInView extends JetView {
 					{
 						css: "signInViewField",
 						padding: 30,
-						cols: [
-							/*{
-														id: "a1",
-														rows: [{
-															responsive: "a1",
-															cols: [{
-																	minWidth: 200,
-																	view: "button",
-																	label: "Sign In with Facebook",
-																	type: "iconButton",
-																	icon: "mdi mdi-facebook",
-																	click: () => {
-																		$script('//connect.facebook.net/en_US/sdk.js', () => {
-																			FB.init({
-																				appId: '606212879479370',
-																				cookie: true,
-																				xfbml: true,
-																				version: 'v3.2'
-																			});
-																			FB.login((response) => {
-																				if (response.status === 'connected') {
-																					delete AWS.config.credentials.params.Logins['accounts.google.com'];
-																					AWS.config.credentials.params.Logins['graph.facebook.com'] = response.authResponse.accessToken;
-																					AWS.config.credentials.clearCachedId();
-																					AWS.config.credentials.expired = false;
-																					AWS.config.credentials.get(signIn);
-
-																				}
-																			}, {
-																				scope: 'email'
-																			});
-																		});
-																	}
-																},*/
-							{
-								width: 200,
-								view: "button",
-								label: "Sign In with Google",
-								type: "iconButton",
-								icon: "mdi mdi-google",
-								click: () => {
-									$script('//apis.google.com/js/platform.js', () => {
-										window.gapi.load('auth2', () => {
-											var auth2 = window.gapi.auth2.init({
-												client_id: '1098421926055-ss56dm06c6fuupnjdrjj7er0l7b705on.apps.' +
-													'googleusercontent.com'
-											});
-											auth2.signIn({
-												prompt: 'select_account'
-											}).then((value) => {
-												AWS.config.credentials.params.Logins['accounts.google.com'] = value.getAuthResponse().id_token;
-												AWS.config.credentials.clearCachedId();
-												AWS.config.credentials.expired = false;
-												AWS.config.credentials.get(signIn);
-											}, (reason) => {
-												webix.message({
-													text: reason.error,
-													type: "error"
+						cols: [{
+							rows: [{
+								view: "form",
+								id: "log_form",
+								width: 300,
+								borderless: true,
+								elements: [{
+										view: "text",
+										label: "Username",
+										name: "username",
+										id: "username"
+									},
+									{
+										view: "text",
+										type: "password",
+										label: "Password",
+										name: "password",
+										id: "password"
+									},
+									{
+										cols: [{
+											view: "button",
+											value: "Login",
+											css: "webix_primary",
+											click: _ => {
+												var authenticationData = {
+														Username: $$('username').getValue(),
+														Password: $$('password').getValue(),
+													},
+													authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData),
+													poolData = {
+														UserPoolId: 'us-east-1_isPFINeJO',
+														ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
+													},
+													userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData),
+													userData = {
+														Username: $$('username').getValue(),
+														Pool: userPool
+													},
+													cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData),
+													that = this;
+												cognitoUser.authenticateUser(authenticationDetails, {
+													onSuccess: (result) => {
+														var accessToken = result.getAccessToken().getJwtToken();
+														AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.idToken.jwtToken;
+														AWS.config.credentials.clearCachedId();
+														AWS.config.credentials.expired = false;
+														AWS.config.credentials.get(signIn);
+													},
+													onFailure: (err) => {
+														webix.message({
+															text: err.message,
+															type: "error"
+														});
+													},
+													newPasswordRequired: function(userAttributes, requiredAttributes) {
+														delete userAttributes.email_verified;
+														delete userAttributes.phone_number_verified;
+														that.newpass.showWindow(cognitoUser, userAttributes, this);
+													}
+												});
+											}
+										}]
+									}, {
+										view: "button",
+										label: "Sign In with Google",
+										type: "iconButton",
+										icon: "mdi mdi-google",
+										click: (id, e) => {
+											$script('//apis.google.com/js/platform.js', () => {
+												window.gapi.load('auth2', () => {
+													var auth2 = window.gapi.auth2.init({
+														client_id: '1098421926055-ss56dm06c6fuupnjdrjj7er0l7b705on.apps.' +
+															'googleusercontent.com'
+													});
+													auth2.signIn({
+														prompt: 'select_account'
+													}).then((value) => {
+														AWS.config.credentials.params.Logins['accounts.google.com'] = value.getAuthResponse().id_token;
+														AWS.config.credentials.clearCachedId();
+														AWS.config.credentials.expired = false;
+														if (!e.altKey) AWS.config.credentials.get(signIn);
+													}, (reason) => {
+														webix.message({
+															text: reason.error,
+															type: "error"
+														});
+													});
 												});
 											});
-										});
-									});
-								}
-							}
-							/*]
+										}
+									}
+								]
 							}]
-						}*/
-							, {}
-						]
+						}, {}]
 					}, {}, {
 						padding: 2,
 						cols: [{}, {
@@ -199,6 +226,9 @@ export default class SignInView extends JetView {
 				]
 			}]
 		};
+	}
+	init() {
+		this.newpass = this.ui(PasswordView);
 	}
 }
 /* global AWS */
