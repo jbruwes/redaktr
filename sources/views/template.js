@@ -236,7 +236,7 @@ export default class TemplateView extends JetView {
 			$($$('fabric').getWindow()).resize(_ => this._makeSelection(this));
 			var observer = new MutationObserver(_ => this._makeSelection(this));
 			observer.observe($$("fabric").getWindow().document.body, {
-				'attributes': true,
+				//'attributes': true, // подвисает на сложных сайтах, падлюка
 				'childList': true,
 				'characterData': true,
 				'subtree': true

@@ -63,11 +63,14 @@ export default class SignInView extends JetView {
 						"id": AWS.config.credentials.identityId
 					}
 				}, (err, data) => {
-					if (err) webix.message({
-						text: err,
-						type: "error"
-					});
-					else if (data.Item) {
+					if (err) {
+						delete AWS.config.credentials.params.Logins['accounts.google.com'];
+						delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+						webix.message({
+							text: err,
+							type: "error"
+						});
+					} else if (data.Item) {
 						if (AWS.config.credentials.params.Logins['accounts.google.com'] && AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']) {
 							this.app.CognitoIdentity.unlinkIdentity({
 								IdentityId: AWS.config.credentials.identityId,
@@ -79,21 +82,31 @@ export default class SignInView extends JetView {
 									'accounts.google.com'
 								]
 							}, (err, data) => {
-								if (err) webix.message({
-									text: err,
-									type: "error"
-								});
+								if (err) {
+									delete AWS.config.credentials.params.Logins['accounts.google.com'];
+									delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+									webix.message({
+										text: err,
+										type: "error"
+									});
+								}
 							});
 						}
 						appShow(data.Item);
-					} else webix.message({
-						text: "Access Denied",
-						type: "error"
-					});
+					} else {
+						delete AWS.config.credentials.params.Logins['accounts.google.com'];
+						delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+						webix.message({
+							text: "Access Denied",
+							type: "error"
+						});
+					}
 				});
 			},
 			signIn = (err) => {
 				if (err) {
+					delete AWS.config.credentials.params.Logins['accounts.google.com'];
+					delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 					webix.message({
 						text: err,
 						type: "error"
