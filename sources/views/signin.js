@@ -67,9 +67,27 @@ export default class SignInView extends JetView {
 						text: err,
 						type: "error"
 					});
-					else if (data.Item) appShow(data.Item);
-					else webix.message({
-						text: "Registration is Temporarily Unavailable",
+					else if (data.Item) {
+						if (AWS.config.credentials.params.Logins['accounts.google.com'] && AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']) {
+							this.app.CognitoIdentity.unlinkIdentity({
+								IdentityId: AWS.config.credentials.identityId,
+								Logins: {
+									'accounts.google.com': AWS.config.credentials.params.Logins['accounts.google.com'],
+									'cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO': AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']
+								},
+								LoginsToRemove: [
+									'accounts.google.com'
+								]
+							}, (err, data) => {
+								if (err) webix.message({
+									text: err,
+									type: "error"
+								});
+							});
+						}
+						appShow(data.Item);
+					} else webix.message({
+						text: "Access Denied",
 						type: "error"
 					});
 				});
