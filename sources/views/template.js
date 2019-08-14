@@ -245,9 +245,9 @@ export default class TemplateView extends JetView {
 		});
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.html',
+			Key: AWS.config.credentials.identityId + '.html'/*,
 			ResponseContentType: 'text/html',
-			ResponseCacheControl: 'no-cache'
+			ResponseCacheControl: 'no-cache'*/
 		}, (err, data) => {
 			if ($$('sidebar').getSelectedId() === 'template') {
 				var body = '';
