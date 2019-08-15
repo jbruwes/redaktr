@@ -103,8 +103,8 @@ export default class TemplateView extends JetView {
 										}, {
 											id: "fabric",
 											view: "fabric",
-											canvas: "fabric",
-											cdn: "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.1.0"
+											canvas: "fabric"//,
+											//cdn: "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.1.0"
 										}]
 									},
 									{

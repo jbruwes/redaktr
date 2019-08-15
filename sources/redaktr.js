@@ -162,7 +162,7 @@ if (!BUILD_AS_MODULE) {
 				return;
 			}
 
-			var cdn = this.config.cdn ? this.config.cdn : "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.7.0";
+			var cdn = this.config.cdn ? this.config.cdn : "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.3.2";
 			webix.require([
 					cdn + "/fabric.min.js"
 				])
