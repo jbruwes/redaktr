@@ -35,7 +35,7 @@ if (!BUILD_AS_MODULE) {
 	webix.protoUI({
 		name: "editlist"
 	}, webix.EditAbility, webix.ui.list);
-
+/*
 	webix.protoUI({
 		name: "tinymce-editor",
 		defaults: {
@@ -148,7 +148,7 @@ if (!BUILD_AS_MODULE) {
 			return waitEditor ? this._waitEditor : this._3rd_editor;
 		}
 	}, webix.ui.view);
-
+*/
 	webix.protoUI({
 		name: "fabric",
 		$init: function() {
