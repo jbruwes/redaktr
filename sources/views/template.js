@@ -401,7 +401,7 @@ export default class TemplateView extends JetView {
 	ready() {
 		$('[view_id="tinymce"]').css("display", "none"); // хак: потому что у subview не выставляется display:none в tabbar
 		$('[view_id="fabric"]').css("position", "absolute");
-		$($$("fabric").getIframe()).css('position', 'absolute');
+		//$($$("fabric").getIframe()).css('position', 'absolute');
 	}
 	_getMode(item) {
 		if (item.parent('div[data-absolute]:not([id])').parent('.pusher').length) return 1;
