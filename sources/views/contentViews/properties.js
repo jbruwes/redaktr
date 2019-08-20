@@ -175,11 +175,12 @@ export default class PropertiesView extends JetView {
 					on: {
 						"onAfterFileAdd": file => {
 							if (!this.getParentView()._lockProperties) {
-								this.app.S3.headObject({
-									Bucket: 'redaktr',
-									Key: AWS.config.credentials.identityId + '/' + file.name
-								}, (err, data) => {
-									file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
+								//this.app.S3.headObject({
+								//	Bucket: 'redaktr',
+								//	Key: AWS.config.credentials.identityId + '/' + file.name
+								//}, (err, data) => {
+									//file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
+									file.file.sname = webix.uid() + '/' + file.name;
 									this.app.S3.putObject({
 										Bucket: 'redaktr',
 										Key: AWS.config.credentials.identityId + '/' + file.file.sname,
@@ -192,7 +193,7 @@ export default class PropertiesView extends JetView {
 										});
 										else this._image();
 									});
-								});
+								//});
 							}
 						},
 						"files->onAfterDelete": file => this._image()

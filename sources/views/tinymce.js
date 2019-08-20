@@ -185,11 +185,12 @@ export default class TinymceView extends JetView {
 							var base64 = reader.result.split(',')[1];
 							var blobInfo = blobCache.create(id, file, base64);
 							blobCache.add(blobInfo);
-							this.app.S3.headObject({
-								Bucket: 'redaktr',
-								Key: AWS.config.credentials.identityId + '/' + decodeURI(file.name)
-							}, (err, data) => {
-								var filePath = (err ? '' : webix.uid() + '/') + decodeURI(file.name);
+							//this.app.S3.headObject({
+							//	Bucket: 'redaktr',
+							//	Key: AWS.config.credentials.identityId + '/' + decodeURI(file.name)
+							//}, (err, data) => {
+								//var filePath = (err ? '' : webix.uid() + '/') + decodeURI(file.name);
+								var filePath = webix.uid() + '/' + decodeURI(file.name);
 								this.app.S3.putObject({
 									Bucket: 'redaktr',
 									Key: AWS.config.credentials.identityId + '/' + filePath,
@@ -204,7 +205,7 @@ export default class TinymceView extends JetView {
 										title: decodeURI(file.name)
 									});
 								});
-							});
+							//});
 						};
 						reader.readAsDataURL(file);
 					};
@@ -224,11 +225,12 @@ export default class TinymceView extends JetView {
 				importcss_append: true,
 				images_reuse_filename: true,
 				images_upload_handler: (blobInfo, success, failure) => {
-					this.app.S3.headObject({
-						Bucket: 'redaktr',
-						Key: AWS.config.credentials.identityId + '/' + decodeURI(blobInfo.filename())
-					}, (err, data) => {
-						var filePath = (err ? '' : webix.uid() + '/') + decodeURI(blobInfo.filename());
+					//this.app.S3.headObject({
+					//	Bucket: 'redaktr',
+					//	Key: AWS.config.credentials.identityId + '/' + decodeURI(blobInfo.filename())
+					//}, (err, data) => {
+						//var filePath = (err ? '' : webix.uid() + '/') + decodeURI(blobInfo.filename());
+						var filePath = webix.uid() + '/' + decodeURI(blobInfo.filename());
 						this.app.S3.putObject({
 							Bucket: 'redaktr',
 							Key: AWS.config.credentials.identityId + '/' + filePath,
@@ -238,7 +240,7 @@ export default class TinymceView extends JetView {
 							if (err) failure(err.message);
 							else success(filePath);
 						});
-					});
+					//});
 				},
 				document_base_url: "//www.redaktr.com/" + AWS.config.credentials.identityId + "/",
 				statusbar: false,
