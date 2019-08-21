@@ -62,7 +62,10 @@ export default class SignInView extends JetView {
 					Key: {
 						"id": AWS.config.credentials.identityId
 					},
-					ProjectionExpression: "id"
+					ProjectionExpression: "id,#name",
+					ExpressionAttributeNames: {
+						"#name": "name"
+					}
 				}, (err, data) => {
 					if (err) {
 						delete AWS.config.credentials.params.Logins['accounts.google.com'];
