@@ -422,6 +422,7 @@ export default class TemplateView extends JetView {
 			'<link rel="icon" href="/' + AWS.config.credentials.identityId + '.ico" type="image/vnd.microsoft.icon">' +
 			'<script src="//cdn.redaktr.com/require.min.js" defer></script>' +
 			"<script>" +
+			"(function(){" +
 			"var $=window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search)));" +
 			"[" +
 			"'//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
@@ -434,6 +435,7 @@ export default class TemplateView extends JetView {
 			"<script src=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".js" +
 			"'+$+'\" defer><\\/script>" +
 			"');" +
+			"})();" +
 			"</script>" +
 			'</head><body>' +
 			'<div class="ui sidebar very wide vertical accordion menu"></div>' +
