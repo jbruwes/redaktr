@@ -141,7 +141,7 @@ export default class SignInView extends JetView {
 					{
 						id: "header_template",
 						view: "template",
-						template: "<h1 class='redaktrHeader'>RΞDΔKTR<div>website control&nbsp;panel</div></h1>",
+						template: "<h1 class='redaktrHeader'>REDAKTR<div>website control&nbsp;panel</div></h1>",
 						minHeight: 150,
 						type: "clean"
 					},
@@ -252,7 +252,7 @@ export default class SignInView extends JetView {
 							css: "webix_transparent",
 							type: "icon",
 							width: 300,
-							label: "𝔚𝔢𝔫𝔦𝔤 𝔚𝔢𝔟 𝔚𝔢𝔯𝔨𝔰𝔱𝔞𝔱𝔱",
+							label: "𝔚𝔢𝔫𝔦𝔤 𝔚𝔢𝔟 𝔚𝔬𝔯𝔨𝔰𝔥𝔬𝔭",
 							icon: "mdi mdi-cursor-default-click-outline",
 							click: () => {
 								window.open("https://w--w--w.com", "_blank");
