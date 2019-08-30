@@ -31,7 +31,7 @@ export default class TopView extends JetView {
 							data: [],
 							click: (id) => {
 								if (id === "signout") webix.delay(_ => {
-									delete AWS.config.credentials.params.Logins['accounts.google.com'];
+									//delete AWS.config.credentials.params.Logins['accounts.google.com'];
 									delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 									this.show('signin');
 									this._resetSidebar();
@@ -73,7 +73,7 @@ export default class TopView extends JetView {
 		$$("sidebar").getPopup().attachEvent("onBeforeShow", () => {
 			return false;
 		});
-		webix.message("В связи с переходом на новую платформу некоторые сайты недоступны для редактирования. Приносим извинения за временные неудобства.", "error", -1);
+		//webix.message("В связи с переходом на новую платформу некоторые сайты недоступны для редактирования. Приносим извинения за временные неудобства.", "error", -1);
 		this._resetSidebar();
 	}
 }

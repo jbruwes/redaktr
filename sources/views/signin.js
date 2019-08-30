@@ -68,14 +68,14 @@ export default class SignInView extends JetView {
 					}
 				}, (err, data) => {
 					if (err) {
-						delete AWS.config.credentials.params.Logins['accounts.google.com'];
+						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
 						delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 						webix.message({
 							text: err,
 							type: "error"
 						});
 					} else if (data.Item) {
-						if (AWS.config.credentials.params.Logins['accounts.google.com'] && AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']) {
+						/*if (AWS.config.credentials.params.Logins['accounts.google.com'] && AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']) {
 							this.app.CognitoIdentity.unlinkIdentity({
 								IdentityId: AWS.config.credentials.identityId,
 								Logins: {
@@ -95,10 +95,10 @@ export default class SignInView extends JetView {
 									});
 								}
 							});
-						}
+						}*/
 						appShow(data.Item);
 					} else {
-						delete AWS.config.credentials.params.Logins['accounts.google.com'];
+						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
 						delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 						webix.message({
 							text: "Access Denied",
@@ -109,7 +109,7 @@ export default class SignInView extends JetView {
 			},
 			signIn = (err) => {
 				if (err) {
-					delete AWS.config.credentials.params.Logins['accounts.google.com'];
+					//delete AWS.config.credentials.params.Logins['accounts.google.com'];
 					delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 					webix.message({
 						text: err,
@@ -212,7 +212,7 @@ export default class SignInView extends JetView {
 												});
 											}
 										}]
-									}, {
+									}/*, {
 										view: "button",
 										label: "Sign In with Google",
 										type: "iconButton",
@@ -240,7 +240,7 @@ export default class SignInView extends JetView {
 												});
 											});
 										}
-									}
+									}*/
 								]
 							}]
 						}, {}]
