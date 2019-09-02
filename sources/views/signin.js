@@ -69,7 +69,8 @@ export default class SignInView extends JetView {
 				}, (err, data) => {
 					if (err) {
 						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
-						delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+						//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+						AWS.config.credentials.params.Logins = [];
 						webix.message({
 							text: err,
 							type: "error"
@@ -99,7 +100,8 @@ export default class SignInView extends JetView {
 						appShow(data.Item);
 					} else {
 						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
-						delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+						//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+						AWS.config.credentials.params.Logins = [];
 						webix.message({
 							text: "Access Denied",
 							type: "error"
@@ -110,7 +112,8 @@ export default class SignInView extends JetView {
 			signIn = (err) => {
 				if (err) {
 					//delete AWS.config.credentials.params.Logins['accounts.google.com'];
-					delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+					//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
+					AWS.config.credentials.params.Logins = [];
 					webix.message({
 						text: err,
 						type: "error"
@@ -173,74 +176,77 @@ export default class SignInView extends JetView {
 											value: "Login",
 											css: "webix_primary",
 											click: _ => {
-												var authenticationData = {
+												if (!this.authenticationData || !(this.authenticationData.Username === $$('username').getValue() && this.authenticationData.Password === $$('password').getValue())) {
+													this.authenticationData = {
 														Username: $$('username').getValue(),
 														Password: $$('password').getValue(),
-													},
-													AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
-													authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData),
-													poolData = {
-														UserPoolId: 'us-east-1_isPFINeJO',
-														ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
-													},
-													userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData),
-													userData = {
-														Username: $$('username').getValue(),
-														Pool: userPool
-													},
-													cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData),
-													that = this;
-												cognitoUser.authenticateUser(authenticationDetails, {
-													onSuccess: (result) => {
-														var accessToken = result.getAccessToken().getJwtToken();
-														AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.idToken.jwtToken;
-														AWS.config.credentials.clearCachedId();
-														AWS.config.credentials.expired = false;
-														AWS.config.credentials.get(signIn);
-													},
-													onFailure: (err) => {
-														webix.message({
-															text: err.message,
-															type: "error"
-														});
-													},
-													newPasswordRequired: function(userAttributes, requiredAttributes) {
-														delete userAttributes.email_verified;
-														delete userAttributes.phone_number_verified;
-														that.newpass.showWindow(cognitoUser, userAttributes, this);
 													}
-												});
+													var AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
+														authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(this.authenticationData),
+														poolData = {
+															UserPoolId: 'us-east-1_isPFINeJO',
+															ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
+														},
+														userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData),
+														userData = {
+															Username: $$('username').getValue(),
+															Pool: userPool
+														},
+														cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData),
+														that = this;
+													cognitoUser.authenticateUser(authenticationDetails, {
+														onSuccess: (result) => {
+															var accessToken = result.getAccessToken().getJwtToken();
+															AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.idToken.jwtToken;
+															AWS.config.credentials.clearCachedId();
+															AWS.config.credentials.expired = false;
+															AWS.config.credentials.get(signIn);
+														},
+														onFailure: (err) => {
+															webix.message({
+																text: err.message,
+																type: "error"
+															});
+														},
+														newPasswordRequired: function(userAttributes, requiredAttributes) {
+															delete userAttributes.email_verified;
+															delete userAttributes.phone_number_verified;
+															that.newpass.showWindow(cognitoUser, userAttributes, this);
+														}
+													});
+												}
 											}
 										}]
-									}/*, {
-										view: "button",
-										label: "Sign In with Google",
-										type: "iconButton",
-										icon: "mdi mdi-google",
-										click: (id, e) => {
-											$script('//apis.google.com/js/platform.js', () => {
-												window.gapi.load('auth2', () => {
-													var auth2 = window.gapi.auth2.init({
-														client_id: '1098421926055-ss56dm06c6fuupnjdrjj7er0l7b705on.apps.' +
-															'googleusercontent.com'
-													});
-													auth2.signIn({
-														prompt: 'select_account'
-													}).then((value) => {
-														AWS.config.credentials.params.Logins['accounts.google.com'] = value.getAuthResponse().id_token;
-														AWS.config.credentials.clearCachedId();
-														AWS.config.credentials.expired = false;
-														if (!e.altKey) AWS.config.credentials.get(signIn);
-													}, (reason) => {
-														webix.message({
-															text: reason.error,
-															type: "error"
-														});
-													});
-												});
-											});
-										}
-									}*/
+									}
+									/*, {
+																			view: "button",
+																			label: "Sign In with Google",
+																			type: "iconButton",
+																			icon: "mdi mdi-google",
+																			click: (id, e) => {
+																				$script('//apis.google.com/js/platform.js', () => {
+																					window.gapi.load('auth2', () => {
+																						var auth2 = window.gapi.auth2.init({
+																							client_id: '1098421926055-ss56dm06c6fuupnjdrjj7er0l7b705on.apps.' +
+																								'googleusercontent.com'
+																						});
+																						auth2.signIn({
+																							prompt: 'select_account'
+																						}).then((value) => {
+																							AWS.config.credentials.params.Logins['accounts.google.com'] = value.getAuthResponse().id_token;
+																							AWS.config.credentials.clearCachedId();
+																							AWS.config.credentials.expired = false;
+																							if (!e.altKey) AWS.config.credentials.get(signIn);
+																						}, (reason) => {
+																							webix.message({
+																								text: reason.error,
+																								type: "error"
+																							});
+																						});
+																					});
+																				});
+																			}
+																		}*/
 								]
 							}]
 						}, {}]
