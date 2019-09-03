@@ -103,7 +103,7 @@ export default class TemplateView extends JetView {
 										}, {
 											id: "fabric",
 											view: "fabric",
-											canvas: "fabric"//,
+											canvas: "fabric" //,
 											//cdn: "https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.1.0"
 										}]
 									},
@@ -245,9 +245,10 @@ export default class TemplateView extends JetView {
 		});
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.html'/*,
-			ResponseContentType: 'text/html',
-			ResponseCacheControl: 'no-cache'*/
+			Key: AWS.config.credentials.identityId + '.html'
+			/*,
+						ResponseContentType: 'text/html',
+						ResponseCacheControl: 'no-cache'*/
 		}, (err, data) => {
 			if ($$('sidebar').getSelectedId() === 'template') {
 				var body = '';
@@ -273,10 +274,9 @@ export default class TemplateView extends JetView {
 				} else o.empty().append('<main></main>');
 				this._body.find('#body:first').empty().append(pusher);
 				list.sort((val1, val2) => {
-					// После переноса сайтов можно восстановить
-					//return $(val2).parent().css("z-index") - $(val1).parent().css("z-index")
-					return $(val2).parent().get(0).style.zIndex ? $(val2).parent().css("z-index") : $(val2).css("z-index") -
-						$(val1).parent().get(0).style.zIndex ? $(val1).parent().css("z-index") : $(val1).css("z-index")
+					return $(val2).parent().css("z-index") - $(val1).parent().css("z-index")
+					//return $(val2).parent().get(0).style.zIndex ? $(val2).parent().css("z-index") : $(val2).css("z-index") -
+					//	$(val1).parent().get(0).style.zIndex ? $(val1).parent().css("z-index") : $(val1).css("z-index")
 				});
 				list.each((i, e) => {
 					var icon = 'mdi mdi-monitor-off';
@@ -774,7 +774,8 @@ export default class TemplateView extends JetView {
 							selectable: true,
 							evented: true
 						});
-						rect.bringToFront();
+						rect.moveTo(selObj.parent().css("z-index") - 1);
+						//rect.bringToFront();
 						layer.left = rect.left;
 						layer.top = rect.top;
 						layer.angle = rect.angle;
@@ -790,7 +791,7 @@ export default class TemplateView extends JetView {
 				});
 				rect.setCoords();
 				if (rect.id && rect.id === selectedId) {
-					$$('fabric').getCanvas().bringToFront(rect);
+					//$$('fabric').getCanvas().bringToFront(rect);
 					$$('fabric').getCanvas().setActiveObject(rect);
 					those._oCoords = rect.oCoords;
 					those._top = rect.top;

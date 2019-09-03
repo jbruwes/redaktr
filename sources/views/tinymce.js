@@ -139,7 +139,8 @@ export default class TinymceView extends JetView {
 							if (item.visible) {
 								child = $$("tree").getFirstChildId(id);
 								value = item.value.replace(/[\""]/g, '\\"');
-								newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
+								//newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
+								newPath = path + value.replace(/ /g, "_") + '/';
 								children = child ? getSubmenuItems(child, newPath) : null;
 								item = '{"type":"menuitem","text":"' + value + '",onAction:function(){""===tinyMCE.activeEditor.selection.getContent()?tinyMCE.execCommand("mceInsertContent",!1,"<a href=\\"' + newPath + '\\">' + value + '</a>"):tinyMCE.execCommand("mceInsertLink",!1,"' + newPath + '")},"icon":';
 								if (children) {
