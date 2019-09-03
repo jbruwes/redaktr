@@ -5,7 +5,12 @@ import {
 import PasswordView from "./signinViews/password";
 export default class SignInView extends JetView {
 	config() {
-		var that, appShow = item => {
+		var that, AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
+			userPool = new AmazonCognitoIdentity.CognitoUserPool({
+				UserPoolId: 'us-east-1_isPFINeJO',
+				ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
+			}),
+			appShow = item => {
 				$$("sidebar").clearAll();
 				$$("toolbar").addView({
 					id: "play",
@@ -59,15 +64,32 @@ export default class SignInView extends JetView {
 			},
 			cbRefresh = err => {
 				if (err) {
-					webix.message({
-						text: err,
-						type: "error"
+					var cognitoUser = userPool.getCurrentUser();
+					if (cognitoUser) cognitoUser.getSession((err, session) => {
+						if (err) webix.message({
+							text: err,
+							type: "error"
+						});
+						else cognitoUser.refreshSession(session.getRefreshToken(), (err, session) => {
+							if (err) webix.message({
+								text: err,
+								type: "error"
+							});
+							else {
+								AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = session.getIdToken().getJwtToken();
+								AWS.config.credentials.refresh(err => {
+									if (err) {
+										AWS.config.credentials.params.Logins = [];
+										webix.message({
+											text: err,
+											type: "error"
+										});
+									} else that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
+								});
+							}
+						});
 					});
-					console.log(err);
-				} else {
-					console.log(that.timeoutId);
-					that.timeoutId = setTimeout(_ => AWS.config.credentials.refresh(cbRefresh), 1000000);
-				}
+				} else that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
 			},
 			check = _ => {
 				this.app.DocumentClient.get({
@@ -81,51 +103,16 @@ export default class SignInView extends JetView {
 					}
 				}, (err, data) => {
 					if (err) {
-						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
-						//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 						AWS.config.credentials.params.Logins = [];
 						webix.message({
 							text: err,
 							type: "error"
 						});
 					} else if (data.Item) {
-						/*if (AWS.config.credentials.params.Logins['accounts.google.com'] && AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']) {
-							this.app.CognitoIdentity.unlinkIdentity({
-								IdentityId: AWS.config.credentials.identityId,
-								Logins: {
-									'accounts.google.com': AWS.config.credentials.params.Logins['accounts.google.com'],
-									'cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO': AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO']
-								},
-								LoginsToRemove: [
-									'accounts.google.com'
-								]
-							}, (err, data) => {
-								if (err) {
-									delete AWS.config.credentials.params.Logins['accounts.google.com'];
-									delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
-									webix.message({
-										text: err,
-										type: "error"
-									});
-								}
-							});
-						}*/
-						
-						/*
-						webix.delay(function(a, b){
-    //a == 1
-    //b == "abc"
-    //this == dtable
-    do_something();
-}, dtable, [1, "abc"], 100);
-*/
-						//that = this.app;
-						//this.app.timeoutId = setTimeout(_ => AWS.config.credentials.refresh(cbRefresh), 1000000);
-
+						that = this.app;
+						that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
 						appShow(data.Item);
 					} else {
-						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
-						//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 						AWS.config.credentials.params.Logins = [];
 						webix.message({
 							text: "Access Denied",
@@ -134,10 +121,8 @@ export default class SignInView extends JetView {
 					}
 				});
 			},
-			signIn = (err) => {
+			signIn = err => {
 				if (err) {
-					//delete AWS.config.credentials.params.Logins['accounts.google.com'];
-					//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 					AWS.config.credentials.params.Logins = [];
 					webix.message({
 						text: err,
@@ -145,7 +130,7 @@ export default class SignInView extends JetView {
 					});
 				} else {
 					if (AWS.config.credentials.identityId) check();
-					else AWS.config.credentials.refresh(_ => check());
+					else AWS.config.credentials.refresh(check);
 				}
 			};
 		return {
@@ -206,28 +191,30 @@ export default class SignInView extends JetView {
 														Username: $$('username').getValue(),
 														Password: $$('password').getValue(),
 													}
-													var AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
-														authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(this.authenticationData),
-														poolData = {
-															UserPoolId: 'us-east-1_isPFINeJO',
-															ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
-														},
-														userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData),
-														userData = {
+													var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(this.authenticationData),
+														cognitoUser = new AmazonCognitoIdentity.CognitoUser({
 															Username: $$('username').getValue(),
 															Pool: userPool
-														},
-														cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData),
+														}),
 														that = this;
 													cognitoUser.authenticateUser(authenticationDetails, {
-														onSuccess: (result) => {
-															var accessToken = result.getAccessToken().getJwtToken();
-															AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.idToken.jwtToken;
+														onSuccess: result => {
+															AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.getIdToken().getJwtToken();
 															AWS.config.credentials.clearCachedId();
-															AWS.config.credentials.expired = false;
-															AWS.config.credentials.get(signIn);
+															AWS.config.credentials.get(err => {
+																if (err) {
+																	AWS.config.credentials.params.Logins = [];
+																	webix.message({
+																		text: err,
+																		type: "error"
+																	});
+																} else {
+																	if (AWS.config.credentials.identityId) check();
+																	else AWS.config.credentials.refresh(check);
+																}
+															});
 														},
-														onFailure: (err) => {
+														onFailure: err => {
 															webix.message({
 																text: err.message,
 																type: "error"
@@ -243,35 +230,6 @@ export default class SignInView extends JetView {
 											}
 										}]
 									}
-									/*, {
-																			view: "button",
-																			label: "Sign In with Google",
-																			type: "iconButton",
-																			icon: "mdi mdi-google",
-																			click: (id, e) => {
-																				$script('//apis.google.com/js/platform.js', () => {
-																					window.gapi.load('auth2', () => {
-																						var auth2 = window.gapi.auth2.init({
-																							client_id: '1098421926055-ss56dm06c6fuupnjdrjj7er0l7b705on.apps.' +
-																								'googleusercontent.com'
-																						});
-																						auth2.signIn({
-																							prompt: 'select_account'
-																						}).then((value) => {
-																							AWS.config.credentials.params.Logins['accounts.google.com'] = value.getAuthResponse().id_token;
-																							AWS.config.credentials.clearCachedId();
-																							AWS.config.credentials.expired = false;
-																							if (!e.altKey) AWS.config.credentials.get(signIn);
-																						}, (reason) => {
-																							webix.message({
-																								text: reason.error,
-																								type: "error"
-																							});
-																						});
-																					});
-																				});
-																			}
-																		}*/
 								]
 							}]
 						}, {}]
