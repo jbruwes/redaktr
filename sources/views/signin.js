@@ -52,7 +52,6 @@ export default class SignInView extends JetView {
 							icon: "mdi mdi-logout-variant",
 							value: "Sign Out"
 						});
-						r
 						$$("sidebar").select("content");
 					});
 				}, function(reason) {
@@ -120,18 +119,6 @@ export default class SignInView extends JetView {
 						});
 					}
 				});
-			},
-			signIn = err => {
-				if (err) {
-					AWS.config.credentials.params.Logins = [];
-					webix.message({
-						text: err,
-						type: "error"
-					});
-				} else {
-					if (AWS.config.credentials.identityId) check();
-					else AWS.config.credentials.refresh(check);
-				}
 			};
 		return {
 			css: "signInView",
@@ -199,6 +186,7 @@ export default class SignInView extends JetView {
 														that = this;
 													cognitoUser.authenticateUser(authenticationDetails, {
 														onSuccess: result => {
+															AWS.config.credentials.params.Logins = [];
 															AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.getIdToken().getJwtToken();
 															AWS.config.credentials.clearCachedId();
 															AWS.config.credentials.get(err => {
