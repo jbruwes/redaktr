@@ -31,6 +31,7 @@ export default class TopView extends JetView {
 							data: [],
 							click: (id) => {
 								if (id === "signout") webix.delay(_ => {
+									clearTimeout(this.app.timeoutId);
 									//delete AWS.config.credentials.params.Logins['accounts.google.com'];
 									//delete AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'];
 									AWS.config.credentials.params.Logins = [];

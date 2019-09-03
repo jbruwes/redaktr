@@ -5,58 +5,71 @@ import {
 import PasswordView from "./signinViews/password";
 export default class SignInView extends JetView {
 	config() {
-		var appShow = item => {
-			$$("sidebar").clearAll();
-			$$("toolbar").addView({
-				id: "play",
-				view: "icon",
-				icon: "mdi mdi-play-circle",
-				click: _ => {
-					window.open("https://redaktr.com/" + item.name + "/?" + webix.uid(), "_tab");
-				}
-			});
-			this.show("content").then(function(value) {
-				$$("tinymce").getEditor(true).then(editor => {
-					$$("sidebar").add({
-						id: "content",
-						icon: "mdi mdi-book-open-page-variant",
-						value: "Content"
-					}, 0);
-					$$("sidebar").add({
-						id: "template",
-						icon: "mdi mdi-language-html5",
-						value: "Template"
-					}, 1);
-					$$("sidebar").add({
-						id: "css",
-						icon: "mdi mdi-language-css3",
-						value: "CSS"
-					}, 2);
-					$$("sidebar").add({
-						id: "js",
-						icon: "mdi mdi-language-javascript",
-						value: "JavaScript"
-					}, 3);
-					$$("sidebar").add({
-						id: "settings",
-						icon: "mdi mdi-settings",
-						value: "Settings"
-					}, 4);
-					$$("sidebar").add({
-						id: "signout",
-						icon: "mdi mdi-logout-variant",
-						value: "Sign Out"
+		var that, appShow = item => {
+				$$("sidebar").clearAll();
+				$$("toolbar").addView({
+					id: "play",
+					view: "icon",
+					icon: "mdi mdi-play-circle",
+					click: _ => {
+						window.open("https://redaktr.com/" + item.name + "/?" + webix.uid(), "_tab");
+					}
+				});
+				this.show("content").then(function(value) {
+					$$("tinymce").getEditor(true).then(editor => {
+						$$("sidebar").add({
+							id: "content",
+							icon: "mdi mdi-book-open-page-variant",
+							value: "Content"
+						}, 0);
+						$$("sidebar").add({
+							id: "template",
+							icon: "mdi mdi-language-html5",
+							value: "Template"
+						}, 1);
+						$$("sidebar").add({
+							id: "css",
+							icon: "mdi mdi-language-css3",
+							value: "CSS"
+						}, 2);
+						$$("sidebar").add({
+							id: "js",
+							icon: "mdi mdi-language-javascript",
+							value: "JavaScript"
+						}, 3);
+						$$("sidebar").add({
+							id: "settings",
+							icon: "mdi mdi-settings",
+							value: "Settings"
+						}, 4);
+						$$("sidebar").add({
+							id: "signout",
+							icon: "mdi mdi-logout-variant",
+							value: "Sign Out"
+						});
+						r
+						$$("sidebar").select("content");
 					});
-					$$("sidebar").select("content");
+				}, function(reason) {
+					webix.message({
+						text: "Something goes wrong",
+						type: "error"
+					});
 				});
-			}, function(reason) {
-				webix.message({
-					text: "Something goes wrong",
-					type: "error"
-				});
-			});
-		};
-		var check = _ => {
+			},
+			cbRefresh = err => {
+				if (err) {
+					webix.message({
+						text: err,
+						type: "error"
+					});
+					console.log(err);
+				} else {
+					console.log(that.timeoutId);
+					that.timeoutId = setTimeout(_ => AWS.config.credentials.refresh(cbRefresh), 1000000);
+				}
+			},
+			check = _ => {
 				this.app.DocumentClient.get({
 					TableName: "redaktr",
 					Key: {
@@ -97,6 +110,18 @@ export default class SignInView extends JetView {
 								}
 							});
 						}*/
+						
+						/*
+						webix.delay(function(a, b){
+    //a == 1
+    //b == "abc"
+    //this == dtable
+    do_something();
+}, dtable, [1, "abc"], 100);
+*/
+						//that = this.app;
+						//this.app.timeoutId = setTimeout(_ => AWS.config.credentials.refresh(cbRefresh), 1000000);
+
 						appShow(data.Item);
 					} else {
 						//delete AWS.config.credentials.params.Logins['accounts.google.com'];
