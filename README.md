@@ -1,30 +1,13 @@
-Webix Jet Demo App
-===================
+REDAKTR
+==================
 
-### How to run
+### https://www.redaktr.com
 
-- run ```npm install```
-- run ```npm start```
-- open ```http://localhost:8080```
+Website control panel by Wenig Web Workshop
 
-For more details, check https://www.gitbook.com/book/webix/webix-jet/details
+Панель управления сайтами. Сделано в маленькой веб студии.
 
-### Other commands
-
-#### Run lint
-
-```
-npm run lint
-```
-
-#### Build production files
-
-```
-npm run build
-```
-
-After that you can copy the "codebase" folder to the production server
-
+https://w--w--w.com
 
 ### License
 
