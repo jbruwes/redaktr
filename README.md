@@ -1,7 +1,7 @@
 REDAKTR
+==================
 
-https://redaktr.com
-===================
+### https://www.redaktr.com
 
 Website control panel by Wenig Web Workshop
 
