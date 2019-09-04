@@ -441,7 +441,7 @@ export default class TemplateView extends JetView {
 			"</script>" +
 			'</head><body>' +
 			'<div class="ui sidebar very wide vertical accordion menu"></div>' +
-			'<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a></div>' +
+			'<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a><div class="header item"></div></div>' +
 			'<div class="pusher">' + this._body.find('#body:first>.pusher').html() + '</div>' +
 			'</body></html>';
 		this._html = this._html.replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "").replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, "><").replace(/^\s*$[\n\r]{1,}/gm, '');
@@ -844,10 +844,10 @@ export default class TemplateView extends JetView {
 				$$('borderRightStyle').setValue(item[0].style.borderRightStyle ? item[0].style.borderRightStyle : 'none');
 				$$('borderTopStyle').setValue(item[0].style.borderTopStyle ? item[0].style.borderTopStyle : 'none');
 				$$('borderBottomStyle').setValue(item[0].style.borderBottomStyle ? item[0].style.borderBottomStyle : 'none');
-				$$('borderLeftColor').setValue(item[0].style.borderLeftColor ? webix.color.rgbToHex(item[0].style.borderLeftColor) : '#000000');
-				$$('borderRightColor').setValue(item[0].style.borderRightColor ? webix.color.rgbToHex(item[0].style.borderRightColor) : '#000000');
-				$$('borderTopColor').setValue(item[0].style.borderTopColor ? webix.color.rgbToHex(item[0].style.borderTopColor) : '#000000');
-				$$('borderBottomColor').setValue(item[0].style.borderBottomColor ? webix.color.rgbToHex(item[0].style.borderBottomColor) : '#000000');
+				$$('borderLeftColor').setValue(webix.color.rgbToHex(item[0].style.borderLeftColor));
+				$$('borderRightColor').setValue(webix.color.rgbToHex(item[0].style.borderRightColor));
+				$$('borderTopColor').setValue(webix.color.rgbToHex(item[0].style.borderTopColor));
+				$$('borderBottomColor').setValue(webix.color.rgbToHex(item[0].style.borderBottomColor));
 				var marginTop = item[0].style.marginTop,
 					parseMarginTop = parseInt(marginTop);
 				$$('marginTop').setValue(parseMarginTop);
@@ -884,7 +884,7 @@ export default class TemplateView extends JetView {
 				$$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
 				$$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
 				$$('borderBottomRightRadius').setValue(parseInt(item[0].style.borderBottomRightRadius));
-				$$('textColor').setValue(item[0].style.color ? webix.color.rgbToHex(item[0].style.color) : '#000000');
+				$$('textColor').setValue(webix.color.rgbToHex(item[0].style.color));
 				var backgroundImage = item[0].style.backgroundImage;
 				backgroundImage = backgroundImage ? backgroundImage : '';
 				backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
@@ -905,7 +905,7 @@ export default class TemplateView extends JetView {
 				$$('repeatY').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-y') ? true : false);
 				var backgroundFixed = item[0].style.backgroundAttachment;
 				$$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
-				$$('backgroundColor').setValue(item[0].style.backgroundColor ? webix.color.rgbToHex(item[0].style.backgroundColor) : '');
+				$$('backgroundColor').setValue(webix.color.rgbToHex(item[0].style.backgroundColor));
 				var transparency = item[0].style.opacity;
 				$$('transparency').setValue(transparency === '' ? 0 : Math.round(100 - transparency * 100));
 				$$('shadows').clearAll();
@@ -949,7 +949,7 @@ export default class TemplateView extends JetView {
 							blur: boxShadowGeom[2] ? parseFloat(boxShadowGeom[2]) : 0,
 							spread: boxShadowGeom[3] ? parseFloat(boxShadowGeom[3]) : 0,
 							inset: inset ? inset : false,
-							color: color ? '#' + webix.color.rgbToHex(color) : '#ffffff'
+							color: '#' + webix.color.rgbToHex(color)
 						});
 					});
 					$$("shadows").select($$("shadows").getFirstId());
