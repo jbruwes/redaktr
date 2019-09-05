@@ -13,6 +13,7 @@ export default class AceView extends JetView {
 	init(ace) {
 		ace.getEditor(true).then(editor => {
 			var session = editor.getSession();
+			this.timeoutId = [];
 			session.that = this;
 			//session.setUseWorker(false);
 			session.on("changeAnnotation", function() {
@@ -27,9 +28,13 @@ export default class AceView extends JetView {
 		});
 	}
 	_aceChange(e, session) {
-		var that = session.that.getParentView();
-		$$("tinymce").$scope.setValue(session.that.getRoot().getEditor().getValue());
-		that._save(null, that);
+		session.that.timeoutId.push(webix.delay(function() {
+			this.timeoutId.pop();
+			if(!this.timeoutId.length) {
+				$$("tinymce").$scope.setValue(this.getRoot().getEditor().getValue());
+				this.getParentView()._save(null, this.getParentView());
+			}
+		}, session.that, [], 3000));
 	}
 	setValue(html) {
 		this.getRoot().getEditor(true).then((editor) => {
