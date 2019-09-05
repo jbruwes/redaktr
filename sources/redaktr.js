@@ -1,3 +1,4 @@
+/*jshint esversion: 9 */
 import "./styles/app.css";
 import {
 	JetApp,
