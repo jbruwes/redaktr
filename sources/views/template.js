@@ -40,7 +40,6 @@ export default class TemplateView extends JetView {
 												view: "icon",
 												icon: "mdi mdi-undo",
 												click: _ => {
-													//console.log(JSON.stringify(this._undo));
 													var pop = this._undo.pop();
 													if (pop) {
 														var fabricDocument = $($$("fabric").getIframe()).contents();
@@ -679,7 +678,7 @@ export default class TemplateView extends JetView {
 			}), value.value).attr("data-" + value.data.toLowerCase(), value.value);
 		});
 		var backgroundImage = $$('bglist').getItem($$('bglist').getFirstId());
-		if (backgroundImage && backgroundImage.file.sname) item.css("background-image", 'url(' + backgroundImage.file.sname + ')');
+		if (backgroundImage && backgroundImage.file.sname) item.css("background-image", 'url("' + backgroundImage.file.sname + '")');
 	}
 	_updateDND(oldRect, newRect) {
 		this._lockRedraw = true;
