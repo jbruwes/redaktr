@@ -627,14 +627,16 @@ export default class TemplateView extends JetView {
 		item.css("border-right-style", $$('borderRightStyle').getValue());
 		item.css("border-top-style", $$('borderTopStyle').getValue());
 		item.css("border-bottom-style", $$('borderBottomStyle').getValue());
+
 		var borderLeftColor = $$('borderLeftColor').getValue();
-		if (borderLeftColor !== '') item.css("border-left-color", borderLeftColor);
+		if (borderLeftColor !== '') item.css("border-left-color", borderLeftColor + webix.color.toHex(Math.round(2.55 * $$('borderLeftTransparency').getValue()), 2));
 		var borderRightColor = $$('borderRightColor').getValue();
-		if (borderRightColor !== '') item.css("border-right-color", borderRightColor);
+		if (borderRightColor !== '') item.css("border-right-color", borderRightColor + webix.color.toHex(Math.round(2.55 * $$('borderRightTransparency').getValue()), 2));
 		var borderTopColor = $$('borderTopColor').getValue();
-		if (borderTopColor !== '') item.css("border-top-color", borderTopColor);
+		if (borderTopColor !== '') item.css("border-top-color", borderTopColor + webix.color.toHex(Math.round(2.55 * $$('borderTopTransparency').getValue()), 2));
 		var borderBottomColor = $$('borderBottomColor').getValue();
-		if (borderBottomColor !== '') item.css("border-bottom-color", borderBottomColor);
+		if (borderBottomColor !== '') item.css("border-bottom-color", borderBottomColor + webix.color.toHex(Math.round(2.55 * $$('borderBottomTransparency').getValue()), 2));
+
 		var borderTopLeftRadius = $$('borderTopLeftRadius').getValue();
 		if (borderTopLeftRadius !== '') item.css("border-top-left-radius", borderTopLeftRadius + 'px');
 		var borderTopRightRadius = $$('borderTopRightRadius').getValue();
@@ -643,11 +645,15 @@ export default class TemplateView extends JetView {
 		if (borderBottomLeftRadius !== '') item.css("border-bottom-left-radius", borderBottomLeftRadius + 'px');
 		var borderBottomRightRadius = $$('borderBottomRightRadius').getValue();
 		if (borderBottomRightRadius !== '') item.css("border-bottom-right-radius", borderBottomRightRadius + 'px');
+
 		var textColor = $$('textColor').getValue();
-		if (textColor !== '') item.css("color", textColor);
-		item.css("opacity", (100 - $$('transparency').getValue()) / 100);
+		if (textColor !== '') item.css("color", textColor + webix.color.toHex(Math.round(2.55 * $$('textTransparency').getValue()), 2));
+
+		item.css("opacity", ($$('transparency').getValue()) / 100);
+
 		var backgroundColor = $$('backgroundColor').getValue();
-		if (backgroundColor !== '') item.css("background-color", backgroundColor);
+		if (backgroundColor !== '') item.css("background-color", backgroundColor + webix.color.toHex(Math.round(2.55 * $$('backgroundTransparency').getValue()), 2));
+
 		var backgroundPositionH = $$('backgroundPositionH').getValue(),
 			pbackgroundPositionH = $$('pbackgroundPositionH').getValue(),
 			backgroundPositionV = $$('backgroundPositionV').getValue(),
@@ -844,10 +850,16 @@ export default class TemplateView extends JetView {
 				$$('borderRightStyle').setValue(item[0].style.borderRightStyle ? item[0].style.borderRightStyle : 'none');
 				$$('borderTopStyle').setValue(item[0].style.borderTopStyle ? item[0].style.borderTopStyle : 'none');
 				$$('borderBottomStyle').setValue(item[0].style.borderBottomStyle ? item[0].style.borderBottomStyle : 'none');
+
 				$$('borderLeftColor').setValue(webix.color.rgbToHex(item[0].style.borderLeftColor));
 				$$('borderRightColor').setValue(webix.color.rgbToHex(item[0].style.borderRightColor));
 				$$('borderTopColor').setValue(webix.color.rgbToHex(item[0].style.borderTopColor));
 				$$('borderBottomColor').setValue(webix.color.rgbToHex(item[0].style.borderBottomColor));
+				$$('borderLeftTransparency').setValue(item[0].style.borderLeftColor.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.borderLeftColor.replace(/^.*,(.+)\)/, '$1')));
+				$$('borderRightTransparency').setValue(item[0].style.borderRightColor.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.borderRightColor.replace(/^.*,(.+)\)/, '$1')));
+				$$('borderTopTransparency').setValue(item[0].style.borderTopColor.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.borderTopColor.replace(/^.*,(.+)\)/, '$1')));
+				$$('borderBottomTransparency').setValue(item[0].style.borderBottomColor.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.borderBottomColor.replace(/^.*,(.+)\)/, '$1')));
+
 				var marginTop = item[0].style.marginTop,
 					parseMarginTop = parseInt(marginTop);
 				$$('marginTop').setValue(parseMarginTop);
@@ -884,7 +896,10 @@ export default class TemplateView extends JetView {
 				$$('borderTopRightRadius').setValue(parseInt(item[0].style.borderTopRightRadius));
 				$$('borderBottomLeftRadius').setValue(parseInt(item[0].style.borderBottomLeftRadius));
 				$$('borderBottomRightRadius').setValue(parseInt(item[0].style.borderBottomRightRadius));
+
 				$$('textColor').setValue(webix.color.rgbToHex(item[0].style.color));
+				$$('textTransparency').setValue(item[0].style.color.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.color.replace(/^.*,(.+)\)/, '$1')));
+
 				var backgroundImage = item[0].style.backgroundImage;
 				backgroundImage = backgroundImage ? backgroundImage : '';
 				backgroundImage = (backgroundImage !== '' && backgroundImage !== 'none') ? backgroundImage.replace('url(', '').replace(')', '').replace(/"/g, '').replace(new RegExp((window.location.protocol + "//" + window.location.host + window.location.pathname).replace(/[^\/]*$/, ''), "g"), "") : '';
@@ -905,9 +920,12 @@ export default class TemplateView extends JetView {
 				$$('repeatY').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-y') ? true : false);
 				var backgroundFixed = item[0].style.backgroundAttachment;
 				$$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
+
 				$$('backgroundColor').setValue(webix.color.rgbToHex(item[0].style.backgroundColor));
+				$$('backgroundTransparency').setValue(item[0].style.backgroundColor.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.backgroundColor.replace(/^.*,(.+)\)/, '$1')));
+
 				var transparency = item[0].style.opacity;
-				$$('transparency').setValue(transparency === '' ? 0 : Math.round(100 - transparency * 100));
+				$$('transparency').setValue(transparency === '' ? 100 : Math.round(transparency * 100));
 				$$('shadows').clearAll();
 				var boxShadow = item[0].style.boxShadow;
 				boxShadow = boxShadow === 'none' ? null : boxShadow;

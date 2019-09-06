@@ -109,6 +109,16 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
+									view: "text",
+									id: "borderLeftWidth",
+									type: "number",
+									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									labelWidth: 33,
+									on: {
+										onChange: _ => this.getParentView()._redraw(this.getParentView())
+									}
+								},
+								{
 									view: "colorpicker",
 									id: "borderLeftColor",
 									value: "#000000",
@@ -120,11 +130,14 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
-									view: "text",
-									id: "borderLeftWidth",
-									type: "number",
-									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									view: "slider",
+									id: "borderLeftTransparency",
+									value: "100",
+									min: 0,
+									max: 100,
+									label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
 									labelWidth: 33,
+									title: webix.template("#value#"),
 									on: {
 										onChange: _ => this.getParentView()._redraw(this.getParentView())
 									}
@@ -183,6 +196,16 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
+									view: "text",
+									id: "borderRightWidth",
+									type: "number",
+									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									labelWidth: 33,
+									on: {
+										onChange: _ => this.getParentView()._redraw(this.getParentView())
+									}
+								},
+								{
 									view: "colorpicker",
 									id: "borderRightColor",
 									value: "#000000",
@@ -194,11 +217,14 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
-									view: "text",
-									id: "borderRightWidth",
-									type: "number",
-									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									view: "slider",
+									id: "borderRightTransparency",
+									value: "100",
+									min: 0,
+									max: 100,
+									label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
 									labelWidth: 33,
+									title: webix.template("#value#"),
 									on: {
 										onChange: _ => this.getParentView()._redraw(this.getParentView())
 									}
@@ -257,6 +283,16 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
+									view: "text",
+									id: "borderTopWidth",
+									type: "number",
+									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									labelWidth: 33,
+									on: {
+										onChange: _ => this.getParentView()._redraw(this.getParentView())
+									}
+								},
+								{
 									view: "colorpicker",
 									id: "borderTopColor",
 									value: "#000000",
@@ -268,11 +304,14 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
-									view: "text",
-									id: "borderTopWidth",
-									type: "number",
-									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									view: "slider",
+									id: "borderTopTransparency",
+									value: "100",
+									min: 0,
+									max: 100,
+									label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
 									labelWidth: 33,
+									title: webix.template("#value#"),
 									on: {
 										onChange: _ => this.getParentView()._redraw(this.getParentView())
 									}
@@ -331,6 +370,16 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
+									view: "text",
+									id: "borderBottomWidth",
+									type: "number",
+									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									labelWidth: 33,
+									on: {
+										onChange: _ => this.getParentView()._redraw(this.getParentView())
+									}
+								},
+								{
 									view: "colorpicker",
 									id: "borderBottomColor",
 									value: "#000000",
@@ -342,11 +391,14 @@ export default class AppearanceView extends JetView {
 									}
 								},
 								{
-									view: "text",
-									id: "borderBottomWidth",
-									type: "number",
-									label: "<span class='mdi mdi-dark mdi-24px mdi-pan-horizontal'></span>",
+									view: "slider",
+									id: "borderBottomTransparency",
+									value: "100",
+									min: 0,
+									max: 100,
+									label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
 									labelWidth: 33,
+									title: webix.template("#value#"),
 									on: {
 										onChange: _ => this.getParentView()._redraw(this.getParentView())
 									}
@@ -416,6 +468,19 @@ export default class AppearanceView extends JetView {
 							label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>",
 							labelWidth: 33,
 							editable: true,
+							on: {
+								onChange: _ => this.getParentView()._redraw(this.getParentView())
+							}
+						},
+						{
+							view: "slider",
+							id: "textTransparency",
+							value: "100",
+							min: 0,
+							max: 100,
+							label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
+							labelWidth: 33,
+							title: webix.template("#value#"),
 							on: {
 								onChange: _ => this.getParentView()._redraw(this.getParentView())
 							}
@@ -498,16 +563,6 @@ export default class AppearanceView extends JetView {
 											}
 										}
 									]
-								}, {
-									view: "colorpicker",
-									id: "backgroundColor",
-									value: "#000000",
-									label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>",
-									labelWidth: 33,
-									editable: true,
-									on: {
-										onChange: _ => this.getParentView()._redraw(this.getParentView())
-									}
 								},
 								{
 									cols: [{
@@ -566,6 +621,29 @@ export default class AppearanceView extends JetView {
 											}
 										}
 									]
+								}, {
+									view: "colorpicker",
+									id: "backgroundColor",
+									value: "#000000",
+									label: "<span class='mdi mdi-dark mdi-24px mdi-palette'></span>",
+									labelWidth: 33,
+									editable: true,
+									on: {
+										onChange: _ => this.getParentView()._redraw(this.getParentView())
+									}
+								},
+								{
+									view: "slider",
+									id: "backgroundTransparency",
+									value: "100",
+									min: 0,
+									max: 100,
+									label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
+									labelWidth: 33,
+									title: webix.template("#value#"),
+									on: {
+										onChange: _ => this.getParentView()._redraw(this.getParentView())
+									}
 								}
 							]
 						}
@@ -573,14 +651,14 @@ export default class AppearanceView extends JetView {
 				},
 				{
 					rows: [{
-							template: "Transparensy",
+							template: "Opacity",
 							type: "section",
 							css: "webix_section"
 						},
 						{
 							view: "slider",
 							id: "transparency",
-							value: "0",
+							value: "100",
 							min: 0,
 							max: 100,
 							label: '<span class="mdi mdi-dark mdi-24px mdi-opacity"></span>',
@@ -591,8 +669,8 @@ export default class AppearanceView extends JetView {
 							}
 						}
 					]
-				}, {}
-
+				},
+				{}
 			]
 		};
 	}
