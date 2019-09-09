@@ -131,6 +131,7 @@ export default class AppearanceView extends JetView {
 								},
 								{
 									view: "slider",
+									type: "alt",
 									id: "borderLeftTransparency",
 									value: "100",
 									min: 0,
@@ -218,6 +219,7 @@ export default class AppearanceView extends JetView {
 								},
 								{
 									view: "slider",
+									type: "alt",
 									id: "borderRightTransparency",
 									value: "100",
 									min: 0,
@@ -305,6 +307,7 @@ export default class AppearanceView extends JetView {
 								},
 								{
 									view: "slider",
+									type: "alt",
 									id: "borderTopTransparency",
 									value: "100",
 									min: 0,
@@ -392,6 +395,7 @@ export default class AppearanceView extends JetView {
 								},
 								{
 									view: "slider",
+									type: "alt",
 									id: "borderBottomTransparency",
 									value: "100",
 									min: 0,
@@ -474,6 +478,7 @@ export default class AppearanceView extends JetView {
 						},
 						{
 							view: "slider",
+							type: "alt",
 							id: "textTransparency",
 							value: "100",
 							min: 0,
@@ -634,6 +639,7 @@ export default class AppearanceView extends JetView {
 								},
 								{
 									view: "slider",
+									type: "alt",
 									id: "backgroundTransparency",
 									value: "100",
 									min: 0,
@@ -657,6 +663,7 @@ export default class AppearanceView extends JetView {
 						},
 						{
 							view: "slider",
+							type: "alt",
 							id: "transparency",
 							value: "100",
 							min: 0,

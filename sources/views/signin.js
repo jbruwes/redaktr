@@ -119,51 +119,32 @@ export default class SignInView extends JetView {
 						});
 					}
 				});
-			};
-		return {
-			css: "signInView",
-			cols: [{
-				gravity: 0.38
-			}, {
-				css: "signInViewRight",
-				rows: [{
-						paddingX: 10,
-						cols: [{}, {
-							view: "label",
-							label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>',
-							height: 152,
-							width: 152
-						}]
-					},
-					{
-						gravity: 2
-					},
-					{
-						id: "header_template",
-						view: "template",
-						template: "<h1 class='redaktrHeader'>REDAKTR<div>website control&nbsp;panel</div></h1>",
-						minHeight: 150,
-						type: "clean"
-					},
-					{
+			},
+			result = {
+				css: "signInView",
+				cols: [{
+					gravity: 0.38
+				}, {
+					css: "signInViewRight",
+					rows: [{
 						css: "signInViewField",
-						padding: 30,
+						padding: 0,
 						cols: [{
 							rows: [{
 								view: "form",
 								id: "log_form",
-								width: 300,
+								width: 270,
 								borderless: true,
 								elements: [{
 										view: "text",
-										label: "Username",
+										placeholder: "Username",
 										name: "username",
 										id: "username"
 									},
 									{
 										view: "text",
 										type: "password",
-										label: "Password",
+										placeholder: "Password",
 										name: "password",
 										id: "password"
 									},
@@ -228,17 +209,36 @@ export default class SignInView extends JetView {
 							view: "button",
 							css: "webix_transparent",
 							type: "icon",
-							width: 300,
+							width: 268,
 							label: "𝔚𝔢𝔫𝔦𝔤 𝔚𝔢𝔟 𝔚𝔬𝔯𝔨𝔰𝔥𝔬𝔭",
 							icon: "mdi mdi-cursor-default-click-outline",
 							click: () => {
 								window.open("https://w--w--w.com", "_blank");
 							}
 						}]
-					}
-				]
-			}]
-		};
+					}]
+				}]
+			};
+		if (this.app.config.size === "wide") result.cols[1].rows.unshift({
+				id: "header_template",
+				view: "template",
+				template: "<h1 class='redaktrHeader'>REDAKTR<div>website control&nbsp;panel</div></h1>",
+				minHeight: 150,
+				type: "clean"
+			});
+			result.cols[1].rows.unshift({
+				gravity: 2
+			});
+			if (this.app.config.size === "wide") result.cols[1].rows.unshift({
+				paddingX: 10,
+				cols: [{}, {
+					view: "label",
+					label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>',
+					height: 152,
+					width: 152
+				}]
+			});
+		return result;
 	}
 	init() {
 		this.newpass = this.ui(PasswordView);

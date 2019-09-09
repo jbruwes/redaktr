@@ -36,6 +36,19 @@ if (!BUILD_AS_MODULE) {
 			correctClockSkew: true
 		});
 		app.CognitoIdentity = new AWS.CognitoIdentity();
+		
+		
+    const size =  () => document.body.offsetWidth > 964 ? "wide" : "small";
+    app.config.size = size();
+    webix.event(window, "resize", function(){
+        var newSize = size();
+        if (newSize != app.config.size){
+            app.config.size = newSize;
+            app.refresh();
+        }
+    });
+		
+		
 		app.render();
 	});
 
