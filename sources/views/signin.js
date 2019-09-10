@@ -3,6 +3,7 @@ import {
 	JetView
 } from "webix-jet";
 import PasswordView from "./signinViews/password";
+import ForgetPasswordView from "./signinViews/forgetPassword";
 export default class SignInView extends JetView {
 	config() {
 		var that, AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
@@ -149,55 +150,75 @@ export default class SignInView extends JetView {
 										id: "password"
 									},
 									{
-										cols: [{
-											view: "button",
-											value: "Login",
-											css: "webix_primary",
-											click: _ => {
-												if (!this.authenticationData || !(this.authenticationData.Username === $$('username').getValue() && this.authenticationData.Password === $$('password').getValue())) {
-													this.authenticationData = {
-														Username: $$('username').getValue(),
-														Password: $$('password').getValue(),
-													}
-													var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(this.authenticationData),
-														cognitoUser = new AmazonCognitoIdentity.CognitoUser({
-															Username: $$('username').getValue(),
-															Pool: userPool
-														}),
-														that = this;
-													cognitoUser.authenticateUser(authenticationDetails, {
-														onSuccess: result => {
-															AWS.config.credentials.params.Logins = [];
-															AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.getIdToken().getJwtToken();
-															AWS.config.credentials.clearCachedId();
-															AWS.config.credentials.get(err => {
-																if (err) {
-																	AWS.config.credentials.params.Logins = [];
-																	webix.message({
-																		text: err,
-																		type: "error"
-																	});
-																} else {
-																	if (AWS.config.credentials.identityId) check();
-																	else AWS.config.credentials.refresh(check);
-																}
-															});
-														},
-														onFailure: err => {
-															webix.message({
-																text: err.message,
-																type: "error"
-															});
-														},
-														newPasswordRequired: function(userAttributes, requiredAttributes) {
-															delete userAttributes.email_verified;
-															delete userAttributes.phone_number_verified;
-															that.newpass.showWindow(cognitoUser, userAttributes, this);
-														}
-													});
+										view: "button",
+										value: "Login",
+										css: "webix_primary",
+										click: _ => {
+											if (!this.authenticationData || !(this.authenticationData.Username === $$('username').getValue() && this.authenticationData.Password === $$('password').getValue())) {
+												this.authenticationData = {
+													Username: $$('username').getValue(),
+													Password: $$('password').getValue(),
 												}
+												var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(this.authenticationData),
+													cognitoUser = new AmazonCognitoIdentity.CognitoUser({
+														Username: $$('username').getValue(),
+														Pool: userPool
+													}),
+													that = this;
+												cognitoUser.authenticateUser(authenticationDetails, {
+													onSuccess: result => {
+														AWS.config.credentials.params.Logins = [];
+														AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.getIdToken().getJwtToken();
+														AWS.config.credentials.clearCachedId();
+														AWS.config.credentials.get(err => {
+															if (err) {
+																AWS.config.credentials.params.Logins = [];
+																webix.message({
+																	text: err,
+																	type: "error"
+																});
+															} else {
+																if (AWS.config.credentials.identityId) check();
+																else AWS.config.credentials.refresh(check);
+															}
+														});
+													},
+													onFailure: err => webix.message({
+														text: err.message,
+														type: "error"
+													}),
+													newPasswordRequired: function(userAttributes, requiredAttributes) {
+														delete userAttributes.email_verified;
+														delete userAttributes.phone_number_verified;
+														that.newpass.showWindow(cognitoUser, userAttributes, this);
+													}
+												});
 											}
-										}]
+										}
+									}, {
+										view: "button",
+										value: "Forgot your password?",
+										css: "webix_transparent",
+										click: _ => {
+											var cognitoUser = new AmazonCognitoIdentity.CognitoUser({
+													Username: $$('username').getValue(),
+													Pool: userPool
+												}),
+												that = this;
+											//that.forgetpass.showWindow(cognitoUser, this);
+											cognitoUser.forgotPassword({
+												onSuccess: result => webix.message({
+													text: result
+												}),
+												onFailure: err => webix.message({
+													text: err.message,
+													type: "error"
+												}),
+												inputVerificationCode() {
+													that.forgetpass.showWindow(cognitoUser, this);
+												}
+											});
+										}
 									}
 								]
 							}]
@@ -220,28 +241,29 @@ export default class SignInView extends JetView {
 				}]
 			};
 		if (this.app.config.size === "wide") result.cols[1].rows.unshift({
-				id: "header_template",
-				view: "template",
-				template: "<h1 class='redaktrHeader'>REDAKTR<div>website control&nbsp;panel</div></h1>",
-				minHeight: 150,
-				type: "clean"
-			});
-			result.cols[1].rows.unshift({
-				gravity: 2
-			});
-			if (this.app.config.size === "wide") result.cols[1].rows.unshift({
-				paddingX: 10,
-				cols: [{}, {
-					view: "label",
-					label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>',
-					height: 152,
-					width: 152
-				}]
-			});
+			//id: "header_template",
+			view: "template",
+			template: "<h1 class='redaktrHeader'>REDAKTR<div>website control&nbsp;panel</div></h1>",
+			minHeight: 150,
+			type: "clean"
+		});
+		result.cols[1].rows.unshift({
+			gravity: 2
+		});
+		if (this.app.config.size === "wide") result.cols[1].rows.unshift({
+			paddingX: 10,
+			cols: [{}, {
+				view: "label",
+				label: '<div class="redaktr-circle-logo-container"><div class="redaktr-circle-logo"><span class="mdi mdi-48px mdi-glassdoor largeLogoRedaktr"></span></div></div>',
+				height: 152,
+				width: 152
+			}]
+		});
 		return result;
 	}
 	init() {
 		this.newpass = this.ui(PasswordView);
+		this.forgetpass = this.ui(ForgetPasswordView);
 	}
 }
 /* global AWS */
