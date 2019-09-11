@@ -25,7 +25,7 @@ if (!BUILD_AS_MODULE) {
 		IdentityPoolId: 'us-east-1:92faa262-cf0e-4586-98d5-2f74fa89baec',
 		Logins: {}
 	});
-	webix.ready(() => {
+	webix.ready(_ => {
 		webix.ui.fullScreen();
 		var app = new MyApp();
 		app.S3 = new AWS.S3({
@@ -37,8 +37,9 @@ if (!BUILD_AS_MODULE) {
 		});
 		app.CognitoIdentity = new AWS.CognitoIdentity();
 
-		const size = () => document.body.offsetWidth > 964 ? "wide" : "small";
+		const size = _ => document.body.offsetWidth > 964 ? "wide" : "small";
 		app.config.size = size();
+		/*
 		webix.event(window, "resize", _ => {
 			if ($$('sidebar').getSelectedId() === 'signin') {
 				var newSize = size();
@@ -48,7 +49,7 @@ if (!BUILD_AS_MODULE) {
 				}
 			}
 		});
-
+		*/
 		app.render();
 	});
 

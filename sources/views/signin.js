@@ -7,7 +7,7 @@ import ForgetPasswordView from "./signinViews/forgetPassword";
 export default class SignInView extends JetView {
 	config() {
 		var that, AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
-			userPool = new AmazonCognitoIdentity.CognitoUserPool({
+			userPool = this.app.userPool = new AmazonCognitoIdentity.CognitoUserPool({
 				UserPoolId: 'us-east-1_isPFINeJO',
 				ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
 			}),
@@ -200,8 +200,11 @@ export default class SignInView extends JetView {
 										value: "Forgot your password?",
 										css: "webix_transparent",
 										click: _ => {
+											
+											var username = $$('username').getValue(); 
+											if(username) {
 											var cognitoUser = new AmazonCognitoIdentity.CognitoUser({
-													Username: $$('username').getValue(),
+													Username: username,
 													Pool: userPool
 												}),
 												that = this;
@@ -217,7 +220,10 @@ export default class SignInView extends JetView {
 												inputVerificationCode() {
 													that.forgetpass.showWindow(cognitoUser, this);
 												}
-											});
+											});} else webix.message({
+													text: "Please fill the username field",
+													type: "debug"
+												})
 										}
 									}
 								]

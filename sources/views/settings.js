@@ -1,6 +1,7 @@
 import {
 	JetView
 } from "webix-jet";
+import ValidateEmailView from "./settingsViews/validateEmail";
 export default class SettingsView extends JetView {
 	config() {
 		return {
@@ -62,7 +63,22 @@ export default class SettingsView extends JetView {
 						template: "{common.removeIcon()}{common.percent()}{common.fileName()}",
 						autoheight: true,
 						borderless: true
+					}, {
+						template: "Email",
+						type: "section"
+					}, {
+						id: "email",
+						view: "search",
+						icon: false
+					},
+					{
+						id: "verifyButton",
+						view: "button",
+						disabled: true,
+						value: "Verify email",
+						click: _ => {this.newpass.showWindow(this);}
 					}
+
 				],
 				elementsConfig: {
 					"labelAlign": "right"
@@ -71,6 +87,7 @@ export default class SettingsView extends JetView {
 		};
 	}
 	init() {
+		this.validateemail = this.ui(ValidateEmailView);
 		this.app.S3.headObject({
 			Bucket: 'redaktr',
 			Key: AWS.config.credentials.identityId + '.ico'
@@ -134,6 +151,51 @@ export default class SettingsView extends JetView {
 				//$$("yandex").attachEvent("onChange", _ => this._save());
 			}
 		});
+
+		var AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
+			cognitoUser = this.app.userPool.getCurrentUser();
+		if (cognitoUser) cognitoUser.getSession((err, session) => {
+			if (err) webix.message({
+				text: err.message,
+				type: "error"
+			});
+			else cognitoUser.getUserAttributes((err, result) => {
+				if (err) webix.message({
+					text: err.message,
+					type: "error"
+				});
+				else {
+					console.log(result);
+					for (const item of result) {
+						if (item.Name === 'email') $$("email").setValue(item.Value);
+						if (item.Name === 'email_verified') {
+							$$("email").config.icon = (item.Value === 'true') ? "mdi mdi-shield-check" : "mdi mdi-shield-off";
+							$$("email").refresh();
+							if(item.Value === 'false') $$("verifyButton").enable();
+						}
+					}
+					$$('email').attachEvent("onChange", _ => {
+						cognitoUser.updateAttributes([new AmazonCognitoIdentity.CognitoUserAttribute({
+							Name: 'email',
+							Value: $$("email").getValue()
+						})], function(err, result) {
+							if (err) webix.message({
+								text: err.message,
+								type: "error"
+							});
+							else {
+								$$("email").config.icon = "mdi mdi-shield-off";
+								$$("email").refresh();
+								$$("verifyButton").enable();
+							}
+						});
+					});
+				}
+			});
+		});
+
+
+
 	}
 	/*
 	_save() {
