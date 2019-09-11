@@ -37,18 +37,21 @@ export default class ValidateEmailView extends JetView {
 							css: "webix_primary",
 							click: _ => {
 								if ($$('validateemailform').validate()) {
-									/*
-									this.cognitoUser.confirmPassword($$('code').getValue(), $$('fpass1').getValue(), {
-										onSuccess: _ => webix.message({
-											text: "Password was successfully changed",
-											type: "success"
-										}),
+									this.cognitoUser.verifyAttribute('email', $$("code").getValue(), {
+										onSuccess: _ => {
+											webix.message({
+												text: "Your email has been verified",
+												type: "success"
+											});
+											$$("email").config.icon = "mdi mdi-shield-check";
+											$$("email").refresh();
+											$$("verifyButton").disable();
+										},
 										onFailure: err => webix.message({
 											text: err.message,
 											type: "error"
 										})
 									});
-									*/
 									this.getRoot().hide();
 								}
 							}
@@ -73,8 +76,8 @@ export default class ValidateEmailView extends JetView {
 			}
 		};
 	}
-	showWindow(/*cognitoUser,*/ that) {
-		//this.cognitoUser = cognitoUser;
+	showWindow(cognitoUser, that) {
+		this.cognitoUser = cognitoUser;
 		this.that = that;
 		$$("code").setValue("");
 		this.getRoot().show();

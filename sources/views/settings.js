@@ -76,9 +76,24 @@ export default class SettingsView extends JetView {
 						view: "button",
 						disabled: true,
 						value: "Verify email",
-						click: _ => {this.newpass.showWindow(this);}
+						click: _ => {
+							//var that = this;
+							//this.cognitoUser.getAttributeVerificationCode('email', {
+							//	onSuccess: result => webix.message({
+							//		text: result,
+							//		type: "success"
+							//	}),
+							//	onFailure: err => webix.message({
+							//		text: err.message,
+							//		type: "error"
+							//	}),
+							//	inputVerificationCode: function() {
+							//		that.validateemail.showWindow(that.cognitoUser, this);
+							//	}
+							//});
+							this.validateemail.showWindow(this.cognitoUser, this);
+						}
 					}
-
 				],
 				elementsConfig: {
 					"labelAlign": "right"
@@ -153,7 +168,7 @@ export default class SettingsView extends JetView {
 		});
 
 		var AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
-			cognitoUser = this.app.userPool.getCurrentUser();
+			cognitoUser = this.cognitoUser = this.app.userPool.getCurrentUser();
 		if (cognitoUser) cognitoUser.getSession((err, session) => {
 			if (err) webix.message({
 				text: err.message,
@@ -165,13 +180,12 @@ export default class SettingsView extends JetView {
 					type: "error"
 				});
 				else {
-					console.log(result);
 					for (const item of result) {
 						if (item.Name === 'email') $$("email").setValue(item.Value);
 						if (item.Name === 'email_verified') {
 							$$("email").config.icon = (item.Value === 'true') ? "mdi mdi-shield-check" : "mdi mdi-shield-off";
 							$$("email").refresh();
-							if(item.Value === 'false') $$("verifyButton").enable();
+							if (item.Value === 'false') $$("verifyButton").enable();
 						}
 					}
 					$$('email').attachEvent("onChange", _ => {
