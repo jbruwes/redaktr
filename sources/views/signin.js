@@ -134,7 +134,7 @@ export default class SignInView extends JetView {
 							rows: [{
 								view: "form",
 								id: "log_form",
-								width: 270,
+								width: 272,
 								borderless: true,
 								elements: [{
 										view: "text",
@@ -200,30 +200,31 @@ export default class SignInView extends JetView {
 										value: "Forgot your password?",
 										css: "webix_transparent",
 										click: _ => {
-											
-											var username = $$('username').getValue(); 
-											if(username) {
-											var cognitoUser = new AmazonCognitoIdentity.CognitoUser({
-													Username: username,
-													Pool: userPool
-												}),
-												that = this;
-											//that.forgetpass.showWindow(cognitoUser, this);
-											cognitoUser.forgotPassword({
-												onSuccess: result => webix.message({
-													text: result
-												}),
-												onFailure: err => webix.message({
-													text: err.message,
-													type: "error"
-												}),
-												inputVerificationCode() {
-													that.forgetpass.showWindow(cognitoUser, this);
-												}
-											});} else webix.message({
-													text: "Please fill the username field",
-													type: "debug"
-												})
+
+											var username = $$('username').getValue();
+											if (username) {
+												var cognitoUser = new AmazonCognitoIdentity.CognitoUser({
+														Username: username,
+														Pool: userPool
+													}),
+													that = this;
+												//that.forgetpass.showWindow(cognitoUser, this);
+												cognitoUser.forgotPassword({
+													onSuccess: result => webix.message({
+														text: result
+													}),
+													onFailure: err => webix.message({
+														text: err.message,
+														type: "error"
+													}),
+													inputVerificationCode() {
+														that.forgetpass.showWindow(cognitoUser, this);
+													}
+												});
+											} else webix.message({
+												text: "Please fill the username field",
+												type: "debug"
+											})
 										}
 									}
 								]
@@ -254,7 +255,7 @@ export default class SignInView extends JetView {
 			type: "clean"
 		});
 		result.cols[1].rows.unshift({
-			gravity: 2
+			gravity: (this.app.config.size === "wide") ? 2 : 1
 		});
 		if (this.app.config.size === "wide") result.cols[1].rows.unshift({
 			paddingX: 10,

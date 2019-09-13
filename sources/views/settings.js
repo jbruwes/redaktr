@@ -76,23 +76,7 @@ export default class SettingsView extends JetView {
 						view: "button",
 						disabled: true,
 						value: "Verify email",
-						click: _ => {
-							//var that = this;
-							//this.cognitoUser.getAttributeVerificationCode('email', {
-							//	onSuccess: result => webix.message({
-							//		text: result,
-							//		type: "success"
-							//	}),
-							//	onFailure: err => webix.message({
-							//		text: err.message,
-							//		type: "error"
-							//	}),
-							//	inputVerificationCode: function() {
-							//		that.validateemail.showWindow(that.cognitoUser, this);
-							//	}
-							//});
-							this.validateemail.showWindow(this.cognitoUser, this);
-						}
+						click: _ => this.validateemail.showWindow(this.cognitoUser, this)
 					}
 				],
 				elementsConfig: {
