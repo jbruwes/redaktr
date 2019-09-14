@@ -653,18 +653,17 @@ export default class TemplateView extends JetView {
 		var backgroundColor = $$('backgroundColor').getValue();
 		if (backgroundColor !== '') item.css("background-color", backgroundColor + webix.color.toHex(Math.round(2.55 * $$('backgroundTransparency').getValue()), 2));
 
-		var backgroundPositionH = $$('backgroundPositionH').getValue(),
+		/*var backgroundPositionH = $$('backgroundPositionH').getValue(),
 			pbackgroundPositionH = $$('pbackgroundPositionH').getValue(),
 			backgroundPositionV = $$('backgroundPositionV').getValue(),
 			pbackgroundPositionV = $$('pbackgroundPositionV').getValue();
 		if (backgroundPositionH !== '' || backgroundPositionV !== '') item.css("background-position", Number(backgroundPositionH) + pbackgroundPositionH + " " + Number(backgroundPositionV) + pbackgroundPositionV);
-		var repeat = null,
-			repeatX = $$('repeatX').getValue(),
-			repeatY = $$('repeatY').getValue();
-		if (repeatX === repeatY) repeat = (repeatX && repeatY) ? 'repeat' : 'no-repeat';
-		else repeat = repeatX ? 'repeat-x' : 'repeat-y';
-		item.css("background-repeat", repeat);
-		item.css("background-attachment", $$('fixed').getValue() ? 'fixed' : 'scroll');
+		*/
+		item.css("background-position", $$('backgroundPosition').getValue());
+		item.css("background-repeat", $$('repeat-x').getValue() + " " + $$('repeat-y').getValue());
+		item.css("background-attachment", $$('attachment').getValue());
+		item.css("background-size", $$('backgroundSize').getValue());
+		
 		var shadows = [];
 		$.each($$('shadows').serialize(), (index, value) => shadows.push((value.inset ? 'inset ' : '') + Number(value.x) + 'px ' + Number(value.y) + 'px ' + Number(value.blur) + 'px ' + Number(value.spread) + 'px ' + value.color));
 		item.css("box-shadow", shadows.join());
@@ -907,6 +906,7 @@ export default class TemplateView extends JetView {
 					name: backgroundImage.split("/").pop(),
 					sname: backgroundImage
 				}, 0);
+				/*
 				var backgroundPosition = item[0].style.backgroundPosition;
 				backgroundPosition = backgroundPosition ? backgroundPosition : 'px px';
 				backgroundPosition = backgroundPosition.split(" ");
@@ -914,11 +914,23 @@ export default class TemplateView extends JetView {
 				$$('pbackgroundPositionH').setValue(backgroundPosition[0].match(/\D+$/)[0]);
 				$$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
 				$$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
-				var backgroundRepeat = item[0].style.backgroundRepeat;
-				$$('repeatX').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-x') ? true : false);
-				$$('repeatY').setValue((!backgroundRepeat || backgroundRepeat === 'repeat' || backgroundRepeat === 'repeat-y') ? true : false);
-				var backgroundFixed = item[0].style.backgroundAttachment;
-				$$('fixed').setValue((!backgroundFixed || backgroundFixed !== 'fixed') ? false : true);
+				*/
+				
+				$$('backgroundPosition').setValue(item[0].style.backgroundPosition);
+				if(!$$('backgroundPosition').getValue())$$('backgroundPosition').setValue("0% 0%");
+
+
+				var backgroundRepeat = item[0].style.backgroundRepeat ? item[0].style.backgroundRepeat : 'repeat';
+				if (backgroundRepeat === 'repeat-x') backgroundRepeat = "repeat no-repeat";
+				if (backgroundRepeat === 'repeat-y') backgroundRepeat = "no-repeat repeat";
+				backgroundRepeat = backgroundRepeat.split(" ");
+				$$('repeat-x').setValue(backgroundRepeat[0]);
+				$$('repeat-y').setValue(backgroundRepeat[backgroundRepeat.length - 1]);
+				$$('attachment').setValue(item[0].style.backgroundAttachment ? item[0].style.backgroundAttachment : 'scroll');
+				$$('backgroundSize').setValue(item[0].style.backgroundSize ? item[0].style.backgroundSize : 'auto');
+
+
+
 
 				$$('backgroundColor').setValue(webix.color.rgbToHex(item[0].style.backgroundColor));
 				$$('backgroundTransparency').setValue(item[0].style.backgroundColor.indexOf('rgba') ? 100 : Math.round(100 * item[0].style.backgroundColor.replace(/^.*,(.+)\)/, '$1')));
