@@ -104,6 +104,7 @@ export default class SignInView extends JetView {
 				}, (err, data) => {
 					if (err) {
 						AWS.config.credentials.params.Logins = [];
+						this.authenticationData = null;
 						webix.message({
 							text: err,
 							type: "error"
@@ -114,6 +115,7 @@ export default class SignInView extends JetView {
 						appShow(data.Item);
 					} else {
 						AWS.config.credentials.params.Logins = [];
+						this.authenticationData = null;
 						webix.message({
 							text: "Access Denied",
 							type: "error"
@@ -173,6 +175,7 @@ export default class SignInView extends JetView {
 														AWS.config.credentials.get(err => {
 															if (err) {
 																AWS.config.credentials.params.Logins = [];
+																this.authenticationData = null;
 																webix.message({
 																	text: err,
 																	type: "error"
@@ -183,11 +186,15 @@ export default class SignInView extends JetView {
 															}
 														});
 													},
-													onFailure: err => webix.message({
-														text: err.message,
-														type: "error"
-													}),
+													onFailure: err => {
+														this.authenticationData = null;
+														webix.message({
+															text: err.message,
+															type: "error"
+														})
+													},
 													newPasswordRequired: function(userAttributes, requiredAttributes) {
+														that.authenticationData = null;
 														delete userAttributes.email_verified;
 														delete userAttributes.phone_number_verified;
 														that.newpass.showWindow(cognitoUser, userAttributes, this);
