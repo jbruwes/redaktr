@@ -16,6 +16,7 @@ export default class AceView extends JetView {
 			if ($$('sidebar').getSelectedId() === 'js') {
 				$$('ace-js').getEditor(true).then(editor => {
 					var session = editor.getSession();
+					this.timeoutId = [];
 					session.that = this;
 					session.setUseWrapMode(true);
 					session.setValue(text.replace(/^function redaktr\(\){try{/, '').replace(/}catch\(e\){}}$/, ''), -1);
@@ -33,21 +34,25 @@ export default class AceView extends JetView {
 		});
 	}
 	_aceChange(e, session) {
-		var that = session.that;
-		if (that.app.lastXHRPostDocAce) that.app.lastXHRPostDocAce.abort();
-		that.app.lastXHRPostDocAce = that.app.S3.putObject({
-			Bucket: 'redaktr',
-			ContentType: 'application/javascript',
-			Key: AWS.config.credentials.identityId + ".js",
-			Body: 'function redaktr(){try{' + $$('ace-js').getEditor().getValue() + '}catch(e){}}'
-		}, (err, data) => {
-			if (err) {
-				if (err.code !== "RequestAbortedError") webix.message({
-					text: err.message,
-					type: "error"
-				})
-			} else webix.message("JS save complete");
-		});
+		session.that.timeoutId.push(webix.delay(function() {
+			this.timeoutId.pop();
+			if (!this.timeoutId.length) {
+				if (this.app.lastXHRPostDocAce) this.app.lastXHRPostDocAce.abort();
+				this.app.lastXHRPostDocAce = this.app.S3.putObject({
+					Bucket: 'redaktr',
+					ContentType: 'application/javascript',
+					Key: AWS.config.credentials.identityId + ".js",
+					Body: 'function redaktr(){try{' + $$('ace-js').getEditor().getValue() + '}catch(e){}}'
+				}, (err, data) => {
+					if (err) {
+						if (err.code !== "RequestAbortedError") webix.message({
+							text: err.message,
+							type: "error"
+						})
+					} else webix.message("JS save complete");
+				});
+			}
+		}, session.that, [], 3000));
 	}
 }
 /* global webix */

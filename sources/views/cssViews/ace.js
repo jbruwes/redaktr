@@ -16,6 +16,7 @@ export default class AceView extends JetView {
 			if ($$('sidebar').getSelectedId() === 'css') {
 				$$("ace-css").getEditor(true).then(editor => {
 					var session = editor.getSession();
+					this.timeoutId = [];
 					session.that = this;
 					session.setUseWrapMode(true);
 					session.setValue(text, -1);
@@ -33,21 +34,25 @@ export default class AceView extends JetView {
 		});
 	}
 	_aceChange(e, session) {
-		var that = session.that;
-		if (that.app.lastXHRPostAce) that.app.lastXHRPostAce.abort();
-		that.app.lastXHRPostAce = that.app.S3.putObject({
-			Bucket: 'redaktr',
-			ContentType: 'text/css',
-			Key: AWS.config.credentials.identityId + ".css",
-			Body: $$('ace-css').getEditor().getValue()
-		}, (err, data) => {
-			if (err) {
-				if (err.code !== "RequestAbortedError") webix.message({
-					text: err.message,
-					type: "error"
-				})
-			} else webix.message("CSS save complete");
-		});
+		session.that.timeoutId.push(webix.delay(function() {
+			this.timeoutId.pop();
+			if (!this.timeoutId.length) {
+				if (this.app.lastXHRPostAce) this.app.lastXHRPostAce.abort();
+				this.app.lastXHRPostAce = this.app.S3.putObject({
+					Bucket: 'redaktr',
+					ContentType: 'text/css',
+					Key: AWS.config.credentials.identityId + ".css",
+					Body: $$('ace-css').getEditor().getValue()
+				}, (err, data) => {
+					if (err) {
+						if (err.code !== "RequestAbortedError") webix.message({
+							text: err.message,
+							type: "error"
+						})
+					} else webix.message("CSS save complete");
+				});
+			}
+		}, session.that, [], 3000));
 	}
 }
 /* global webix */
