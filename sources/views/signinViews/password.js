@@ -35,7 +35,9 @@ export default class PasswordView extends JetView {
 						click: _ => {
 							if ($$('newpassform').validate()) {
 								this.cognitoUser.completeNewPasswordChallenge($$('pass1').getValue(), this.attributesData, this.that);
-								this.getRoot().close();
+								$$('pass1').setValue('');
+								$$('pass2').setValue('');
+								this.getRoot().hide();
 							}
 						}
 					}
