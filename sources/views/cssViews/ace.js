@@ -52,7 +52,7 @@ export default class AceView extends JetView {
 					} else webix.message("CSS save complete");
 				});
 			}
-		}, session.that, [], 3000));
+		}, session.that, [], 1000));
 	}
 }
 /* global webix */

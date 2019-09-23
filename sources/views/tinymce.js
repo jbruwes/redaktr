@@ -217,8 +217,10 @@ export default class TinymceView extends JetView {
 					input.click();
 				},
 				quickbars_insert_toolbar: false,
+				quickbars_selection_toolbar: false,
 				extended_valid_elements: 'script[*],i[*],span[*]',
 				valid_children: "+body[style],+body[link]",
+				toolbar_drawer: 'floating',
 				branding: false,
 				convert_urls: false,
 				image_advtab: true,
