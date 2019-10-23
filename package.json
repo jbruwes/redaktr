@@ -28,13 +28,13 @@
     "less": "^3.10.3",
     "less-loader": "^4.0.5",
     "mini-css-extract-plugin": "^0.4.0",
-    "url-loader": "^2.1.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7",
-    "webpack-dev-server": "^3.8.0"
+    "url-loader": "^2.2.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
-    "amazon-cognito-identity-js": "^3.0.15",
+    "amazon-cognito-identity-js": "^3.1.2",
     "scriptjs": "^2.5.9",
     "webix-jet": "^2.1.2"
   }
