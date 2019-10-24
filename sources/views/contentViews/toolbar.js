@@ -19,7 +19,6 @@ export default class ToolbarView extends JetView {
                         $$("tree").select(item);
                         $$("tree").edit(item);
                     }
-
                 },
                 {
                     view: "icon",

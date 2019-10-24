@@ -98,7 +98,7 @@ export default class TreeView extends JetView {
 						Key: AWS.config.credentials.identityId + '/' + id + '.htm'
 					}, (err, data) => {
 						if (err) {
-							if (err.code === 'NotFound') {
+							if (err.code === 'AccessDenied') {
 								if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
 								this.app.lastXHRPostContent = this.app.S3.putObject({
 									Bucket: 'redaktr',
