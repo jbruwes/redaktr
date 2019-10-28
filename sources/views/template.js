@@ -553,13 +553,13 @@ export default class TemplateView extends JetView {
 		if (dock) {
 			switch (fixed) {
 				case 1:
-					item.wrap('<div data-absolute>');
+					item.wrap('<div data-absolute class="ui fluid container">');
 					break;
 				case 2:
-					item.wrap('<div data-fixed>');
+					item.wrap('<div data-fixed class="ui fluid container">');
 					break;
 				case 3:
-					item.wrap('<div data-static>');
+					item.wrap('<div data-static class="ui fluid container">');
 					break;
 			}
 		} else {
@@ -834,7 +834,7 @@ export default class TemplateView extends JetView {
 					$$('ace-template').enable();
 				}
 				$$('mode').setValue(that._getMode(item));
-				$$('dock').setValue((!item.parent('div.container:not([id])').length) + 1);
+				$$('dock').setValue((!item.parent('div.container:not(.fluid):not([id])').length) + 1);
 				$$('angle').setValue(((item.attr('style') || "").match(/rotate\(-?\d+deg\)/g) || [''])[0].replace('rotate(', '').replace('deg)', ''));
 				$$('paddingLeft').setValue(parseInt(item[0].style.paddingLeft));
 				$$('paddingRight').setValue(parseInt(item[0].style.paddingRight));
