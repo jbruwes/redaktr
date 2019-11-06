@@ -229,18 +229,20 @@ export default class TemplateView extends JetView {
 		this._undo = [];
 		this._redo = [];
 		$$('fabric').attachEvent("onAfterLoad", _ => {
-			$$('fabric').getCanvas().setWidth($$('fabric').getWindow().document.documentElement.clientWidth);
-			$$('fabric').getCanvas().setHeight($$('fabric').getWindow().document.documentElement.clientHeight);
-			$($$('fabric').getWindow()).scroll(_ => this._makeSelection(this));
-			$($$('fabric').getWindow()).resize(_ => this._makeSelection(this));
-			var observer = new MutationObserver(_ => this._makeSelection(this));
-			observer.observe($$("fabric").getWindow().document.body, {
-				//'attributes': true, // подвисает на сложных сайтах, падлюка
-				'childList': true,
-				'characterData': true,
-				'subtree': true
+			$$("fabric").getCanvas(true).then(canvas => {
+				canvas.setWidth($$('fabric').getWindow().document.documentElement.clientWidth);
+				canvas.setHeight($$('fabric').getWindow().document.documentElement.clientHeight);
+				$($$('fabric').getWindow()).scroll(_ => this._makeSelection(this));
+				$($$('fabric').getWindow()).resize(_ => this._makeSelection(this));
+				var observer = new MutationObserver(_ => this._makeSelection(this));
+				observer.observe($$("fabric").getWindow().document.body, {
+					//'attributes': true, // подвисает на сложных сайтах, падлюка
+					'childList': true,
+					'characterData': true,
+					'subtree': true
+				});
+				$$("layers").select($$("layers").getFirstId());
 			});
-			$$("layers").select($$("layers").getFirstId());
 		});
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
@@ -663,7 +665,7 @@ export default class TemplateView extends JetView {
 		item.css("background-repeat", $$('repeat-x').getValue() + " " + $$('repeat-y').getValue());
 		item.css("background-attachment", $$('attachment').getValue());
 		item.css("background-size", $$('backgroundSize').getValue());
-		
+
 		var shadows = [];
 		$.each($$('shadows').serialize(), (index, value) => shadows.push((value.inset ? 'inset ' : '') + Number(value.x) + 'px ' + Number(value.y) + 'px ' + Number(value.blur) + 'px ' + Number(value.spread) + 'px ' + value.color));
 		item.css("box-shadow", shadows.join());
@@ -915,9 +917,9 @@ export default class TemplateView extends JetView {
 				$$('backgroundPositionV').setValue(parseInt(backgroundPosition[1]));
 				$$('pbackgroundPositionV').setValue(backgroundPosition[1].match(/\D+$/)[0]);
 				*/
-				
+
 				$$('backgroundPosition').setValue(item[0].style.backgroundPosition);
-				if(!$$('backgroundPosition').getValue())$$('backgroundPosition').setValue("0% 0%");
+				if (!$$('backgroundPosition').getValue()) $$('backgroundPosition').setValue("0% 0%");
 
 
 				var backgroundRepeat = item[0].style.backgroundRepeat ? item[0].style.backgroundRepeat : 'repeat';
