@@ -91,6 +91,7 @@ export default class SignInView extends JetView {
 				} else that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
 			},
 			check = _ => {
+				this.app.identityId = AWS.config.credentials.identityId;
 				this.app.DocumentClient.get({
 					TableName: "redaktr",
 					Key: {
@@ -136,6 +137,17 @@ export default class SignInView extends JetView {
 						that = this;
 					cognitoUser.authenticateUser(authenticationDetails, {
 						onSuccess: result => {
+
+							AWS.config.region = 'us-east-1';
+							AWS.config.correctClockSkew = true;
+							AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+								IdentityPoolId: 'us-east-1:92faa262-cf0e-4586-98d5-2f74fa89baec',
+								Logins: {}
+							});
+
+
+
+
 							AWS.config.credentials.params.Logins = [];
 							AWS.config.credentials.params.Logins['cognito-idp.us-east-1.amazonaws.com/us-east-1_isPFINeJO'] = result.getIdToken().getJwtToken();
 							AWS.config.credentials.clearCachedId();
@@ -148,7 +160,21 @@ export default class SignInView extends JetView {
 										type: "error"
 									});
 								} else {
-									if (AWS.config.credentials.identityId) check();
+
+									this.app.S3 = new AWS.S3({
+										correctClockSkew: true,
+										useAccelerateEndpoint: true
+									});
+									this.app.DocumentClient = new AWS.DynamoDB.DocumentClient({
+										correctClockSkew: true
+									});
+									//this.app.CognitoIdentity = new AWS.CognitoIdentity();
+
+
+									if (AWS.config.credentials.identityId) {
+										this.app.identityId = AWS.config.credentials.identityId;
+										check();
+									}
 									else AWS.config.credentials.refresh(check);
 								}
 							});
@@ -168,7 +194,7 @@ export default class SignInView extends JetView {
 						}
 					});
 				}
-			},				
+			},
 			result = {
 				css: "signInView",
 				cols: [{

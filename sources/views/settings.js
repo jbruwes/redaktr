@@ -89,20 +89,20 @@ export default class SettingsView extends JetView {
 		this.validateemail = this.ui(ValidateEmailView);
 		this.app.S3.headObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.ico'
+			Key: this.app.identityId + '.ico'
 		}, (err, data) => {
 			if (!err && $$('sidebar').getSelectedId() === 'settings') {
 				$$("uploader").files.data.clearAll();
 				$$("uploader").addFile({
 					name: 'favicon.ico',
-					sname: AWS.config.credentials.identityId + ".ico"
+					sname: this.app.identityId + ".ico"
 				}, 0);
 			}
 			$$("uploader").attachEvent("onAfterFileAdd", file => {
 				file.file.sname = 'favicon.ico';
 				this.app.S3.putObject({
 					Bucket: 'redaktr',
-					Key: AWS.config.credentials.identityId + '.ico',
+					Key: this.app.identityId + '.ico',
 					ContentType: file.file.type,
 					Body: file.file
 				}, (err, data) => {
@@ -116,7 +116,7 @@ export default class SettingsView extends JetView {
 			$$("uploader").files.attachEvent("onAfterDelete", file => {
 				this.app.S3.deleteObject({
 					Bucket: 'redaktr',
-					Key: AWS.config.credentials.identityId + '.ico'
+					Key: this.app.identityId + '.ico'
 				}, (err, data) => {
 					if (err) webix.message({
 						text: err.message,
@@ -129,7 +129,7 @@ export default class SettingsView extends JetView {
 		this.app.DocumentClient.get({
 			TableName: "redaktr",
 			Key: {
-				"id": AWS.config.credentials.identityId
+				"id": this.app.identityId
 			}
 		}, (err, data) => {
 			if ($$('sidebar').getSelectedId() === 'settings') {
@@ -204,7 +204,7 @@ export default class SettingsView extends JetView {
 			params = {
 				TableName: "redaktr",
 				Key: {
-					"id": AWS.config.credentials.identityId
+					"id": this.app.identityId
 				},
 				//ExpressionAttributeValues: {},
 				ReturnValues: "UPDATED_NEW"

@@ -485,13 +485,13 @@ export default class AppearanceView extends JetView {
 							if (!this.getParentView()._lockRedraw) {
 								//this.app.S3.headObject({
 								//    Bucket: 'redaktr',
-								//    Key: AWS.config.credentials.identityId + '/' + file.name
+								//    Key: this.app.identityId + '/' + file.name
 								//}, (err, data) => {
 								//file.file.sname = (err ? '' : webix.uid() + '/') + file.name;
 								file.file.sname = webix.uid() + '/' + file.name;
 								this.app.S3.putObject({
 									Bucket: 'redaktr',
-									Key: AWS.config.credentials.identityId + '/' + file.file.sname,
+									Key: this.app.identityId + '/' + file.file.sname,
 									ContentType: file.file.type,
 									Body: file.file
 								}, (err, data) => {

@@ -19,7 +19,7 @@ export default class CdnView extends JetView {
 	init() {
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.cdn.css'
+			Key: this.app.identityId + '.cdn.css'
 		}, (err, data) => {
 			if (err) webix.message({
 				text: err.message,
@@ -40,7 +40,7 @@ export default class CdnView extends JetView {
 					if (this.app.lastXHRPostCdnCss) this.app.lastXHRPostCdnCss.abort();
 					this.app.lastXHRPostCdnCss = this.app.S3.putObject({
 						Bucket: 'redaktr',
-						Key: AWS.config.credentials.identityId + '.cdn.css',
+						Key: this.app.identityId + '.cdn.css',
 						ContentType: 'text/css',
 						Body: url.join('\n')
 					}, (err, data) => {

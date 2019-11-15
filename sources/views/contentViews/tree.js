@@ -22,7 +22,7 @@ export default class TreeView extends JetView {
 			if (this.app.lastXHRPostTree) this.app.lastXHRPostTree.abort();
 			this.app.lastXHRPostTree = this.app.S3.putObject({
 				Bucket: 'redaktr',
-				Key: AWS.config.credentials.identityId + '.json',
+				Key: this.app.identityId + '.json',
 				ContentType: 'application/json',
 				Body: webix.ajax().stringify(tree)
 			}, (err, data) => {
@@ -95,7 +95,7 @@ export default class TreeView extends JetView {
 					this.getParentView()._lockProperties = false;
 					this.app.S3.getObject({
 						Bucket: 'redaktr',
-						Key: AWS.config.credentials.identityId + '/' + id + '.htm'
+						Key: this.app.identityId + '/' + id + '.htm'
 					}, (err, data) => {
 						if (err) {
 							if (err.code === 'AccessDenied') {
@@ -103,7 +103,7 @@ export default class TreeView extends JetView {
 								this.app.lastXHRPostContent = this.app.S3.putObject({
 									Bucket: 'redaktr',
 									ContentType: 'text/html',
-									Key: AWS.config.credentials.identityId + "/" + id + ".htm",
+									Key: this.app.identityId + "/" + id + ".htm",
 									Body: ''
 								}, (err, data) => {
 									if (err) webix.message({ text: err.message, type: "error" });
@@ -142,7 +142,7 @@ export default class TreeView extends JetView {
 	init() {
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.json'
+			Key: this.app.identityId + '.json'
 		}, (err, data) => {
 			if (err) webix.message({
 				text: err.message,

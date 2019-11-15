@@ -19,23 +19,23 @@ export default class MyApp extends JetApp {
 	}
 }
 if (!BUILD_AS_MODULE) {
-	AWS.config.region = 'us-east-1';
-	AWS.config.correctClockSkew = true;
-	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-		IdentityPoolId: 'us-east-1:92faa262-cf0e-4586-98d5-2f74fa89baec',
-		Logins: {}
-	});
+//	AWS.config.region = 'us-east-1';
+//	AWS.config.correctClockSkew = true;
+//	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+//		IdentityPoolId: 'us-east-1:92faa262-cf0e-4586-98d5-2f74fa89baec',
+//		Logins: {}
+//	});
 	webix.ready(_ => {
 		webix.ui.fullScreen();
 		var app = new MyApp();
-		app.S3 = new AWS.S3({
-			correctClockSkew: true,
-			useAccelerateEndpoint: true
-		});
-		app.DocumentClient = new AWS.DynamoDB.DocumentClient({
-			correctClockSkew: true
-		});
-		app.CognitoIdentity = new AWS.CognitoIdentity();
+//		app.S3 = new AWS.S3({
+//			correctClockSkew: true,
+//			useAccelerateEndpoint: true
+//		});
+//		app.DocumentClient = new AWS.DynamoDB.DocumentClient({
+//			correctClockSkew: true
+//		});
+//		app.CognitoIdentity = new AWS.CognitoIdentity();
 
 		const size = _ => document.body.offsetWidth > 964 ? "wide" : "small";
 		app.config.size = size();

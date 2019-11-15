@@ -27,7 +27,7 @@ export default class AceView extends JetView {
 		};
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.css'
+			Key: this.app.identityId + '.css'
 		}, (err, data) => {
 			if (err) cb('');
 			else cb(data.Body.toString());
@@ -41,7 +41,7 @@ export default class AceView extends JetView {
 				this.app.lastXHRPostAce = this.app.S3.putObject({
 					Bucket: 'redaktr',
 					ContentType: 'text/css',
-					Key: AWS.config.credentials.identityId + ".css",
+					Key: this.app.identityId + ".css",
 					Body: $$('ace-css').getEditor().getValue()
 				}, (err, data) => {
 					if (err) {

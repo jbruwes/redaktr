@@ -246,7 +246,7 @@ export default class TemplateView extends JetView {
 		});
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.html'
+			Key: this.app.identityId + '.html'
 			/*,
 						ResponseContentType: 'text/html',
 						ResponseCacheControl: 'no-cache'*/
@@ -421,17 +421,17 @@ export default class TemplateView extends JetView {
 			'<meta charset="utf-8">' +
 			//'<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
 			'<meta name="viewport" content="width=device-width, initial-scale=1">' +
-			'<base href="' + (identity ? '//www.redaktr.com/' : '/') + AWS.config.credentials.identityId + '/">' +
-			'<link rel="icon" href="/' + AWS.config.credentials.identityId + '.ico" type="image/vnd.microsoft.icon">' +
+			'<base href="' + (identity ? '//www.redaktr.com/' : '/') + this.app.identityId + '/">' +
+			'<link rel="icon" href="/' + this.app.identityId + '.ico" type="image/vnd.microsoft.icon">' +
 			'<script src="//cdn.redaktr.com/require.min.js"></script>' +
 			"<script>" +
 			"(function(){" +
 			"var $=window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search)));" +
 			"[" +
 			"'//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
-			"'/" + AWS.config.credentials.identityId + ".cdn.css'," +
+			"'/" + this.app.identityId + ".cdn.css'," +
 			"'//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
-			"'/" + AWS.config.credentials.identityId + ".css'" +
+			"'/" + this.app.identityId + ".css'" +
 			"]" +
 			".forEach(function(_){document.write('<link rel=\"stylesheet\" href=\"'+_+$+'\">')});" +
 			"document.write('" +
@@ -534,7 +534,7 @@ export default class TemplateView extends JetView {
 		if (that.app.lastXHRPostTempl) that.app.lastXHRPostTempl.abort();
 		that.app.lastXHRPostTempl = that.app.S3.putObject({
 			Bucket: 'redaktr',
-			Key: AWS.config.credentials.identityId + '.html',
+			Key: that.app.identityId + '.html',
 			ContentType: 'text/html',
 			Body: that._html
 		}, (err, data) => {
