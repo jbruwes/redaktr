@@ -1,4 +1,4 @@
-import $script from "scriptjs";
+//import $script from "scriptjs";
 import {
 	JetView
 } from "webix-jet";
