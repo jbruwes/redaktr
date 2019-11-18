@@ -18,9 +18,9 @@ export default class TinymceView extends JetView {
 				toolbar: "undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
 				content_style: ".mce-content-body{padding:8px;}",
 				content_css: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid() + "," +
-					"//www.redaktr.com/" + this.app.identityId + ".cdn.css?" + webix.uid() + "," +
+					"//" + location.hostname.replace(/\w+./,'') + "/" + this.app.identityId + ".cdn.css?" + webix.uid() + "," +
 					'//cdn.redaktr.com/redaktr.min.css?' + webix.uid() + "," +
-					"//www.redaktr.com/" + this.app.identityId + ".css?" + webix.uid(),
+					"//" + location.hostname.replace(/\w+./,'') + "/" + this.app.identityId + ".css?" + webix.uid(),
 				templates: [
 					/*                    { title: 'Social Share1', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
 					                    { title: 'Social Share2', description: 'facebook,<br>gplus, twitter, linkedin, skype, facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
@@ -259,7 +259,7 @@ export default class TinymceView extends JetView {
 						});
 					//});
 				},
-				document_base_url: "//www.redaktr.com/" + this.app.identityId + "/",
+				document_base_url: "//" + location.hostname.replace(/\w+./,'') + "/" + this.app.identityId + "/",
 				statusbar: false,
 				resize: false,
 				spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",

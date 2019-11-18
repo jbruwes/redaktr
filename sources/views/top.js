@@ -32,7 +32,7 @@ export default class TopView extends JetView {
 							click: (id) => {
 								if (id === "signout") webix.delay(_ => {
 									clearTimeout(this.app.timeoutId);
-									AWS.config.credentials.params.Logins = [];
+									if(AWS.config.credentials)AWS.config.credentials.params.Logins = [];
 									this.show('signin');
 									this._resetSidebar();
 								});
