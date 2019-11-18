@@ -25,24 +25,6 @@ export default class SettingsView extends JetView {
 						label: "-",
 						labelWidth: 33
 					},
-					/*
-					{
-						template: "Verification",
-						type: "section"
-					},
-					{
-						id: "yandex",
-						view: "text",
-						label: "Yandex",
-						labelWidth: 56
-					},
-					{
-						id: "google",
-						view: "text",
-						label: "Google",
-						labelWidth: 56
-					},
-					*/
 					{
 						template: "Icon",
 						type: "section",
@@ -140,17 +122,12 @@ export default class SettingsView extends JetView {
 				else if (data.Item) {
 					if (data.Item.name) $$("name").setValue("http://redaktr.com/" + data.Item.name);
 					if (data.Item.domain) $$("domain").setValue(data.Item.domain);
-					//if (data.Item.google) $$("google").setValue(data.Item.google);
-					//if (data.Item.yandex) $$("yandex").setValue(data.Item.yandex);
 				} else webix.message({
 					text: "Something went wrong",
 					type: "error"
 				});
-				//$$("google").attachEvent("onChange", _ => this._save());
-				//$$("yandex").attachEvent("onChange", _ => this._save());
 			}
 		});
-
 		var AmazonCognitoIdentity = require('amazon-cognito-identity-js'),
 			cognitoUser = this.cognitoUser = this.app.userPool.getCurrentUser();
 		if (cognitoUser) cognitoUser.getSession((err, session) => {
@@ -191,44 +168,7 @@ export default class SettingsView extends JetView {
 				}
 			});
 		});
-
-
-
 	}
-	/*
-	_save() {
-		var y = $$("yandex").getValue(),
-			g = $$("google").getValue(),
-			UpdateExpressionSet = '',
-			UpdateExpressionRemove = '',
-			params = {
-				TableName: "redaktr",
-				Key: {
-					"id": this.app.identityId
-				},
-				//ExpressionAttributeValues: {},
-				ReturnValues: "UPDATED_NEW"
-			};
-		if (y) {
-			UpdateExpressionSet = 'yandex = :y';
-			if (!params.ExpressionAttributeValues) params.ExpressionAttributeValues = {};
-			params.ExpressionAttributeValues[":y"] = y;
-		} else UpdateExpressionRemove = 'yandex';
-		if (g) {
-			UpdateExpressionSet = UpdateExpressionSet + (UpdateExpressionSet ? ", " : "") + 'google = :g';
-			if (!params.ExpressionAttributeValues) params.ExpressionAttributeValues = {};
-			params.ExpressionAttributeValues[":g"] = g;
-		} else UpdateExpressionRemove = UpdateExpressionRemove + (UpdateExpressionRemove ? ", " : "") + 'google';
-		params.UpdateExpression = (UpdateExpressionSet ? "set " + UpdateExpressionSet : "") + (UpdateExpressionRemove ? " remove " + UpdateExpressionRemove : "");
-		this.app.DocumentClient.update(params, function(err, data) {
-			if (err) webix.message({
-				text: err,
-				type: "error"
-			});
-			else webix.message("Settings save complete");
-		});
-	}
-	*/
 }
 /* global webix */
 /* global AWS */
