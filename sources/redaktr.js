@@ -11,7 +11,8 @@ export default class MyApp extends JetApp {
 			version: VERSION,
 			router: EmptyRouter,
 			debug: !PRODUCTION,
-			start: "/top/signin"
+			//start: "/top/signin"
+			start: "/top/signinlocal"
 		};
 		super({ ...defaults,
 			...config
