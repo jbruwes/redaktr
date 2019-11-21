@@ -421,7 +421,8 @@ export default class TemplateView extends JetView {
 			'<meta charset="utf-8">' +
 			//'<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">' +
 			'<meta name="viewport" content="width=device-width, initial-scale=1">' +
-			'<base href="' + (identity ? '//www.redaktr.com/' : '/') + this.app.identityId + '/">' +
+			//'<base href="' + (identity ? '//www.redaktr.com/' : '/') + this.app.identityId + '/">' +
+			'<base href="' + (identity ? '//' + window.location.host + '/' : '/') + this.app.identityId + '/">' +
 			'<link rel="icon" href="/' + this.app.identityId + '.ico" type="image/vnd.microsoft.icon">' +
 			'<script src="//cdn.redaktr.com/require.min.js"></script>' +
 			"<script>" +
