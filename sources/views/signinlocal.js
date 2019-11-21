@@ -41,11 +41,11 @@ export default class SignInViewLocal extends JetView {
                             icon: "mdi mdi-language-javascript",
                             value: "JavaScript"
                         }, 3);
-                        $$("sidebar").add({
-                            id: "settings",
-                            icon: "mdi mdi-settings",
-                            value: "Settings"
-                        }, 4);
+                        //$$("sidebar").add({
+                        //    id: "settings",
+                        //    icon: "mdi mdi-settings",
+                        //    value: "Settings"
+                        //}, 4);
                         $$("sidebar").add({
                             id: "signout",
                             icon: "mdi mdi-logout-variant",
