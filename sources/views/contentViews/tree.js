@@ -98,7 +98,7 @@ export default class TreeView extends JetView {
 						Key: this.app.identityId + '/' + id + '.htm'
 					}, (err, data) => {
 						if (err) {
-							if (err.code === 'AccessDenied') {
+							if (err.code === 'AccessDenied' || err.code === 'NoSuchKey') {
 								if (this.app.lastXHRPostContent) this.app.lastXHRPostContent.abort();
 								this.app.lastXHRPostContent = this.app.S3.putObject({
 									Bucket: 'redaktr',
