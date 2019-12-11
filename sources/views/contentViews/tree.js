@@ -5,7 +5,7 @@ export default class TreeView extends JetView {
 	config() {
 		var onChangeFnc = id => {
 			var tree = $$("tree").data.serialize();
-			Promise.all([
+			webix.promise.all([
 				$$("tinymce").getEditor(true),
 				$$("ace-content").getEditor(true)
 			]).then(editors => {

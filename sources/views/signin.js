@@ -115,12 +115,50 @@ export default class SignInView extends JetView {
 						that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
 						appShow(data.Item);
 					} else {
+
+						/*****************************************************************/
+						/* Новый проект                                                 */
+						/*****************************************************************/
+
+						/*this.app.DocumentClient.put({
+							TableName: "redaktr",
+							Item: {
+								"id": AWS.config.credentials.identityId,
+								"name": $$('username').getValue()
+							}
+						}, function(err, data) {
+							if (err) {
+								webix.message({
+									text: "Something went wrong",
+									type: "error"
+								})
+							} else {
+								console.log("Added item:", JSON.stringify(data, null, 2));
+							}
+						});*/
+
+
+						webix.promise.all([this.app.DocumentClient.put({
+							TableName: "redaktr",
+							Item: {
+								"id": AWS.config.credentials.identityId,
+								"name": $$('username').getValue()
+							}
+						})]).then(function(results) {
+							console.log(results[0]);
+						});
+
+
 						AWS.config.credentials.params.Logins = [];
 						this.authenticationData = null;
 						webix.message({
 							text: "Access Denied",
 							type: "error"
 						});
+
+
+
+
 					}
 				});
 			},
@@ -175,8 +213,7 @@ export default class SignInView extends JetView {
 									if (AWS.config.credentials.identityId) {
 										this.app.identityId = AWS.config.credentials.identityId;
 										check();
-									}
-									else AWS.config.credentials.refresh(check);
+									} else AWS.config.credentials.refresh(check);
 								}
 							});
 						},

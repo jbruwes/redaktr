@@ -63,7 +63,8 @@ module.exports = function(env) {
 		],
 		devServer:{
 			stats:"errors-only"
-		}
+		},
+		performance: { hints: false }
 	};
 
 	if (!production){

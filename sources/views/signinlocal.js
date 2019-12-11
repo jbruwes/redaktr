@@ -66,6 +66,16 @@ export default class SignInViewLocal extends JetView {
                         Username: $$('username').getValue(),
                         Password: $$('password').getValue(),
                     }
+                  
+                  
+                  webix.ajax().post("//s3.redaktr:9000/minio/webrpc",
+                  {"id":1,"jsonrpc":"2.0","params":{"username":$$("username").getValue(),"password":$$("password").getValue()},"method":"Web.Login"}
+                                   ).then(function(res){
+    // response
+                    console.log(res);
+                    console.log(res.json());
+});
+                  
                     $.ajax({
                         url: "http://s3.redaktr:9000/minio/webrpc",
                         type: "POST",
@@ -93,6 +103,9 @@ export default class SignInViewLocal extends JetView {
                         }
 
                     });
+                  
+                  
+                  
                 }
             },
             result = {
@@ -170,10 +183,6 @@ export default class SignInViewLocal extends JetView {
         });
         webix.UIManager.addHotKey("enter", clickLogin);
         return result;
-    }
-    init() {
-        this.newpass = this.ui(PasswordView);
-        this.forgetpass = this.ui(ForgetPasswordView);
     }
 }
 /* global AWS */

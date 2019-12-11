@@ -1,3 +1,4 @@
+import $ from "jquery/dist/jquery.slim";
 import {
 	JetView
 } from "webix-jet";

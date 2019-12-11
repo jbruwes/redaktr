@@ -1,7 +1,6 @@
 import {
 	JetView
 } from "webix-jet";
-
 export default class PasswordView extends JetView {
 	config() {
 		return {

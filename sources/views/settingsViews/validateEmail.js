@@ -1,7 +1,6 @@
 import {
 	JetView
 } from "webix-jet";
-
 export default class ValidateEmailView extends JetView {
 	config() {
 		return {
