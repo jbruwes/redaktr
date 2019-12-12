@@ -66,8 +66,6 @@ export default class SignInViewLocal extends JetView {
             Username: $$('username').getValue(),
             Password: $$('password').getValue(),
           }
-
-
           webix.ajax().headers({
             "Content-type": "application/json"
           }).post("//s3.redaktr:9000/minio/webrpc", {
@@ -78,7 +76,7 @@ export default class SignInViewLocal extends JetView {
               "password": $$("password").getValue()
             },
             "method": "Web.Login"
-          }).then(function(data) {
+          }).then(data => {
             var res = data.json();
             if (res.error) webix.message({
               text: res.error.message,
@@ -98,37 +96,6 @@ export default class SignInViewLocal extends JetView {
               appShow($$('username').getValue());
             }
           });
-          /*                  
-                              $.ajax({
-                                  url: "http://s3.redaktr:9000/minio/webrpc",
-                                  type: "POST",
-                                  dataType: "json",
-                                  contentType: "application/json",
-                                  data: '{"id":1,"jsonrpc":"2.0","params":{"username":"' + $$("username").getValue() + '","password":"' + $$("password").getValue() + '"},"method":"Web.Login"}',
-                                  success: (res) => {
-                                      if (res.error) webix.message({
-                                          text: res.error.message,
-                                          type: "error"
-                                      });
-                                      else {
-                                          this.app.S3 = new AWS.S3({
-                                              correctClockSkew: true,
-                                              useAccelerateEndpoint: true,
-                                              accessKeyId: $$('username').getValue(),
-                                              secretAccessKey: $$('password').getValue(),
-                                              endpoint: 'http://s3.redaktr',
-                                              s3ForcePathStyle: true,
-                                              signatureVersion: 'v4'
-                                          });
-                                          this.app.identityId = 'us-east-1:' + $$('username').getValue();
-                                          appShow($$('username').getValue());
-                                      }
-                                  }
-
-                              });
-          */
-
-
         }
       },
       result = {
