@@ -39,7 +39,7 @@ export default class SignInView extends JetView {
           });
         } else that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
       },        
-      appShow = item => {
+      appShow = name => {
         this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
         webix.UIManager.removeHotKey("enter");
         $$("sidebar").clearAll();
@@ -48,7 +48,7 @@ export default class SignInView extends JetView {
           view: "icon",
           icon: "mdi mdi-play-circle",
           click: _ => {
-            window.open("https://redaktr.com/" + item.name + "/?" + webix.uid(), "_tab");
+            window.open("https://redaktr.com/" + name + "/?" + webix.uid(), "_tab");
           }
         });
         this.show("content").then(function(value) {
@@ -114,7 +114,7 @@ export default class SignInView extends JetView {
           } else if (data.Item) {
             //that = this.app;
             //this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
-            appShow(data.Item);
+            appShow(data.Item.name);
           } else {
 
             /*****************************************************************/
@@ -192,7 +192,7 @@ export default class SignInView extends JetView {
                 '</body></html>'
             }).promise()]).then(results => {
               //this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
-              appShow(data.Item);
+              appShow($$('username').getValue());
             }, err => {
               AWS.config.credentials.params.Logins = [];
               this.authenticationData = null;
