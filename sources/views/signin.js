@@ -112,7 +112,7 @@ export default class SignInView extends JetView {
               type: "error"
             });
           } else if (data.Item) {
-            //that = this.app;
+            that = this.app;
             //this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
             appShow(data.Item.name);
           } else {
@@ -122,6 +122,7 @@ export default class SignInView extends JetView {
             /*****************************************************************/
 
             var id = webix.uid();
+            that = this.app;
             
             webix.promise.all([this.app.DocumentClient.put({
               TableName: "redaktr",
