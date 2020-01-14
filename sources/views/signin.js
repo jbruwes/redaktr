@@ -245,8 +245,8 @@ export default class SignInView extends JetView {
                 } else {
 
                   this.app.S3 = new AWS.S3({
-                    correctClockSkew: true,
-                    useAccelerateEndpoint: true
+                    correctClockSkew: true//,
+                    //useAccelerateEndpoint: true
                   });
                   this.app.DocumentClient = new AWS.DynamoDB.DocumentClient({
                     correctClockSkew: true

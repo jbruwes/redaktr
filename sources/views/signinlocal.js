@@ -85,7 +85,7 @@ export default class SignInViewLocal extends JetView {
             else {
               this.app.S3 = new AWS.S3({
                 correctClockSkew: true,
-                useAccelerateEndpoint: true,
+                //useAccelerateEndpoint: true,
                 accessKeyId: $$('username').getValue(),
                 secretAccessKey: $$('password').getValue(),
                 endpoint: 'http://s3.redaktr',
