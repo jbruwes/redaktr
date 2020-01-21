@@ -227,10 +227,16 @@ export default class TinymceView extends JetView {
 					};
 					input.click();
 				},
+        
+        allow_conditional_comments: true,
+        allow_html_in_named_anchor: true,
+        element_format : 'html',
+        
+        
 				quickbars_insert_toolbar: false,
 				quickbars_selection_toolbar: false,
 				extended_valid_elements: 'script[*],i[*],span[*]',
-				valid_children: "+body[style],+body[link]",
+				valid_children: "+body[style],+body[link],+h1[div],+h2[div],+h3[div],+h4[div],+h5[div],+h6[div]",
 				toolbar_drawer: 'floating',
 				branding: false,
 				convert_urls: false,
@@ -260,7 +266,7 @@ export default class TinymceView extends JetView {
 						});
 					//});
 				},
-				document_base_url: "//" + location.hostname.replace(/\w+./,'') + "/" + this.app.identityId + "/",
+				document_base_url: "//" + location.hostname.replace(/(?:(?=www)|\w+.)/,'') + "/" + this.app.identityId + "/",
 				statusbar: false,
 				resize: false,
 				spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",
