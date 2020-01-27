@@ -560,10 +560,11 @@ export default class TemplateView extends JetView {
   }
   _saveStage(item, body, object) {
     item.attr('style', '');
-    var fixed = $$('mode').getValue(),
+    var fixed = Number($$('mode').getValue()),
       dock = $$('dock').getValue() - 1,
       hidden = item.parent().attr("hidden");
     object.find(body).append(item);
+    console.log(dock, fixed);
     if (dock) {
       switch (fixed) {
         case 1:
@@ -573,6 +574,7 @@ export default class TemplateView extends JetView {
           item.wrap('<div data-fixed class="ui fluid container">');
           break;
         case 3:
+          console.log('gotcha!');
           item.wrap('<div data-static class="ui fluid container">');
           break;
       }
@@ -585,6 +587,7 @@ export default class TemplateView extends JetView {
           item.wrap('<div data-fixed class="ui container">');
           break;
         case 3:
+          console.log('gotcha!');
           item.wrap('<div data-static class="ui container">');
           break;
       }
