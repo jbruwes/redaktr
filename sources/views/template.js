@@ -275,7 +275,7 @@ export default class TemplateView extends JetView {
         } else o.empty().append('<main></main>');
         this._body.find('#body:first').empty().append(pusher);
         list.sort((val1, val2) => {
-          return $(val2).parent().css("z-index") - $(val1).parent().css("z-index")
+          return Math.abs($(val2).parent().css("z-index")) - Math.abs($(val1).parent().css("z-index"))
           //return $(val2).parent().get(0).style.zIndex ? $(val2).parent().css("z-index") : $(val2).css("z-index") -
           //	$(val1).parent().get(0).style.zIndex ? $(val1).parent().css("z-index") : $(val1).css("z-index")
         });
@@ -470,8 +470,11 @@ export default class TemplateView extends JetView {
       prefix + 'body:first>.pusher>div[data-absolute]:not([id]),' +
       prefix + 'body:first>.pusher>div[data-static]:not([id])'
     ).sort((a, b) => {
-      return $(b).css('z-index') - $(a).css('z-index');
+      return Math.abs($(b).css('z-index')) - Math.abs($(a).css('z-index'));
     }));
+
+    body.find(prefix + 'body:first>.pusher>div[data-static]:not([id])').each((index, element) => $(element).css('z-index', -$(element).css('z-index')));
+
     /*
     var i = $$('layers').count();
     $.each($$('layers').serialize(), (index, value) => {
@@ -793,7 +796,7 @@ export default class TemplateView extends JetView {
               selectable: true,
               evented: true
             });
-            rect.moveTo(selObj.parent().css("z-index") - 1);
+            rect.moveTo(Math.abs(selObj.parent().css("z-index")) - 1);
             //rect.bringToFront();
             layer.left = rect.left;
             layer.top = rect.top;

@@ -68,7 +68,8 @@ export default class SignInViewLocal extends JetView {
           }
           webix.ajax().headers({
             "Content-type": "application/json"
-          }).post("//s3.redaktr:9000/minio/webrpc", {
+          //}).post("//s3.redaktr:9000/minio/webrpc", {
+          }).post("//s3.redaktr.mggt.ru/minio/webrpc", {
             "id": 1,
             "jsonrpc": "2.0",
             "params": {
@@ -88,7 +89,8 @@ export default class SignInViewLocal extends JetView {
                 //useAccelerateEndpoint: true,
                 accessKeyId: $$('username').getValue(),
                 secretAccessKey: $$('password').getValue(),
-                endpoint: 'http://s3.redaktr',
+                //endpoint: 'http://s3.redaktr',
+                endpoint: 'http://s3.redaktr.mggt.ru',
                 s3ForcePathStyle: true,
                 signatureVersion: 'v4'
               });
