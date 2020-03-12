@@ -29,7 +29,7 @@ export default class TinymceView extends JetView {
           {
             title: 'menu',
             description: 'https://demos.telerik.com/kendo-ui/menu/index',
-            content: '<div data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true">menu</div>'
+            content: '<div data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
           },
         ],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +

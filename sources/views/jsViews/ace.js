@@ -8,7 +8,7 @@ export default class AceView extends JetView {
 			id: "ace-js",
 			theme: "tomorrow",
 			mode: "javascript",
-			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6"
+			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7"
 		};
 	}
 	init(ace) {

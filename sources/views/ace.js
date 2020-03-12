@@ -7,7 +7,7 @@ export default class AceView extends JetView {
 			view: "ace-editor",
 			theme: "tomorrow",
 			mode: "html",
-			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6"
+			cdn: "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7"
 		};
 	}
 	init(ace) {
@@ -31,7 +31,9 @@ export default class AceView extends JetView {
 		session.that.timeoutId.push(webix.delay(function() {
 			this.timeoutId.pop();
 			if(!this.timeoutId.length) {
-				$$("tinymce").$scope.setValue(this.getRoot().getEditor().getValue());
+        console.log(this.getRoot().getEditor().getValue());
+				//$$("tinymce").$scope.setValue(this.getRoot().getEditor().getValue());
+				$$("tinymce").setValue(this.getRoot().getEditor().getValue());
 				this.getParentView()._save(null, this.getParentView());
 			}
 		}, session.that, [], 1000));
