@@ -10,6 +10,7 @@ export default class SignInViewLocal extends JetView {
 				ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
 			}),*/
       appShow = item => {
+        webix.UIManager.removeHotKey("enter");
         $$("sidebar").clearAll();
         //$$("toolbar").addView({
         //	id: "play",
