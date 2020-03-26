@@ -10,7 +10,11 @@ export default class SignInViewLocal extends JetView {
 				ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
 			}),*/
       appShow = item => {
-        webix.UIManager.removeHotKey("enter");
+        //webix.UIManager.removeHotKey("enter");
+        webix.UIManager.removeHotKey("enter", null, $$('username'));
+        webix.UIManager.removeHotKey("enter", null, $$('password'));
+        webix.UIManager.removeHotKey("enter", null, $$('login'));
+
         $$("sidebar").clearAll();
         //$$("toolbar").addView({
         //	id: "play",
@@ -69,7 +73,7 @@ export default class SignInViewLocal extends JetView {
           }
           webix.ajax().headers({
             "Content-type": "application/json"
-          //}).post("//s3.redaktr:9000/minio/webrpc", {
+            //}).post("//s3.redaktr:9000/minio/webrpc", {
           }).post("//s3.redaktr.mggt.ru/minio/webrpc", {
             "id": 1,
             "jsonrpc": "2.0",
@@ -132,6 +136,7 @@ export default class SignInViewLocal extends JetView {
                   {
                     view: "button",
                     value: "Login",
+                    id: "login",
                     css: "webix_primary",
                     click: clickLogin
                   }
@@ -174,7 +179,9 @@ export default class SignInViewLocal extends JetView {
         width: 152
       }]
     });
-    webix.UIManager.addHotKey("enter", clickLogin);
+    webix.UIManager.addHotKey("enter", clickLogin, $$('username'));
+    webix.UIManager.addHotKey("enter", clickLogin, $$('password'));
+    webix.UIManager.addHotKey("enter", clickLogin, $$('login'));
     return result;
   }
 }

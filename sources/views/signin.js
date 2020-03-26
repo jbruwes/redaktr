@@ -38,10 +38,15 @@ export default class SignInView extends JetView {
             });
           });
         } else that.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
-      },        
+      },
       appShow = name => {
         this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
-        webix.UIManager.removeHotKey("enter");
+        //webix.UIManager.removeHotKey("enter");
+        webix.UIManager.removeHotKey("enter", null, $$('username'));
+        webix.UIManager.removeHotKey("enter", null, $$('password'));
+        webix.UIManager.removeHotKey("enter", null, $$('login'));
+
+
         $$("sidebar").clearAll();
         $$("toolbar").addView({
           id: "play",
@@ -123,7 +128,7 @@ export default class SignInView extends JetView {
 
             var id = webix.uid();
             that = this.app;
-            
+
             webix.promise.all([this.app.DocumentClient.put({
               TableName: "redaktr",
               Item: {
@@ -245,7 +250,7 @@ export default class SignInView extends JetView {
                 } else {
 
                   this.app.S3 = new AWS.S3({
-                    correctClockSkew: true//,
+                    correctClockSkew: true //,
                     //useAccelerateEndpoint: true
                   });
                   this.app.DocumentClient = new AWS.DynamoDB.DocumentClient({
@@ -308,6 +313,7 @@ export default class SignInView extends JetView {
                   {
                     view: "button",
                     value: "Login",
+                    id: "login",
                     css: "webix_primary",
                     click: clickLogin
                   }, {
@@ -380,7 +386,9 @@ export default class SignInView extends JetView {
         width: 152
       }]
     });
-    webix.UIManager.addHotKey("enter", clickLogin);
+    webix.UIManager.addHotKey("enter", clickLogin, $$('username'));
+    webix.UIManager.addHotKey("enter", clickLogin, $$('password'));
+    webix.UIManager.addHotKey("enter", clickLogin, $$('login'));
     return result;
   }
   init() {
