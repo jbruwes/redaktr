@@ -464,7 +464,7 @@ export default class TemplateView extends JetView {
     ).sort((a, b) => {
       return Math.abs($(b).css('z-index')) - Math.abs($(a).css('z-index'));
     }));
-    body.find(prefix + 'body:first>.pusher>div[data-static]:not([id])').each((index, element) => $(element).css('z-index', -$(element).css('z-index')));
+    //body.find(prefix + 'body:first>.pusher>div[data-static]:not([id])').each((index, element) => $(element).css('z-index', -$(element).css('z-index')));
   }
   _redraw(that, layers) {
     that = that ? that : this;
