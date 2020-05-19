@@ -37,7 +37,7 @@
     "@wbx/view-ace-editor": "^1.4.6",
     "@wbx/view-tinymce5-editor": "^5.0.14",
     "amazon-cognito-identity-js": "^3.3.3",
-    "aws-sdk": "^2.674.0",
+    "aws-sdk": "^2.679.0",
     "jquery": "^3.5.1",
     "webix": "^7.3.0",
     "webix-jet": "^2.1.3"
