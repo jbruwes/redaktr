@@ -36,9 +36,11 @@ export default class TinymceView extends JetView {
             description: 'https://demos.telerik.com/kendo-ui/menu/index',
             content: '<div data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
           },
-          {title: 'gallery',
-          description: 'A gallery template',
-          content: '<div class="ui three doubling stackable cards mceNonEditable" style="margin: 0;" data-light-slider=""><div style="padding: 50px; display: flex; margin: auto;"><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;"><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;"><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;" hidden=""><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;" hidden=""><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;" hidden=""><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div></div>'}
+          {
+            title: 'gallery',
+            description: 'A gallery template',
+            content: '<div class="ui three doubling stackable cards mceNonEditable" style="margin: 0;" data-light-slider=""><div style="padding: 50px; display: flex; margin: auto;"><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;"><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;"><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;" hidden=""><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;" hidden=""><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div><div style="padding: 50px; display: flex; margin: auto;" hidden=""><div class="ui centered raised card" data-tilt=""><div class="ui placeholder"><div class="rectangular image"><div class="ui inverted dimmer"><button class="circular ui disabled inverted secondary icon button"><i class="icon secondary plus"><!-- --></i></button></div></div></div><div class="content"><div class="ui placeholder"><div class="header"><div class="very short line">&nbsp;</div><div class="medium line">&nbsp;</div></div><div class="paragraph"><div class="short line">&nbsp;</div></div></div></div><div class="extra content"><button class="ui disabled primary icon button"><i class="icon check"><!-- --></i></button> <button class="ui disabled secondary icon button"><i class="icon times"><!-- --></i></button></div></div></div></div>'
+          }
         ],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
@@ -147,6 +149,595 @@ export default class TinymceView extends JetView {
           "Vollkorn SC='Vollkorn SC', serif;" + // google
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
+
+        style_formats: [{
+          title: "Buttons",
+          items: [{
+              title: "Primary",
+              items: [{
+                  title: "Extra Small",
+                  items: [{
+                    title: 'Primary Extra Small Slant',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-slant'
+                  }, {
+                    title: 'Primary Extra Small Unite',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-unite'
+                  }, {
+                    title: 'Primary Extra Small Float',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-float'
+                  }, {
+                    title: 'Primary Extra Small Pill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-pill'
+                  }, {
+                    title: 'Primary Extra Small Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-material-flat'
+                  }, {
+                    title: 'Primary Extra Small Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-material-circle'
+                  }, {
+                    title: 'Primary Extra Small Fill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-fill'
+                  }, {
+                    title: 'Primary Extra Small Gradient',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-gradient'
+                  }, {
+                    title: 'Primary Extra Small Jelly',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-jelly'
+                  }, {
+                    title: 'Primary Extra Small Stretch',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-stretch'
+                  }, {
+                    title: 'Primary Extra Small Minimal',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-minimal'
+                  }, {
+                    title: 'Primary Extra Small Bordered',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-bordered'
+                  }, {
+                    title: 'Primary Extra Small Simple',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-xs bttn-simple'
+                  }]
+                },
+                {
+                  title: "Small",
+                  items: [{
+                    title: 'Primary Small Slant',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-slant'
+                  }, {
+                    title: 'Primary Small Unite',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-unite'
+                  }, {
+                    title: 'Primary Small Float',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-float'
+                  }, {
+                    title: 'Primary Small Pill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-pill'
+                  }, {
+                    title: 'Primary Small Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-material-flat'
+                  }, {
+                    title: 'Primary Small Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-material-circle'
+                  }, {
+                    title: 'Primary Small Fill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-fill'
+                  }, {
+                    title: 'Primary Small Gradient',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-gradient'
+                  }, {
+                    title: 'Primary Small Jelly',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-jelly'
+                  }, {
+                    title: 'Primary Small Stretch',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-stretch'
+                  }, {
+                    title: 'Primary Small Minimal',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-minimal'
+                  }, {
+                    title: 'Primary Small Bordered',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-bordered'
+                  }, {
+                    title: 'Primary Small Simple',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-sm bttn-simple'
+                  }]
+                },
+                {
+                  title: "Middle",
+                  items: [{
+                    title: 'Primary Middle Slant',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-slant'
+                  }, {
+                    title: 'Primary Middle Unite',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-unite'
+                  }, {
+                    title: 'Primary Middle Float',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-float'
+                  }, {
+                    title: 'Primary Middle Pill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-pill'
+                  }, {
+                    title: 'Primary Middle Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-material-flat'
+                  }, {
+                    title: 'Primary Middle Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-material-circle'
+                  }, {
+                    title: 'Primary Middle Fill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-fill'
+                  }, {
+                    title: 'Primary Middle Gradient',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-gradient'
+                  }, {
+                    title: 'Primary Middle Jelly',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-jelly'
+                  }, {
+                    title: 'Primary Middle Stretch',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-stretch'
+                  }, {
+                    title: 'Primary Middle Minimal',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-minimal'
+                  }, {
+                    title: 'Primary Middle Bordered',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-bordered'
+                  }, {
+                    title: 'Primary Middle Simple',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-md bttn-simple'
+                  }]
+                },
+                {
+                  title: "Large",
+                  items: [{
+                    title: 'Primary Large Slant',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-slant'
+                  }, {
+                    title: 'Primary Large Unite',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-unite'
+                  }, {
+                    title: 'Primary Large Float',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-float'
+                  }, {
+                    title: 'Primary Large Pill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-pill'
+                  }, {
+                    title: 'Primary Large Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-material-flat'
+                  }, {
+                    title: 'Primary Large Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-material-circle'
+                  }, {
+                    title: 'Primary Large Fill',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-fill'
+                  }, {
+                    title: 'Primary Large Gradient',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-gradient'
+                  }, {
+                    title: 'Primary Large Jelly',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-jelly'
+                  }, {
+                    title: 'Primary Large Stretch',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-stretch'
+                  }, {
+                    title: 'Primary Large Minimal',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-minimal'
+                  }, {
+                    title: 'Primary Large Bordered',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-bordered'
+                  }, {
+                    title: 'Primary Large Simple',
+                    inline: 'button',
+                    classes: 'bttn-primary bttn-lg bttn-simple'
+                  }]
+                }
+              ]
+            },
+            {
+              title: "Warning",
+              items: [{
+                  title: "Extra Small",
+                  items: [{
+                    title: 'Warning Extra Small Slant',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-slant'
+                  }, {
+                    title: 'Warning Extra Small Unite',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-unite'
+                  }, {
+                    title: 'Warning Extra Small Float',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-float'
+                  }, {
+                    title: 'Warning Extra Small Pill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-pill'
+                  }, {
+                    title: 'Warning Extra Small Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-material-flat'
+                  }, {
+                    title: 'Warning Extra Small Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-material-circle'
+                  }, {
+                    title: 'Warning Extra Small Fill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-fill'
+                  }, {
+                    title: 'Warning Extra Small Gradient',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-gradient'
+                  }, {
+                    title: 'Warning Extra Small Jelly',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-jelly'
+                  }, {
+                    title: 'Warning Extra Small Stretch',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-stretch'
+                  }, {
+                    title: 'Warning Extra Small Minimal',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-minimal'
+                  }, {
+                    title: 'Warning Extra Small Bordered',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-bordered'
+                  }, {
+                    title: 'Warning Extra Small Simple',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-xs bttn-simple'
+                  }]
+                },
+                {
+                  title: "Small",
+                  items: [{
+                    title: 'Warning Small Slant',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-slant'
+                  }, {
+                    title: 'Warning Small Unite',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-unite'
+                  }, {
+                    title: 'Warning Small Float',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-float'
+                  }, {
+                    title: 'Warning Small Pill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-pill'
+                  }, {
+                    title: 'Warning Small Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-material-flat'
+                  }, {
+                    title: 'Warning Small Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-material-circle'
+                  }, {
+                    title: 'Warning Small Fill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-fill'
+                  }, {
+                    title: 'Warning Small Gradient',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-gradient'
+                  }, {
+                    title: 'Warning Small Jelly',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-jelly'
+                  }, {
+                    title: 'Warning Small Stretch',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-stretch'
+                  }, {
+                    title: 'Warning Small Minimal',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-minimal'
+                  }, {
+                    title: 'Warning Small Bordered',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-bordered'
+                  }, {
+                    title: 'Warning Small Simple',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-sm bttn-simple'
+                  }]
+                },
+                {
+                  title: "Middle",
+                  items: [{
+                    title: 'Warning Middle Slant',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-slant'
+                  }, {
+                    title: 'Warning Middle Unite',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-unite'
+                  }, {
+                    title: 'Warning Middle Float',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-float'
+                  }, {
+                    title: 'Warning Middle Pill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-pill'
+                  }, {
+                    title: 'Warning Middle Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-material-flat'
+                  }, {
+                    title: 'Warning Middle Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-material-circle'
+                  }, {
+                    title: 'Warning Middle Fill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-fill'
+                  }, {
+                    title: 'Warning Middle Gradient',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-gradient'
+                  }, {
+                    title: 'Warning Middle Jelly',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-jelly'
+                  }, {
+                    title: 'Warning Middle Stretch',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-stretch'
+                  }, {
+                    title: 'Warning Middle Minimal',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-minimal'
+                  }, {
+                    title: 'Warning Middle Bordered',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-bordered'
+                  }, {
+                    title: 'Warning Middle Simple',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-md bttn-simple'
+                  }]
+                },
+                {
+                  title: "Large",
+                  items: [{
+                    title: 'Warning Large Slant',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-slant'
+                  }, {
+                    title: 'Warning Large Unite',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-unite'
+                  }, {
+                    title: 'Warning Large Float',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-float'
+                  }, {
+                    title: 'Warning Large Pill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-pill'
+                  }, {
+                    title: 'Warning Large Material-flat',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-material-flat'
+                  }, {
+                    title: 'Warning Large Material-circle',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-material-circle'
+                  }, {
+                    title: 'Warning Large Fill',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-fill'
+                  }, {
+                    title: 'Warning Large Gradient',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-gradient'
+                  }, {
+                    title: 'Warning Large Jelly',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-jelly'
+                  }, {
+                    title: 'Warning Large Stretch',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-stretch'
+                  }, {
+                    title: 'Warning Large Minimal',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-minimal'
+                  }, {
+                    title: 'Warning Large Bordered',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-bordered'
+                  }, {
+                    title: 'Warning Large Simple',
+                    inline: 'button',
+                    classes: 'bttn-warning bttn-lg bttn-simple'
+                  }]
+                }
+              ]
+            },
+            {
+              title: "danger",
+              items: [{
+                  title: "xs",
+                  items: []
+                },
+                {
+                  title: "sm",
+                  items: []
+                },
+                {
+                  title: "md",
+                  items: []
+                },
+                {
+                  title: "lg",
+                  items: []
+                }
+              ]
+            },
+            {
+              title: "success",
+              items: [{
+                  title: "xs",
+                  items: []
+                },
+                {
+                  title: "sm",
+                  items: []
+                },
+                {
+                  title: "md",
+                  items: []
+                },
+                {
+                  title: "lg",
+                  items: []
+                }
+              ]
+            },
+            {
+              title: "royal",
+              items: [{
+                  title: "xs",
+                  items: []
+                },
+                {
+                  title: "sm",
+                  items: []
+                },
+                {
+                  title: "md",
+                  items: []
+                },
+                {
+                  title: "lg",
+                  items: []
+                }
+              ]
+            },
+            {
+              title: "default",
+              items: [{
+                  title: "xs",
+                  items: []
+                },
+                {
+                  title: "sm",
+                  items: []
+                },
+                {
+                  title: "md",
+                  items: []
+                },
+                {
+                  title: "lg",
+                  items: []
+                }
+              ]
+            }
+          ]
+        }],
+
+        /*        link_class_list: [{
+          title: 'none',
+          value: ''
+        }, {
+          title: 'slant',
+          value: 'bttn-slant bttn-primary bttn-sm'
+        }, {
+          title: 'unite',
+          value: 'bttn-unite bttn-primary bttn-sm'
+        }, {
+          title: 'float',
+          value: 'bttn-float bttn-primary bttn-sm'
+        }, {
+          title: 'pill',
+          value: 'bttn-pill bttn-primary bttn-sm'
+        }, {
+          title: 'material flat',
+          value: 'bttn-material-flat bttn-primary bttn-sm'
+        }, {
+          title: 'material circle',
+          value: 'bttn-material-circle bttn-primary bttn-sm'
+        }, {
+          title: 'fill',
+          value: 'bttn-fill bttn-primary bttn-sm'
+        }, {
+          title: 'gradient',
+          value: 'bttn-gradient bttn-primary bttn-sm'
+        }, {
+          title: 'jelly',
+          value: 'bttn-jelly bttn-primary bttn-sm'
+        }, {
+          title: 'stretch',
+          value: 'bttn-stretch bttn-primary bttn-sm'
+        }, {
+          title: 'minimal',
+          value: 'bttn-minimal bttn-primary bttn-sm'
+        }, {
+          title: 'bordered',
+          value: 'bttn-bordered bttn-primary bttn-sm'
+        }, {
+          title: 'simple',
+          value: 'bttn-simple bttn-primary bttn-sm'
+        }],
+*/
+
+        preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
+
         setup: editor => {
           editor.that = this;
           var getSubmenuItems = (id, path) => {
@@ -244,16 +835,16 @@ export default class TinymceView extends JetView {
         //quickbars_selection_toolbar: false,
         quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
         noneditable_noneditable_class: "mceNonEditable",
-  toolbar_mode: 'sliding',
-  contextmenu: "link image imagetools table",
-        
-          autosave_ask_before_unload: true,
-  autosave_interval: "30s",
-  autosave_prefix: "{path}{query}-{id}-",
-  autosave_restore_when_empty: false,
-  autosave_retention: "2m",
+        toolbar_mode: 'sliding',
+        contextmenu: "link image imagetools table",
 
-        
+        autosave_ask_before_unload: true,
+        autosave_interval: "30s",
+        autosave_prefix: "{path}{query}-{id}-",
+        autosave_restore_when_empty: false,
+        autosave_retention: "2m",
+
+
         extended_valid_elements: 'script[*],i[*],span[*]',
         valid_children: "+body[style],+body[link],+h1[div],+h2[div],+h3[div],+h4[div],+h5[div],+h6[div]",
         toolbar_drawer: 'floating',
@@ -264,6 +855,7 @@ export default class TinymceView extends JetView {
         image_title: true,
         allow_script_urls: true,
         style_formats_autohide: true,
+        style_formats_merge: true,
         paste_data_images: true,
         importcss_append: true,
         images_reuse_filename: true,
@@ -325,6 +917,10 @@ export default class TinymceView extends JetView {
           title: 'Negative Basic Button',
           value: 'ui icon basic negative button'
         }],
+
+
+
+
         image_class_list: [{
           title: 'None',
           value: ''
