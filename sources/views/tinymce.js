@@ -153,590 +153,121 @@ export default class TinymceView extends JetView {
         style_formats: [{
           title: "Buttons",
           items: [{
-              title: "Primary",
+              title: "Type",
               items: [{
-                  title: "Extra Small",
-                  items: [{
-                    title: 'Primary Extra Small Slant',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-slant'
-                  }, {
-                    title: 'Primary Extra Small Unite',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-unite'
-                  }, {
-                    title: 'Primary Extra Small Float',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-float'
-                  }, {
-                    title: 'Primary Extra Small Pill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-pill'
-                  }, {
-                    title: 'Primary Extra Small Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-material-flat'
-                  }, {
-                    title: 'Primary Extra Small Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-material-circle'
-                  }, {
-                    title: 'Primary Extra Small Fill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-fill'
-                  }, {
-                    title: 'Primary Extra Small Gradient',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-gradient'
-                  }, {
-                    title: 'Primary Extra Small Jelly',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-jelly'
-                  }, {
-                    title: 'Primary Extra Small Stretch',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-stretch'
-                  }, {
-                    title: 'Primary Extra Small Minimal',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-minimal'
-                  }, {
-                    title: 'Primary Extra Small Bordered',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-bordered'
-                  }, {
-                    title: 'Primary Extra Small Simple',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-xs bttn-simple'
-                  }]
-                },
-                {
-                  title: "Small",
-                  items: [{
-                    title: 'Primary Small Slant',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-slant'
-                  }, {
-                    title: 'Primary Small Unite',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-unite'
-                  }, {
-                    title: 'Primary Small Float',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-float'
-                  }, {
-                    title: 'Primary Small Pill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-pill'
-                  }, {
-                    title: 'Primary Small Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-material-flat'
-                  }, {
-                    title: 'Primary Small Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-material-circle'
-                  }, {
-                    title: 'Primary Small Fill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-fill'
-                  }, {
-                    title: 'Primary Small Gradient',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-gradient'
-                  }, {
-                    title: 'Primary Small Jelly',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-jelly'
-                  }, {
-                    title: 'Primary Small Stretch',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-stretch'
-                  }, {
-                    title: 'Primary Small Minimal',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-minimal'
-                  }, {
-                    title: 'Primary Small Bordered',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-bordered'
-                  }, {
-                    title: 'Primary Small Simple',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-sm bttn-simple'
-                  }]
-                },
-                {
-                  title: "Middle",
-                  items: [{
-                    title: 'Primary Middle Slant',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-slant'
-                  }, {
-                    title: 'Primary Middle Unite',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-unite'
-                  }, {
-                    title: 'Primary Middle Float',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-float'
-                  }, {
-                    title: 'Primary Middle Pill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-pill'
-                  }, {
-                    title: 'Primary Middle Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-material-flat'
-                  }, {
-                    title: 'Primary Middle Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-material-circle'
-                  }, {
-                    title: 'Primary Middle Fill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-fill'
-                  }, {
-                    title: 'Primary Middle Gradient',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-gradient'
-                  }, {
-                    title: 'Primary Middle Jelly',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-jelly'
-                  }, {
-                    title: 'Primary Middle Stretch',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-stretch'
-                  }, {
-                    title: 'Primary Middle Minimal',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-minimal'
-                  }, {
-                    title: 'Primary Middle Bordered',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-bordered'
-                  }, {
-                    title: 'Primary Middle Simple',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-md bttn-simple'
-                  }]
-                },
-                {
-                  title: "Large",
-                  items: [{
-                    title: 'Primary Large Slant',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-slant'
-                  }, {
-                    title: 'Primary Large Unite',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-unite'
-                  }, {
-                    title: 'Primary Large Float',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-float'
-                  }, {
-                    title: 'Primary Large Pill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-pill'
-                  }, {
-                    title: 'Primary Large Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-material-flat'
-                  }, {
-                    title: 'Primary Large Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-material-circle'
-                  }, {
-                    title: 'Primary Large Fill',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-fill'
-                  }, {
-                    title: 'Primary Large Gradient',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-gradient'
-                  }, {
-                    title: 'Primary Large Jelly',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-jelly'
-                  }, {
-                    title: 'Primary Large Stretch',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-stretch'
-                  }, {
-                    title: 'Primary Large Minimal',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-minimal'
-                  }, {
-                    title: 'Primary Large Bordered',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-bordered'
-                  }, {
-                    title: 'Primary Large Simple',
-                    inline: 'button',
-                    classes: 'bttn-primary bttn-lg bttn-simple'
-                  }]
-                }
-              ]
+                title: 'Slant',
+                selector: 'button,a',
+                classes: 'bttn-slant'
+              }, {
+                title: 'Unite',
+                selector: 'button,a',
+                classes: 'bttn-unite'
+              }, {
+                title: 'Float',
+                selector: 'button,a',
+                classes: 'bttn-float'
+              }, {
+                title: 'Pill',
+                selector: 'button,a',
+                classes: 'bttn-pill'
+              }, {
+                title: 'Material Flat',
+                selector: 'button,a',
+                classes: 'bttn-material-flat'
+              }, {
+                title: 'Material Circle',
+                selector: 'button,a',
+                classes: 'bttn-material-circle'
+              }, {
+                title: 'Fill',
+                selector: 'button,a',
+                classes: 'bttn-fill'
+              }, {
+                title: 'Gradient',
+                selector: 'button,a',
+                classes: 'bttn-gradient'
+              }, {
+                title: 'Jelly',
+                selector: 'button,a',
+                classes: 'bttn-jelly'
+              }, {
+                title: 'Stretch',
+                selector: 'button,a',
+                classes: 'bttn-stretch'
+              }, {
+                title: 'Minimal',
+                selector: 'button,a',
+                classes: 'bttn-minimal'
+              }, {
+                title: 'Bordered',
+                selector: 'button,a',
+                classes: 'bttn-bordered'
+              }, {
+                title: 'Simple',
+                selector: 'button,a',
+                classes: 'bttn-simple'
+              }]
             },
             {
-              title: "Warning",
+              title: "Color",
               items: [{
-                  title: "Extra Small",
-                  items: [{
-                    title: 'Warning Extra Small Slant',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-slant'
-                  }, {
-                    title: 'Warning Extra Small Unite',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-unite'
-                  }, {
-                    title: 'Warning Extra Small Float',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-float'
-                  }, {
-                    title: 'Warning Extra Small Pill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-pill'
-                  }, {
-                    title: 'Warning Extra Small Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-material-flat'
-                  }, {
-                    title: 'Warning Extra Small Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-material-circle'
-                  }, {
-                    title: 'Warning Extra Small Fill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-fill'
-                  }, {
-                    title: 'Warning Extra Small Gradient',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-gradient'
-                  }, {
-                    title: 'Warning Extra Small Jelly',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-jelly'
-                  }, {
-                    title: 'Warning Extra Small Stretch',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-stretch'
-                  }, {
-                    title: 'Warning Extra Small Minimal',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-minimal'
-                  }, {
-                    title: 'Warning Extra Small Bordered',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-bordered'
-                  }, {
-                    title: 'Warning Extra Small Simple',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-xs bttn-simple'
-                  }]
-                },
-                {
-                  title: "Small",
-                  items: [{
-                    title: 'Warning Small Slant',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-slant'
-                  }, {
-                    title: 'Warning Small Unite',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-unite'
-                  }, {
-                    title: 'Warning Small Float',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-float'
-                  }, {
-                    title: 'Warning Small Pill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-pill'
-                  }, {
-                    title: 'Warning Small Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-material-flat'
-                  }, {
-                    title: 'Warning Small Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-material-circle'
-                  }, {
-                    title: 'Warning Small Fill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-fill'
-                  }, {
-                    title: 'Warning Small Gradient',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-gradient'
-                  }, {
-                    title: 'Warning Small Jelly',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-jelly'
-                  }, {
-                    title: 'Warning Small Stretch',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-stretch'
-                  }, {
-                    title: 'Warning Small Minimal',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-minimal'
-                  }, {
-                    title: 'Warning Small Bordered',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-bordered'
-                  }, {
-                    title: 'Warning Small Simple',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-sm bttn-simple'
-                  }]
-                },
-                {
-                  title: "Middle",
-                  items: [{
-                    title: 'Warning Middle Slant',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-slant'
-                  }, {
-                    title: 'Warning Middle Unite',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-unite'
-                  }, {
-                    title: 'Warning Middle Float',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-float'
-                  }, {
-                    title: 'Warning Middle Pill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-pill'
-                  }, {
-                    title: 'Warning Middle Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-material-flat'
-                  }, {
-                    title: 'Warning Middle Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-material-circle'
-                  }, {
-                    title: 'Warning Middle Fill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-fill'
-                  }, {
-                    title: 'Warning Middle Gradient',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-gradient'
-                  }, {
-                    title: 'Warning Middle Jelly',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-jelly'
-                  }, {
-                    title: 'Warning Middle Stretch',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-stretch'
-                  }, {
-                    title: 'Warning Middle Minimal',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-minimal'
-                  }, {
-                    title: 'Warning Middle Bordered',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-bordered'
-                  }, {
-                    title: 'Warning Middle Simple',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-md bttn-simple'
-                  }]
-                },
-                {
-                  title: "Large",
-                  items: [{
-                    title: 'Warning Large Slant',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-slant'
-                  }, {
-                    title: 'Warning Large Unite',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-unite'
-                  }, {
-                    title: 'Warning Large Float',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-float'
-                  }, {
-                    title: 'Warning Large Pill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-pill'
-                  }, {
-                    title: 'Warning Large Material-flat',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-material-flat'
-                  }, {
-                    title: 'Warning Large Material-circle',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-material-circle'
-                  }, {
-                    title: 'Warning Large Fill',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-fill'
-                  }, {
-                    title: 'Warning Large Gradient',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-gradient'
-                  }, {
-                    title: 'Warning Large Jelly',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-jelly'
-                  }, {
-                    title: 'Warning Large Stretch',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-stretch'
-                  }, {
-                    title: 'Warning Large Minimal',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-minimal'
-                  }, {
-                    title: 'Warning Large Bordered',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-bordered'
-                  }, {
-                    title: 'Warning Large Simple',
-                    inline: 'button',
-                    classes: 'bttn-warning bttn-lg bttn-simple'
-                  }]
-                }
-              ]
+                title: "Primary",
+                selector: "button,a",
+                classes: "bttn-primary"
+              }, {
+                title: "Warning",
+                selector: "button,a",
+                classes: "bttn-warning"
+              }, {
+                title: "Danger",
+                selector: "button,a",
+                classes: "bttn-danger"
+              }, {
+                title: "Success",
+                selector: "button,a",
+                classes: "bttn-success"
+              }, {
+                title: "Royal",
+                selector: "button,a",
+                classes: "bttn-royal"
+              }, {
+                title: "Default",
+                selector: "button,a",
+                classes: "bttn-default"
+              }]
             },
             {
-              title: "danger",
+              title: "Size",
               items: [{
-                  title: "xs",
-                  items: []
-                },
-                {
-                  title: "sm",
-                  items: []
-                },
-                {
-                  title: "md",
-                  items: []
-                },
-                {
-                  title: "lg",
-                  items: []
-                }
-              ]
-            },
-            {
-              title: "success",
-              items: [{
-                  title: "xs",
-                  items: []
-                },
-                {
-                  title: "sm",
-                  items: []
-                },
-                {
-                  title: "md",
-                  items: []
-                },
-                {
-                  title: "lg",
-                  items: []
-                }
-              ]
-            },
-            {
-              title: "royal",
-              items: [{
-                  title: "xs",
-                  items: []
-                },
-                {
-                  title: "sm",
-                  items: []
-                },
-                {
-                  title: "md",
-                  items: []
-                },
-                {
-                  title: "lg",
-                  items: []
-                }
-              ]
-            },
-            {
-              title: "default",
-              items: [{
-                  title: "xs",
-                  items: []
-                },
-                {
-                  title: "sm",
-                  items: []
-                },
-                {
-                  title: "md",
-                  items: []
-                },
-                {
-                  title: "lg",
-                  items: []
-                }
-              ]
+                title: "Extra Small",
+                selector: "button,a",
+                classes: "bttn-xs"
+              }, {
+                title: "Small",
+                selector: "button,a",
+                classes: "bttn-sm"
+              }, {
+                title: "Medium",
+                selector: "button,a",
+                classes: "bttn-md"
+              }, {
+                title: "Large",
+                selector: "button,a",
+                classes: "bttn-lg"
+              }]
+            }, {
+              title: "Block",
+              selector: "button,a",
+              classes: "bttn-block"
             }
+
+
           ]
         }],
 
-        /*        link_class_list: [{
-          title: 'none',
-          value: ''
-        }, {
-          title: 'slant',
-          value: 'bttn-slant bttn-primary bttn-sm'
-        }, {
-          title: 'unite',
-          value: 'bttn-unite bttn-primary bttn-sm'
-        }, {
-          title: 'float',
-          value: 'bttn-float bttn-primary bttn-sm'
-        }, {
-          title: 'pill',
-          value: 'bttn-pill bttn-primary bttn-sm'
-        }, {
-          title: 'material flat',
-          value: 'bttn-material-flat bttn-primary bttn-sm'
-        }, {
-          title: 'material circle',
-          value: 'bttn-material-circle bttn-primary bttn-sm'
-        }, {
-          title: 'fill',
-          value: 'bttn-fill bttn-primary bttn-sm'
-        }, {
-          title: 'gradient',
-          value: 'bttn-gradient bttn-primary bttn-sm'
-        }, {
-          title: 'jelly',
-          value: 'bttn-jelly bttn-primary bttn-sm'
-        }, {
-          title: 'stretch',
-          value: 'bttn-stretch bttn-primary bttn-sm'
-        }, {
-          title: 'minimal',
-          value: 'bttn-minimal bttn-primary bttn-sm'
-        }, {
-          title: 'bordered',
-          value: 'bttn-bordered bttn-primary bttn-sm'
-        }, {
-          title: 'simple',
-          value: 'bttn-simple bttn-primary bttn-sm'
-        }],
-*/
 
-        preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
+        //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
+        preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
 
         setup: editor => {
           editor.that = this;
