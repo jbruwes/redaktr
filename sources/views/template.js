@@ -556,17 +556,29 @@ export default class TemplateView extends JetView {
     object.find(body + '>div:not([id]):empty').remove();
     var marginLeft = $$('marginLeft').getValue(),
       width = $$('width').getValue(),
-      marginRight = $$('marginRight').getValue();
-    if (marginLeft !== '') item.css("margin-left", marginLeft + $$('pmarginLeft').getValue());
-    if (marginRight !== '') item.css("margin-right", marginRight + $$('pmarginRight').getValue());
-    if (width !== '') item.css("min-width", width + $$('pwidth').getValue());
+      marginRight = $$('marginRight').getValue(),
+      pmarginLeft = $$('pmarginLeft').getValue(),
+      pmarginRight = $$('pmarginRight').getValue(),
+      pwidth = $$('pwidth').getValue();
+    pmarginRight = pmarginRight === '%' ? 'vw' : pmarginRight;
+    pmarginLeft = pmarginLeft === '%' ? 'vw' : pmarginLeft;
+    pwidth = pwidth === '%' ? 'vw' : pwidth;
+    if (marginLeft !== '') item.css("margin-left", marginLeft + pmarginLeft);
+    if (marginRight !== '') item.css("margin-right", marginRight + pmarginRight);
+    if (width !== '') item.css("min-width", width + pwidth);
     if (!(marginLeft !== '' && marginRight !== '')) item.css("align-self", "center").css('-ms-flex-item-align', 'center');
     var marginTop = $$('marginTop').getValue(),
       height = $$('height').getValue(),
-      marginBottom = $$('marginBottom').getValue();
-    if (marginTop !== '') item.css("margin-top", marginTop + $$('pmarginTop').getValue());
-    if (marginBottom !== '') item.css("margin-bottom", marginBottom + $$('pmarginBottom').getValue());
-    if (height !== '') item.css("min-height", height + $$('pheight').getValue());
+      marginBottom = $$('marginBottom').getValue(),
+      pmarginTop = $$('pmarginTop').getValue(),
+      pmarginBottom = $$('pmarginBottom').getValue(),
+      pheight = $$('pheight').getValue();
+    pmarginTop = pmarginTop === '%' ? 'vh' : pmarginTop;
+    pmarginBottom = pmarginBottom === '%' ? 'vh' : pmarginBottom;
+    pheight = pheight === '%' ? 'vh' : pheight;
+    if (marginTop !== '') item.css("margin-top", marginTop + pmarginTop);
+    if (marginBottom !== '') item.css("margin-bottom", marginBottom + pmarginBottom);
+    if (height !== '') item.css("min-height", height + pheight);
     if (marginTop !== '' && marginBottom !== '') item.css("flex", "1 1 auto");
     var angle = $$('angle').getValue();
     if (angle) item.css("transform", 'rotate(' + angle + 'deg)');
@@ -681,6 +693,7 @@ export default class TemplateView extends JetView {
   }
   _makeSelection(that, resetDimension = false) {
     that = that ? that : this;
+
     function swap(elem, options, callback, args) {
       var ret, name,
         old = {};
@@ -694,6 +707,7 @@ export default class TemplateView extends JetView {
       }
       return ret;
     }
+
     function doLayers(those) {
       var layer = null,
         map = null,
