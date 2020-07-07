@@ -174,7 +174,7 @@ export default class SignInView extends JetView {
                 '<meta name="viewport" content="width=device-width, initial-scale=1">' +
                 '<base href="' + ('/') + this.app.identityId + '/">' +
                 '<link rel="icon" href="/' + this.app.identityId + '.ico" type="image/vnd.microsoft.icon">' +
-                '<script src="//cdn.jsdelivr.net/npm/requirejs/bin/r.js"></script>' +
+                '<script src="//cdn.redaktr.com/require.min.js"></script>' +
                 "<script>" +
                 "(function(){" +
                 "var $=window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search)));" +
