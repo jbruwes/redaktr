@@ -159,7 +159,7 @@ export default class TinymceView extends JetView {
           "Vollkorn SC='Vollkorn SC', serif;" + // google
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
-
+/*
         style_formats: [{
           title: "Buttons",
           items: [{
@@ -274,10 +274,10 @@ export default class TinymceView extends JetView {
 
           ]
         }],
-
+*/
 
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
-        preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
+        //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
 
         setup: editor => {
           editor.that = this;
