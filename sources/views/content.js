@@ -8,7 +8,7 @@ export default class ContentView extends JetView {
 			view: "accordion",
 			on: {
 				"onAfterCollapse": id => {
-					if (id === 'treeItem') $$("ace-content").getEditor().resize()
+					if (id === 'tools') $$("ace-content").getEditor().resize()
 				}
 			},
 			cols: [{

@@ -246,6 +246,8 @@ export default class TemplateView extends JetView {
     });
     this.app.S3.getObject({
       Bucket: 'redaktr',
+      ResponseCacheControl: 'no-cache',
+      ResponseExpires: new Date(0),
       Key: this.app.identityId + '.html'
     }, (err, data) => {
       if ($$('sidebar').getSelectedId() === 'template') {
