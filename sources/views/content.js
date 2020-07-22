@@ -8,7 +8,16 @@ export default class ContentView extends JetView {
 			view: "accordion",
 			on: {
 				"onAfterCollapse": id => {
-					if (id === 'tools') $$("ace-content").getEditor().resize()
+					if (id === 'tools') {
+            switch ($$("tabbar").getValue()) {
+              case 'ace-content':
+                $$("ace-content").getEditor().resize();
+                break;
+              case 'tinymce':
+                $$("tinymce").getEditor().contentWindow.AOS.refresh();
+                break;
+            }
+          }
 				}
 			},
 			cols: [{
@@ -45,9 +54,8 @@ export default class ContentView extends JetView {
 								type: "bottom",
 								on: {
 									onChange: _ => {
-										if ($$("tabbar").getValue() === 'ace-content') {
-											$$("ace-content").$scope.setValue($$("tinymce").getValue());
-										}
+										if ($$("tabbar").getValue() === 'ace-content') $$("ace-content").$scope.setValue($$("tinymce").getValue());
+										else $$("tinymce").getEditor().contentWindow.AOS.refresh();
 									}
 								}
 							}

@@ -159,128 +159,140 @@ export default class TinymceView extends JetView {
           "Vollkorn SC='Vollkorn SC', serif;" + // google
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
-/*
-        style_formats: [{
-          title: "Buttons",
-          items: [{
-              title: "Type",
-              items: [{
-                title: 'Slant',
-                selector: 'button,a',
-                classes: 'bttn-slant'
-              }, {
-                title: 'Unite',
-                selector: 'button,a',
-                classes: 'bttn-unite'
-              }, {
-                title: 'Float',
-                selector: 'button,a',
-                classes: 'bttn-float'
-              }, {
-                title: 'Pill',
-                selector: 'button,a',
-                classes: 'bttn-pill'
-              }, {
-                title: 'Material Flat',
-                selector: 'button,a',
-                classes: 'bttn-material-flat'
-              }, {
-                title: 'Material Circle',
-                selector: 'button,a',
-                classes: 'bttn-material-circle'
-              }, {
-                title: 'Fill',
-                selector: 'button,a',
-                classes: 'bttn-fill'
-              }, {
-                title: 'Gradient',
-                selector: 'button,a',
-                classes: 'bttn-gradient'
-              }, {
-                title: 'Jelly',
-                selector: 'button,a',
-                classes: 'bttn-jelly'
-              }, {
-                title: 'Stretch',
-                selector: 'button,a',
-                classes: 'bttn-stretch'
-              }, {
-                title: 'Minimal',
-                selector: 'button,a',
-                classes: 'bttn-minimal'
-              }, {
-                title: 'Bordered',
-                selector: 'button,a',
-                classes: 'bttn-bordered'
-              }, {
-                title: 'Simple',
-                selector: 'button,a',
-                classes: 'bttn-simple'
-              }]
-            },
-            {
-              title: "Color",
-              items: [{
-                title: "Primary",
-                selector: "button,a",
-                classes: "bttn-primary"
-              }, {
-                title: "Warning",
-                selector: "button,a",
-                classes: "bttn-warning"
-              }, {
-                title: "Danger",
-                selector: "button,a",
-                classes: "bttn-danger"
-              }, {
-                title: "Success",
-                selector: "button,a",
-                classes: "bttn-success"
-              }, {
-                title: "Royal",
-                selector: "button,a",
-                classes: "bttn-royal"
-              }, {
-                title: "Default",
-                selector: "button,a",
-                classes: "bttn-default"
-              }]
-            },
-            {
-              title: "Size",
-              items: [{
-                title: "Extra Small",
-                selector: "button,a",
-                classes: "bttn-xs"
-              }, {
-                title: "Small",
-                selector: "button,a",
-                classes: "bttn-sm"
-              }, {
-                title: "Medium",
-                selector: "button,a",
-                classes: "bttn-md"
-              }, {
-                title: "Large",
-                selector: "button,a",
-                classes: "bttn-lg"
-              }]
-            }, {
-              title: "Block",
-              selector: "button,a",
-              classes: "bttn-block"
-            }
+        /*
+                style_formats: [{
+                  title: "Buttons",
+                  items: [{
+                      title: "Type",
+                      items: [{
+                        title: 'Slant',
+                        selector: 'button,a',
+                        classes: 'bttn-slant'
+                      }, {
+                        title: 'Unite',
+                        selector: 'button,a',
+                        classes: 'bttn-unite'
+                      }, {
+                        title: 'Float',
+                        selector: 'button,a',
+                        classes: 'bttn-float'
+                      }, {
+                        title: 'Pill',
+                        selector: 'button,a',
+                        classes: 'bttn-pill'
+                      }, {
+                        title: 'Material Flat',
+                        selector: 'button,a',
+                        classes: 'bttn-material-flat'
+                      }, {
+                        title: 'Material Circle',
+                        selector: 'button,a',
+                        classes: 'bttn-material-circle'
+                      }, {
+                        title: 'Fill',
+                        selector: 'button,a',
+                        classes: 'bttn-fill'
+                      }, {
+                        title: 'Gradient',
+                        selector: 'button,a',
+                        classes: 'bttn-gradient'
+                      }, {
+                        title: 'Jelly',
+                        selector: 'button,a',
+                        classes: 'bttn-jelly'
+                      }, {
+                        title: 'Stretch',
+                        selector: 'button,a',
+                        classes: 'bttn-stretch'
+                      }, {
+                        title: 'Minimal',
+                        selector: 'button,a',
+                        classes: 'bttn-minimal'
+                      }, {
+                        title: 'Bordered',
+                        selector: 'button,a',
+                        classes: 'bttn-bordered'
+                      }, {
+                        title: 'Simple',
+                        selector: 'button,a',
+                        classes: 'bttn-simple'
+                      }]
+                    },
+                    {
+                      title: "Color",
+                      items: [{
+                        title: "Primary",
+                        selector: "button,a",
+                        classes: "bttn-primary"
+                      }, {
+                        title: "Warning",
+                        selector: "button,a",
+                        classes: "bttn-warning"
+                      }, {
+                        title: "Danger",
+                        selector: "button,a",
+                        classes: "bttn-danger"
+                      }, {
+                        title: "Success",
+                        selector: "button,a",
+                        classes: "bttn-success"
+                      }, {
+                        title: "Royal",
+                        selector: "button,a",
+                        classes: "bttn-royal"
+                      }, {
+                        title: "Default",
+                        selector: "button,a",
+                        classes: "bttn-default"
+                      }]
+                    },
+                    {
+                      title: "Size",
+                      items: [{
+                        title: "Extra Small",
+                        selector: "button,a",
+                        classes: "bttn-xs"
+                      }, {
+                        title: "Small",
+                        selector: "button,a",
+                        classes: "bttn-sm"
+                      }, {
+                        title: "Medium",
+                        selector: "button,a",
+                        classes: "bttn-md"
+                      }, {
+                        title: "Large",
+                        selector: "button,a",
+                        classes: "bttn-lg"
+                      }]
+                    }, {
+                      title: "Block",
+                      selector: "button,a",
+                      classes: "bttn-block"
+                    }
 
 
-          ]
-        }],
-*/
+                  ]
+                }],
+        */
 
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
 
         setup: editor => {
           editor.that = this;
+          editor.on('init', function() {
+            var scriptId = editor.dom.uniqueId();
+            var scriptElm = editor.dom.create('script', {
+              id: scriptId,
+              type: 'text/javascript',
+              src: '//cdn.jsdelivr.net/npm/aos/dist/aos.js'
+            });
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(scriptElm);
+            scriptElm.addEventListener('load', () => {
+              editor.contentWindow.AOS.init();
+            })
+          });
           var getSubmenuItems = (id, path) => {
             var items = [];
             var item;

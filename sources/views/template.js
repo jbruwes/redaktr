@@ -17,6 +17,9 @@ export default class TemplateView extends JetView {
               case 'ace-template':
                 $$("ace-template").getEditor().resize();
                 break;
+              case 'tinymce':
+                $$("tinymce").getEditor().contentWindow.AOS.refresh();
+                break;
               case 'fabricCnt':
                 this._makeSelection(this);
                 break;
@@ -142,6 +145,9 @@ export default class TemplateView extends JetView {
                     switch ($$("tabbar").getValue()) {
                       case 'ace-template':
                         $$("ace-template").$scope.setValue($$("tinymce").getValue());
+                        break;
+                      case 'tinymce':
+                        $$("tinymce").getEditor().contentWindow.AOS.refresh();
                         break;
                       case 'fabricCnt':
                         this._makeSelection(this);

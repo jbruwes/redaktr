@@ -41,10 +41,10 @@ export default class SignInView extends JetView {
       },
       appShow = name => {
         this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
-        //webix.UIManager.removeHotKey("enter");
-        webix.UIManager.removeHotKey("enter", null, $$('username'));
-        webix.UIManager.removeHotKey("enter", null, $$('password'));
-        webix.UIManager.removeHotKey("enter", null, $$('login'));
+        webix.UIManager.removeHotKey("enter", clickLogin);
+        //webix.UIManager.removeHotKey("enter", null, $$('username'));
+        //webix.UIManager.removeHotKey("enter", null, $$('password'));
+        //webix.UIManager.removeHotKey("enter", null, $$('login'));
 
 
         $$("sidebar").clearAll();

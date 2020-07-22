@@ -10,10 +10,10 @@ export default class SignInViewLocal extends JetView {
 				ClientId: '4vvur02v4d5smj3pvtj0tu8qda'
 			}),*/
       appShow = item => {
-        //webix.UIManager.removeHotKey("enter");
-        webix.UIManager.removeHotKey("enter", null, $$('username'));
-        webix.UIManager.removeHotKey("enter", null, $$('password'));
-        webix.UIManager.removeHotKey("enter", null, $$('login'));
+        webix.UIManager.removeHotKey("enter", clickLogin);
+        //webix.UIManager.removeHotKey("enter", null, $$('username'));
+        //webix.UIManager.removeHotKey("enter", null, $$('password'));
+        //webix.UIManager.removeHotKey("enter", null, $$('login'));
 
         $$("sidebar").clearAll();
         //$$("toolbar").addView({
