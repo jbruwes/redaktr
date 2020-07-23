@@ -159,126 +159,189 @@ export default class TinymceView extends JetView {
           "Vollkorn SC='Vollkorn SC', serif;" + // google
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
-        /*
-                style_formats: [{
-                  title: "Buttons",
-                  items: [{
-                      title: "Type",
-                      items: [{
-                        title: 'Slant',
-                        selector: 'button,a',
-                        classes: 'bttn-slant'
-                      }, {
-                        title: 'Unite',
-                        selector: 'button,a',
-                        classes: 'bttn-unite'
-                      }, {
-                        title: 'Float',
-                        selector: 'button,a',
-                        classes: 'bttn-float'
-                      }, {
-                        title: 'Pill',
-                        selector: 'button,a',
-                        classes: 'bttn-pill'
-                      }, {
-                        title: 'Material Flat',
-                        selector: 'button,a',
-                        classes: 'bttn-material-flat'
-                      }, {
-                        title: 'Material Circle',
-                        selector: 'button,a',
-                        classes: 'bttn-material-circle'
-                      }, {
-                        title: 'Fill',
-                        selector: 'button,a',
-                        classes: 'bttn-fill'
-                      }, {
-                        title: 'Gradient',
-                        selector: 'button,a',
-                        classes: 'bttn-gradient'
-                      }, {
-                        title: 'Jelly',
-                        selector: 'button,a',
-                        classes: 'bttn-jelly'
-                      }, {
-                        title: 'Stretch',
-                        selector: 'button,a',
-                        classes: 'bttn-stretch'
-                      }, {
-                        title: 'Minimal',
-                        selector: 'button,a',
-                        classes: 'bttn-minimal'
-                      }, {
-                        title: 'Bordered',
-                        selector: 'button,a',
-                        classes: 'bttn-bordered'
-                      }, {
-                        title: 'Simple',
-                        selector: 'button,a',
-                        classes: 'bttn-simple'
-                      }]
-                    },
-                    {
-                      title: "Color",
-                      items: [{
-                        title: "Primary",
-                        selector: "button,a",
-                        classes: "bttn-primary"
-                      }, {
-                        title: "Warning",
-                        selector: "button,a",
-                        classes: "bttn-warning"
-                      }, {
-                        title: "Danger",
-                        selector: "button,a",
-                        classes: "bttn-danger"
-                      }, {
-                        title: "Success",
-                        selector: "button,a",
-                        classes: "bttn-success"
-                      }, {
-                        title: "Royal",
-                        selector: "button,a",
-                        classes: "bttn-royal"
-                      }, {
-                        title: "Default",
-                        selector: "button,a",
-                        classes: "bttn-default"
-                      }]
-                    },
-                    {
-                      title: "Size",
-                      items: [{
-                        title: "Extra Small",
-                        selector: "button,a",
-                        classes: "bttn-xs"
-                      }, {
-                        title: "Small",
-                        selector: "button,a",
-                        classes: "bttn-sm"
-                      }, {
-                        title: "Medium",
-                        selector: "button,a",
-                        classes: "bttn-md"
-                      }, {
-                        title: "Large",
-                        selector: "button,a",
-                        classes: "bttn-lg"
-                      }]
-                    }, {
-                      title: "Block",
-                      selector: "button,a",
-                      classes: "bttn-block"
-                    }
-
-
-                  ]
-                }],
-        */
-
+        style_formats: [{
+          title: "AOS",
+          items: [{
+              title: "Fade",
+              items: [{
+                title: 'fade',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade'
+                }
+              }, {
+                title: 'fade-up',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-up'
+                }
+              }, {
+                title: 'fade-down',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-down'
+                }
+              }, {
+                title: 'fade-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-left'
+                }
+              }, {
+                title: 'fade-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-right'
+                }
+              }, {
+                title: 'fade-up-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-up-right'
+                }
+              }, {
+                title: 'fade-up-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-up-left'
+                }
+              }, {
+                title: 'fade-down-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-down-right'
+                }
+              }, {
+                title: 'fade-down-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'fade-down-left'
+                }
+              }]
+            },
+            {
+              title: "Flip",
+              items: [{
+                title: 'flip-up',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'flip-up'
+                }
+              }, {
+                title: 'flip-down',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'flip-down'
+                }
+              }, {
+                title: 'flip-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'flip-left'
+                }
+              }, {
+                title: 'flip-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'flip-right'
+                }
+              }]
+            },
+            {
+              title: "Slide",
+              items: [{
+                title: 'slide-up',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'slide-up'
+                }
+              }, {
+                title: 'slide-down',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'slide-down'
+                }
+              }, {
+                title: 'slide-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'slide-left'
+                }
+              }, {
+                title: 'slide-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'slide-right'
+                }
+              }]
+            }, {
+              title: "Zoom",
+              items: [{
+                title: 'zoom-in',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-in'
+                }
+              }, {
+                title: 'zoom-in-up',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-in-up'
+                }
+              }, {
+                title: 'zoom-in-down',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-in-down'
+                }
+              }, {
+                title: 'zoom-in-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-in-left'
+                }
+              }, {
+                title: 'zoom-in-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-in-right'
+                }
+              }, {
+                title: 'zoom-out',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-out'
+                }
+              }, {
+                title: 'zoom-out-up',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-out-up'
+                }
+              }, {
+                title: 'zoom-out-down',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-out-down'
+                }
+              }, {
+                title: 'zoom-out-left',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-out-left'
+                }
+              }, {
+                title: 'zoom-out-right',
+                selector: '*',
+                attributes: {
+                  'data-aos': 'zoom-out-right'
+                }
+              }]
+            }
+          ]
+        }],
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
-
         setup: editor => {
           editor.that = this;
           editor.on('init', function() {

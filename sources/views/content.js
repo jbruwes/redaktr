@@ -14,7 +14,7 @@ export default class ContentView extends JetView {
                 $$("ace-content").getEditor().resize();
                 break;
               case 'tinymce':
-                $$("tinymce").getEditor().contentWindow.AOS.refresh();
+                $$("tinymce").getEditor().contentWindow.AOS.refreshHard();
                 break;
             }
           }
@@ -55,7 +55,7 @@ export default class ContentView extends JetView {
 								on: {
 									onChange: _ => {
 										if ($$("tabbar").getValue() === 'ace-content') $$("ace-content").$scope.setValue($$("tinymce").getValue());
-										else $$("tinymce").getEditor().contentWindow.AOS.refresh();
+										else $$("tinymce").getEditor().contentWindow.AOS.refreshHard();
 									}
 								}
 							}
