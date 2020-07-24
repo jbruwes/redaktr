@@ -160,60 +160,69 @@ export default class TinymceView extends JetView {
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
         style_formats: [{
-          title: "AOS",
+          title: "Animation",
           items: [{
               title: "Fade",
               items: [{
                 title: 'fade',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade'
                 }
               }, {
                 title: 'fade-up',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-up'
                 }
               }, {
                 title: 'fade-down',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-down'
                 }
               }, {
                 title: 'fade-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-left'
                 }
               }, {
                 title: 'fade-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-right'
                 }
               }, {
                 title: 'fade-up-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-up-right'
                 }
               }, {
                 title: 'fade-up-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-up-left'
                 }
               }, {
                 title: 'fade-down-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-down-right'
                 }
               }, {
                 title: 'fade-down-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'fade-down-left'
                 }
@@ -224,24 +233,28 @@ export default class TinymceView extends JetView {
               items: [{
                 title: 'flip-up',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'flip-up'
                 }
               }, {
                 title: 'flip-down',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'flip-down'
                 }
               }, {
                 title: 'flip-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'flip-left'
                 }
               }, {
                 title: 'flip-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'flip-right'
                 }
@@ -252,24 +265,28 @@ export default class TinymceView extends JetView {
               items: [{
                 title: 'slide-up',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'slide-up'
                 }
               }, {
                 title: 'slide-down',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'slide-down'
                 }
               }, {
                 title: 'slide-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'slide-left'
                 }
               }, {
                 title: 'slide-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'slide-right'
                 }
@@ -279,60 +296,70 @@ export default class TinymceView extends JetView {
               items: [{
                 title: 'zoom-in',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-in'
                 }
               }, {
                 title: 'zoom-in-up',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-in-up'
                 }
               }, {
                 title: 'zoom-in-down',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-in-down'
                 }
               }, {
                 title: 'zoom-in-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-in-left'
                 }
               }, {
                 title: 'zoom-in-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-in-right'
                 }
               }, {
                 title: 'zoom-out',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-out'
                 }
               }, {
                 title: 'zoom-out-up',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-out-up'
                 }
               }, {
                 title: 'zoom-out-down',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-out-down'
                 }
               }, {
                 title: 'zoom-out-left',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-out-left'
                 }
               }, {
                 title: 'zoom-out-right',
                 selector: '*',
+                classes: 'aos-animate',
                 attributes: {
                   'data-aos': 'zoom-out-right'
                 }
@@ -345,16 +372,19 @@ export default class TinymceView extends JetView {
         setup: editor => {
           editor.that = this;
           editor.on('init', function() {
-            var scriptId = editor.dom.uniqueId();
-            var scriptElm = editor.dom.create('script', {
-              id: scriptId,
+            var aos = editor.dom.create('script', {
+              id: editor.dom.uniqueId(),
               type: 'text/javascript',
               src: '//cdn.jsdelivr.net/npm/aos/dist/aos.js'
             });
-            editor.getDoc().getElementsByTagName('head')[0].appendChild(scriptElm);
-            scriptElm.addEventListener('load', () => {
-              editor.contentWindow.AOS.init();
-            })
+            aos.addEventListener('load', _ => editor.contentWindow.AOS.init());
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
+            /*var tilt = editor.dom.create('script', {
+              id: editor.dom.uniqueId(),
+              type: 'text/javascript',
+              src: '//cdn.jsdelivr.net/npm/vanilla-tilt/dist/vanilla-tilt.min.js'
+            });
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(tilt);*/
           });
           var getSubmenuItems = (id, path) => {
             var items = [];
@@ -648,8 +678,16 @@ export default class TinymceView extends JetView {
       tinymce.setContent(val);
       tinymce.undoManager.clear();
       tinymce.nodeChanged();
-      tinymce.on("Change", this.getParentView()._save);
-      tinymce.on("SetContent", this.getParentView()._save);
+      var save = _ => {
+        tinymce.contentWindow.AOS.refreshHard();
+        this.getParentView()._save(null, this.getParentView());
+      }
+
+      tinymce.on("Change", save);
+      tinymce.on("SetContent", save);
+
+      //tinymce.on("Change", this.getParentView()._save);
+      //tinymce.on("SetContent", this.getParentView()._save);
     });
   }
 }
