@@ -395,7 +395,7 @@ export default class TinymceView extends JetView {
             var newPath = null;
             do {
               item = $$("tree").getItem(id);
-              if (item.visible) {
+              //if (item.visible) {
                 child = $$("tree").getFirstChildId(id);
                 value = item.value.replace(/[\""]/g, '\\"');
                 //newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
@@ -410,7 +410,7 @@ export default class TinymceView extends JetView {
                 }
                 item = item + '}';
                 items.push(item);
-              }
+              //}
               id = $$("tree").getNextSiblingId(id);
             } while (id);
             items = items.join();
