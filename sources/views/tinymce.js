@@ -44,7 +44,7 @@ export default class TinymceView extends JetView {
           {
             title: 'carousel',
             description: 'A carousel template',
-            content: '<div class="mceNonEditable" data-carousel="" data-pager="false"><div class="ui basic vertical segment" style="height:100vh;background-image:url();background-size:cover;"><div class="ui active very light dimmer"><div class="content"><h2>First slide</h2></div></div></div><div class="ui basic vertical segment" style="height:100vh;background-image:url();background-size:cover;" hidden><div class="ui active very light dimmer"><div class="content"><h2>Second slide</h2></div></div></div><div class="ui basic vertical segment" style="height:100vh;background-image:url();background-size:cover;" hidden><div class="ui active very light dimmer"><div class="content"><h2>Third slide</h2></div></div></div></div>'
+            content: '<div class="mceNonEditable" data-carousel="" data-pager="false" data-auto=""><div class="ui basic vertical segment" style="height: 100vh; background-size: cover;"><div class="ui active very light dimmer"><div class="content"><a class="ui huge inverted header" href="#">&nbsp;</a></div></div></div></div>'
           },
           {
             title: 'particles',

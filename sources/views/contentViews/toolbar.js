@@ -15,19 +15,27 @@ export default class ToolbarView extends JetView {
               var parent = $$("tree").getParentId(sel);
               if (!parent) parent = sel;
               item = $$("tree").add({
-                link: '',
-                text: '',
-                date: '',
+                url: '',
+                description: '',
+                title: '',
+                lastmod: '',
+                keywords: '',
                 image: '',
+                priority: '',
+                changefreq: '',
                 visible: true,
                 value: "article-" + webix.uid()
               }, parent === sel ? 0 : $$("tree").getBranchIndex(sel) + 1, parent);
               $$("tree").open(parent);
             } else item = $$("tree").add({
-              link: '',
-              text: '',
-              date: '',
+              url: '',
+              description: '',
+              title: '',
+              lastmod: '',
+              keywords: '',
               image: '',
+              priority: '',
+              changefreq: '',
               visible: true,
               value: "article-" + webix.uid()
             });
