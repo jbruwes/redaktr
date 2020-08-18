@@ -171,6 +171,8 @@ export default class PropertiesView extends JetView {
           {
             view: "combo",
             id: "icon",
+            label: '<span class="mdi mdi-dark mdi-24px mdi-postage-stamp"></span>',
+            labelWidth: 33,
             on: {
               onChange: value => {
                 var id, item;
