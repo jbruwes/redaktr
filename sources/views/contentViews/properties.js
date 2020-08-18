@@ -170,15 +170,20 @@ export default class PropertiesView extends JetView {
           },
           {
             view: "combo",
-            id: "field_m",
-            //label:"Combo", 
-            //value:"One", 
+            id: "icon",
+            on: {
+              onChange: value => {
+                var id, item;
+                if (!this.getParentView()._lockProperties) {
+                  id = $$("tree").getSelectedId();
+                  item = $$("tree").getItem(id);
+                  item.icon = value;
+                  $$("tree").updateItem(id, item);
+                }
+              }
+            },
             options: {
-              //view:"suggest", // для обычного suggest list можно не указывать
-              //filter:function(item, value){ ...},
               body: {
-                // настройки для листа
-                //view:"list", // если выбираете лист, тип можно не указывать
                 data: [
                   "accessible",
                   "american sign language interpreting",

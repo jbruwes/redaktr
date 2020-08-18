@@ -18,6 +18,7 @@ export default class ToolbarView extends JetView {
                 url: '',
                 description: '',
                 title: '',
+                icon: '',
                 lastmod: '',
                 keywords: '',
                 image: '',

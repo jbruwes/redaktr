@@ -87,6 +87,7 @@ export default class TreeView extends JetView {
           $$('description').setValue(item.description);
           $$('keywords').setValue(item.keywords);
           $$('title').setValue(item.title);
+          $$('icon').setValue(item.icon);
           $$("uploader").files.data.clearAll();
           if (item.image) $$("uploader").addFile({
             name: item.image.split("/").pop(),
