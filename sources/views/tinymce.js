@@ -375,14 +375,14 @@ export default class TinymceView extends JetView {
             var aos = editor.dom.create('script', {
               id: editor.dom.uniqueId(),
               type: 'text/javascript',
-              src: '//cdn.jsdelivr.net/npm/aos/dist/aos.js'
+              src: '//unpkg.com/aos/dist/aos.js'
             });
             aos.addEventListener('load', _ => editor.contentWindow.AOS.init());
             editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
             /*var tilt = editor.dom.create('script', {
               id: editor.dom.uniqueId(),
               type: 'text/javascript',
-              src: '//cdn.jsdelivr.net/npm/vanilla-tilt/dist/vanilla-tilt.min.js'
+              src: '//unpkg.com/vanilla-tilt/dist/vanilla-tilt.min.js'
             });
             editor.getDoc().getElementsByTagName('head')[0].appendChild(tilt);*/
           });

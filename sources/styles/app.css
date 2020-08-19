@@ -1,4 +1,4 @@
-@import url("//cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.3.95/css/materialdesignicons.min.css");
+@import url("https://unpkg.com/@mdi/font@4.3.95/css/materialdesignicons.min.css");
 
 .webixappstart {
     opacity: 0;
