@@ -44,7 +44,7 @@ export default class TinymceView extends JetView {
           {
             title: 'slider',
             description: 'data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="mceNonEditable" data-id="slider" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height: 100vh; background-size: cover;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header" href="#"><span class="sub header"><!-- --></span></a></div></div></div>'
+            content: '<div class="mceNonEditable" data-id="slider" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header" href="#"><span class="sub header"><!-- --></span></a></div></div></div>'
           },
           {
             title: 'particles',
