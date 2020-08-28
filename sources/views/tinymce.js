@@ -37,14 +37,14 @@ export default class TinymceView extends JetView {
             content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
           },
           {
-            title: 'carousel',
+            title: 'card deck',
             description: 'data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="carousel" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path=""><div class="ui column"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header" href="#"><span class="sub header"><!-- --></span></a></div></div></div></div>'
+            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path=""><div class="ui column"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header" href="#"><span class="sub header"><!-- --></span></a></div></div></div></div>'
           },
           {
-            title: 'slider',
+            title: 'carousel',
             description: 'data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="mceNonEditable" data-id="slider" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header" href="#"><span class="sub header"><!-- --></span></a></div></div></div>'
+            content: '<div class="mceNonEditable" data-id="carousel" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header" href="#"><span class="sub header"><!-- --></span></a></div></div></div>'
           },
           {
             title: 'particles',
