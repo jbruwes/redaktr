@@ -44,12 +44,12 @@ export default class TinymceView extends JetView {
           {
             title: 'carousel',
             description: 'data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="mceNonEditable" data-id="carousel" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header" href="#"><span class="sub header"><!-- --></span></a></div></div></div>'
+            content: '<div class="mceNonEditable" data-id="carousel" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header"><span class="sub header"><!-- --></span></a></div></div></div>'
           },
           {
             title: 'particles',
-            description: 'A particles template',
-            content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical segment mceNonEditable" style="height:100vh;background-image:url();background-size:cover;" data-particles="default"><div class="ui active very light center dimmer"><div class="content"><h2>Header</h2>particles example</div></div></div>'
+            description: 'data-particles data-auto data-path',
+            content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" class="ui tertiary inverted basic vertical segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer"><a class="ui massive inverted icon header"><span class="sub header"><!-- --></span></a></div></div>'
           }
         ],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
