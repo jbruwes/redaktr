@@ -170,213 +170,356 @@ export default class TinymceView extends JetView {
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
         style_formats: [{
-          title: "Animation",
-          items: [{
-              title: "Fade",
+            title: "Animation",
+            items: [{
+                title: "Fade",
+                items: [{
+                  title: 'fade',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade'
+                  }
+                }, {
+                  title: 'fade-up',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-up'
+                  }
+                }, {
+                  title: 'fade-down',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-down'
+                  }
+                }, {
+                  title: 'fade-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-left'
+                  }
+                }, {
+                  title: 'fade-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-right'
+                  }
+                }, {
+                  title: 'fade-up-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-up-right'
+                  }
+                }, {
+                  title: 'fade-up-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-up-left'
+                  }
+                }, {
+                  title: 'fade-down-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-down-right'
+                  }
+                }, {
+                  title: 'fade-down-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'fade-down-left'
+                  }
+                }]
+              },
+              {
+                title: "Flip",
+                items: [{
+                  title: 'flip-up',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'flip-up'
+                  }
+                }, {
+                  title: 'flip-down',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'flip-down'
+                  }
+                }, {
+                  title: 'flip-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'flip-left'
+                  }
+                }, {
+                  title: 'flip-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'flip-right'
+                  }
+                }]
+              },
+              {
+                title: "Slide",
+                items: [{
+                  title: 'slide-up',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'slide-up'
+                  }
+                }, {
+                  title: 'slide-down',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'slide-down'
+                  }
+                }, {
+                  title: 'slide-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'slide-left'
+                  }
+                }, {
+                  title: 'slide-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'slide-right'
+                  }
+                }]
+              }, {
+                title: "Zoom",
+                items: [{
+                  title: 'zoom-in',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-in'
+                  }
+                }, {
+                  title: 'zoom-in-up',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-in-up'
+                  }
+                }, {
+                  title: 'zoom-in-down',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-in-down'
+                  }
+                }, {
+                  title: 'zoom-in-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-in-left'
+                  }
+                }, {
+                  title: 'zoom-in-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-in-right'
+                  }
+                }, {
+                  title: 'zoom-out',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-out'
+                  }
+                }, {
+                  title: 'zoom-out-up',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-out-up'
+                  }
+                }, {
+                  title: 'zoom-out-down',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-out-down'
+                  }
+                }, {
+                  title: 'zoom-out-left',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-out-left'
+                  }
+                }, {
+                  title: 'zoom-out-right',
+                  selector: '*',
+                  classes: 'aos-init aos-animate',
+                  attributes: {
+                    'data-aos': 'zoom-out-right'
+                  }
+                }]
+              }
+            ]
+          },
+          {
+            title: "Hover",
+            items: [{
+              title: "2D Transitions",
               items: [{
-                title: 'fade',
+                title: 'Grow',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade'
-                }
+                classes: 'hvr-grow'
               }, {
-                title: 'fade-up',
+                title: 'Shrink',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-up'
-                }
+                classes: 'hvr-shrink'
               }, {
-                title: 'fade-down',
+                title: 'Pulse',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-down'
-                }
+                classes: 'hvr-pulse'
               }, {
-                title: 'fade-left',
+                title: 'Pulse Grow',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-left'
-                }
+                classes: 'hvr-pulse-grow'
               }, {
-                title: 'fade-right',
+                title: 'Pulse Shrink',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-right'
-                }
+                classes: 'hvr-pulse-shrink'
               }, {
-                title: 'fade-up-right',
+                title: 'Push',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-up-right'
-                }
+                classes: 'hvr-push'
               }, {
-                title: 'fade-up-left',
+                title: 'Pop',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-up-left'
-                }
+                classes: 'hvr-pop'
               }, {
-                title: 'fade-down-right',
+                title: 'Bounce In',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-down-right'
-                }
+                classes: 'hvr-bounce-in'
               }, {
-                title: 'fade-down-left',
+                title: 'Bounce Out',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'fade-down-left'
-                }
-              }]
-            },
-            {
-              title: "Flip",
-              items: [{
-                title: 'flip-up',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'flip-up'
-                }
+                classes: 'hvr-bounce-out'
               }, {
-                title: 'flip-down',
+                title: 'Rotate',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'flip-down'
-                }
+                classes: 'hvr-rotate'
               }, {
-                title: 'flip-left',
+                title: 'Grow Rotate',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'flip-left'
-                }
+                classes: 'hvr-grow-rotate'
               }, {
-                title: 'flip-right',
+                title: 'Float',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'flip-right'
-                }
-              }]
-            },
-            {
-              title: "Slide",
-              items: [{
-                title: 'slide-up',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'slide-up'
-                }
+                classes: 'hvr-float'
               }, {
-                title: 'slide-down',
+                title: 'Sink',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'slide-down'
-                }
+                classes: 'hvr-sink'
               }, {
-                title: 'slide-left',
+                title: 'Bob',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'slide-left'
-                }
+                classes: 'hvr-bob'
               }, {
-                title: 'slide-right',
+                title: 'Hang',
                 selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'slide-right'
-                }
+                classes: 'hvr-hang'
+              }, {
+                title: 'Skew',
+                selector: '*',
+                classes: 'hvr-skew'
+              }, {
+                title: 'Skew Forward',
+                selector: '*',
+                classes: 'hvr-skew-forward'
+              }, {
+                title: 'Skew Backward',
+                selector: '*',
+                classes: 'hvr-skew-backward'
+              }, {
+                title: 'Wobble Vertical',
+                selector: '*',
+                classes: 'hvr-wobble-vertical'
+              }, {
+                title: 'Wobble Horizontal',
+                selector: '*',
+                classes: 'hvr-wobble-horizontal'
+              }, {
+                title: 'Wobble To Bottom Right',
+                selector: '*',
+                classes: 'hvr-wobble-to-bottom-right'
+              }, {
+                title: 'Wobble To Top Right',
+                selector: '*',
+                classes: 'hvr-wobble-to-top-right'
+              }, {
+                title: 'Wobble Top',
+                selector: '*',
+                classes: 'hvr-wobble-top'
+              }, {
+                title: 'Wobble Bottom',
+                selector: '*',
+                classes: 'hvr-wobble-bottom'
+              }, {
+                title: 'Wobble Skew',
+                selector: '*',
+                classes: 'hvr-wobble-skew'
+              }, {
+                title: 'Buzz',
+                selector: '*',
+                classes: 'hvr-buzz'
+              }, {
+                title: 'Buzz Out',
+                selector: '*',
+                classes: 'hvr-buzz-out'
+              }, {
+                title: 'Forward',
+                selector: '*',
+                classes: 'hvr-forward'
+              }, {
+                title: 'Backward',
+                selector: '*',
+                classes: 'hvr-backward'
               }]
             }, {
-              title: "Zoom",
-              items: [{
-                title: 'zoom-in',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-in'
-                }
-              }, {
-                title: 'zoom-in-up',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-in-up'
-                }
-              }, {
-                title: 'zoom-in-down',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-in-down'
-                }
-              }, {
-                title: 'zoom-in-left',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-in-left'
-                }
-              }, {
-                title: 'zoom-in-right',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-in-right'
-                }
-              }, {
-                title: 'zoom-out',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-out'
-                }
-              }, {
-                title: 'zoom-out-up',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-out-up'
-                }
-              }, {
-                title: 'zoom-out-down',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-out-down'
-                }
-              }, {
-                title: 'zoom-out-left',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-out-left'
-                }
-              }, {
-                title: 'zoom-out-right',
-                selector: '*',
-                classes: 'aos-init aos-animate',
-                attributes: {
-                  'data-aos': 'zoom-out-right'
-                }
-              }]
-            }
-          ]
-        }],
+              title: "Background Transitions",
+              items: [{title:'Fade',selector:'*',classes:'hvr-fade'},{title:'Back Pulse',selector:'*',classes:'hvr-back-pulse'},{title:'Sweep To Right',selector:'*',classes:'hvr-sweep-to-right'},{title:'Sweep To Left',selector:'*',classes:'hvr-sweep-to-left'},{title:'Sweep To Bottom',selector:'*',classes:'hvr-sweep-to-bottom'},{title:'Sweep To Top',selector:'*',classes:'hvr-sweep-to-top'},{title:'Bounce To Right',selector:'*',classes:'hvr-bounce-to-right'},{title:'Bounce To Left',selector:'*',classes:'hvr-bounce-to-left'},{title:'Bounce To Bottom',selector:'*',classes:'hvr-bounce-to-bottom'},{title:'Bounce To Top',selector:'*',classes:'hvr-bounce-to-top'},{title:'Radial Out',selector:'*',classes:'hvr-radial-out'},{title:'Radial In',selector:'*',classes:'hvr-radial-in'},{title:'Rectangle In',selector:'*',classes:'hvr-rectangle-in'},{title:'Rectangle Out',selector:'*',classes:'hvr-rectangle-out'},{title:'Shutter In Horizontal',selector:'*',classes:'hvr-shutter-in-horizontal'},{title:'Shutter Out Horizontal',selector:'*',classes:'hvr-shutter-out-horizontal'},{title:'Shutter In Vertical',selector:'*',classes:'hvr-shutter-in-vertical'},{title:'Shutter Out Vertical',selector:'*',classes:'hvr-shutter-out-vertical'}]
+            }, {
+              title: "Border Transitions",
+              items: [{title:'Border Fade',selector:'*',classes:'hvr-border-fade'},{title:'Hollow',selector:'*',classes:'hvr-hollow'},{title:'Trim',selector:'*',classes:'hvr-trim'},{title:'Ripple Out',selector:'*',classes:'hvr-ripple-out'},{title:'Ripple In',selector:'*',classes:'hvr-ripple-in'},{title:'Outline Out',selector:'*',classes:'hvr-outline-out'},{title:'Outline In',selector:'*',classes:'hvr-outline-in'},{title:'Round Corners',selector:'*',classes:'hvr-round-corners'},{title:'Underline From Left',selector:'*',classes:'hvr-underline-from-left'},{title:'Underline From Center',selector:'*',classes:'hvr-underline-from-center'},{title:'Underline From Right',selector:'*',classes:'hvr-underline-from-right'},{title:'Overline From Left',selector:'*',classes:'hvr-overline-from-left'},{title:'Overline From Center',selector:'*',classes:'hvr-overline-from-center'},{title:'Overline From Right',selector:'*',classes:'hvr-overline-from-right'},{title:'Reveal',selector:'*',classes:'hvr-reveal'},{title:'Underline Reveal',selector:'*',classes:'hvr-underline-reveal'},{title:'Overline Reveal',selector:'*',classes:'hvr-overline-reveal'}]
+            }, {
+              title: "Shadow/Glow Transitions",
+              items: [{title:'Glow',selector:'*',classes:'hvr-glow'},{title:'Shadow',selector:'*',classes:'hvr-shadow'},{title:'Grow Shadow',selector:'*',classes:'hvr-grow-shadow'},{title:'Box Shadow Outset',selector:'*',classes:'hvr-box-shadow-outset'},{title:'Box Shadow Inset',selector:'*',classes:'hvr-box-shadow-inset'},{title:'Float Shadow',selector:'*',classes:'hvr-float-shadow'},{title:'Shadow Radial',selector:'*',classes:'hvr-shadow-radial'}]
+            }, {
+              title: "Speech Bubbles",
+              items: [{title:'Bubble Top',selector:'*',classes:'hvr-bubble-top'},{title:'Bubble Right',selector:'*',classes:'hvr-bubble-right'},{title:'Bubble Bottom',selector:'*',classes:'hvr-bubble-bottom'},{title:'Bubble Left',selector:'*',classes:'hvr-bubble-left'},{title:'Bubble Float Top',selector:'*',classes:'hvr-bubble-float-top'},{title:'Bubble Float Right',selector:'*',classes:'hvr-bubble-float-right'},{title:'Bubble Float Bottom',selector:'*',classes:'hvr-bubble-float-bottom'},{title:'Bubble Float Left',selector:'*',classes:'hvr-bubble-float-left'}]
+            }, {
+              title: "Icons",
+              items: [{title:'Icon Back',selector:'*',classes:'hvr-icon-back'},{title:'Icon Forward',selector:'*',classes:'hvr-icon-forward'},{title:'Icon Down',selector:'*',classes:'hvr-icon-down'},{title:'Icon Up',selector:'*',classes:'hvr-icon-up'},{title:'Icon Spin',selector:'*',classes:'hvr-icon-spin'},{title:'Icon Drop',selector:'*',classes:'hvr-icon-drop'},{title:'Icon Fade',selector:'*',classes:'hvr-icon-fade'},{title:'Icon Float Away',selector:'*',classes:'hvr-icon-float-away'},{title:'Icon Sink Away',selector:'*',classes:'hvr-icon-sink-away'},{title:'Icon Grow',selector:'*',classes:'hvr-icon-grow'},{title:'Icon Shrink',selector:'*',classes:'hvr-icon-shrink'},{title:'Icon Pulse',selector:'*',classes:'hvr-icon-pulse'},{title:'Icon Pulse Grow',selector:'*',classes:'hvr-icon-pulse-grow'},{title:'Icon Pulse Shrink',selector:'*',classes:'hvr-icon-pulse-shrink'},{title:'Icon Push',selector:'*',classes:'hvr-icon-push'},{title:'Icon Pop',selector:'*',classes:'hvr-icon-pop'},{title:'Icon Bounce',selector:'*',classes:'hvr-icon-bounce'},{title:'Icon Rotate',selector:'*',classes:'hvr-icon-rotate'},{title:'Icon Grow Rotate',selector:'*',classes:'hvr-icon-grow-rotate'},{title:'Icon Float',selector:'*',classes:'hvr-icon-float'},{title:'Icon Sink',selector:'*',classes:'hvr-icon-sink'},{title:'Icon Bob',selector:'*',classes:'hvr-icon-bob'},{title:'Icon Hang',selector:'*',classes:'hvr-icon-hang'},{title:'Icon Wobble Horizontal',selector:'*',classes:'hvr-icon-wobble-horizontal'},{title:'Icon Wobble Vertical',selector:'*',classes:'hvr-icon-wobble-vertical'},{title:'Icon Buzz',selector:'*',classes:'hvr-icon-buzz'},{title:'Icon Buzz Out',selector:'*',classes:'hvr-icon-buzz-out'}]
+            }, {
+              title: "Curls",
+              items: [{title:'Curl Top Left',selector:'*',classes:'hvr-curl-top-left'},{title:'Curl Top Right',selector:'*',classes:'hvr-curl-top-right'},{title:'Curl Bottom Right',selector:'*',classes:'hvr-curl-bottom-right'},{title:'Curl Bottom Left',selector:'*',classes:'hvr-curl-bottom-left'}]
+            }]
+
+          }
+        ],
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
         //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
         setup: editor => {
@@ -406,20 +549,20 @@ export default class TinymceView extends JetView {
             do {
               item = $$("tree").getItem(id);
               //if (item.visible) {
-                child = $$("tree").getFirstChildId(id);
-                value = item.value.replace(/[\""]/g, '\\"');
-                //newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
-                newPath = path + value.replace(/ /g, "_") + '/';
-                children = child ? getSubmenuItems(child, newPath) : null;
-                item = '{"type":"menuitem","text":"' + value + '",onAction:function(){""===tinyMCE.activeEditor.selection.getContent()?tinyMCE.execCommand("mceInsertContent",!1,"<a href=\\"' + newPath + '\\">' + value + '</a>"):tinyMCE.execCommand("mceInsertLink",!1,"' + newPath + '")},"icon":';
-                if (children) {
-                  item = item + '"chevron-right",';
-                  item = item + '"getSubmenuItems":function(){return ' + children + '}';
-                } else {
-                  item = item + '"link"';
-                }
-                item = item + '}';
-                items.push(item);
+              child = $$("tree").getFirstChildId(id);
+              value = item.value.replace(/[\""]/g, '\\"');
+              //newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
+              newPath = path + value.replace(/ /g, "_") + '/';
+              children = child ? getSubmenuItems(child, newPath) : null;
+              item = '{"type":"menuitem","text":"' + value + '",onAction:function(){""===tinyMCE.activeEditor.selection.getContent()?tinyMCE.execCommand("mceInsertContent",!1,"<a href=\\"' + newPath + '\\">' + value + '</a>"):tinyMCE.execCommand("mceInsertLink",!1,"' + newPath + '")},"icon":';
+              if (children) {
+                item = item + '"chevron-right",';
+                item = item + '"getSubmenuItems":function(){return ' + children + '}';
+              } else {
+                item = item + '"link"';
+              }
+              item = item + '}';
+              items.push(item);
               //}
               id = $$("tree").getNextSiblingId(id);
             } while (id);
