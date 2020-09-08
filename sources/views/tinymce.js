@@ -39,22 +39,22 @@ export default class TinymceView extends JetView {
           {
             title: 'card deck',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path=""><div class="ui column"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header" href="#"><i class="icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div></div>'
+            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path=""><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header hvr-icon-wobble-vertical" href="#"><i class="hvr-icon icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div></div>'
           },
           {
             title: 'carousel',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="mceNonEditable" data-id="carousel" data-length="" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header"><span class="sub header"><!-- --></span></a></div></div></div>'
+            content: '<div class="mceNonEditable" data-id="carousel" data-length="" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><span class="sub header"><!-- --></span></a></div></div></div>'
           },
           {
             title: 'particles',
             description: 'data-particles data-auto data-path',
-            content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" class="ui tertiary inverted basic vertical segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer"><a class="ui massive inverted icon header"><span class="sub header"><!-- --></span></a></div></div>'
+            content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" class="ui tertiary inverted basic vertical segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><span class="sub header"><!-- --></span></a></div></div>'
           },
           {
             title: 'list',
             description: 'data-length data-auto data-path data-deep data-random',
-            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length=""><div class="item"><div class="ui small image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header" href="#"><i class="icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
+            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length=""><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div><div class="content" data-aos="fade-left"><a class="ui header hvr-icon-wobble-vertical" href="#"><i class="hvr-icon icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
           },
           {
             title: 'header',
@@ -500,22 +500,346 @@ export default class TinymceView extends JetView {
               }]
             }, {
               title: "Background Transitions",
-              items: [{title:'Fade',selector:'*',classes:'hvr-fade'},{title:'Back Pulse',selector:'*',classes:'hvr-back-pulse'},{title:'Sweep To Right',selector:'*',classes:'hvr-sweep-to-right'},{title:'Sweep To Left',selector:'*',classes:'hvr-sweep-to-left'},{title:'Sweep To Bottom',selector:'*',classes:'hvr-sweep-to-bottom'},{title:'Sweep To Top',selector:'*',classes:'hvr-sweep-to-top'},{title:'Bounce To Right',selector:'*',classes:'hvr-bounce-to-right'},{title:'Bounce To Left',selector:'*',classes:'hvr-bounce-to-left'},{title:'Bounce To Bottom',selector:'*',classes:'hvr-bounce-to-bottom'},{title:'Bounce To Top',selector:'*',classes:'hvr-bounce-to-top'},{title:'Radial Out',selector:'*',classes:'hvr-radial-out'},{title:'Radial In',selector:'*',classes:'hvr-radial-in'},{title:'Rectangle In',selector:'*',classes:'hvr-rectangle-in'},{title:'Rectangle Out',selector:'*',classes:'hvr-rectangle-out'},{title:'Shutter In Horizontal',selector:'*',classes:'hvr-shutter-in-horizontal'},{title:'Shutter Out Horizontal',selector:'*',classes:'hvr-shutter-out-horizontal'},{title:'Shutter In Vertical',selector:'*',classes:'hvr-shutter-in-vertical'},{title:'Shutter Out Vertical',selector:'*',classes:'hvr-shutter-out-vertical'}]
+              items: [{
+                title: 'Fade',
+                selector: '*',
+                classes: 'hvr-fade'
+              }, {
+                title: 'Back Pulse',
+                selector: '*',
+                classes: 'hvr-back-pulse'
+              }, {
+                title: 'Sweep To Right',
+                selector: '*',
+                classes: 'hvr-sweep-to-right'
+              }, {
+                title: 'Sweep To Left',
+                selector: '*',
+                classes: 'hvr-sweep-to-left'
+              }, {
+                title: 'Sweep To Bottom',
+                selector: '*',
+                classes: 'hvr-sweep-to-bottom'
+              }, {
+                title: 'Sweep To Top',
+                selector: '*',
+                classes: 'hvr-sweep-to-top'
+              }, {
+                title: 'Bounce To Right',
+                selector: '*',
+                classes: 'hvr-bounce-to-right'
+              }, {
+                title: 'Bounce To Left',
+                selector: '*',
+                classes: 'hvr-bounce-to-left'
+              }, {
+                title: 'Bounce To Bottom',
+                selector: '*',
+                classes: 'hvr-bounce-to-bottom'
+              }, {
+                title: 'Bounce To Top',
+                selector: '*',
+                classes: 'hvr-bounce-to-top'
+              }, {
+                title: 'Radial Out',
+                selector: '*',
+                classes: 'hvr-radial-out'
+              }, {
+                title: 'Radial In',
+                selector: '*',
+                classes: 'hvr-radial-in'
+              }, {
+                title: 'Rectangle In',
+                selector: '*',
+                classes: 'hvr-rectangle-in'
+              }, {
+                title: 'Rectangle Out',
+                selector: '*',
+                classes: 'hvr-rectangle-out'
+              }, {
+                title: 'Shutter In Horizontal',
+                selector: '*',
+                classes: 'hvr-shutter-in-horizontal'
+              }, {
+                title: 'Shutter Out Horizontal',
+                selector: '*',
+                classes: 'hvr-shutter-out-horizontal'
+              }, {
+                title: 'Shutter In Vertical',
+                selector: '*',
+                classes: 'hvr-shutter-in-vertical'
+              }, {
+                title: 'Shutter Out Vertical',
+                selector: '*',
+                classes: 'hvr-shutter-out-vertical'
+              }]
             }, {
               title: "Border Transitions",
-              items: [{title:'Border Fade',selector:'*',classes:'hvr-border-fade'},{title:'Hollow',selector:'*',classes:'hvr-hollow'},{title:'Trim',selector:'*',classes:'hvr-trim'},{title:'Ripple Out',selector:'*',classes:'hvr-ripple-out'},{title:'Ripple In',selector:'*',classes:'hvr-ripple-in'},{title:'Outline Out',selector:'*',classes:'hvr-outline-out'},{title:'Outline In',selector:'*',classes:'hvr-outline-in'},{title:'Round Corners',selector:'*',classes:'hvr-round-corners'},{title:'Underline From Left',selector:'*',classes:'hvr-underline-from-left'},{title:'Underline From Center',selector:'*',classes:'hvr-underline-from-center'},{title:'Underline From Right',selector:'*',classes:'hvr-underline-from-right'},{title:'Overline From Left',selector:'*',classes:'hvr-overline-from-left'},{title:'Overline From Center',selector:'*',classes:'hvr-overline-from-center'},{title:'Overline From Right',selector:'*',classes:'hvr-overline-from-right'},{title:'Reveal',selector:'*',classes:'hvr-reveal'},{title:'Underline Reveal',selector:'*',classes:'hvr-underline-reveal'},{title:'Overline Reveal',selector:'*',classes:'hvr-overline-reveal'}]
+              items: [{
+                title: 'Border Fade',
+                selector: '*',
+                classes: 'hvr-border-fade'
+              }, {
+                title: 'Hollow',
+                selector: '*',
+                classes: 'hvr-hollow'
+              }, {
+                title: 'Trim',
+                selector: '*',
+                classes: 'hvr-trim'
+              }, {
+                title: 'Ripple Out',
+                selector: '*',
+                classes: 'hvr-ripple-out'
+              }, {
+                title: 'Ripple In',
+                selector: '*',
+                classes: 'hvr-ripple-in'
+              }, {
+                title: 'Outline Out',
+                selector: '*',
+                classes: 'hvr-outline-out'
+              }, {
+                title: 'Outline In',
+                selector: '*',
+                classes: 'hvr-outline-in'
+              }, {
+                title: 'Round Corners',
+                selector: '*',
+                classes: 'hvr-round-corners'
+              }, {
+                title: 'Underline From Left',
+                selector: '*',
+                classes: 'hvr-underline-from-left'
+              }, {
+                title: 'Underline From Center',
+                selector: '*',
+                classes: 'hvr-underline-from-center'
+              }, {
+                title: 'Underline From Right',
+                selector: '*',
+                classes: 'hvr-underline-from-right'
+              }, {
+                title: 'Overline From Left',
+                selector: '*',
+                classes: 'hvr-overline-from-left'
+              }, {
+                title: 'Overline From Center',
+                selector: '*',
+                classes: 'hvr-overline-from-center'
+              }, {
+                title: 'Overline From Right',
+                selector: '*',
+                classes: 'hvr-overline-from-right'
+              }, {
+                title: 'Reveal',
+                selector: '*',
+                classes: 'hvr-reveal'
+              }, {
+                title: 'Underline Reveal',
+                selector: '*',
+                classes: 'hvr-underline-reveal'
+              }, {
+                title: 'Overline Reveal',
+                selector: '*',
+                classes: 'hvr-overline-reveal'
+              }]
             }, {
               title: "Shadow/Glow Transitions",
-              items: [{title:'Glow',selector:'*',classes:'hvr-glow'},{title:'Shadow',selector:'*',classes:'hvr-shadow'},{title:'Grow Shadow',selector:'*',classes:'hvr-grow-shadow'},{title:'Box Shadow Outset',selector:'*',classes:'hvr-box-shadow-outset'},{title:'Box Shadow Inset',selector:'*',classes:'hvr-box-shadow-inset'},{title:'Float Shadow',selector:'*',classes:'hvr-float-shadow'},{title:'Shadow Radial',selector:'*',classes:'hvr-shadow-radial'}]
+              items: [{
+                title: 'Glow',
+                selector: '*',
+                classes: 'hvr-glow'
+              }, {
+                title: 'Shadow',
+                selector: '*',
+                classes: 'hvr-shadow'
+              }, {
+                title: 'Grow Shadow',
+                selector: '*',
+                classes: 'hvr-grow-shadow'
+              }, {
+                title: 'Box Shadow Outset',
+                selector: '*',
+                classes: 'hvr-box-shadow-outset'
+              }, {
+                title: 'Box Shadow Inset',
+                selector: '*',
+                classes: 'hvr-box-shadow-inset'
+              }, {
+                title: 'Float Shadow',
+                selector: '*',
+                classes: 'hvr-float-shadow'
+              }, {
+                title: 'Shadow Radial',
+                selector: '*',
+                classes: 'hvr-shadow-radial'
+              }]
             }, {
               title: "Speech Bubbles",
-              items: [{title:'Bubble Top',selector:'*',classes:'hvr-bubble-top'},{title:'Bubble Right',selector:'*',classes:'hvr-bubble-right'},{title:'Bubble Bottom',selector:'*',classes:'hvr-bubble-bottom'},{title:'Bubble Left',selector:'*',classes:'hvr-bubble-left'},{title:'Bubble Float Top',selector:'*',classes:'hvr-bubble-float-top'},{title:'Bubble Float Right',selector:'*',classes:'hvr-bubble-float-right'},{title:'Bubble Float Bottom',selector:'*',classes:'hvr-bubble-float-bottom'},{title:'Bubble Float Left',selector:'*',classes:'hvr-bubble-float-left'}]
+              items: [{
+                title: 'Bubble Top',
+                selector: '*',
+                classes: 'hvr-bubble-top'
+              }, {
+                title: 'Bubble Right',
+                selector: '*',
+                classes: 'hvr-bubble-right'
+              }, {
+                title: 'Bubble Bottom',
+                selector: '*',
+                classes: 'hvr-bubble-bottom'
+              }, {
+                title: 'Bubble Left',
+                selector: '*',
+                classes: 'hvr-bubble-left'
+              }, {
+                title: 'Bubble Float Top',
+                selector: '*',
+                classes: 'hvr-bubble-float-top'
+              }, {
+                title: 'Bubble Float Right',
+                selector: '*',
+                classes: 'hvr-bubble-float-right'
+              }, {
+                title: 'Bubble Float Bottom',
+                selector: '*',
+                classes: 'hvr-bubble-float-bottom'
+              }, {
+                title: 'Bubble Float Left',
+                selector: '*',
+                classes: 'hvr-bubble-float-left'
+              }]
             }, {
               title: "Icons",
-              items: [{title:'Icon Back',selector:'*',classes:'hvr-icon-back'},{title:'Icon Forward',selector:'*',classes:'hvr-icon-forward'},{title:'Icon Down',selector:'*',classes:'hvr-icon-down'},{title:'Icon Up',selector:'*',classes:'hvr-icon-up'},{title:'Icon Spin',selector:'*',classes:'hvr-icon-spin'},{title:'Icon Drop',selector:'*',classes:'hvr-icon-drop'},{title:'Icon Fade',selector:'*',classes:'hvr-icon-fade'},{title:'Icon Float Away',selector:'*',classes:'hvr-icon-float-away'},{title:'Icon Sink Away',selector:'*',classes:'hvr-icon-sink-away'},{title:'Icon Grow',selector:'*',classes:'hvr-icon-grow'},{title:'Icon Shrink',selector:'*',classes:'hvr-icon-shrink'},{title:'Icon Pulse',selector:'*',classes:'hvr-icon-pulse'},{title:'Icon Pulse Grow',selector:'*',classes:'hvr-icon-pulse-grow'},{title:'Icon Pulse Shrink',selector:'*',classes:'hvr-icon-pulse-shrink'},{title:'Icon Push',selector:'*',classes:'hvr-icon-push'},{title:'Icon Pop',selector:'*',classes:'hvr-icon-pop'},{title:'Icon Bounce',selector:'*',classes:'hvr-icon-bounce'},{title:'Icon Rotate',selector:'*',classes:'hvr-icon-rotate'},{title:'Icon Grow Rotate',selector:'*',classes:'hvr-icon-grow-rotate'},{title:'Icon Float',selector:'*',classes:'hvr-icon-float'},{title:'Icon Sink',selector:'*',classes:'hvr-icon-sink'},{title:'Icon Bob',selector:'*',classes:'hvr-icon-bob'},{title:'Icon Hang',selector:'*',classes:'hvr-icon-hang'},{title:'Icon Wobble Horizontal',selector:'*',classes:'hvr-icon-wobble-horizontal'},{title:'Icon Wobble Vertical',selector:'*',classes:'hvr-icon-wobble-vertical'},{title:'Icon Buzz',selector:'*',classes:'hvr-icon-buzz'},{title:'Icon Buzz Out',selector:'*',classes:'hvr-icon-buzz-out'}]
+              items: [{
+                title: 'Icon Back',
+                selector: '*',
+                classes: 'hvr-icon-back'
+              }, {
+                title: 'Icon Forward',
+                selector: '*',
+                classes: 'hvr-icon-forward'
+              }, {
+                title: 'Icon Down',
+                selector: '*',
+                classes: 'hvr-icon-down'
+              }, {
+                title: 'Icon Up',
+                selector: '*',
+                classes: 'hvr-icon-up'
+              }, {
+                title: 'Icon Spin',
+                selector: '*',
+                classes: 'hvr-icon-spin'
+              }, {
+                title: 'Icon Drop',
+                selector: '*',
+                classes: 'hvr-icon-drop'
+              }, {
+                title: 'Icon Fade',
+                selector: '*',
+                classes: 'hvr-icon-fade'
+              }, {
+                title: 'Icon Float Away',
+                selector: '*',
+                classes: 'hvr-icon-float-away'
+              }, {
+                title: 'Icon Sink Away',
+                selector: '*',
+                classes: 'hvr-icon-sink-away'
+              }, {
+                title: 'Icon Grow',
+                selector: '*',
+                classes: 'hvr-icon-grow'
+              }, {
+                title: 'Icon Shrink',
+                selector: '*',
+                classes: 'hvr-icon-shrink'
+              }, {
+                title: 'Icon Pulse',
+                selector: '*',
+                classes: 'hvr-icon-pulse'
+              }, {
+                title: 'Icon Pulse Grow',
+                selector: '*',
+                classes: 'hvr-icon-pulse-grow'
+              }, {
+                title: 'Icon Pulse Shrink',
+                selector: '*',
+                classes: 'hvr-icon-pulse-shrink'
+              }, {
+                title: 'Icon Push',
+                selector: '*',
+                classes: 'hvr-icon-push'
+              }, {
+                title: 'Icon Pop',
+                selector: '*',
+                classes: 'hvr-icon-pop'
+              }, {
+                title: 'Icon Bounce',
+                selector: '*',
+                classes: 'hvr-icon-bounce'
+              }, {
+                title: 'Icon Rotate',
+                selector: '*',
+                classes: 'hvr-icon-rotate'
+              }, {
+                title: 'Icon Grow Rotate',
+                selector: '*',
+                classes: 'hvr-icon-grow-rotate'
+              }, {
+                title: 'Icon Float',
+                selector: '*',
+                classes: 'hvr-icon-float'
+              }, {
+                title: 'Icon Sink',
+                selector: '*',
+                classes: 'hvr-icon-sink'
+              }, {
+                title: 'Icon Bob',
+                selector: '*',
+                classes: 'hvr-icon-bob'
+              }, {
+                title: 'Icon Hang',
+                selector: '*',
+                classes: 'hvr-icon-hang'
+              }, {
+                title: 'Icon Wobble Horizontal',
+                selector: '*',
+                classes: 'hvr-icon-wobble-horizontal'
+              }, {
+                title: 'Icon Wobble Vertical',
+                selector: '*',
+                classes: 'hvr-icon-wobble-vertical'
+              }, {
+                title: 'Icon Buzz',
+                selector: '*',
+                classes: 'hvr-icon-buzz'
+              }, {
+                title: 'Icon Buzz Out',
+                selector: '*',
+                classes: 'hvr-icon-buzz-out'
+              }]
             }, {
               title: "Curls",
-              items: [{title:'Curl Top Left',selector:'*',classes:'hvr-curl-top-left'},{title:'Curl Top Right',selector:'*',classes:'hvr-curl-top-right'},{title:'Curl Bottom Right',selector:'*',classes:'hvr-curl-bottom-right'},{title:'Curl Bottom Left',selector:'*',classes:'hvr-curl-bottom-left'}]
+              items: [{
+                title: 'Curl Top Left',
+                selector: '*',
+                classes: 'hvr-curl-top-left'
+              }, {
+                title: 'Curl Top Right',
+                selector: '*',
+                classes: 'hvr-curl-top-right'
+              }, {
+                title: 'Curl Bottom Right',
+                selector: '*',
+                classes: 'hvr-curl-bottom-right'
+              }, {
+                title: 'Curl Bottom Left',
+                selector: '*',
+                classes: 'hvr-curl-bottom-left'
+              }]
             }]
 
           }
