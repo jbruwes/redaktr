@@ -968,7 +968,7 @@ export default class TinymceView extends JetView {
         autosave_retention: "2m",
 
 
-        extended_valid_elements: 'script[*],i[*],span[*]',
+        extended_valid_elements: 'script[*],i[*],span[*],img[*]',
         valid_children: "+body[style],+body[link],+h1[div],+h2[div],+h3[div],+h4[div],+h5[div],+h6[div]",
         toolbar_drawer: 'floating',
         branding: false,
