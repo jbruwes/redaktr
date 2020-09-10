@@ -54,7 +54,7 @@ export default class TinymceView extends JetView {
           {
             title: 'list',
             description: 'data-length data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length="" data-date="true"><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div><div class="content" data-aos="fade-left"><a class="ui header hvr-icon-wobble-vertical" href="#"><i class="hvr-icon icon " style="vertical-align:top"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
+            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length="" data-date="true"><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div><div class="content" data-aos="fade-left"><a class="ui header hvr-icon-wobble-vertical" href="#"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
           },
           {
             title: 'header',
