@@ -39,7 +39,7 @@ export default class TinymceView extends JetView {
           {
             title: 'card deck',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random',
-            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path=""><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header hvr-icon-wobble-vertical" href="#"><i class="hvr-icon icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div></div>'
+            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path=""><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div></div>'
           },
           {
             title: 'carousel',
@@ -54,7 +54,7 @@ export default class TinymceView extends JetView {
           {
             title: 'list',
             description: 'data-length data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length="" data-date="true"><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div><div class="content" data-aos="fade-left"><a class="ui header hvr-icon-wobble-vertical" href="#"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
+            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length="" data-date="true"><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div><div class="content" data-aos="fade-left"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
           },
           {
             title: 'header',
