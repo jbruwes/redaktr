@@ -60,8 +60,9 @@ export default class TinymceView extends JetView {
           },
           {
             title: 'header',
-            description: 'data-auto data-path',
-            content: '<div class="ui massive dividing header mceNonEditable" data-id="header" data-auto="" data-path=""><span class="content"><span class="sub header"><!-- --></span></span></div>'
+            description: 'data-auto data-path data-date',
+            //content: '<div class="ui basic segment mceNonEditable"><div class="ui massive dividing header" data-id="header" data-auto="" data-path="" data-date="false"><span class="content"><span class="sub header"><!-- --></span></span></div></div>'
+            content: '<div class="ui basic segment mceNonEditable" data-id="header" data-auto="" data-path="" data-date="false"><div class="content"><div class="ui massive dividing header fluid container hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></div></div></div>'
           }
         ],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
