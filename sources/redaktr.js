@@ -27,6 +27,7 @@ if (!BUILD_AS_MODULE) {
 //		Logins: {}
 //	});
 	webix.ready(_ => {
+    webix.i18n.setLocale("ru-RU");
 		webix.ui.fullScreen();
 		var app = new MyApp();
 //		app.S3 = new AWS.S3({

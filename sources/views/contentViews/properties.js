@@ -93,13 +93,13 @@ export default class PropertiesView extends JetView {
               }
             }
           },
-          /*{
-					template: "Last Modification",
+          {
+					template: "Date",
 					type: "section",
 					css: "webix_section"
 				}, {
 					view: "datepicker",
-					id: "lastmod",
+					id: "date",
 					label: "<span class='mdi mdi-dark mdi-24px mdi-calendar'></span>",
 					labelWidth: 33,
 					on: {
@@ -108,13 +108,14 @@ export default class PropertiesView extends JetView {
 							if (!this.getParentView()._lockProperties) {
 								id = $$("tree").getSelectedId();
 								item = $$("tree").getItem(id);
-								var format = webix.Date.dateToStr("%Y-%m-%d");
-								item.lastmod = format(value);
+								//var format = webix.Date.dateToStr("%Y-%m-%d");
+								//item.date = format(value);
+                item.date = value.toISOString();
 								$$("tree").updateItem(id, item);
 							}
 						}
 					}
-				},*/
+				},
           {
             template: "Change Frequency",
             type: "section",
