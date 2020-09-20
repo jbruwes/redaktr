@@ -3,6 +3,7 @@ import {
 } from "webix-jet";
 export default class TinymceView extends JetView {
   config() {
+    const header =  '<div class="content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span></a></div>';
     return {
       id: "tinymce",
       view: "tinymce5-editor",
@@ -39,19 +40,18 @@ export default class TinymceView extends JetView {
           {
             title: 'card deck',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path="" data-date="true"><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image"></div><div class="content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div></div>'
+            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path="" data-date="true"><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
           },
           {
             title: 'carousel',
-            description: 'data-length data-pager data-controls data-auto data-path data-deep data-random',
-            //content: '<div class="mceNonEditable" data-id="carousel" data-length="" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><span class="sub header"><!-- --></span></a></div></div></div>'
-            content: '<div class="mceNonEditable" data-id="carousel" data-length="" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path=""><div class="ui basic vertical fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><i class="hvr-icon icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
+            description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
+            content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" data-length="" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path="" data-date="false"><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
           },
           {
             title: 'particles',
-            description: 'data-particles data-auto data-path',
+            description: 'data-particles data-auto data-path data-date',
             //content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" class="ui tertiary inverted basic vertical segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><span class="sub header"><!-- --></span></a></div></div>'
-            content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><i class="hvr-icon icon "><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div>'
+            content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" data-date="false" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer">' + header + '</div></div>'
           },
           {
             title: 'list',
