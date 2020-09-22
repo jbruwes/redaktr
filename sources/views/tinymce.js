@@ -3,7 +3,10 @@ import {
 } from "webix-jet";
 export default class TinymceView extends JetView {
   config() {
-    const header =  '<div class="content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span></a></div>';
+    const header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span></a></div>',
+      singleData = 'data-auto="" data-path="" data-date="true"',
+      multiData = 'data-length="" data-deep="false" data-random="false"',
+      sliderData = 'data-pager="true" data-controls="true"';
     return {
       id: "tinymce",
       view: "tinymce5-editor",
@@ -40,29 +43,28 @@ export default class TinymceView extends JetView {
           {
             title: 'card deck',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" data-length="" data-deep="false" data-random="false" data-pager="true" data-controls="true" data-auto="" data-path="" data-date="true"><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
+            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
           },
           {
             title: 'carousel',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" data-length="" data-deep="false" data-random="false" data-pager="false" data-controls="true" data-auto="" data-path="" data-date="false"><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
+            content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
           },
           {
             title: 'particles',
             description: 'data-particles data-auto data-path data-date',
-            //content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" class="ui tertiary inverted basic vertical segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer"><a class="ui massive inverted icon header hvr-icon-wobble-vertical"><span class="sub header"><!-- --></span></a></div></div>'
-            content: '<div id="' + webix.uid() + '" data-id="particles" data-auto="" data-path="" data-date="false" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" style="height:100vh;background-size:cover;background-position:center;" data-particles="default"><div class="ui active very light center dimmer">' + header + '</div></div>'
+            content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" data-id="particles" ' + singleData + ' data-particles="default" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
           },
           {
-            title: 'list',
+            title: 'items',
             description: 'data-length data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui items mceNonEditable" data-id="list" data-deep="false" data-random="false" data-auto="" data-path="" data-length="" data-date="true"><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div><div class="content" data-aos="fade-left"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></a></div></div></div>'
+            content: '<div class="ui items mceNonEditable" data-id="items" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
           },
           {
             title: 'header',
             description: 'data-auto data-path data-date',
-            //content: '<div class="ui basic segment mceNonEditable"><div class="ui massive dividing header" data-id="header" data-auto="" data-path="" data-date="false"><span class="content"><span class="sub header"><!-- --></span></span></div></div>'
-            content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" data-auto="" data-path="" data-date="false"><div class="content"><h1 class="ui massive dividing header fluid container hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></h1></div></div>'
+            //content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" data-auto="" data-path="" data-date="false"><div class="content"><h1 class="ui massive dividing header fluid container hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></h1></div></div>'
+            content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '><div class="content"><h1 class="ui massive dividing header fluid container hvr-icon-wobble-vertical"><i class="hvr-icon icon " style="vertical-align:top;padding-top:0.3em"><!-- --></i><span class="content"><span class="sub header"><!-- --></span></span></h1></div></div>'
           },
           {
             title: 'double icon header',
@@ -962,8 +964,8 @@ export default class TinymceView extends JetView {
           input.click();
         },
 
-visualblocks_default_state: true,        
-        
+        visualblocks_default_state: true,
+
         allow_conditional_comments: true,
         allow_html_in_named_anchor: true,
         element_format: 'html',
