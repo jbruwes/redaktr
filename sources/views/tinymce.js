@@ -3,9 +3,16 @@ import {
 } from "webix-jet";
 export default class TinymceView extends JetView {
   config() {
-    const innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
+    const 
+    items='<div class="ui items mceNonEditable" #{data}><div class="item">#{content}</div></div>',
+    grid='<div class="ui #{count} column centered stackable doubling stretched padded grid" #{data}><div class="column #{align} aligned" data-aos="#{aos}">#{content}</div></div>',
+    //cards='<div class="ui #{count} centered stackable doubling cards mceNonEditable" #{data}>#{content}</div>',
+    segments='<div class="ui vertical padded segments mceNonEditable" #{data}>#{content}</div>',
+    
+    innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
     header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
           h1 = '<div class="content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
+          dimmedImage = '<div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>',
       singleData = 'data-auto="" data-path="" data-date="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
       sliderData = 'data-pager="true" data-controls="true"';
@@ -45,7 +52,13 @@ export default class TinymceView extends JetView {
           {
             title: 'card deck',
             description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
+            //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
+            content: grid
+            .replace('#{count}', 'three')
+            .replace('#{aos}', 'flip-left')
+            .replace('#{align}', 'left')
+            .replace('#{data}', ['data-id="deck"', singleData, multiData, sliderData].join(' '))
+            .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage + header + '</div>')
           },
           {
             title: 'carousel',
@@ -58,9 +71,9 @@ export default class TinymceView extends JetView {
             content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" data-id="particles" ' + singleData + ' data-particles="default" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
           },
           {
-            title: 'items',
+            title: 'header list',
             description: 'data-length data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui items mceNonEditable" data-id="items" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
+            content: '<div class="ui items mceNonEditable" data-id="list" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
           },
           {
             title: 'header',
