@@ -3,16 +3,16 @@ import {
 } from "webix-jet";
 export default class TinymceView extends JetView {
   config() {
-    const 
-    items='<div class="ui items mceNonEditable" #{data}><div class="item">#{content}</div></div>',
-    grid='<div class="ui #{count} column centered stackable doubling stretched padded grid" #{data}><div class="column #{align} aligned" data-aos="#{aos}">#{content}</div></div>',
-    //cards='<div class="ui #{count} centered stackable doubling cards mceNonEditable" #{data}>#{content}</div>',
-    segments='<div class="ui vertical padded segments mceNonEditable" #{data}>#{content}</div>',
-    
-    innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
-    header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
-          h1 = '<div class="content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
-          dimmedImage = '<div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>',
+    const
+      items = '<div class="ui items mceNonEditable" #{data}><div class="item">#{content}</div></div>',
+      grid = '<div class="ui #{count} column centered #{adaptive} stretched padded grid mceNonEditable" #{data}><div class="column #{align}" data-aos="#{aos}">#{content}</div></div>',
+      //cards='<div class="ui #{count} centered stackable doubling cards mceNonEditable" #{data}>#{content}</div>',
+      segments = '<div class="ui vertical padded segments mceNonEditable" #{data}>#{content}</div>',
+
+      innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
+      header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
+      h1 = '<div class="content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
+      dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>',
       singleData = 'data-auto="" data-path="" data-date="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
       sliderData = 'data-pager="true" data-controls="true"';
@@ -39,53 +39,55 @@ export default class TinymceView extends JetView {
           "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + ".cdn.css?" + webix.uid() + "," +
           '//cdn.redaktr.com/redaktr.min.css?' + webix.uid() + "," +
           "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + ".css?" + webix.uid(),
-        templates: [
-          /*                    { title: 'Social Share1', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
-                              { title: 'Social Share2', description: 'facebook,<br>gplus, twitter, linkedin, skype, facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
-                              { title: 'Social Share3', description: 'facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' },
-                              { title: 'Social Share4', description: 'facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype facebook, gplus, twitter, linkedin, skype', content: '<div class="ya-share2" data-services="facebook,gplus,twitter,linkedin,skype" data-counter=""><button class="ui mini icon facebook button">&nbsp;<i class="facebook f icon"></i>&nbsp;</button><button class="ui mini icon google plus button">&nbsp;<i class="google plus g icon"></i>&nbsp;</button><button class="ui mini icon twitter button">&nbsp;<i class="twitter icon"></i>&nbsp;</button><button class="ui mini icon linkedin button">&nbsp;<i class="linkedin in icon"></i>&nbsp;</button><button class="ui mini icon blue button">&nbsp;<i class="skype icon"></i>&nbsp;</button></div>' }*/
-          {
-            title: 'menu',
-            description: 'data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision',
-            content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
-          },
-          {
-            title: 'card deck',
-            description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
-            //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
-            content: grid
+        templates: [{
+          title: 'menu',
+          description: 'data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision',
+          content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
+        }, {
+          title: 'card deck',
+          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
+          //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
+          content: grid
             .replace('#{count}', 'three')
             .replace('#{aos}', 'flip-left')
-            .replace('#{align}', 'left')
+            .replace('#{align}', '')
+            .replace('#{adaptive}', '')
             .replace('#{data}', ['data-id="deck"', singleData, multiData, sliderData].join(' '))
-            .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage + header + '</div>')
-          },
-          {
-            title: 'carousel',
-            description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
-          },
-          {
-            title: 'particles',
-            description: 'data-particles data-auto data-path data-date',
-            content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" data-id="particles" ' + singleData + ' data-particles="default" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
-          },
-          {
-            title: 'header list',
-            description: 'data-length data-auto data-path data-deep data-random data-date',
-            content: '<div class="ui items mceNonEditable" data-id="list" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
-          },
-          {
-            title: 'header',
-            description: 'data-auto data-path data-date',
-            content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + h1 + '</div>'
-          },
-          {
-            title: 'icon header grid',
-            description: 'data-length data-auto data-path data-deep data-random',
-            content: '<div class="ui six column centered stackable doubling stretched padded grid" data-id="headergrid" ' + [singleData, multiData].join(' ') + '><div class="column center aligned">' + header + '</div></div>'
-          }
-        ],
+            .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
+        }, {
+          title: 'carousel',
+          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
+          //content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
+          content: segments
+            .replace('#{data}', ['data-id="carousel"', singleData, multiData, sliderData].join(' '))
+            .replace('#{content}', '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div>')
+        }, {
+          title: 'particles',
+          description: 'data-particles data-auto data-path data-date',
+          content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" data-id="particles" ' + singleData + ' data-particles="default" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
+        }, {
+          title: 'header list',
+          description: 'data-length data-auto data-path data-deep data-random data-date',
+          //content: '<div class="ui items mceNonEditable" data-id="list" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
+          content: items
+            .replace('#{data}', ['data-id="list"', singleData, multiData].join(' '))
+            .replace('#{content}', dimmedImage.replace('#{loading}', 'lazy').replace('#{size}', 'small') + header)
+        }, {
+          title: 'header',
+          description: 'data-auto data-path data-date',
+          content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + h1 + '</div>'
+        }, {
+          title: 'icon header grid',
+          description: 'data-length data-auto data-path data-deep data-random',
+          //content: '<div class="ui six column centered stackable doubling stretched padded grid" data-id="headergrid" ' + [singleData, multiData].join(' ') + '><div class="column center aligned">' + header + '</div></div>'
+          content: grid
+            .replace('#{count}', 'six')
+            .replace('#{aos}', 'fade-up')
+            .replace('#{align}', 'center aligned')
+            .replace('#{adaptive}', 'stackable doubling')
+            .replace('#{data}', ['data-id="headergrid"', singleData, multiData].join(' '))
+            .replace('#{content}', header)
+        }],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
           "Alegreya Sans='Alegreya Sans', sans-serif;" + // google
