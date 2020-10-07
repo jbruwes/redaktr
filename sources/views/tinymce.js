@@ -7,7 +7,7 @@ export default class TinymceView extends JetView {
       items = '<div class="ui items mceNonEditable" #{data}><div class="item">#{content}</div></div>',
       grid = '<div class="ui #{count} column centered #{adaptive} stretched padded grid mceNonEditable" #{data}><div class="column #{align}" data-aos="#{aos}">#{content}</div></div>',
       //cards='<div class="ui #{count} centered stackable doubling cards mceNonEditable" #{data}>#{content}</div>',
-      segments = '<div class="ui vertical padded segments mceNonEditable" #{data}>#{content}</div>',
+      segments = '<div class="ui vertical padded basic segments mceNonEditable" #{data}>#{content}</div>',
 
       innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
       header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
