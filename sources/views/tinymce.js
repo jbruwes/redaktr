@@ -10,8 +10,8 @@ export default class TinymceView extends JetView {
       segments = '<div class="ui vertical padded basic segments mceNonEditable" #{data}>#{content}</div>',
 
       innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
-      header = '<div class="content"><a class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
-      h1 = '<div class="content"><h1 class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
+      header = '<div class="middle aligned content"><a class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
+      h1 = '<div class="middle aligned content"><h1 class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
       dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>',
       singleData = 'data-auto="" data-path="" data-date="true" data-description="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
@@ -90,7 +90,7 @@ export default class TinymceView extends JetView {
         }, {
           title: 'youtube',
           description: 'data-id',
-          content: '<div class="ui embed" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
+          content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
         }],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
