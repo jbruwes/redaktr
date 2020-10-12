@@ -10,8 +10,8 @@ export default class TinymceView extends JetView {
       segments = '<div class="ui vertical padded basic segments mceNonEditable" #{data}>#{content}</div>',
 
       innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
-      header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
-      h1 = '<div class="content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
+      header = '<div class="content"><a class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
+      h1 = '<div class="content"><h1 class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
       dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>',
       singleData = 'data-auto="" data-path="" data-date="true" data-description="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
