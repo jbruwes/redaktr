@@ -13,7 +13,7 @@ export default class TinymceView extends JetView {
       header = '<div class="content"><a class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
       h1 = '<div class="content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
       dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>',
-      singleData = 'data-auto="" data-path="" data-date="true"',
+      singleData = 'data-auto="" data-path="" data-date="true" data-description="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
       sliderData = 'data-pager="true" data-controls="true"';
     return {
@@ -45,7 +45,7 @@ export default class TinymceView extends JetView {
           content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
         }, {
           title: 'card deck',
-          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
+          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date data-description',
           //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
           content: grid
             .replace('#{count}', 'three')
@@ -56,29 +56,29 @@ export default class TinymceView extends JetView {
             .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
         }, {
           title: 'carousel',
-          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date',
+          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date data-description',
           //content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
           content: segments
             .replace('#{data}', ['data-id="carousel"', singleData, multiData, sliderData].join(' '))
             .replace('#{content}', '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div>')
         }, {
           title: 'particles',
-          description: 'data-particles data-auto data-path data-date',
+          description: 'data-particles data-auto data-path data-date data-description',
           content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" data-id="particles" ' + singleData + ' data-particles="default" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
         }, {
           title: 'header list',
-          description: 'data-length data-auto data-path data-deep data-random data-date',
+          description: 'data-length data-auto data-path data-deep data-random data-date data-description',
           //content: '<div class="ui items mceNonEditable" data-id="list" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
           content: items
             .replace('#{data}', ['data-id="list"', singleData, multiData].join(' '))
             .replace('#{content}', dimmedImage.replace('#{loading}', 'lazy').replace('#{size}', 'small') + header)
         }, {
           title: 'header',
-          description: 'data-auto data-path data-date',
+          description: 'data-auto data-path data-date data-description',
           content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + h1 + '</div>'
         }, {
           title: 'icon header grid',
-          description: 'data-length data-auto data-path data-deep data-random',
+          description: 'data-length data-auto data-path data-deep data-random data-description',
           //content: '<div class="ui six column centered stackable doubling stretched padded grid" data-id="headergrid" ' + [singleData, multiData].join(' ') + '><div class="column center aligned">' + header + '</div></div>'
           content: grid
             .replace('#{count}', 'six')
