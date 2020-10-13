@@ -188,7 +188,7 @@ if (!BUILD_AS_MODULE) {
 				webix.delay(this._initCanvas, this);
 				return;
 			}
-			var cdn = this.config.cdn ? this.config.cdn : "//unpkg.com/fabric/dist";
+			var cdn = this.config.cdn ? this.config.cdn : "//cdnjs.cloudflare.com/ajax/libs/fabric.js/4.2.0";
 			webix.require([cdn + "/fabric.min.js"])
 				.then(webix.bind(this._initCanvas, this))
 				.catch(function(e) {

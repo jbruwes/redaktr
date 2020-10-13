@@ -78,7 +78,7 @@ export default class TinymceView extends JetView {
           content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + header + '</div>'
         }, {
           title: 'icon header grid',
-          description: 'data-length data-auto data-path data-deep data-random data-description',
+          description: 'data-length data-auto data-path data-deep data-random data-date data-description',
           //content: '<div class="ui six column centered stackable doubling stretched padded grid" data-id="headergrid" ' + [singleData, multiData].join(' ') + '><div class="column center aligned">' + header + '</div></div>'
           content: grid
             .replace('#{count}', 'six')
@@ -89,14 +89,14 @@ export default class TinymceView extends JetView {
             .replace('#{content}', header)
         }, {
           title: 'card grid',
-          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date data-description',
+          description: 'data-length data-auto data-path data-deep data-random data-date data-description',
           //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
           content: grid
             .replace('#{count}', 'three')
             .replace('#{aos}', 'flip-left')
             .replace('#{align}', '')
-            .replace('#{adaptive}', '')
-            .replace('#{data}', ['data-id="cardgrid"', singleData, multiData, sliderData].join(' '))
+            .replace('#{adaptive}', 'stackable doubling')
+            .replace('#{data}', ['data-id="cardgrid"', singleData, multiData].join(' '))
             .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
         }, {
           title: 'youtube',
@@ -893,7 +893,7 @@ export default class TinymceView extends JetView {
             var aos = editor.dom.create('script', {
               id: editor.dom.uniqueId(),
               type: 'text/javascript',
-              src: '//unpkg.com/aos/dist/aos.js'
+              src: '//cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js'
             });
             aos.addEventListener('load', _ => editor.contentWindow.AOS.init());
             editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
