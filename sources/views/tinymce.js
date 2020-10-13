@@ -9,9 +9,9 @@ export default class TinymceView extends JetView {
       //cards='<div class="ui #{count} centered stackable doubling cards mceNonEditable" #{data}>#{content}</div>',
       segments = '<div class="ui vertical padded basic segments mceNonEditable" #{data}>#{content}</div>',
 
-      innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
-      header = '<div class="middle aligned content"><a class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</a></div>',
-      h1 = '<div class="middle aligned content"><h1 class="ui grey header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
+      //innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
+      header = '<div class="middle aligned content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span></a></div>',
+      //h1 = '<div class="middle aligned content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
       dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>',
       singleData = 'data-auto="" data-path="" data-date="true" data-description="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
@@ -75,7 +75,7 @@ export default class TinymceView extends JetView {
         }, {
           title: 'header',
           description: 'data-auto data-path data-date data-description',
-          content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + h1 + '</div>'
+          content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + header + '</div>'
         }, {
           title: 'icon header grid',
           description: 'data-length data-auto data-path data-deep data-random data-description',
@@ -87,6 +87,17 @@ export default class TinymceView extends JetView {
             .replace('#{adaptive}', 'stackable doubling')
             .replace('#{data}', ['data-id="headergrid"', singleData, multiData].join(' '))
             .replace('#{content}', header)
+        }, {
+          title: 'card grid',
+          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date data-description',
+          //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
+          content: grid
+            .replace('#{count}', 'three')
+            .replace('#{aos}', 'flip-left')
+            .replace('#{align}', '')
+            .replace('#{adaptive}', '')
+            .replace('#{data}', ['data-id="cardgrid"', singleData, multiData, sliderData].join(' '))
+            .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
         }, {
           title: 'youtube',
           description: 'data-id',
