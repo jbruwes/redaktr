@@ -102,6 +102,10 @@ export default class TinymceView extends JetView {
           title: 'youtube',
           description: 'data-id',
           content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
+        }, {
+          title: 'breadcrumbs',
+          description: 'data-description',
+          content: '<div class="ui mini fluid steps mceNonEditable" data-id="breadcrumbs" data-auto="" data-description="true"><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
         }],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
