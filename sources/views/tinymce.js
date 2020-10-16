@@ -13,7 +13,8 @@ export default class TinymceView extends JetView {
       header = '<div class="middle aligned content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span></a></div>',
       //h1 = '<div class="middle aligned content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
       dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>',
-      singleData = 'data-auto="" data-path="" data-date="true" data-description="true"',
+      commonData = 'data-auto="" data-description="true" data-reveal="true"',
+      singleData = 'data-path="" data-date="true"',
       multiData = 'data-length="" data-deep="false" data-random="false"',
       sliderData = 'data-pager="true" data-controls="true"';
     return {
@@ -44,68 +45,68 @@ export default class TinymceView extends JetView {
           description: 'data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision',
           content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
         }, {
-          title: 'card deck',
-          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date data-description',
+          title: 'deck',
+          description: 'колода карточек',
           //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
           content: grid
             .replace('#{count}', 'three')
             .replace('#{aos}', 'flip-left')
             .replace('#{align}', '')
             .replace('#{adaptive}', '')
-            .replace('#{data}', ['data-id="deck"', singleData, multiData, sliderData].join(' '))
+            .replace('#{data}', ['data-id="deck"', 'data-unlink="true"', commonData, singleData, multiData, sliderData].join(' '))
             .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
         }, {
           title: 'carousel',
-          description: 'data-length data-pager data-controls data-auto data-path data-deep data-random data-date data-description',
+          description: 'слайдер',
           //content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
           content: segments
-            .replace('#{data}', ['data-id="carousel"', singleData, multiData, sliderData].join(' '))
+            .replace('#{data}', ['data-id="carousel"', 'data-unlink="true"', commonData, singleData, multiData, sliderData].join(' '))
             .replace('#{content}', '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div>')
         }, {
           title: 'particles',
-          description: 'data-particles data-auto data-path data-date data-description',
-          content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" data-id="particles" ' + singleData + ' data-particles="default" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
+          description: 'заголовок с анимированными частичками',
+          content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" ' + ['data-id="particles"', 'data-unlink="false"', commonData, singleData, 'data-particles="default"'].join(' ') + ' style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
         }, {
-          title: 'header list',
-          description: 'data-length data-auto data-path data-deep data-random data-date data-description',
+          title: 'headerlist',
+          description: 'вертикальный список заголовков',
           //content: '<div class="ui items mceNonEditable" data-id="list" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
           content: items
-            .replace('#{data}', ['data-id="list"', singleData, multiData].join(' '))
+            .replace('#{data}', ['data-id="list"', 'data-unlink="true"', commonData, singleData, multiData].join(' '))
             .replace('#{content}', dimmedImage.replace('#{loading}', 'lazy').replace('#{size}', 'small') + header)
         }, {
           title: 'header',
-          description: 'data-auto data-path data-date data-description',
-          content: '<div class="ui basic fitted segment mceNonEditable" data-id="header" ' + singleData + '>' + header + '</div>'
+          description: 'одиночный заголовок',
+          content: '<div class="ui basic fitted segment mceNonEditable" ' +  ['data-id="header"', 'data-unlink="false"', commonData, singleData].join(' ') + '>' + header + '</div>'
         }, {
-          title: 'icon header grid',
-          description: 'data-length data-auto data-path data-deep data-random data-date data-description',
+          title: 'icongrid',
+          description: 'плитка из иконок',
           //content: '<div class="ui six column centered stackable doubling stretched padded grid" data-id="headergrid" ' + [singleData, multiData].join(' ') + '><div class="column center aligned">' + header + '</div></div>'
           content: grid
             .replace('#{count}', 'six')
             .replace('#{aos}', 'fade-up')
             .replace('#{align}', 'center aligned')
             .replace('#{adaptive}', 'stackable doubling')
-            .replace('#{data}', ['data-id="headergrid"', singleData, multiData].join(' '))
+            .replace('#{data}', ['data-id="icongrid"', 'data-unlink="true"', commonData, singleData, multiData].join(' '))
             .replace('#{content}', header)
         }, {
-          title: 'card grid',
-          description: 'data-length data-auto data-path data-deep data-random data-date data-description',
+          title: 'cardgrid',
+          description: 'плитка из карточек',
           //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
           content: grid
             .replace('#{count}', 'three')
             .replace('#{aos}', 'flip-left')
             .replace('#{align}', '')
             .replace('#{adaptive}', 'stackable doubling')
-            .replace('#{data}', ['data-id="cardgrid"', singleData, multiData].join(' '))
+            .replace('#{data}', ['data-id="cardgrid"', 'data-unlink="true"', commonData, singleData, multiData].join(' '))
             .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
         }, {
           title: 'youtube',
-          description: 'data-id',
+          description: 'вставка youtube ролика',
           content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
         }, {
           title: 'breadcrumbs',
-          description: 'data-description',
-          content: '<div class="ui mini fluid steps mceNonEditable" data-id="breadcrumbs" data-auto="" data-description="true"><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
+          description: 'путь до текущей страницы',
+          content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', 'data-unlink="true"', commonData].join(' ') + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
         }],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
