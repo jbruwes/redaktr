@@ -40,7 +40,57 @@ export default class TinymceView extends JetView {
           "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + ".cdn.css?" + webix.uid() + "," +
           '//cdn.redaktr.com/redaktr.min.css?' + webix.uid() + "," +
           "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + ".css?" + webix.uid(),
-        templates: [{
+
+		  
+		  
+		  
+                   templates: [{
+                        title: "menu",
+                        description: "data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision",
+                        content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
+                    }, {
+                        title: "deck",
+                        description: "колода карточек",
+                        content: grid.replace("#{count}", "three").replace("#{aos}", "flip-left").replace("#{align}", "").replace("#{adaptive}", "").replace("#{data}", ['data-id="deck"', commonData, singleData, multiData, sliderData].join(" ")).replace("#{content}", '<div class="ui fluid raised link card">' + dimmedImage.replace("#{loading}", "eager").replace("#{size}", "") + header + "</div>")
+                    }, {
+                        title: "carousel",
+                        description: "слайдер",
+                        content: segments.replace("#{data}", ['data-id="carousel"', commonData, singleData, multiData, sliderData].join(" ")).replace("#{content}", '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + "</div></div>")
+                    }, {
+                        title: "particles",
+                        description: "заголовок с анимированными частичками",
+                        content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" ' + ['data-id="particles"', commonData, singleData, 'data-particles="default"'].join(" ") + ' style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + "</div></div>"
+                    }, {
+                        title: "headerlist",
+                        description: "вертикальный список заголовков",
+                        content: items.replace("#{data}", ['data-id="list"', commonData, singleData, multiData].join(" ")).replace("#{content}", dimmedImage.replace("#{loading}", "lazy").replace("#{size}", "small") + header)
+                    }, {
+                        title: "header",
+                        description: "одиночный заголовок",
+                        content: '<div class="ui basic fitted segment mceNonEditable" ' + ['data-id="header"', commonData, singleData].join(" ") + ">" + header + "</div>"
+                    }, {
+                        title: "icongrid",
+                        description: "плитка из иконок",
+                        content: grid.replace("#{count}", "six").replace("#{aos}", "fade-up").replace("#{align}", "center aligned").replace("#{adaptive}", "stackable doubling").replace("#{data}", ['data-id="icongrid"', commonData, singleData, multiData].join(" ")).replace("#{content}", header)
+                    }, {
+                        title: "cardgrid",
+                        description: "плитка из карточек",
+                        content: grid.replace("#{count}", "three").replace("#{aos}", "flip-left").replace("#{align}", "").replace("#{adaptive}", "stackable doubling").replace("#{data}", ['data-id="cardgrid"', commonData, singleData, multiData].join(" ")).replace("#{content}", '<div class="ui fluid raised link card">' + dimmedImage.replace("#{loading}", "eager").replace("#{size}", "") + header + "</div>")
+                    }, {
+                        title: "youtube",
+                        description: "вставка youtube ролика",
+                        content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
+                    }, {
+                        title: "breadcrumbs",
+                        description: "путь до текущей страницы",
+                        content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', commonData].join(" ") + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
+                    }],
+		  
+		  
+		  
+		  
+		  
+/*        templates: [{
           title: 'menu',
           description: 'data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision',
           content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
@@ -107,7 +157,7 @@ export default class TinymceView extends JetView {
           title: 'breadcrumbs',
           description: 'путь до текущей страницы',
           content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', commonData].join(' ') + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
-        }],
+        }],*/
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
           "Alegreya Sans='Alegreya Sans', sans-serif;" + // google
