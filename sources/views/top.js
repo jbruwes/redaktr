@@ -74,7 +74,10 @@ export default class TopView extends JetView {
 		$$("sidebar").getPopup().attachEvent("onBeforeShow", () => {
 			return false;
 		});
-		//webix.message("В связи с переходом на новую платформу некоторые сайты недоступны для редактирования. Приносим извинения за временные неудобства.", "error", -1);
+		webix.message({
+                type: "debug",
+                text: "<br><b>DEMO ACCOUNT</b><br><br><b>Username:</b> demo<br><b>Password:</b> Demodemo!1<br><br>"
+            });
 		this._resetSidebar();
 	}
 }
