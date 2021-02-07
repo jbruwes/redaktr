@@ -19,7 +19,7 @@ export default class CdnView extends JetView {
 	init() {
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: this.app.identityId + '.cdn.json'
+			Key: this.app.identityId + '/index.cdn.json'
 		}, (err, data) => {
 			if (err) webix.message({
 				text: err.message,
@@ -34,7 +34,7 @@ export default class CdnView extends JetView {
 					if (this.app.lastXHRPostCdnJs) this.app.lastXHRPostCdnJs.abort();
 					this.app.lastXHRPostCdnJs = this.app.S3.putObject({
 						Bucket: 'redaktr',
-						Key: this.app.identityId + '.cdn.json',
+						Key: this.app.identityId + '/index.cdn.json',
 						ContentType: 'application/json',
 						Body: webix.ajax().stringify($$('cdn').serialize())
 					}, (err, data) => {

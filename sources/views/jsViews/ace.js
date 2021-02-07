@@ -27,7 +27,7 @@ export default class AceView extends JetView {
 		};
 		this.app.S3.getObject({
 			Bucket: 'redaktr',
-			Key: this.app.identityId + '.js'
+			Key: this.app.identityId + '/index.js'
 		}, (err, data) => {
 			if (err) cb('');
 			else cb(data.Body.toString());
@@ -41,7 +41,7 @@ export default class AceView extends JetView {
 				this.app.lastXHRPostDocAce = this.app.S3.putObject({
 					Bucket: 'redaktr',
 					ContentType: 'application/javascript',
-					Key: this.app.identityId + ".js",
+					Key: this.app.identityId + "/index.js",
 					Body: 'function redaktr(){try{' + $$('ace-js').getEditor().getValue() + '}catch(e){}}'
 				}, (err, data) => {
 					if (err) {

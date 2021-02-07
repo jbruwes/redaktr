@@ -22,7 +22,7 @@ export default class TreeView extends JetView {
       if (this.app.lastXHRPostTree) this.app.lastXHRPostTree.abort();
       this.app.lastXHRPostTree = this.app.S3.putObject({
         Bucket: 'redaktr',
-        Key: this.app.identityId + '.json',
+        Key: this.app.identityId + '/index.json',
         ContentType: 'application/json',
         Body: webix.ajax().stringify(tree)
       }, (err, data) => {
@@ -147,7 +147,7 @@ export default class TreeView extends JetView {
   init() {
     this.app.S3.getObject({
       Bucket: 'redaktr',
-      Key: this.app.identityId + '.json'
+      Key: this.app.identityId + '/index.json'
     }, (err, data) => {
       if (err) webix.message({
         text: err.message,

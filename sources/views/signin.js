@@ -137,7 +137,7 @@ export default class SignInView extends JetView {
               }
             }).promise(), this.app.S3.putObject({
               Bucket: 'redaktr',
-              Key: this.app.identityId + '.json',
+              Key: this.app.identityId + '/index.json',
               ContentType: 'application/json',
               Body: '{"link":"","text":"","date":"","image":"","visible":true,"value":"' + $$('username').getValue() + '","id":' + id + '}'
             }).promise(), this.app.S3.putObject({
@@ -147,22 +147,22 @@ export default class SignInView extends JetView {
               Body: ""
             }).promise(), this.app.S3.putObject({
               Bucket: 'redaktr',
-              Key: this.app.identityId + '.cdn.json',
+              Key: this.app.identityId + '/index.cdn.json',
               ContentType: 'application/json',
               Body: "[]"
             }).promise(), this.app.S3.putObject({
               Bucket: 'redaktr',
-              Key: this.app.identityId + '.js',
+              Key: this.app.identityId + '/index.js',
               ContentType: 'application/javascript',
               Body: "function redaktr(){try{}catch(e){}}"
             }).promise(), this.app.S3.putObject({
               Bucket: 'redaktr',
-              Key: this.app.identityId + '.css',
+              Key: this.app.identityId + '/index.css',
               ContentType: 'text/css',
               Body: ""
             }).promise(), this.app.S3.putObject({
               Bucket: 'redaktr',
-              Key: this.app.identityId + '.cdn.css',
+              Key: this.app.identityId + '/index.cdn.css',
               ContentType: 'text/css',
               Body: ""
             }).promise(), this.app.S3.putObject({
@@ -172,25 +172,11 @@ export default class SignInView extends JetView {
               Body: '<!DOCTYPE html><html><head>' +
                 '<meta charset="utf-8">' +
                 '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-                '<base href="' + ('/') + this.app.identityId + '/">' +
+                '<base href="/' + this.app.identityId + '/">' +
                 '<link rel="icon" href="/' + this.app.identityId + '.ico" type="image/vnd.microsoft.icon">' +
-                '<script src="//cdn.redaktr.com/require.min.js"></script>' +
-                "<script>" +
-                "(function(){" +
-                "var $=window.location.hostname===\"www.redaktr.com\"||window.location.hostname===\"dev.redaktr.com\"?\"?\"+window.btoa(Math.random()):window.location.search.charAt(0)+window.btoa(unescape(encodeURIComponent(window.location.search)));" +
-                "[" +
-                "'//cdn.redaktr.com/redaktr.cdn" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
-                "'/" + this.app.identityId + ".cdn.css'," +
-                "'//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".css'," +
-                "'/" + this.app.identityId + ".css'" +
-                "]" +
-                ".forEach(function(_){document.write('<link rel=\"stylesheet\" href=\"'+_+$+'\">')});" +
-                "document.write('" +
-                "<script src=\"//cdn.redaktr.com/redaktr" + (window.location.hostname === 'dev.redaktr.com' ? "" : ".min") + ".js" +
-                "'+$+'\"><\\/script>" +
-                "');" +
-                "})();" +
-                "</script>" +
+                '<script async src="https://cdn.redaktr.com/redaktr.min.js"></script>' +
+				'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.cdn.min.css">' +
+				'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.min.css">' +
                 '</head><body>' +
                 '<div class="ui sidebar very wide vertical accordion menu"></div>' +
                 '<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a><div class="header item"></div></div>' +
@@ -250,8 +236,8 @@ export default class SignInView extends JetView {
                 } else {
 
                   this.app.S3 = new AWS.S3({
-                    correctClockSkew: true //,
-                    //useAccelerateEndpoint: true
+                    correctClockSkew: true,
+                    useAccelerateEndpoint: true
                   });
                   this.app.DocumentClient = new AWS.DynamoDB.DocumentClient({
                     correctClockSkew: true

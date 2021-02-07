@@ -71,7 +71,7 @@ export default class SettingsView extends JetView {
 		this.validateemail = this.ui(ValidateEmailView);
 		this.app.S3.headObject({
 			Bucket: 'redaktr',
-			Key: this.app.identityId + '.ico'
+			Key: this.app.identityId + '/favicon.ico'
 		}, (err, data) => {
 			if (!err && $$('sidebar').getSelectedId() === 'settings') {
 				$$("uploader").files.data.clearAll();
@@ -84,7 +84,7 @@ export default class SettingsView extends JetView {
 				file.file.sname = 'favicon.ico';
 				this.app.S3.putObject({
 					Bucket: 'redaktr',
-					Key: this.app.identityId + '.ico',
+					Key: this.app.identityId + '/favicon.ico',
 					ContentType: file.file.type,
 					Body: file.file
 				}, (err, data) => {
@@ -98,7 +98,7 @@ export default class SettingsView extends JetView {
 			$$("uploader").files.attachEvent("onAfterDelete", file => {
 				this.app.S3.deleteObject({
 					Bucket: 'redaktr',
-					Key: this.app.identityId + '.ico'
+					Key: this.app.identityId + '/favicon.ico'
 				}, (err, data) => {
 					if (err) webix.message({
 						text: err.message,
