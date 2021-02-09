@@ -37,9 +37,9 @@ export default class TinymceView extends JetView {
         imagetools_cors_hosts: ['redaktr.com'],
         content_style: ".mce-content-body{padding:8px;}",
         content_css: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid() + "," +
-          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + ".cdn.css?" + webix.uid() + "," +
+          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.cdn.css?" + webix.uid() + "," +
           '//cdn.redaktr.com/redaktr.min.css?' + webix.uid() + "," +
-          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + ".css?" + webix.uid(),
+          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.css?" + webix.uid(),
 
 		  
 		  
