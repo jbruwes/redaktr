@@ -530,6 +530,25 @@ export default class TemplateView extends JetView {
 											break;
 									}
 							});
+
+							//stackoverflow.com/questions/41592349/allow-pointer-click-events-to-pass-through-element-whilst-maintaining-scroll-f
+							fabric.util.addListener(document.body, 'wheel', (eo) => {
+								var s = $($$('fabric').getIframe()).contents();
+								switch (eo.deltaMode) {
+									case 0: //DOM_DELTA_PIXEL		Chrome
+										s.scrollTop(eo.deltaY + s.scrollTop());
+										s.scrollLeft(eo.deltaX + s.scrollLeft());
+										break;
+									case 1: //DOM_DELTA_LINE		Firefox
+										s.scrollTop(15 * eo.deltaY + s.scrollTop()); //scroll(e.deltaX, e.deltaY); 	Just a random small amount of scrolling
+										s.scrollLeft(15 * eo.deltaX + s.scrollLeft());
+										break;
+									case 2: //DOM_DELTA_PAGE
+										s.scrollTop(0.03 * eo.deltaY + s.scrollTop());
+										s.scrollLeft(0.03 * eo.deltaX + s.scrollLeft());
+										break;
+								}
+							});
 						});
 					this._genHtml(true);
 					this._loadSite();
