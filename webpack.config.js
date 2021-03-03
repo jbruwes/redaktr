@@ -5,6 +5,7 @@ module.exports = function(env) {
 
 	var pack = require("./package.json");
 	var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+	var CopyWebpackPlugin = require("copy-webpack-plugin");
 
 	var production = !!(env && env.production === "true");
 	var asmodule = !!(env && env.module === "true");
@@ -21,7 +22,7 @@ module.exports = function(env) {
 		},
 		output: {
 			path: path.join(__dirname, "codebase"),
-			publicPath:"/codebase/",
+			//publicPath:"/codebase/",
 			filename: "[name].js",
 			chunkFilename: "[name].bundle.js"
 		},
@@ -33,7 +34,8 @@ module.exports = function(env) {
 				},
 				{
 					test: /\.(svg|png|jpg|gif)$/,
-					use: "url-loader?limit=25000"
+					//use: "url-loader?limit=25000",
+    				use: 'file-loader?name=[name].[ext]'
 				},
 				{
 					test: /\.(less|css)$/,
@@ -54,6 +56,16 @@ module.exports = function(env) {
 			new MiniCssExtractPlugin({
 				filename:"[name].css"
 			}),
+			new CopyWebpackPlugin([
+				{from: 'resource/404.html'},
+				{from: 'resource/apple-touch-icon.png'},
+				{from: 'resource/favicon.ico'},
+				{from: 'resource/index.html'},
+				{from: 'resource/manifest.json'},
+				{from: 'resource/pwabuilder-sw.js'},
+				{from: 'resource/redaktr.svg'},
+				{from: 'resource/robots.txt'}
+			]),
 			new webpack.DefinePlugin({
 				VERSION: `"${pack.version}"`,
 				APPNAME: `"${pack.name}"`,
