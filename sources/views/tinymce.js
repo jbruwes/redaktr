@@ -1098,7 +1098,8 @@ export default class TinymceView extends JetView {
           });
           //});
         },
-        document_base_url: "//" + location.hostname.replace(/(?:(?=www)|\w+.)/, '') + "/" + this.app.identityId + "/",
+        //document_base_url: "//" + location.hostname.replace(/(?:(?=www)|\w+.)/, '') + "/" + this.app.identityId + "/",
+        document_base_url: "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/",
         statusbar: false,
         resize: false,
         spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",
