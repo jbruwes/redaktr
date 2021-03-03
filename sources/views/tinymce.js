@@ -34,7 +34,7 @@ export default class TinymceView extends JetView {
         //toolbar: "undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
         toolbar: 'undo redo | rlink | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview print | insertfile image media template link unlink anchor codesample | ltr rtl',
         toolbar_sticky: true,
-        imagetools_cors_hosts: ['redaktr.com'],
+        //imagetools_cors_hosts: ['redaktr.com'],
         content_style: ".mce-content-body{padding:8px;}",
         content_css: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid() + "," +
           "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.cdn.css?" + webix.uid() + "," +
