@@ -36,10 +36,10 @@ export default class TinymceView extends JetView {
         toolbar_sticky: true,
         //imagetools_cors_hosts: ['redaktr.com'],
         content_style: ".mce-content-body{padding:8px;}",
-        content_css: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid() + "," +
+        /*content_css: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid() + "," +
           "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.cdn.css?" + webix.uid() + "," +
           '//cdn.redaktr.com/redaktr.min.css?' + webix.uid() + "," +
-          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.css?" + webix.uid(),
+          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.css?" + webix.uid(),*/
 
 		  
 		  
@@ -952,6 +952,32 @@ export default class TinymceView extends JetView {
             });
             aos.addEventListener('load', _ => editor.contentWindow.AOS.init());
             editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
+			  
+			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+              id: editor.dom.uniqueId(),
+		      rel: 'stylesheet',
+              type: 'text/css',
+              href: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid()
+            }));
+			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+              id: editor.dom.uniqueId(),
+		      rel: 'stylesheet',
+              type: 'text/css',
+              href: "//" + location.hostname.replace(/\w+./, '') + "/" + editor.that.app.identityId + "/index.cdn.css?" + webix.uid()
+            }));
+			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+              id: editor.dom.uniqueId(),
+		      rel: 'stylesheet',
+              type: 'text/css',
+              href: '//cdn.redaktr.com/redaktr.min.css?' + webix.uid()
+            }));
+			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+              id: editor.dom.uniqueId(),
+		      rel: 'stylesheet',
+              type: 'text/css',
+              href: "//" + location.hostname.replace(/\w+./, '') + "/" + editor.that.app.identityId + "/index.css?" + webix.uid()
+            }));
+
             /*var tilt = editor.dom.create('script', {
               id: editor.dom.uniqueId(),
               type: 'text/javascript',
