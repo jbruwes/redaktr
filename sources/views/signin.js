@@ -41,18 +41,10 @@ export default class SignInView extends JetView {
 													});
 												} else
 													that.timeoutId = webix.delay(
-														(_) =>
-															AWS.config.credentials.refresh(
-																cbRefresh
-															),
+														_ => AWS.config.credentials.refresh(cbRefresh),
 														this,
 														[],
-														new Date(
-															AWS.config.credentials.expireTime
-														) -
-															new Date() -
-															100000
-													);
+														new Date(AWS.config.credentials.expireTime) - new Date() - 1000*60*5);
 											});
 										}
 									}
@@ -60,18 +52,18 @@ export default class SignInView extends JetView {
 						});
 				} else
 					that.timeoutId = webix.delay(
-						(_) => AWS.config.credentials.refresh(cbRefresh),
+						_ => AWS.config.credentials.refresh(cbRefresh),
 						this,
 						[],
-						new Date(AWS.config.credentials.expireTime) - new Date() - 100000
+						new Date(AWS.config.credentials.expireTime) - new Date() - 1000*60*5
 					);
 			},
-			appShow = (name) => {
+			appShow = name => {
 				this.app.timeoutId = webix.delay(
-					(_) => AWS.config.credentials.refresh(cbRefresh),
+					_ => AWS.config.credentials.refresh(cbRefresh),
 					this,
 					[],
-					new Date(AWS.config.credentials.expireTime) - new Date() - 100000
+					new Date(AWS.config.credentials.expireTime) - new Date() - 1000*60*5
 				);
 				webix.UIManager.removeHotKey('enter', clickLogin);
 				//webix.UIManager.removeHotKey("enter", null, $$('username'));
@@ -150,7 +142,7 @@ export default class SignInView extends JetView {
 					}
 				);
 			},
-			check = (_) => {
+			check = _ => {
 				this.app.identityId = AWS.config.credentials.identityId;
 				this.app.DocumentClient.get(
 					{
@@ -275,7 +267,7 @@ export default class SignInView extends JetView {
 					}
 				);
 			},
-			clickLogin = (_) => {
+			clickLogin = _ => {
 				if (
 					!this.authenticationData ||
 					!(
@@ -288,8 +280,8 @@ export default class SignInView extends JetView {
 						Password: $$('password').getValue(),
 					};
 					var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
-							this.authenticationData
-						),
+						this.authenticationData
+					),
 						cognitoUser = new AmazonCognitoIdentity.CognitoUser({
 							Username: $$('username').getValue(),
 							Pool: userPool,
@@ -395,17 +387,17 @@ export default class SignInView extends JetView {
 														view: 'button',
 														value: 'Forgot your password?',
 														css: 'webix_transparent',
-														click: (_) => {
+														click: _ => {
 															var username = $$(
 																'username'
 															).getValue();
 															if (username) {
 																var cognitoUser = new AmazonCognitoIdentity.CognitoUser(
-																		{
-																			Username: username,
-																			Pool: userPool,
-																		}
-																	),
+																	{
+																		Username: username,
+																		Pool: userPool,
+																	}
+																),
 																	that = this;
 																//that.forgetpass.showWindow(cognitoUser, this);
 																cognitoUser.forgotPassword({
