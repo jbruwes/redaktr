@@ -27,137 +27,52 @@ export default class TinymceView extends JetView {
           theme: "silver",
           menubar: false
         },
-        //plugins: 'print preview paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists imagetools textpattern save importcss quickbars spellchecker tabfocus',
         plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap quickbars emoticons spellchecker',
         menubar: 'file edit view insert format tools table',
-        //toolbar: 'fullpage | bold italic strikethrough forecolor backcolor | rlink | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-        //toolbar: "undo redo | bold italic | forecolor backcolor | template rlink | alignleft aligncenter alignright alignjustify | bullist numlist | link image",
         toolbar: 'undo redo | rlink | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview print | insertfile image media template link unlink anchor codesample | ltr rtl',
         toolbar_sticky: true,
-        //imagetools_cors_hosts: ['redaktr.com'],
         content_style: ".mce-content-body{padding:8px;}",
-        /*content_css: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid() + "," +
-          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.cdn.css?" + webix.uid() + "," +
-          '//cdn.redaktr.com/redaktr.min.css?' + webix.uid() + "," +
-          "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/index.css?" + webix.uid(),*/
-
-		  
-		  
-		  
-                   templates: [{
-                        title: "menu",
-                        description: "data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision",
-                        content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
-                    }, {
-                        title: "deck",
-                        description: "колода карточек",
-                        content: grid.replace("#{count}", "three").replace("#{aos}", "flip-left").replace("#{align}", "").replace("#{adaptive}", "").replace("#{data}", ['data-id="deck"', commonData, singleData, multiData, sliderData].join(" ")).replace("#{content}", '<div class="ui fluid raised link card">' + dimmedImage.replace("#{loading}", "eager").replace("#{size}", "") + header + "</div>")
-                    }, {
-                        title: "carousel",
-                        description: "слайдер",
-                        content: segments.replace("#{data}", ['data-id="carousel"', commonData, singleData, multiData, sliderData].join(" ")).replace("#{content}", '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + "</div></div>")
-                    }, {
-                        title: "particles",
-                        description: "заголовок с анимированными частичками",
-                        content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" ' + ['data-id="particles"', commonData, singleData, 'data-particles="default"'].join(" ") + ' style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + "</div></div>"
-                    }, {
-                        title: "headerlist",
-                        description: "вертикальный список заголовков",
-                        content: items.replace("#{data}", ['data-id="list"', commonData, singleData, multiData].join(" ")).replace("#{content}", dimmedImage.replace("#{loading}", "lazy").replace("#{size}", "small") + header)
-                    }, {
-                        title: "header",
-                        description: "одиночный заголовок",
-                        content: '<div class="ui basic fitted segment mceNonEditable" ' + ['data-id="header"', commonData, singleData].join(" ") + ">" + header + "</div>"
-                    }, {
-                        title: "icongrid",
-                        description: "плитка из иконок",
-                        content: grid.replace("#{count}", "six").replace("#{aos}", "fade-up").replace("#{align}", "center aligned").replace("#{adaptive}", "stackable doubling").replace("#{data}", ['data-id="icongrid"', commonData, singleData, multiData].join(" ")).replace("#{content}", header)
-                    }, {
-                        title: "cardgrid",
-                        description: "плитка из карточек",
-                        content: grid.replace("#{count}", "three").replace("#{aos}", "flip-left").replace("#{align}", "").replace("#{adaptive}", "stackable doubling").replace("#{data}", ['data-id="cardgrid"', commonData, singleData, multiData].join(" ")).replace("#{content}", '<div class="ui fluid raised link card">' + dimmedImage.replace("#{loading}", "eager").replace("#{size}", "") + header + "</div>")
-                    }, {
-                        title: "youtube",
-                        description: "вставка youtube ролика",
-                        content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
-                    }, {
-                        title: "breadcrumbs",
-                        description: "путь до текущей страницы",
-                        content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', commonData].join(" ") + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
-                    }],
-		  
-		  
-		  
-		  
-		  
-/*        templates: [{
-          title: 'menu',
-          description: 'data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision',
+        templates: [{
+          title: "menu",
+          description: "data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision",
           content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>'
         }, {
-          title: 'deck',
-          description: 'колода карточек',
-          //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
-          content: grid
-            .replace('#{count}', 'three')
-            .replace('#{aos}', 'flip-left')
-            .replace('#{align}', '')
-            .replace('#{adaptive}', '')
-            .replace('#{data}', ['data-id="deck"', commonData, singleData, multiData, sliderData].join(' '))
-            .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
+          title: "deck",
+          description: "колода карточек",
+          content: grid.replace("#{count}", "three").replace("#{aos}", "flip-left").replace("#{align}", "").replace("#{adaptive}", "").replace("#{data}", ['data-id="deck"', commonData, singleData, multiData, sliderData].join(" ")).replace("#{content}", '<div class="ui fluid raised link card">' + dimmedImage.replace("#{loading}", "eager").replace("#{size}", "") + header + "</div>")
         }, {
-          title: 'carousel',
-          description: 'слайдер',
-          //content: '<div class="ui vertical segments mceNonEditable" data-id="carousel" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div></div>'
-          content: segments
-            .replace('#{data}', ['data-id="carousel"', commonData, singleData, multiData, sliderData].join(' '))
-            .replace('#{content}', '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div>')
+          title: "carousel",
+          description: "слайдер",
+          content: segments.replace("#{data}", ['data-id="carousel"', commonData, singleData, multiData, sliderData].join(" ")).replace("#{content}", '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + "</div></div>")
         }, {
-          title: 'particles',
-          description: 'заголовок с анимированными частичками',
-          content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" ' + ['data-id="particles"', commonData, singleData, 'data-particles="default"'].join(' ') + ' style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>'
+          title: "particles",
+          description: "заголовок с анимированными частичками",
+          content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" ' + ['data-id="particles"', commonData, singleData, 'data-particles="default"'].join(" ") + ' style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + "</div></div>"
         }, {
-          title: 'headerlist',
-          description: 'вертикальный список заголовков',
-          //content: '<div class="ui items mceNonEditable" data-id="list" ' + [singleData, multiData].join(' ') + '><div class="item"><div class="ui small image" data-aos="fade-left"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon "><!-- --></i></a></div><img class="ui image" loading="lazy"></div>' + header + '</div></div>'
-          content: items
-            .replace('#{data}', ['data-id="list"', commonData, singleData, multiData].join(' '))
-            .replace('#{content}', dimmedImage.replace('#{loading}', 'lazy').replace('#{size}', 'small') + header)
+          title: "headerlist",
+          description: "вертикальный список заголовков",
+          content: items.replace("#{data}", ['data-id="list"', commonData, singleData, multiData].join(" ")).replace("#{content}", dimmedImage.replace("#{loading}", "lazy").replace("#{size}", "small") + header)
         }, {
-          title: 'header',
-          description: 'одиночный заголовок',
-          content: '<div class="ui basic fitted segment mceNonEditable" ' +  ['data-id="header"', commonData, singleData].join(' ') + '>' + header + '</div>'
+          title: "header",
+          description: "одиночный заголовок",
+          content: '<div class="ui basic fitted segment mceNonEditable" ' + ['data-id="header"', commonData, singleData].join(" ") + ">" + header + "</div>"
         }, {
-          title: 'icongrid',
-          description: 'плитка из иконок',
-          //content: '<div class="ui six column centered stackable doubling stretched padded grid" data-id="headergrid" ' + [singleData, multiData].join(' ') + '><div class="column center aligned">' + header + '</div></div>'
-          content: grid
-            .replace('#{count}', 'six')
-            .replace('#{aos}', 'fade-up')
-            .replace('#{align}', 'center aligned')
-            .replace('#{adaptive}', 'stackable doubling')
-            .replace('#{data}', ['data-id="icongrid"', commonData, singleData, multiData].join(' '))
-            .replace('#{content}', header)
+          title: "icongrid",
+          description: "плитка из иконок",
+          content: grid.replace("#{count}", "six").replace("#{aos}", "fade-up").replace("#{align}", "center aligned").replace("#{adaptive}", "stackable doubling").replace("#{data}", ['data-id="icongrid"', commonData, singleData, multiData].join(" ")).replace("#{content}", header)
         }, {
-          title: 'cardgrid',
-          description: 'плитка из карточек',
-          //content: '<div class="ui three column stretched padded grid mceNonEditable" data-id="deck" ' + [singleData, multiData, sliderData].join(' ') + '><div class="ui column" data-aos="flip-left"><div class="ui fluid raised link card"><div class="ui image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image"></div>' + header + '</div></div></div>'
-          content: grid
-            .replace('#{count}', 'three')
-            .replace('#{aos}', 'flip-left')
-            .replace('#{align}', '')
-            .replace('#{adaptive}', 'stackable doubling')
-            .replace('#{data}', ['data-id="cardgrid"', commonData, singleData, multiData].join(' '))
-            .replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>')
+          title: "cardgrid",
+          description: "плитка из карточек",
+          content: grid.replace("#{count}", "three").replace("#{aos}", "flip-left").replace("#{align}", "").replace("#{adaptive}", "stackable doubling").replace("#{data}", ['data-id="cardgrid"', commonData, singleData, multiData].join(" ")).replace("#{content}", '<div class="ui fluid raised link card">' + dimmedImage.replace("#{loading}", "eager").replace("#{size}", "") + header + "</div>")
         }, {
-          title: 'youtube',
-          description: 'вставка youtube ролика',
+          title: "youtube",
+          description: "вставка youtube ролика",
           content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>'
         }, {
-          title: 'breadcrumbs',
-          description: 'путь до текущей страницы',
-          content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', commonData].join(' ') + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
-        }],*/
+          title: "breadcrumbs",
+          description: "путь до текущей страницы",
+          content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', commonData].join(" ") + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>'
+        }],
         font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
           "Alegreya='Alegreya', serif;" + // google
           "Alegreya Sans='Alegreya Sans', sans-serif;" + // google
@@ -266,685 +181,683 @@ export default class TinymceView extends JetView {
           "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
           "Yeseva One='Yeseva One', cursive;", // google
         style_formats: [{
-            title: "Animation",
+          title: "Animation",
+          items: [{
+            title: "Fade",
             items: [{
-                title: "Fade",
-                items: [{
-                  title: 'fade',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade'
-                  }
-                }, {
-                  title: 'fade-up',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-up'
-                  }
-                }, {
-                  title: 'fade-down',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-down'
-                  }
-                }, {
-                  title: 'fade-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-left'
-                  }
-                }, {
-                  title: 'fade-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-right'
-                  }
-                }, {
-                  title: 'fade-up-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-up-right'
-                  }
-                }, {
-                  title: 'fade-up-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-up-left'
-                  }
-                }, {
-                  title: 'fade-down-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-down-right'
-                  }
-                }, {
-                  title: 'fade-down-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'fade-down-left'
-                  }
-                }]
-              },
-              {
-                title: "Flip",
-                items: [{
-                  title: 'flip-up',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'flip-up'
-                  }
-                }, {
-                  title: 'flip-down',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'flip-down'
-                  }
-                }, {
-                  title: 'flip-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'flip-left'
-                  }
-                }, {
-                  title: 'flip-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'flip-right'
-                  }
-                }]
-              },
-              {
-                title: "Slide",
-                items: [{
-                  title: 'slide-up',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'slide-up'
-                  }
-                }, {
-                  title: 'slide-down',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'slide-down'
-                  }
-                }, {
-                  title: 'slide-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'slide-left'
-                  }
-                }, {
-                  title: 'slide-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'slide-right'
-                  }
-                }]
-              }, {
-                title: "Zoom",
-                items: [{
-                  title: 'zoom-in',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-in'
-                  }
-                }, {
-                  title: 'zoom-in-up',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-in-up'
-                  }
-                }, {
-                  title: 'zoom-in-down',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-in-down'
-                  }
-                }, {
-                  title: 'zoom-in-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-in-left'
-                  }
-                }, {
-                  title: 'zoom-in-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-in-right'
-                  }
-                }, {
-                  title: 'zoom-out',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-out'
-                  }
-                }, {
-                  title: 'zoom-out-up',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-out-up'
-                  }
-                }, {
-                  title: 'zoom-out-down',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-out-down'
-                  }
-                }, {
-                  title: 'zoom-out-left',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-out-left'
-                  }
-                }, {
-                  title: 'zoom-out-right',
-                  selector: '*',
-                  classes: 'aos-init aos-animate',
-                  attributes: {
-                    'data-aos': 'zoom-out-right'
-                  }
-                }]
+              title: 'fade',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade'
               }
-            ]
+            }, {
+              title: 'fade-up',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-up'
+              }
+            }, {
+              title: 'fade-down',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-down'
+              }
+            }, {
+              title: 'fade-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-left'
+              }
+            }, {
+              title: 'fade-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-right'
+              }
+            }, {
+              title: 'fade-up-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-up-right'
+              }
+            }, {
+              title: 'fade-up-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-up-left'
+              }
+            }, {
+              title: 'fade-down-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-down-right'
+              }
+            }, {
+              title: 'fade-down-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'fade-down-left'
+              }
+            }]
           },
           {
-            title: "Hover",
+            title: "Flip",
             items: [{
-              title: "2D Transitions",
-              items: [{
-                title: 'Grow',
-                selector: '*',
-                classes: 'hvr-grow'
-              }, {
-                title: 'Shrink',
-                selector: '*',
-                classes: 'hvr-shrink'
-              }, {
-                title: 'Pulse',
-                selector: '*',
-                classes: 'hvr-pulse'
-              }, {
-                title: 'Pulse Grow',
-                selector: '*',
-                classes: 'hvr-pulse-grow'
-              }, {
-                title: 'Pulse Shrink',
-                selector: '*',
-                classes: 'hvr-pulse-shrink'
-              }, {
-                title: 'Push',
-                selector: '*',
-                classes: 'hvr-push'
-              }, {
-                title: 'Pop',
-                selector: '*',
-                classes: 'hvr-pop'
-              }, {
-                title: 'Bounce In',
-                selector: '*',
-                classes: 'hvr-bounce-in'
-              }, {
-                title: 'Bounce Out',
-                selector: '*',
-                classes: 'hvr-bounce-out'
-              }, {
-                title: 'Rotate',
-                selector: '*',
-                classes: 'hvr-rotate'
-              }, {
-                title: 'Grow Rotate',
-                selector: '*',
-                classes: 'hvr-grow-rotate'
-              }, {
-                title: 'Float',
-                selector: '*',
-                classes: 'hvr-float'
-              }, {
-                title: 'Sink',
-                selector: '*',
-                classes: 'hvr-sink'
-              }, {
-                title: 'Bob',
-                selector: '*',
-                classes: 'hvr-bob'
-              }, {
-                title: 'Hang',
-                selector: '*',
-                classes: 'hvr-hang'
-              }, {
-                title: 'Skew',
-                selector: '*',
-                classes: 'hvr-skew'
-              }, {
-                title: 'Skew Forward',
-                selector: '*',
-                classes: 'hvr-skew-forward'
-              }, {
-                title: 'Skew Backward',
-                selector: '*',
-                classes: 'hvr-skew-backward'
-              }, {
-                title: 'Wobble Vertical',
-                selector: '*',
-                classes: 'hvr-wobble-vertical'
-              }, {
-                title: 'Wobble Horizontal',
-                selector: '*',
-                classes: 'hvr-wobble-horizontal'
-              }, {
-                title: 'Wobble To Bottom Right',
-                selector: '*',
-                classes: 'hvr-wobble-to-bottom-right'
-              }, {
-                title: 'Wobble To Top Right',
-                selector: '*',
-                classes: 'hvr-wobble-to-top-right'
-              }, {
-                title: 'Wobble Top',
-                selector: '*',
-                classes: 'hvr-wobble-top'
-              }, {
-                title: 'Wobble Bottom',
-                selector: '*',
-                classes: 'hvr-wobble-bottom'
-              }, {
-                title: 'Wobble Skew',
-                selector: '*',
-                classes: 'hvr-wobble-skew'
-              }, {
-                title: 'Buzz',
-                selector: '*',
-                classes: 'hvr-buzz'
-              }, {
-                title: 'Buzz Out',
-                selector: '*',
-                classes: 'hvr-buzz-out'
-              }, {
-                title: 'Forward',
-                selector: '*',
-                classes: 'hvr-forward'
-              }, {
-                title: 'Backward',
-                selector: '*',
-                classes: 'hvr-backward'
-              }]
+              title: 'flip-up',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'flip-up'
+              }
             }, {
-              title: "Background Transitions",
-              items: [{
-                title: 'Fade',
-                selector: '*',
-                classes: 'hvr-fade'
-              }, {
-                title: 'Back Pulse',
-                selector: '*',
-                classes: 'hvr-back-pulse'
-              }, {
-                title: 'Sweep To Right',
-                selector: '*',
-                classes: 'hvr-sweep-to-right'
-              }, {
-                title: 'Sweep To Left',
-                selector: '*',
-                classes: 'hvr-sweep-to-left'
-              }, {
-                title: 'Sweep To Bottom',
-                selector: '*',
-                classes: 'hvr-sweep-to-bottom'
-              }, {
-                title: 'Sweep To Top',
-                selector: '*',
-                classes: 'hvr-sweep-to-top'
-              }, {
-                title: 'Bounce To Right',
-                selector: '*',
-                classes: 'hvr-bounce-to-right'
-              }, {
-                title: 'Bounce To Left',
-                selector: '*',
-                classes: 'hvr-bounce-to-left'
-              }, {
-                title: 'Bounce To Bottom',
-                selector: '*',
-                classes: 'hvr-bounce-to-bottom'
-              }, {
-                title: 'Bounce To Top',
-                selector: '*',
-                classes: 'hvr-bounce-to-top'
-              }, {
-                title: 'Radial Out',
-                selector: '*',
-                classes: 'hvr-radial-out'
-              }, {
-                title: 'Radial In',
-                selector: '*',
-                classes: 'hvr-radial-in'
-              }, {
-                title: 'Rectangle In',
-                selector: '*',
-                classes: 'hvr-rectangle-in'
-              }, {
-                title: 'Rectangle Out',
-                selector: '*',
-                classes: 'hvr-rectangle-out'
-              }, {
-                title: 'Shutter In Horizontal',
-                selector: '*',
-                classes: 'hvr-shutter-in-horizontal'
-              }, {
-                title: 'Shutter Out Horizontal',
-                selector: '*',
-                classes: 'hvr-shutter-out-horizontal'
-              }, {
-                title: 'Shutter In Vertical',
-                selector: '*',
-                classes: 'hvr-shutter-in-vertical'
-              }, {
-                title: 'Shutter Out Vertical',
-                selector: '*',
-                classes: 'hvr-shutter-out-vertical'
-              }]
+              title: 'flip-down',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'flip-down'
+              }
             }, {
-              title: "Border Transitions",
-              items: [{
-                title: 'Border Fade',
-                selector: '*',
-                classes: 'hvr-border-fade'
-              }, {
-                title: 'Hollow',
-                selector: '*',
-                classes: 'hvr-hollow'
-              }, {
-                title: 'Trim',
-                selector: '*',
-                classes: 'hvr-trim'
-              }, {
-                title: 'Ripple Out',
-                selector: '*',
-                classes: 'hvr-ripple-out'
-              }, {
-                title: 'Ripple In',
-                selector: '*',
-                classes: 'hvr-ripple-in'
-              }, {
-                title: 'Outline Out',
-                selector: '*',
-                classes: 'hvr-outline-out'
-              }, {
-                title: 'Outline In',
-                selector: '*',
-                classes: 'hvr-outline-in'
-              }, {
-                title: 'Round Corners',
-                selector: '*',
-                classes: 'hvr-round-corners'
-              }, {
-                title: 'Underline From Left',
-                selector: '*',
-                classes: 'hvr-underline-from-left'
-              }, {
-                title: 'Underline From Center',
-                selector: '*',
-                classes: 'hvr-underline-from-center'
-              }, {
-                title: 'Underline From Right',
-                selector: '*',
-                classes: 'hvr-underline-from-right'
-              }, {
-                title: 'Overline From Left',
-                selector: '*',
-                classes: 'hvr-overline-from-left'
-              }, {
-                title: 'Overline From Center',
-                selector: '*',
-                classes: 'hvr-overline-from-center'
-              }, {
-                title: 'Overline From Right',
-                selector: '*',
-                classes: 'hvr-overline-from-right'
-              }, {
-                title: 'Reveal',
-                selector: '*',
-                classes: 'hvr-reveal'
-              }, {
-                title: 'Underline Reveal',
-                selector: '*',
-                classes: 'hvr-underline-reveal'
-              }, {
-                title: 'Overline Reveal',
-                selector: '*',
-                classes: 'hvr-overline-reveal'
-              }]
+              title: 'flip-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'flip-left'
+              }
             }, {
-              title: "Shadow/Glow Transitions",
-              items: [{
-                title: 'Glow',
-                selector: '*',
-                classes: 'hvr-glow'
-              }, {
-                title: 'Shadow',
-                selector: '*',
-                classes: 'hvr-shadow'
-              }, {
-                title: 'Grow Shadow',
-                selector: '*',
-                classes: 'hvr-grow-shadow'
-              }, {
-                title: 'Box Shadow Outset',
-                selector: '*',
-                classes: 'hvr-box-shadow-outset'
-              }, {
-                title: 'Box Shadow Inset',
-                selector: '*',
-                classes: 'hvr-box-shadow-inset'
-              }, {
-                title: 'Float Shadow',
-                selector: '*',
-                classes: 'hvr-float-shadow'
-              }, {
-                title: 'Shadow Radial',
-                selector: '*',
-                classes: 'hvr-shadow-radial'
-              }]
-            }, {
-              title: "Speech Bubbles",
-              items: [{
-                title: 'Bubble Top',
-                selector: '*',
-                classes: 'hvr-bubble-top'
-              }, {
-                title: 'Bubble Right',
-                selector: '*',
-                classes: 'hvr-bubble-right'
-              }, {
-                title: 'Bubble Bottom',
-                selector: '*',
-                classes: 'hvr-bubble-bottom'
-              }, {
-                title: 'Bubble Left',
-                selector: '*',
-                classes: 'hvr-bubble-left'
-              }, {
-                title: 'Bubble Float Top',
-                selector: '*',
-                classes: 'hvr-bubble-float-top'
-              }, {
-                title: 'Bubble Float Right',
-                selector: '*',
-                classes: 'hvr-bubble-float-right'
-              }, {
-                title: 'Bubble Float Bottom',
-                selector: '*',
-                classes: 'hvr-bubble-float-bottom'
-              }, {
-                title: 'Bubble Float Left',
-                selector: '*',
-                classes: 'hvr-bubble-float-left'
-              }]
-            }, {
-              title: "Icons",
-              items: [{
-                title: 'Icon Back',
-                selector: '*',
-                classes: 'hvr-icon-back'
-              }, {
-                title: 'Icon Forward',
-                selector: '*',
-                classes: 'hvr-icon-forward'
-              }, {
-                title: 'Icon Down',
-                selector: '*',
-                classes: 'hvr-icon-down'
-              }, {
-                title: 'Icon Up',
-                selector: '*',
-                classes: 'hvr-icon-up'
-              }, {
-                title: 'Icon Spin',
-                selector: '*',
-                classes: 'hvr-icon-spin'
-              }, {
-                title: 'Icon Drop',
-                selector: '*',
-                classes: 'hvr-icon-drop'
-              }, {
-                title: 'Icon Fade',
-                selector: '*',
-                classes: 'hvr-icon-fade'
-              }, {
-                title: 'Icon Float Away',
-                selector: '*',
-                classes: 'hvr-icon-float-away'
-              }, {
-                title: 'Icon Sink Away',
-                selector: '*',
-                classes: 'hvr-icon-sink-away'
-              }, {
-                title: 'Icon Grow',
-                selector: '*',
-                classes: 'hvr-icon-grow'
-              }, {
-                title: 'Icon Shrink',
-                selector: '*',
-                classes: 'hvr-icon-shrink'
-              }, {
-                title: 'Icon Pulse',
-                selector: '*',
-                classes: 'hvr-icon-pulse'
-              }, {
-                title: 'Icon Pulse Grow',
-                selector: '*',
-                classes: 'hvr-icon-pulse-grow'
-              }, {
-                title: 'Icon Pulse Shrink',
-                selector: '*',
-                classes: 'hvr-icon-pulse-shrink'
-              }, {
-                title: 'Icon Push',
-                selector: '*',
-                classes: 'hvr-icon-push'
-              }, {
-                title: 'Icon Pop',
-                selector: '*',
-                classes: 'hvr-icon-pop'
-              }, {
-                title: 'Icon Bounce',
-                selector: '*',
-                classes: 'hvr-icon-bounce'
-              }, {
-                title: 'Icon Rotate',
-                selector: '*',
-                classes: 'hvr-icon-rotate'
-              }, {
-                title: 'Icon Grow Rotate',
-                selector: '*',
-                classes: 'hvr-icon-grow-rotate'
-              }, {
-                title: 'Icon Float',
-                selector: '*',
-                classes: 'hvr-icon-float'
-              }, {
-                title: 'Icon Sink',
-                selector: '*',
-                classes: 'hvr-icon-sink'
-              }, {
-                title: 'Icon Bob',
-                selector: '*',
-                classes: 'hvr-icon-bob'
-              }, {
-                title: 'Icon Hang',
-                selector: '*',
-                classes: 'hvr-icon-hang'
-              }, {
-                title: 'Icon Wobble Horizontal',
-                selector: '*',
-                classes: 'hvr-icon-wobble-horizontal'
-              }, {
-                title: 'Icon Wobble Vertical',
-                selector: '*',
-                classes: 'hvr-icon-wobble-vertical'
-              }, {
-                title: 'Icon Buzz',
-                selector: '*',
-                classes: 'hvr-icon-buzz'
-              }, {
-                title: 'Icon Buzz Out',
-                selector: '*',
-                classes: 'hvr-icon-buzz-out'
-              }]
-            }, {
-              title: "Curls",
-              items: [{
-                title: 'Curl Top Left',
-                selector: '*',
-                classes: 'hvr-curl-top-left'
-              }, {
-                title: 'Curl Top Right',
-                selector: '*',
-                classes: 'hvr-curl-top-right'
-              }, {
-                title: 'Curl Bottom Right',
-                selector: '*',
-                classes: 'hvr-curl-bottom-right'
-              }, {
-                title: 'Curl Bottom Left',
-                selector: '*',
-                classes: 'hvr-curl-bottom-left'
-              }]
+              title: 'flip-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'flip-right'
+              }
             }]
-
+          },
+          {
+            title: "Slide",
+            items: [{
+              title: 'slide-up',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'slide-up'
+              }
+            }, {
+              title: 'slide-down',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'slide-down'
+              }
+            }, {
+              title: 'slide-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'slide-left'
+              }
+            }, {
+              title: 'slide-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'slide-right'
+              }
+            }]
+          }, {
+            title: "Zoom",
+            items: [{
+              title: 'zoom-in',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-in'
+              }
+            }, {
+              title: 'zoom-in-up',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-in-up'
+              }
+            }, {
+              title: 'zoom-in-down',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-in-down'
+              }
+            }, {
+              title: 'zoom-in-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-in-left'
+              }
+            }, {
+              title: 'zoom-in-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-in-right'
+              }
+            }, {
+              title: 'zoom-out',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-out'
+              }
+            }, {
+              title: 'zoom-out-up',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-out-up'
+              }
+            }, {
+              title: 'zoom-out-down',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-out-down'
+              }
+            }, {
+              title: 'zoom-out-left',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-out-left'
+              }
+            }, {
+              title: 'zoom-out-right',
+              selector: '*',
+              classes: 'aos-init aos-animate',
+              attributes: {
+                'data-aos': 'zoom-out-right'
+              }
+            }]
           }
+          ]
+        },
+        {
+          title: "Hover",
+          items: [{
+            title: "2D Transitions",
+            items: [{
+              title: 'Grow',
+              selector: '*',
+              classes: 'hvr-grow'
+            }, {
+              title: 'Shrink',
+              selector: '*',
+              classes: 'hvr-shrink'
+            }, {
+              title: 'Pulse',
+              selector: '*',
+              classes: 'hvr-pulse'
+            }, {
+              title: 'Pulse Grow',
+              selector: '*',
+              classes: 'hvr-pulse-grow'
+            }, {
+              title: 'Pulse Shrink',
+              selector: '*',
+              classes: 'hvr-pulse-shrink'
+            }, {
+              title: 'Push',
+              selector: '*',
+              classes: 'hvr-push'
+            }, {
+              title: 'Pop',
+              selector: '*',
+              classes: 'hvr-pop'
+            }, {
+              title: 'Bounce In',
+              selector: '*',
+              classes: 'hvr-bounce-in'
+            }, {
+              title: 'Bounce Out',
+              selector: '*',
+              classes: 'hvr-bounce-out'
+            }, {
+              title: 'Rotate',
+              selector: '*',
+              classes: 'hvr-rotate'
+            }, {
+              title: 'Grow Rotate',
+              selector: '*',
+              classes: 'hvr-grow-rotate'
+            }, {
+              title: 'Float',
+              selector: '*',
+              classes: 'hvr-float'
+            }, {
+              title: 'Sink',
+              selector: '*',
+              classes: 'hvr-sink'
+            }, {
+              title: 'Bob',
+              selector: '*',
+              classes: 'hvr-bob'
+            }, {
+              title: 'Hang',
+              selector: '*',
+              classes: 'hvr-hang'
+            }, {
+              title: 'Skew',
+              selector: '*',
+              classes: 'hvr-skew'
+            }, {
+              title: 'Skew Forward',
+              selector: '*',
+              classes: 'hvr-skew-forward'
+            }, {
+              title: 'Skew Backward',
+              selector: '*',
+              classes: 'hvr-skew-backward'
+            }, {
+              title: 'Wobble Vertical',
+              selector: '*',
+              classes: 'hvr-wobble-vertical'
+            }, {
+              title: 'Wobble Horizontal',
+              selector: '*',
+              classes: 'hvr-wobble-horizontal'
+            }, {
+              title: 'Wobble To Bottom Right',
+              selector: '*',
+              classes: 'hvr-wobble-to-bottom-right'
+            }, {
+              title: 'Wobble To Top Right',
+              selector: '*',
+              classes: 'hvr-wobble-to-top-right'
+            }, {
+              title: 'Wobble Top',
+              selector: '*',
+              classes: 'hvr-wobble-top'
+            }, {
+              title: 'Wobble Bottom',
+              selector: '*',
+              classes: 'hvr-wobble-bottom'
+            }, {
+              title: 'Wobble Skew',
+              selector: '*',
+              classes: 'hvr-wobble-skew'
+            }, {
+              title: 'Buzz',
+              selector: '*',
+              classes: 'hvr-buzz'
+            }, {
+              title: 'Buzz Out',
+              selector: '*',
+              classes: 'hvr-buzz-out'
+            }, {
+              title: 'Forward',
+              selector: '*',
+              classes: 'hvr-forward'
+            }, {
+              title: 'Backward',
+              selector: '*',
+              classes: 'hvr-backward'
+            }]
+          }, {
+            title: "Background Transitions",
+            items: [{
+              title: 'Fade',
+              selector: '*',
+              classes: 'hvr-fade'
+            }, {
+              title: 'Back Pulse',
+              selector: '*',
+              classes: 'hvr-back-pulse'
+            }, {
+              title: 'Sweep To Right',
+              selector: '*',
+              classes: 'hvr-sweep-to-right'
+            }, {
+              title: 'Sweep To Left',
+              selector: '*',
+              classes: 'hvr-sweep-to-left'
+            }, {
+              title: 'Sweep To Bottom',
+              selector: '*',
+              classes: 'hvr-sweep-to-bottom'
+            }, {
+              title: 'Sweep To Top',
+              selector: '*',
+              classes: 'hvr-sweep-to-top'
+            }, {
+              title: 'Bounce To Right',
+              selector: '*',
+              classes: 'hvr-bounce-to-right'
+            }, {
+              title: 'Bounce To Left',
+              selector: '*',
+              classes: 'hvr-bounce-to-left'
+            }, {
+              title: 'Bounce To Bottom',
+              selector: '*',
+              classes: 'hvr-bounce-to-bottom'
+            }, {
+              title: 'Bounce To Top',
+              selector: '*',
+              classes: 'hvr-bounce-to-top'
+            }, {
+              title: 'Radial Out',
+              selector: '*',
+              classes: 'hvr-radial-out'
+            }, {
+              title: 'Radial In',
+              selector: '*',
+              classes: 'hvr-radial-in'
+            }, {
+              title: 'Rectangle In',
+              selector: '*',
+              classes: 'hvr-rectangle-in'
+            }, {
+              title: 'Rectangle Out',
+              selector: '*',
+              classes: 'hvr-rectangle-out'
+            }, {
+              title: 'Shutter In Horizontal',
+              selector: '*',
+              classes: 'hvr-shutter-in-horizontal'
+            }, {
+              title: 'Shutter Out Horizontal',
+              selector: '*',
+              classes: 'hvr-shutter-out-horizontal'
+            }, {
+              title: 'Shutter In Vertical',
+              selector: '*',
+              classes: 'hvr-shutter-in-vertical'
+            }, {
+              title: 'Shutter Out Vertical',
+              selector: '*',
+              classes: 'hvr-shutter-out-vertical'
+            }]
+          }, {
+            title: "Border Transitions",
+            items: [{
+              title: 'Border Fade',
+              selector: '*',
+              classes: 'hvr-border-fade'
+            }, {
+              title: 'Hollow',
+              selector: '*',
+              classes: 'hvr-hollow'
+            }, {
+              title: 'Trim',
+              selector: '*',
+              classes: 'hvr-trim'
+            }, {
+              title: 'Ripple Out',
+              selector: '*',
+              classes: 'hvr-ripple-out'
+            }, {
+              title: 'Ripple In',
+              selector: '*',
+              classes: 'hvr-ripple-in'
+            }, {
+              title: 'Outline Out',
+              selector: '*',
+              classes: 'hvr-outline-out'
+            }, {
+              title: 'Outline In',
+              selector: '*',
+              classes: 'hvr-outline-in'
+            }, {
+              title: 'Round Corners',
+              selector: '*',
+              classes: 'hvr-round-corners'
+            }, {
+              title: 'Underline From Left',
+              selector: '*',
+              classes: 'hvr-underline-from-left'
+            }, {
+              title: 'Underline From Center',
+              selector: '*',
+              classes: 'hvr-underline-from-center'
+            }, {
+              title: 'Underline From Right',
+              selector: '*',
+              classes: 'hvr-underline-from-right'
+            }, {
+              title: 'Overline From Left',
+              selector: '*',
+              classes: 'hvr-overline-from-left'
+            }, {
+              title: 'Overline From Center',
+              selector: '*',
+              classes: 'hvr-overline-from-center'
+            }, {
+              title: 'Overline From Right',
+              selector: '*',
+              classes: 'hvr-overline-from-right'
+            }, {
+              title: 'Reveal',
+              selector: '*',
+              classes: 'hvr-reveal'
+            }, {
+              title: 'Underline Reveal',
+              selector: '*',
+              classes: 'hvr-underline-reveal'
+            }, {
+              title: 'Overline Reveal',
+              selector: '*',
+              classes: 'hvr-overline-reveal'
+            }]
+          }, {
+            title: "Shadow/Glow Transitions",
+            items: [{
+              title: 'Glow',
+              selector: '*',
+              classes: 'hvr-glow'
+            }, {
+              title: 'Shadow',
+              selector: '*',
+              classes: 'hvr-shadow'
+            }, {
+              title: 'Grow Shadow',
+              selector: '*',
+              classes: 'hvr-grow-shadow'
+            }, {
+              title: 'Box Shadow Outset',
+              selector: '*',
+              classes: 'hvr-box-shadow-outset'
+            }, {
+              title: 'Box Shadow Inset',
+              selector: '*',
+              classes: 'hvr-box-shadow-inset'
+            }, {
+              title: 'Float Shadow',
+              selector: '*',
+              classes: 'hvr-float-shadow'
+            }, {
+              title: 'Shadow Radial',
+              selector: '*',
+              classes: 'hvr-shadow-radial'
+            }]
+          }, {
+            title: "Speech Bubbles",
+            items: [{
+              title: 'Bubble Top',
+              selector: '*',
+              classes: 'hvr-bubble-top'
+            }, {
+              title: 'Bubble Right',
+              selector: '*',
+              classes: 'hvr-bubble-right'
+            }, {
+              title: 'Bubble Bottom',
+              selector: '*',
+              classes: 'hvr-bubble-bottom'
+            }, {
+              title: 'Bubble Left',
+              selector: '*',
+              classes: 'hvr-bubble-left'
+            }, {
+              title: 'Bubble Float Top',
+              selector: '*',
+              classes: 'hvr-bubble-float-top'
+            }, {
+              title: 'Bubble Float Right',
+              selector: '*',
+              classes: 'hvr-bubble-float-right'
+            }, {
+              title: 'Bubble Float Bottom',
+              selector: '*',
+              classes: 'hvr-bubble-float-bottom'
+            }, {
+              title: 'Bubble Float Left',
+              selector: '*',
+              classes: 'hvr-bubble-float-left'
+            }]
+          }, {
+            title: "Icons",
+            items: [{
+              title: 'Icon Back',
+              selector: '*',
+              classes: 'hvr-icon-back'
+            }, {
+              title: 'Icon Forward',
+              selector: '*',
+              classes: 'hvr-icon-forward'
+            }, {
+              title: 'Icon Down',
+              selector: '*',
+              classes: 'hvr-icon-down'
+            }, {
+              title: 'Icon Up',
+              selector: '*',
+              classes: 'hvr-icon-up'
+            }, {
+              title: 'Icon Spin',
+              selector: '*',
+              classes: 'hvr-icon-spin'
+            }, {
+              title: 'Icon Drop',
+              selector: '*',
+              classes: 'hvr-icon-drop'
+            }, {
+              title: 'Icon Fade',
+              selector: '*',
+              classes: 'hvr-icon-fade'
+            }, {
+              title: 'Icon Float Away',
+              selector: '*',
+              classes: 'hvr-icon-float-away'
+            }, {
+              title: 'Icon Sink Away',
+              selector: '*',
+              classes: 'hvr-icon-sink-away'
+            }, {
+              title: 'Icon Grow',
+              selector: '*',
+              classes: 'hvr-icon-grow'
+            }, {
+              title: 'Icon Shrink',
+              selector: '*',
+              classes: 'hvr-icon-shrink'
+            }, {
+              title: 'Icon Pulse',
+              selector: '*',
+              classes: 'hvr-icon-pulse'
+            }, {
+              title: 'Icon Pulse Grow',
+              selector: '*',
+              classes: 'hvr-icon-pulse-grow'
+            }, {
+              title: 'Icon Pulse Shrink',
+              selector: '*',
+              classes: 'hvr-icon-pulse-shrink'
+            }, {
+              title: 'Icon Push',
+              selector: '*',
+              classes: 'hvr-icon-push'
+            }, {
+              title: 'Icon Pop',
+              selector: '*',
+              classes: 'hvr-icon-pop'
+            }, {
+              title: 'Icon Bounce',
+              selector: '*',
+              classes: 'hvr-icon-bounce'
+            }, {
+              title: 'Icon Rotate',
+              selector: '*',
+              classes: 'hvr-icon-rotate'
+            }, {
+              title: 'Icon Grow Rotate',
+              selector: '*',
+              classes: 'hvr-icon-grow-rotate'
+            }, {
+              title: 'Icon Float',
+              selector: '*',
+              classes: 'hvr-icon-float'
+            }, {
+              title: 'Icon Sink',
+              selector: '*',
+              classes: 'hvr-icon-sink'
+            }, {
+              title: 'Icon Bob',
+              selector: '*',
+              classes: 'hvr-icon-bob'
+            }, {
+              title: 'Icon Hang',
+              selector: '*',
+              classes: 'hvr-icon-hang'
+            }, {
+              title: 'Icon Wobble Horizontal',
+              selector: '*',
+              classes: 'hvr-icon-wobble-horizontal'
+            }, {
+              title: 'Icon Wobble Vertical',
+              selector: '*',
+              classes: 'hvr-icon-wobble-vertical'
+            }, {
+              title: 'Icon Buzz',
+              selector: '*',
+              classes: 'hvr-icon-buzz'
+            }, {
+              title: 'Icon Buzz Out',
+              selector: '*',
+              classes: 'hvr-icon-buzz-out'
+            }]
+          }, {
+            title: "Curls",
+            items: [{
+              title: 'Curl Top Left',
+              selector: '*',
+              classes: 'hvr-curl-top-left'
+            }, {
+              title: 'Curl Top Right',
+              selector: '*',
+              classes: 'hvr-curl-top-right'
+            }, {
+              title: 'Curl Bottom Right',
+              selector: '*',
+              classes: 'hvr-curl-bottom-right'
+            }, {
+              title: 'Curl Bottom Left',
+              selector: '*',
+              classes: 'hvr-curl-bottom-left'
+            }]
+          }]
+
+        }
         ],
-        //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform color background-color border border-radius outline text-shadow",
-        //preview_styles: "font-family font-size font-weight font-style text-decoration text-transform text-shadow",
         setup: editor => {
           editor.that = this;
-          editor.on('init', function() {
+          editor.on('init', function () {
             var aos = editor.dom.create('script', {
               id: editor.dom.uniqueId(),
               type: 'text/javascript',
@@ -952,30 +865,30 @@ export default class TinymceView extends JetView {
             });
             aos.addEventListener('load', _ => editor.contentWindow.AOS.init());
             editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
-			  
-			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
               id: editor.dom.uniqueId(),
-		      rel: 'stylesheet',
+              rel: 'stylesheet',
               type: 'text/css',
               href: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid()
             }));
-			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
               id: editor.dom.uniqueId(),
-		      rel: 'stylesheet',
+              rel: 'stylesheet',
               type: 'text/css',
-              href: "//" + location.hostname.replace(/\w+./, '') + "/" + editor.that.app.identityId + "/index.cdn.css?" + webix.uid()
+              href: "//" + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) + "/" + editor.that.app.identityId + "/index.cdn.css?" + webix.uid()
             }));
-			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
               id: editor.dom.uniqueId(),
-		      rel: 'stylesheet',
+              rel: 'stylesheet',
               type: 'text/css',
               href: '//cdn.redaktr.com/redaktr.min.css?' + webix.uid()
             }));
-			editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
               id: editor.dom.uniqueId(),
-		      rel: 'stylesheet',
+              rel: 'stylesheet',
               type: 'text/css',
-              href: "//" + location.hostname.replace(/\w+./, '') + "/" + editor.that.app.identityId + "/index.css?" + webix.uid()
+              href: "//" + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) + "/" + editor.that.app.identityId + "/index.css?" + webix.uid()
             }));
 
             /*var tilt = editor.dom.create('script', {
@@ -1124,8 +1037,7 @@ export default class TinymceView extends JetView {
           });
           //});
         },
-        //document_base_url: "//" + location.hostname.replace(/(?:(?=www)|\w+.)/, '') + "/" + this.app.identityId + "/",
-        document_base_url: "//" + location.hostname.replace(/\w+./, '') + "/" + this.app.identityId + "/",
+        document_base_url: "//" + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) + "/" + this.app.identityId + "/",
         statusbar: false,
         resize: false,
         spellchecker_languages: "Russian=ru,Ukrainian=uk,English=en",
@@ -1165,10 +1077,6 @@ export default class TinymceView extends JetView {
           title: 'Negative Basic Button',
           value: 'ui icon basic negative button'
         }],
-
-
-
-
         image_class_list: [{
           title: 'None',
           value: ''

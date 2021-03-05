@@ -577,7 +577,7 @@ export default class TemplateView extends JetView {
 			'<meta charset="utf-8">' +
 			'<meta name="viewport" content="width=device-width, initial-scale=1">' +
 			'<base href="' +
-			(identity ? '//' + window.location.host : '') +
+			(identity ? '//' + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) : '') +
 			'/' +
 			this.app.identityId +
 			'/">' +
@@ -622,11 +622,11 @@ export default class TemplateView extends JetView {
 			body
 				.find(
 					prefix +
-						'body:first>.pusher>div[data-fixed]:not([id]),' +
-						prefix +
-						'body:first>.pusher>div[data-absolute]:not([id]),' +
-						prefix +
-						'body:first>.pusher>div[data-static]:not([id])'
+					'body:first>.pusher>div[data-fixed]:not([id]),' +
+					prefix +
+					'body:first>.pusher>div[data-absolute]:not([id]),' +
+					prefix +
+					'body:first>.pusher>div[data-static]:not([id])'
 				)
 				.sort((a, b) => {
 					return Math.abs($(b).css('z-index')) - Math.abs($(a).css('z-index'));
@@ -790,34 +790,34 @@ export default class TemplateView extends JetView {
 			item.css(
 				'border-left-color',
 				borderLeftColor +
-					webix.color.toHex(Math.round(2.55 * $$('borderLeftTransparency').getValue()), 2)
+				webix.color.toHex(Math.round(2.55 * $$('borderLeftTransparency').getValue()), 2)
 			);
 		var borderRightColor = $$('borderRightColor').getValue();
 		if (borderRightColor !== '')
 			item.css(
 				'border-right-color',
 				borderRightColor +
-					webix.color.toHex(
-						Math.round(2.55 * $$('borderRightTransparency').getValue()),
-						2
-					)
+				webix.color.toHex(
+					Math.round(2.55 * $$('borderRightTransparency').getValue()),
+					2
+				)
 			);
 		var borderTopColor = $$('borderTopColor').getValue();
 		if (borderTopColor !== '')
 			item.css(
 				'border-top-color',
 				borderTopColor +
-					webix.color.toHex(Math.round(2.55 * $$('borderTopTransparency').getValue()), 2)
+				webix.color.toHex(Math.round(2.55 * $$('borderTopTransparency').getValue()), 2)
 			);
 		var borderBottomColor = $$('borderBottomColor').getValue();
 		if (borderBottomColor !== '')
 			item.css(
 				'border-bottom-color',
 				borderBottomColor +
-					webix.color.toHex(
-						Math.round(2.55 * $$('borderBottomTransparency').getValue()),
-						2
-					)
+				webix.color.toHex(
+					Math.round(2.55 * $$('borderBottomTransparency').getValue()),
+					2
+				)
 			);
 		var borderTopLeftRadius = $$('borderTopLeftRadius').getValue();
 		if (borderTopLeftRadius !== '')
@@ -836,7 +836,7 @@ export default class TemplateView extends JetView {
 			item.css(
 				'color',
 				textColor +
-					webix.color.toHex(Math.round(2.55 * $$('textTransparency').getValue()), 2)
+				webix.color.toHex(Math.round(2.55 * $$('textTransparency').getValue()), 2)
 			);
 		item.css('opacity', $$('transparency').getValue() / 100);
 		var backgroundColor = $$('backgroundColor').getValue();
@@ -844,7 +844,7 @@ export default class TemplateView extends JetView {
 			item.css(
 				'background-color',
 				backgroundColor +
-					webix.color.toHex(Math.round(2.55 * $$('backgroundTransparency').getValue()), 2)
+				webix.color.toHex(Math.round(2.55 * $$('backgroundTransparency').getValue()), 2)
 			);
 		item.css('background-position', $$('backgroundPosition').getValue());
 		item.css('background-repeat', $$('repeat-x').getValue() + ' ' + $$('repeat-y').getValue());
@@ -854,15 +854,15 @@ export default class TemplateView extends JetView {
 		$.each($$('shadows').serialize(), (index, value) =>
 			shadows.push(
 				(value.inset ? 'inset ' : '') +
-					Number(value.x) +
-					'px ' +
-					Number(value.y) +
-					'px ' +
-					Number(value.blur) +
-					'px ' +
-					Number(value.spread) +
-					'px ' +
-					value.color
+				Number(value.x) +
+				'px ' +
+				Number(value.y) +
+				'px ' +
+				Number(value.blur) +
+				'px ' +
+				Number(value.spread) +
+				'px ' +
+				value.color
 			)
 		);
 		item.css('box-shadow', shadows.join());
@@ -1127,15 +1127,15 @@ export default class TemplateView extends JetView {
 					item[0].style.borderLeftColor.indexOf('rgba')
 						? 100
 						: Math.round(
-								100 * item[0].style.borderLeftColor.replace(/^.*,(.+)\)/, '$1')
-						  )
+							100 * item[0].style.borderLeftColor.replace(/^.*,(.+)\)/, '$1')
+						)
 				);
 				$$('borderRightTransparency').setValue(
 					item[0].style.borderRightColor.indexOf('rgba')
 						? 100
 						: Math.round(
-								100 * item[0].style.borderRightColor.replace(/^.*,(.+)\)/, '$1')
-						  )
+							100 * item[0].style.borderRightColor.replace(/^.*,(.+)\)/, '$1')
+						)
 				);
 				$$('borderTopTransparency').setValue(
 					item[0].style.borderTopColor.indexOf('rgba')
@@ -1146,8 +1146,8 @@ export default class TemplateView extends JetView {
 					item[0].style.borderBottomColor.indexOf('rgba')
 						? 100
 						: Math.round(
-								100 * item[0].style.borderBottomColor.replace(/^.*,(.+)\)/, '$1')
-						  )
+							100 * item[0].style.borderBottomColor.replace(/^.*,(.+)\)/, '$1')
+						)
 				);
 				var marginTop = item[0].style.marginTop,
 					parseMarginTop = parseInt(marginTop);
@@ -1156,8 +1156,8 @@ export default class TemplateView extends JetView {
 					$$('pmarginTop').setValue(marginTop.match(/\D+$/)[0] === 'px' ? 'px' : '%');
 				else if (resetDimension) $$('pmarginTop').setValue('px');
 				var height = item[0].style.minHeight
-						? item[0].style.minHeight
-						: item[0].style.height,
+					? item[0].style.minHeight
+					: item[0].style.height,
 					parseHeight = parseInt(height);
 				$$('height').setValue(parseHeight);
 				if (parseHeight)
@@ -1207,21 +1207,21 @@ export default class TemplateView extends JetView {
 				backgroundImage =
 					backgroundImage !== '' && backgroundImage !== 'none'
 						? backgroundImage
-								.replace('url(', '')
-								.replace(')', '')
-								.replace(/"/g, '')
-								.replace(
-									new RegExp(
-										(
-											window.location.protocol +
-											'//' +
-											window.location.host +
-											window.location.pathname
-										).replace(/[^\/]*$/, ''),
-										'g'
-									),
-									''
-								)
+							.replace('url(', '')
+							.replace(')', '')
+							.replace(/"/g, '')
+							.replace(
+								new RegExp(
+									(
+										window.location.protocol +
+										'//' +
+										window.location.host +
+										window.location.pathname
+									).replace(/[^\/]*$/, ''),
+									'g'
+								),
+								''
+							)
 						: '';
 				$$('uploader').files.data.clearAll();
 				if (backgroundImage)
@@ -1256,8 +1256,8 @@ export default class TemplateView extends JetView {
 					item[0].style.backgroundColor.indexOf('rgba')
 						? 100
 						: Math.round(
-								100 * item[0].style.backgroundColor.replace(/^.*,(.+)\)/, '$1')
-						  )
+							100 * item[0].style.backgroundColor.replace(/^.*,(.+)\)/, '$1')
+						)
 				);
 				var transparency = item[0].style.opacity;
 				$$('transparency').setValue(
