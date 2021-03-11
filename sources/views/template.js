@@ -576,17 +576,14 @@ export default class TemplateView extends JetView {
 			'<!DOCTYPE html><html><head>' +
 			'<meta charset="utf-8">' +
 			'<meta name="viewport" content="width=device-width, initial-scale=1">' +
+			'<script async src="//cdn.redaktr.com/redaktr.min.js"></script>' +
+			'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.min.css">' +
 			'<base href="' +
 			(identity ? '//' + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) : '') +
 			'/' +
 			this.app.identityId +
 			'/">' +
-			'<link rel="icon" href="/' +
-			this.app.identityId +
-			'.ico" type="image/vnd.microsoft.icon">' +
-			'<script async src="//cdn.redaktr.com/redaktr.min.js"></script>' +
-			'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.cdn.min.css">' +
-			'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.min.css">' +
+			'<link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">' +
 			'</head><body>' +
 			'<div class="ui sidebar very wide vertical accordion menu"></div>' +
 			'<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a><div class="header item"></div></div>' +
