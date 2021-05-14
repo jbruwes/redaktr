@@ -866,12 +866,12 @@ export default class TinymceView extends JetView {
             aos.addEventListener('load', _ => editor.contentWindow.AOS.init());
             editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
 
-            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
+            /*editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
               id: editor.dom.uniqueId(),
               rel: 'stylesheet',
               type: 'text/css',
               href: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid()
-            }));
+            }));*/
             editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
               id: editor.dom.uniqueId(),
               rel: 'stylesheet',

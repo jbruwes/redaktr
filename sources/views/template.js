@@ -577,7 +577,7 @@ export default class TemplateView extends JetView {
 			'<meta charset="utf-8">' +
 			'<meta name="viewport" content="width=device-width, initial-scale=1">' +
 			'<script async src="//cdn.redaktr.com/redaktr.min.js"></script>' +
-			'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.cdn.min.css">' +
+			//'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.cdn.min.css">' +
 			'<link rel="stylesheet" href="https://cdn.redaktr.com/redaktr.min.css">' +
 			'<base href="' +
 			(identity ? '//' + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) : '') +
