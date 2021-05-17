@@ -58,11 +58,8 @@ module.exports = function(env) {
       }),
       new CopyWebpackPlugin([
         { from: 'resource/404.html' },
-        { from: 'resource/apple-touch-icon.png' },
         { from: 'resource/favicon.ico' },
         { from: 'resource/index.html' },
-        { from: 'resource/manifest.json' },
-        { from: 'resource/pwabuilder-sw.js' },
         { from: 'resource/redaktr.svg' },
         { from: 'resource/robots.txt' }
       ]),
