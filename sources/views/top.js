@@ -1,7 +1,14 @@
 import {
   JetView,
 } from 'webix-jet';
+/**
+ * Ксласс описания формы заголовка начальной страницы
+ */
 export default class TopView extends JetView {
+  /**
+   * This method returns the initial UI configuration of a view
+   * @return {Object} The initial UI configuration of a view
+   */
   config() {
     const ui = {
       rows: [{
@@ -18,7 +25,15 @@ export default class TopView extends JetView {
         },
         {
           view: 'label',
-          label: "<span class='mdi mdi-36px mdi-glassdoor logoRedaktr'></span> <span class='mdi mdi-dark mdi-24px mdi-alpha-r'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-e'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-d'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-a'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-k'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-t'></span><span class='mdi mdi-dark mdi-24px mdi-alpha-r'></span>",
+          label:
+            '<span class="mdi mdi-36px mdi-glassdoor logoRedaktr"></span> ' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-r"></span>' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-e"></span>' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-d"></span>' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-a"></span>' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-k"></span>' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-t"></span>' +
+            '<span class="mdi mdi-dark mdi-24px mdi-alpha-r"></span>',
         },
         ],
       },
@@ -33,7 +48,9 @@ export default class TopView extends JetView {
             if (id === 'signout') {
               webix.delay((_) => {
                 clearTimeout(this.app.timeoutId);
-                if (AWS.config.credentials)AWS.config.credentials.params.Logins = [];
+                if (AWS.config.credentials) {
+                  AWS.config.credentials.params.Logins = [];
+                }
                 this.show('signin');
                 // this.show('signinlocal');
                 this._resetSidebar();
@@ -56,6 +73,9 @@ export default class TopView extends JetView {
     };
     return ui;
   }
+  /**
+   * Сброс сайдбара в состояние до логина
+   */
   _resetSidebar() {
     $$('sidebar').clearAll();
     if ($$('play')) $$('toolbar').removeView('play');
@@ -71,17 +91,18 @@ export default class TopView extends JetView {
     });
     $$('sidebar').select('signin');
   }
+  /**
+   * The method is called once when a view is rendered
+   */
   init() {
     $$('sidebar').getPopup().attachEvent('onBeforeShow', () => {
       return false;
     });
     webix.message({
       type: 'debug',
-      text: '<br><b>DEMO ACCOUNT</b><br><br><b>Username:</b> demo<br><b>Password:</b> Demodemo!1<br><br>',
+      text: '<br><b>DEMO ACCOUNT</b><br><br>' +
+        '<b>Username:</b> demo<br><b>Password:</b> Demodemo!1<br><br>',
     });
     this._resetSidebar();
   }
 }
-/* global webix */
-/* global AWS */
-/* global $$ */

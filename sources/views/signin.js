@@ -1,4 +1,4 @@
-import { JetView } from 'webix-jet';
+import {JetView} from 'webix-jet';
 import PasswordView from './signinViews/password';
 import ForgetPasswordView from './signinViews/forgetPassword';
 export default class SignInView extends JetView {
@@ -146,7 +146,7 @@ export default class SignInView extends JetView {
         }
       );
     };
-    const check = _ => {
+    const check = (_) => {
       this.app.identityId = AWS.config.credentials.identityId;
       this.app.S3.getObject({
         Bucket: 'redaktr',
@@ -265,7 +265,6 @@ export default class SignInView extends JetView {
           // this.app.timeoutId = webix.delay(_ => AWS.config.credentials.refresh(cbRefresh), this, [], new Date(AWS.config.credentials.expireTime) - new Date() - 100000);
           appShow(data.name);
         }
-
       });
     };
     var clickLogin = (_) => {
