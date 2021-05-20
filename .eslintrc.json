@@ -9,6 +9,7 @@
         "webix":true,
         "$$": true,
         "AWS": true,
+        "tinymce": true,
         "scheduler":true,
         "APPNAME":true, "VERSION":true, "PRODUCTION":true, "BUILD_AS_MODULE":true
     },

@@ -1,185 +1,430 @@
 import {
   JetView,
 } from 'webix-jet';
+/**
+ *
+ */
 export default class TinymceView extends JetView {
+  /**
+   * This method returns the initial UI configuration of a view
+   * @return {Object} The initial UI configuration of a view
+   */
   config() {
-    const
-      items = '<div class="ui items mceNonEditable" #{data}><div class="item">#{content}</div></div>';
-    const grid = '<div class="ui #{count} column centered #{adaptive} stretched padded grid mceNonEditable" #{data}><div class="column #{align}" data-aos="#{aos}">#{content}</div></div>';
-    // cards='<div class="ui #{count} centered stackable doubling cards mceNonEditable" #{data}>#{content}</div>',
-    const segments = '<div class="ui vertical padded basic segments mceNonEditable" #{data}>#{content}</div>';
-
-    // innerHeader = '<i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span>',
-    const header = '<div class="middle aligned content"><a class="ui header hvr-icon-wobble-vertical"><i class="hvr-icon icon"><!-- --></i><span class="ui"><span class="sub header"><!-- --></span></span></a></div>';
-    // h1 = '<div class="middle aligned content"><h1 class="ui header hvr-icon-wobble-vertical">' + innerHeader + '</h1></div>',
-    const dimmedImage = '<div class="ui #{size} image"><div class="ui inverted dimmer"><a class="ui circular inverted secondary icon button"><i class="icon"><!-- --></i></a></div><img class="ui image" loading="#{loading}"></div>';
+    const items = '<div class="ui items mceNonEditable" #{data}>' +
+      '<div class="item">#{content}</div>' +
+      '</div>';
+    const grid = '<div class="' +
+      'ui column centered stretched padded grid mceNonEditable ' +
+      '#{count} #{adaptive}' +
+      '" #{data}>' +
+      '<div class="column #{align}" data-aos="#{aos}">#{content}</div>' +
+      '</div>';
+    const segments = '<div class="' +
+      'ui vertical padded basic segments mceNonEditable' +
+      '" #{data}>' +
+      '#{content}' +
+      '</div>';
+    const header = '<div class="middle aligned content">' +
+      '<a class="ui header hvr-icon-wobble-vertical">' +
+      '<i class="hvr-icon icon"><!-- --></i>' +
+      '<span class="ui">' +
+      '<span class="sub header"><!-- --></span>' +
+      '</span></a></div>';
+    const dimmedImage = '<div class="ui #{size} image">' +
+      '<div class="ui inverted dimmer">' +
+      '<a class="ui circular inverted secondary icon button">' +
+      '<i class="icon"><!-- --></i>' +
+      '</a></div><img class="ui image" loading="#{loading}"></div>';
     const commonData = 'data-auto="" data-description="true"';
     const singleData = 'data-path="" data-date="true"';
-    const multiData = 'data-length="" data-deep="false" data-random="false" data-reveal="true"';
+    const multiData = 'data-length="" ' +
+      'data-deep="false" ' +
+      'data-random="false" ' +
+      'data-reveal="true"';
     const sliderData = 'data-pager="true" data-controls="true"';
     return {
       id: 'tinymce',
       view: 'tinymce5-editor',
-      // cdn: "//cdn.tiny.cloud/1/r2lw5k8fd0gyrwrhztc4ie6zdmanh9ovn6c38xwh8ujjimpw/tinymce/5",
       apiKey: 'r2lw5k8fd0gyrwrhztc4ie6zdmanh9ovn6c38xwh8ujjimpw',
       config: {
         mobile: {
           theme: 'silver',
           menubar: false,
         },
-        plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable charmap quickbars emoticons spellchecker',
+        plugins: 'print ' +
+          'preview ' +
+          'paste ' +
+          'importcss ' +
+          'searchreplace ' +
+          'autolink ' +
+          'autosave ' +
+          'save ' +
+          'directionality ' +
+          'code ' +
+          'visualblocks ' +
+          'visualchars ' +
+          'fullscreen ' +
+          'image ' +
+          'link ' +
+          'media ' +
+          'template ' +
+          'codesample ' +
+          'table ' +
+          'charmap ' +
+          'hr ' +
+          'pagebreak ' +
+          'nonbreaking ' +
+          'anchor ' +
+          'toc ' +
+          'insertdatetime ' +
+          'advlist ' +
+          'lists ' +
+          'wordcount ' +
+          'imagetools ' +
+          'textpattern ' +
+          'noneditable ' +
+          'charmap ' +
+          'quickbars ' +
+          'emoticons ' +
+          'spellchecker',
         menubar: 'file edit view insert format tools table',
-        toolbar: 'undo redo | rlink | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview print | insertfile image media template link unlink anchor codesample | ltr rtl',
+        toolbar: 'undo redo' +
+          ' | ' +
+          'rlink' +
+          ' | ' +
+          'bold italic underline strikethrough' +
+          ' | ' +
+          'fontselect fontsizeselect formatselect' +
+          ' | ' +
+          'alignleft aligncenter alignright alignjustify' +
+          ' | ' +
+          'outdent indent' +
+          ' |  ' +
+          'numlist bullist' +
+          ' | ' +
+          'forecolor backcolor removeformat' +
+          ' | ' +
+          'pagebreak' +
+          ' | ' +
+          'charmap emoticons' +
+          ' | ' +
+          'fullscreen preview print' +
+          ' | ' +
+          'insertfile image media template link unlink anchor codesample' +
+          ' | ' +
+          'ltr rtl',
         toolbar_sticky: true,
         content_style: '.mce-content-body{padding:8px;}',
         templates: [{
           title: 'menu',
-          description: 'data-scrollable data-animation data-close-on-click data-direction data-hover-delay data-open-on-click data-orientation data-popup-collision',
-          content: '<div class="mceNonEditable" data-id="rmenu" data-scrollable="true" data-animation="true" data-close-on-click="true" data-direction="default" data-hover-delay="100" data-open-on-click="false" data-orientation="horizontal" data-popup-collision="true"></div>',
+          description: 'data-scrollable ' +
+            'data-animation ' +
+            'data-close-on-click ' +
+            'data-direction ' +
+            'data-hover-delay ' +
+            'data-open-on-click ' +
+            'data-orientation ' +
+            'data-popup-collision',
+          content: '<div' +
+            ' ' +
+            'class="mceNonEditable"' +
+            ' ' +
+            'data-id="rmenu"' +
+            ' ' +
+            'data-scrollable="true"' +
+            ' ' +
+            'data-animation="true"' +
+            ' ' +
+            'data-close-on-click="true"' +
+            ' ' +
+            'data-direction="default"' +
+            ' ' +
+            'data-hover-delay="100"' +
+            ' ' +
+            'data-open-on-click="false"' +
+            ' ' +
+            'data-orientation="horizontal"' +
+            ' ' +
+            'data-popup-collision="true"' +
+            '></div>',
         }, {
           title: 'deck',
           description: 'колода карточек',
-          content: grid.replace('#{count}', 'three').replace('#{aos}', 'flip-left').replace('#{align}', '').replace('#{adaptive}', '').replace('#{data}', ['data-id="deck"', commonData, singleData, multiData, sliderData].join(' ')).replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>'),
+          content: grid.replace('#{count}', 'three')
+            .replace('#{aos}', 'flip-left')
+            .replace('#{align}', '')
+            .replace('#{adaptive}', '')
+            .replace('#{data}',
+              ['data-id="deck"',
+                commonData,
+                singleData,
+                multiData,
+                sliderData].join(' '))
+            .replace('#{content}',
+              '<div class="ui fluid raised link card">' +
+              dimmedImage.replace('#{loading}', 'eager')
+                .replace('#{size}', '') +
+              header +
+              '</div>'),
         }, {
           title: 'carousel',
           description: 'слайдер',
-          content: segments.replace('#{data}', ['data-id="carousel"', commonData, singleData, multiData, sliderData].join(' ')).replace('#{content}', '<div class="ui basic fitted segment" style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light dimmer">' + header + '</div></div>'),
+          content: segments.replace('#{data}',
+            ['data-id="carousel"',
+              commonData,
+              singleData,
+              multiData,
+              sliderData].join(' '))
+            .replace('#{content}',
+              '<div' +
+              ' ' +
+              'class="ui basic fitted segment"' +
+              ' ' +
+              'style="' +
+              'height:100vh;background-size:cover;background-position:center;' +
+              '"' +
+              '>' +
+              '<div class="ui active very light dimmer">' +
+              header +
+              '</div></div>'),
         }, {
           title: 'particles',
           description: 'заголовок с анимированными частичками',
-          content: '<div id="' + webix.uid() + '" class="ui tertiary inverted basic vertical fitted segment mceNonEditable" ' + ['data-id="particles"', commonData, singleData, 'data-particles="default"'].join(' ') + ' style="height:100vh;background-size:cover;background-position:center;"><div class="ui active very light center dimmer">' + header + '</div></div>',
+          content: '<div id="' +
+            webix.uid() +
+            '"' +
+            ' ' +
+            'class="' +
+            'ui' +
+            ' ' +
+            'tertiary' +
+            ' ' +
+            'inverted' +
+            ' ' +
+            'basic' +
+            ' ' +
+            'vertical' +
+            ' ' +
+            'fitted' +
+            ' ' +
+            'segment' +
+            ' ' +
+            'mceNonEditable' +
+            '"' +
+            ' ' +
+            ['data-id="particles"',
+              commonData,
+              singleData,
+              'data-particles="default"'].join(' ') +
+            ' ' +
+            'style="' +
+            'height:100vh;background-size:cover;background-position:center;' +
+            '">' +
+            '<div class="ui active very light center dimmer">' +
+            header +
+            '</div></div>',
         }, {
           title: 'headerlist',
           description: 'вертикальный список заголовков',
-          content: items.replace('#{data}', ['data-id="list"', commonData, singleData, multiData].join(' ')).replace('#{content}', dimmedImage.replace('#{loading}', 'lazy').replace('#{size}', 'small') + header),
+          content: items.replace('#{data}',
+            ['data-id="list"', commonData, singleData, multiData].join(' '))
+            .replace('#{content}',
+              dimmedImage.replace('#{loading}', 'lazy')
+                .replace('#{size}', 'small') +
+              header),
         }, {
           title: 'header',
           description: 'одиночный заголовок',
-          content: '<div class="ui basic fitted segment mceNonEditable" ' + ['data-id="header"', commonData, singleData].join(' ') + '>' + header + '</div>',
+          content: '<div class="ui basic fitted segment mceNonEditable" ' +
+            ['data-id="header"', commonData, singleData].join(' ') +
+            '>' +
+            header +
+            '</div>',
         }, {
           title: 'icongrid',
           description: 'плитка из иконок',
-          content: grid.replace('#{count}', 'six').replace('#{aos}', 'fade-up').replace('#{align}', 'center aligned').replace('#{adaptive}', 'stackable doubling').replace('#{data}', ['data-id="icongrid"', commonData, singleData, multiData].join(' ')).replace('#{content}', header),
+          content: grid.replace('#{count}', 'six')
+            .replace('#{aos}', 'fade-up')
+            .replace('#{align}', 'center aligned')
+            .replace('#{adaptive}', 'stackable doubling')
+            .replace('#{data}',
+              ['data-id="icongrid"',
+                commonData,
+                singleData,
+                multiData].join(' '))
+            .replace('#{content}', header),
         }, {
           title: 'cardgrid',
           description: 'плитка из карточек',
-          content: grid.replace('#{count}', 'three').replace('#{aos}', 'flip-left').replace('#{align}', '').replace('#{adaptive}', 'stackable doubling').replace('#{data}', ['data-id="cardgrid"', commonData, singleData, multiData].join(' ')).replace('#{content}', '<div class="ui fluid raised link card">' + dimmedImage.replace('#{loading}', 'eager').replace('#{size}', '') + header + '</div>'),
+          content: grid.replace('#{count}', 'three')
+            .replace('#{aos}', 'flip-left')
+            .replace('#{align}', '')
+            .replace('#{adaptive}', 'stackable doubling')
+            .replace('#{data}',
+              ['data-id="cardgrid"',
+                commonData,
+                singleData,
+                multiData].join(' '))
+            .replace('#{content}',
+              '<div class="ui fluid raised link card">' +
+              dimmedImage.replace('#{loading}', 'eager')
+                .replace('#{size}', '') +
+              header +
+              '</div>'),
         }, {
           title: 'youtube',
           description: 'вставка youtube ролика',
-          content: '<div class="ui embed mceNonEditable" data-source="youtube" data-id="TaOoK8kd6Zg" data-placeholder="//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg"></div>',
+          content: '<div' +
+            ' ' +
+            'class="ui embed mceNonEditable"' +
+            ' ' +
+            'data-source="youtube"' +
+            ' ' +
+            'data-id="TaOoK8kd6Zg"' +
+            ' ' +
+            'data-placeholder="' +
+            '//i.ytimg.com/vi/TaOoK8kd6Zg/maxresdefault.jpg' +
+            '"' +
+            '></div>',
         }, {
           title: 'breadcrumbs',
           description: 'путь до текущей страницы',
-          content: '<div class="ui mini fluid steps mceNonEditable" ' + ['data-id="breadcrumbs"', commonData].join(' ') + '><a class="step"><i class="hvr-wobble-vertical icon"><!-- --></i><span class="content"><span class="ui title tiny header"><span class="ui"><span class="sub header"><!-- --></span></span></span></span></a></div>',
+          content: '<div class="ui mini fluid steps mceNonEditable" ' +
+            ['data-id="breadcrumbs"',
+              commonData].join(' ') +
+            '><a class="step">' +
+            '<i class="hvr-wobble-vertical icon"><!-- --></i>' +
+            '<span class="content">' +
+            '<span class="ui title tiny header">' +
+            '<span class="ui">' +
+            '<span class="sub header"><!-- --></span>' +
+            '</span></span></span></a></div>',
         }],
-        font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats' +
-          "Alegreya='Alegreya', serif;" + // google
-          "Alegreya Sans='Alegreya Sans', sans-serif;" + // google
-          "Alegreya Sans SC='Alegreya Sans SC', sans-serif;" + // google
-          "Alegreya SC='Alegreya SC', serif;" + // google
-          "Alice='Alice', serif;" + // google
-          "Amatic SC='Amatic SC', cursive;" + // google
-          "Andika='Andika', sans-serif;" + // google
-          "Anonymous Pro='Anonymous Pro', monospace;" + // google
-          "Arimo='Arimo', sans-serif;" + // google
-          "Arsenal='Arsenal', sans-serif;" + // google
-          "Bad Script='Bad Script', cursive;" + // google
-          "Caveat='Caveat', cursive;" + // google
-          "Comfortaa='Comfortaa', cursive;" + // google
-          "Cormorant Garamond='Cormorant Garamond', serif;" + // google
-          "Cormorant Infant='Cormorant Infant', serif;" + // google
-          "Cormorant SC='Cormorant SC', serif;" + // google
-          "Cormorant Unicase='Cormorant Unicase', serif;" + // google
-          "Cormorant='Cormorant', serif;" + // google
-          "Cousine='Cousine', monospace;" + // google
-          "Cuprum='Cuprum', sans-serif;" + // google
-          "Didact Gothic='Didact Gothic', sans-serif;" + // google
-          "EB Garamond='EB Garamond', serif;" + // google
-          "El Messiri='El Messiri', sans-serif;" + // google
-          "Exo 2='Exo 2', sans-serif;" + // google
-          "Fira Code='Fira Code', monospace;" + // google
-          "Fira Mono='Fira Mono', monospace;" + // google
-          "Fira Sans Condensed='Fira Sans Condensed', sans-serif;" + // google
-          "Fira Sans Extra Condensed='Fira Sans Extra Condensed', sans-serif;" + // google
-          "Fira Sans='Fira Sans', sans-serif;" + // google
-          "Forum='Forum', cursive;" + // google
-          "Gabriela='Gabriela', serif;" + // google
-          "IBM Plex Mono='IBM Plex Mono', monospace;" + // google
-          "IBM Plex Sans='IBM Plex Sans', sans-serif;" + // google
-          "IBM Plex Serif='IBM Plex Serif', serif;" + // google
-          "Istok Web='Istok Web', sans-serif;" + // google
-          "Jura='Jura', sans-serif;" + // google
-          "Kelly Slab='Kelly Slab', cursive;" + // google
-          "Kosugi='Kosugi', sans-serif;" + // google
-          "Kosugi Maru='Kosugi Maru', sans-serif;" + // google
-          "Kurale='Kurale', serif;" + // google
-          "Ledger='Ledger', serif;" + // google
-          "Literata='Literata', serif;" + // google
-          "Lobster='Lobster', cursive;" + // google
-          "Lora='Lora', serif;" + // google
-          "M PLUS 1p='M PLUS 1p', sans-serif;" + // google
-          "M PLUS Rounded 1c='M PLUS Rounded 1c', sans-serif;" + // google
-          "Marck Script='Marck Script', cursive;" + // google
-          "Marmelad='Marmelad', sans-serif;" + // google
-          "Merriweather='Merriweather', serif;" + // google
-          "Montserrat='Montserrat', sans-serif;" + // google
-          "Montserrat Alternates='Montserrat Alternates', sans-serif;" + // google
-          "Neucha='Neucha', cursive;" + // google
-          "Noto Sans='Noto Sans', sans-serif;" + // google
-          "Noto Sans SC='Noto Sans SC', sans-serif;" + // google
-          "Noto Serif='Noto Serif', serif;" + // google
-          "Noto Serif SC='Noto Serif SC', serif;" + // google
-          "Noto Serif TC='Noto Serif TC', serif;" + // google
-          "Old Standard TT='Old Standard TT', serif;" + // google
-          "Open Sans Condensed='Open Sans Condensed', sans-serif;" + // google
-          "Open Sans='Open Sans', sans-serif;" + // google
-          "Oranienbaum='Oranienbaum', serif;" + // google
-          "Oswald='Oswald', sans-serif;" + // google
-          "Pacifico='Pacifico', cursive;" + // google
-          "Pangolin='Pangolin', cursive;" + // google
-          "Pattaya='Pattaya', sans-serif;" + // google
-          "Philosopher='Philosopher', sans-serif;" + // google
-          "Play='Play', sans-serif;" + // google
-          "Playfair Display SC='Playfair Display SC', serif;" + // google
-          "Playfair Display='Playfair Display', serif;" + // google
-          "Podkova='Podkova', serif;" + // google
-          "Poiret One='Poiret One', cursive;" + // google
-          "Prata='Prata', serif;" + // google
-          "Press Start 2P='Press Start 2P', cursive;" + // google
-          "Prosto One='Prosto One', cursive;" + // google
-          "PT Mono='PT Mono', monospace;" + // google
-          "PT Sans Caption='PT Sans Caption', sans-serif;" + // google
-          "PT Sans Narrow='PT Sans Narrow', sans-serif;" + // google
-          "PT Sans='PT Sans', sans-serif;" + // google
-          "PT Serif Caption='PT Serif Caption', serif;" + // google
-          "PT Serif='PT Serif', serif;" + // google
-          "Roboto Condensed='Roboto Condensed', sans-serif;" + // google
-          "Roboto Mono='Roboto Mono', monospace;" + // google
-          "Roboto Slab='Roboto Slab', serif;" + // google
-          "Roboto='Roboto', sans-serif;" + // google
-          "Rubik Mono One='Rubik Mono One', sans-serif;" + // google
-          "Rubik='Rubik', sans-serif;" + // google
-          "Ruslan Display='Ruslan Display', cursive;" + // google
-          "Russo One='Russo One', sans-serif;" + // google
-          "Sawarabi Gothic='Sawarabi Gothic', sans-serif;" + // google
-          "Scada='Scada', sans-serif;" + // google
-          "Seymour One='Seymour One', sans-serif;" + // google
-          "Source Code Pro='Source Code Pro', monospace;" + // google
-          "Source Sans Pro='Source Sans Pro', sans-serif;" + // google
-          "Spectral='Spectral', serif;" + // google
-          "Spectral SC='Spectral SC', serif;" + // google
-          "Stalinist One='Stalinist One', cursive;" + // google
-          "Tenor Sans='Tenor Sans', sans-serif;" + // google
-          "Tinos='Tinos', serif;" + // google
-          "Ubuntu Condensed='Ubuntu Condensed', sans-serif;" + // google
-          "Ubuntu Mono='Ubuntu Mono', monospace;" + // google
-          "Ubuntu='Ubuntu', sans-serif;" + // google
-          "Underdog='Underdog', cursive;" + // google
-          "Vollkorn='Vollkorn', serif;" + // google
-          "Vollkorn SC='Vollkorn SC', serif;" + // google
-          "Yanone Kaffeesatz='Yanone Kaffeesatz', sans-serif;" + // google
-          "Yeseva One='Yeseva One', cursive;", // google
+        font_formats: 'Andale Mono=andale mono,times;' +
+          'Arial=arial,helvetica,sans-serif;' +
+          'Arial Black=arial black,avant garde;' +
+          'Book Antiqua=book antiqua,palatino;' +
+          'Comic Sans MS=comic sans ms,sans-serif;' +
+          'Courier New=courier new,courier;' +
+          'Georgia=georgia,palatino;' +
+          'Helvetica=helvetica;' +
+          'Impact=impact,chicago;' +
+          'Symbol=symbol;' +
+          'Tahoma=tahoma,arial,helvetica,sans-serif;' +
+          'Terminal=terminal,monaco;' +
+          'Times New Roman=times new roman,times;' +
+          'Trebuchet MS=trebuchet ms,geneva;' +
+          'Verdana=verdana,geneva;' +
+          'Webdings=webdings;' +
+          'Wingdings=wingdings,zapf dingbats;' +
+          'Alegreya="Alegreya", serif;' + // google
+          'Alegreya Sans="Alegreya Sans", sans-serif;' + // google
+          'Alegreya Sans SC="Alegreya Sans SC", sans-serif;' + // google
+          'Alegreya SC="Alegreya SC", serif;' + // google
+          'Alice="Alice", serif;' + // google
+          'Amatic SC="Amatic SC", cursive;' + // google
+          'Andika="Andika", sans-serif;' + // google
+          'Anonymous Pro="Anonymous Pro", monospace;' + // google
+          'Arimo="Arimo", sans-serif;' + // google
+          'Arsenal="Arsenal", sans-serif;' + // google
+          'Bad Script="Bad Script", cursive;' + // google
+          'Caveat="Caveat", cursive;' + // google
+          'Comfortaa="Comfortaa", cursive;' + // google
+          'Cormorant Garamond="Cormorant Garamond", serif;' + // google
+          'Cormorant Infant="Cormorant Infant", serif;' + // google
+          'Cormorant SC="Cormorant SC", serif;' + // google
+          'Cormorant Unicase="Cormorant Unicase", serif;' + // google
+          'Cormorant="Cormorant", serif;' + // google
+          'Cousine="Cousine", monospace;' + // google
+          'Cuprum="Cuprum", sans-serif;' + // google
+          'Didact Gothic="Didact Gothic", sans-serif;' + // google
+          'EB Garamond="EB Garamond", serif;' + // google
+          'El Messiri="El Messiri", sans-serif;' + // google
+          'Exo 2="Exo 2", sans-serif;' + // google
+          'Fira Code="Fira Code", monospace;' + // google
+          'Fira Mono="Fira Mono", monospace;' + // google
+          'Fira Sans Condensed="Fira Sans Condensed", sans-serif;' + // google
+          'Fira Sans Extra Condensed=' +
+          '"Fira Sans Extra Condensed", sans-serif;' + // google
+          'Fira Sans="Fira Sans", sans-serif;' + // google
+          'Forum="Forum", cursive;' + // google
+          'Gabriela="Gabriela", serif;' + // google
+          'IBM Plex Mono="IBM Plex Mono", monospace;' + // google
+          'IBM Plex Sans="IBM Plex Sans", sans-serif;' + // google
+          'IBM Plex Serif="IBM Plex Serif", serif;' + // google
+          'Istok Web="Istok Web", sans-serif;' + // google
+          'Jura="Jura", sans-serif;' + // google
+          'Kelly Slab="Kelly Slab", cursive;' + // google
+          'Kosugi="Kosugi", sans-serif;' + // google
+          'Kosugi Maru="Kosugi Maru", sans-serif;' + // google
+          'Kurale="Kurale", serif;' + // google
+          'Ledger="Ledger", serif;' + // google
+          'Literata="Literata", serif;' + // google
+          'Lobster="Lobster", cursive;' + // google
+          'Lora="Lora", serif;' + // google
+          'M PLUS 1p="M PLUS 1p", sans-serif;' + // google
+          'M PLUS Rounded 1c="M PLUS Rounded 1c", sans-serif;' + // google
+          'Marck Script="Marck Script", cursive;' + // google
+          'Marmelad="Marmelad", sans-serif;' + // google
+          'Merriweather="Merriweather", serif;' + // google
+          'Montserrat="Montserrat", sans-serif;' + // google
+          'Montserrat Alternates=' +
+          '"Montserrat Alternates", sans-serif;' + // google
+          'Neucha="Neucha", cursive;' + // google
+          'Noto Sans="Noto Sans", sans-serif;' + // google
+          'Noto Sans SC="Noto Sans SC", sans-serif;' + // google
+          'Noto Serif="Noto Serif", serif;' + // google
+          'Noto Serif SC="Noto Serif SC", serif;' + // google
+          'Noto Serif TC="Noto Serif TC", serif;' + // google
+          'Old Standard TT="Old Standard TT", serif;' + // google
+          'Open Sans Condensed="Open Sans Condensed", sans-serif;' + // google
+          'Open Sans="Open Sans", sans-serif;' + // google
+          'Oranienbaum="Oranienbaum", serif;' + // google
+          'Oswald="Oswald", sans-serif;' + // google
+          'Pacifico="Pacifico", cursive;' + // google
+          'Pangolin="Pangolin", cursive;' + // google
+          'Pattaya="Pattaya", sans-serif;' + // google
+          'Philosopher="Philosopher", sans-serif;' + // google
+          'Play="Play", sans-serif;' + // google
+          'Playfair Display SC="Playfair Display SC", serif;' + // google
+          'Playfair Display="Playfair Display", serif;' + // google
+          'Podkova="Podkova", serif;' + // google
+          'Poiret One="Poiret One", cursive;' + // google
+          'Prata="Prata", serif;' + // google
+          'Press Start 2P="Press Start 2P", cursive;' + // google
+          'Prosto One="Prosto One", cursive;' + // google
+          'PT Mono="PT Mono", monospace;' + // google
+          'PT Sans Caption="PT Sans Caption", sans-serif;' + // google
+          'PT Sans Narrow="PT Sans Narrow", sans-serif;' + // google
+          'PT Sans="PT Sans", sans-serif;' + // google
+          'PT Serif Caption="PT Serif Caption", serif;' + // google
+          'PT Serif="PT Serif", serif;' + // google
+          'Roboto Condensed="Roboto Condensed", sans-serif;' + // google
+          'Roboto Mono="Roboto Mono", monospace;' + // google
+          'Roboto Slab="Roboto Slab", serif;' + // google
+          'Roboto="Roboto", sans-serif;' + // google
+          'Rubik Mono One="Rubik Mono One", sans-serif;' + // google
+          'Rubik="Rubik", sans-serif;' + // google
+          'Ruslan Display="Ruslan Display", cursive;' + // google
+          'Russo One="Russo One", sans-serif;' + // google
+          'Sawarabi Gothic="Sawarabi Gothic", sans-serif;' + // google
+          'Scada="Scada", sans-serif;' + // google
+          'Seymour One="Seymour One", sans-serif;' + // google
+          'Source Code Pro="Source Code Pro", monospace;' + // google
+          'Source Sans Pro="Source Sans Pro", sans-serif;' + // google
+          'Spectral="Spectral", serif;' + // google
+          'Spectral SC="Spectral SC", serif;' + // google
+          'Stalinist One="Stalinist One", cursive;' + // google
+          'Tenor Sans="Tenor Sans", sans-serif;' + // google
+          'Tinos="Tinos", serif;' + // google
+          'Ubuntu Condensed="Ubuntu Condensed", sans-serif;' + // google
+          'Ubuntu Mono="Ubuntu Mono", monospace;' + // google
+          'Ubuntu="Ubuntu", sans-serif;' + // google
+          'Underdog="Underdog", cursive;' + // google
+          'Vollkorn="Vollkorn", serif;' + // google
+          'Vollkorn SC="Vollkorn SC", serif;' + // google
+          'Yanone Kaffeesatz="Yanone Kaffeesatz", sans-serif;' + // google
+          'Yeseva One="Yeseva One", cursive;', // google
         style_formats: [{
           title: 'Animation',
           items: [{
@@ -852,7 +1097,6 @@ export default class TinymceView extends JetView {
               classes: 'hvr-curl-bottom-left',
             }],
           }],
-
         },
         ],
         setup: (editor) => {
@@ -863,42 +1107,49 @@ export default class TinymceView extends JetView {
               type: 'text/javascript',
               src: '//cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js',
             });
-            aos.addEventListener('load', (_) => editor.contentWindow.AOS.init());
+            aos.addEventListener('load',
+              (_) => editor.contentWindow.AOS.init());
             editor.getDoc().getElementsByTagName('head')[0].appendChild(aos);
-
-            /* editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
-              id: editor.dom.uniqueId(),
-              rel: 'stylesheet',
-              type: 'text/css',
-              href: '//cdn.redaktr.com/redaktr.cdn.min.css?' + webix.uid()
-            }));*/
-            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
-              id: editor.dom.uniqueId(),
-              rel: 'stylesheet',
-              type: 'text/css',
-              href: '//' + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) + '/' + editor.that.app.identityId + '/index.cdn.css?' + webix.uid(),
-            }));
-            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
-              id: editor.dom.uniqueId(),
-              rel: 'stylesheet',
-              type: 'text/css',
-              href: '//cdn.redaktr.com/redaktr.min.css?' + webix.uid(),
-            }));
-            editor.getDoc().getElementsByTagName('head')[0].appendChild(editor.dom.create('link', {
-              id: editor.dom.uniqueId(),
-              rel: 'stylesheet',
-              type: 'text/css',
-              href: '//' + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) + '/' + editor.that.app.identityId + '/index.css?' + webix.uid(),
-            }));
-
-            /* var tilt = editor.dom.create('script', {
-              id: editor.dom.uniqueId(),
-              type: 'text/javascript',
-              src: '//unpkg.com/vanilla-tilt/dist/vanilla-tilt.min.js'
-            });
-            editor.getDoc().getElementsByTagName('head')[0].appendChild(tilt);*/
+            editor.getDoc()
+              .getElementsByTagName('head')[0]
+              .appendChild(editor.dom.create('link', {
+                id: editor.dom.uniqueId(),
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '//' +
+                  (location.hostname === 'localhost' ?
+                    'redaktr.com' :
+                    location.hostname.replace(/\w+./, '')) +
+                  '/' +
+                  editor.that.app.identityId +
+                  '/index.cdn.css?' +
+                  webix.uid(),
+              }));
+            editor.getDoc()
+              .getElementsByTagName('head')[0]
+              .appendChild(editor.dom.create('link', {
+                id: editor.dom.uniqueId(),
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '//cdn.redaktr.com/redaktr.min.css?' + webix.uid(),
+              }));
+            editor.getDoc()
+              .getElementsByTagName('head')[0]
+              .appendChild(editor.dom.create('link', {
+                id: editor.dom.uniqueId(),
+                rel: 'stylesheet',
+                type: 'text/css',
+                href: '//' +
+                  (location.hostname === 'localhost' ?
+                    'redaktr.com' :
+                    location.hostname.replace(/\w+./, '')) +
+                  '/' +
+                  editor.that.app.identityId +
+                  '/index.css?' +
+                  webix.uid(),
+              }));
           });
-          var getSubmenuItems = (id, path) => {
+          const getSubmenuItems = (id, path) => {
             let items = [];
             let item;
             let child;
@@ -907,16 +1158,31 @@ export default class TinymceView extends JetView {
             let newPath = null;
             do {
               item = $$('tree').getItem(id);
-              // if (item.visible) {
               child = $$('tree').getFirstChildId(id);
-              value = item.value.replace(/[\""]/g, '\\"');
-              // newPath = path + encodeURI(value.replace(/ /g, "_")) + '/';
+              value = item.value.replace(/[""]/g, '\\"');
               newPath = path + value.replace(/ /g, '_') + '/';
               children = child ? getSubmenuItems(child, newPath) : null;
-              item = '{"type":"menuitem","text":"' + value + '",onAction:function(){""===tinyMCE.activeEditor.selection.getContent()?tinyMCE.execCommand("mceInsertContent",!1,"<a href=\\"' + newPath + '\\">' + value + '</a>"):tinyMCE.execCommand("mceInsertLink",!1,"' + newPath + '")},"icon":';
+              item = '{"type":"menuitem","text":"' +
+                value +
+                '"' +
+                ',' +
+                'onAction:' +
+                'function(){' +
+                '""===tinyMCE.activeEditor.selection.getContent()' +
+                '?' +
+                'tinyMCE.execCommand("mceInsertContent",!1,"<a href=\\"' +
+                newPath +
+                '\\">' +
+                value +
+                '</a>"):tinyMCE.execCommand("mceInsertLink",!1,"' +
+                newPath +
+                '")},"icon":';
               if (children) {
                 item = item + '"chevron-right",';
-                item = item + '"getSubmenuItems":function(){return ' + children + '}';
+                item = item +
+                  '"getSubmenuItems":function(){return ' +
+                  children +
+                  '}';
               } else {
                 item = item + '"link"';
               }
@@ -928,17 +1194,20 @@ export default class TinymceView extends JetView {
             items = items.join();
             return '[' + items + ']';
           };
-          if (!$$('sidebar').getSelectedItem() || $$('sidebar').getSelectedItem().id === 'content') {
+          if (!$$('sidebar').getSelectedItem() ||
+            $$('sidebar').getSelectedItem().id === 'content') {
             editor.ui.registry.addMenuButton('rlink', {
               icon: 'link',
               tooltip: 'Insert/edit link',
-              // fetch: callback => callback(eval(getSubmenuItems($$("tree").getFirstChildId($$("tree").getFirstId()), '/')))
               fetch: (callback) => {
                 const item = $$('tree').getFirstId();
                 let firstChild = null;
                 if (item) {
                   firstChild = $$('tree').getFirstChildId(item);
-                  if (firstChild) callback(eval(getSubmenuItems(firstChild, '/')));
+                  if (firstChild) {
+                    callback(eval(getSubmenuItems(firstChild,
+                      '/')));
+                  }
                 }
               },
             });
@@ -950,7 +1219,6 @@ export default class TinymceView extends JetView {
           input.setAttribute('type', 'file');
           input.setAttribute('accept', 'image/*,video/*');
           input.onchange = (_) => {
-            // var file = this.files[0];
             const file = input.files[0];
             const reader = new FileReader();
             reader.onload = (_) => {
@@ -959,11 +1227,6 @@ export default class TinymceView extends JetView {
               const base64 = reader.result.split(',')[1];
               const blobInfo = blobCache.create(id, file, base64);
               blobCache.add(blobInfo);
-              // this.app.S3.headObject({
-              //	Bucket: 'redaktr',
-              //	Key: this.app.identityId + '/' + decodeURI(file.name)
-              // }, (err, data) => {
-              // var filePath = (err ? '' : webix.uid() + '/') + decodeURI(file.name);
               const filePath = webix.uid() + '/' + decodeURI(file.name);
               this.app.S3.putObject({
                 Bucket: 'redaktr',
@@ -982,36 +1245,36 @@ export default class TinymceView extends JetView {
                   });
                 }
               });
-              // });
             };
             reader.readAsDataURL(file);
           };
           input.click();
         },
-
         visualblocks_default_state: true,
-
         allow_conditional_comments: true,
         allow_html_in_named_anchor: true,
         element_format: 'html',
-
-
         quickbars_insert_toolbar: false,
-        // quickbars_selection_toolbar: false,
-        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+        quickbars_selection_toolbar: 'bold italic' +
+          ' | ' +
+          'quicklink h2 h3 blockquote quickimage quicktable',
         noneditable_noneditable_class: 'mceNonEditable',
         toolbar_mode: 'sliding',
         contextmenu: 'link image imagetools table',
-
         autosave_ask_before_unload: true,
         autosave_interval: '30s',
         autosave_prefix: '{path}{query}-{id}-',
         autosave_restore_when_empty: false,
         autosave_retention: '2m',
-
-
         extended_valid_elements: 'script[*],i[*],span[*],img[*]',
-        valid_children: '+body[style],+body[link],+h1[div],+h2[div],+h3[div],+h4[div],+h5[div],+h6[div]',
+        valid_children: '+body[style],' +
+          '+body[link],' +
+          '+h1[div],' +
+          '+h2[div],' +
+          '+h3[div],' +
+          '+h4[div],' +
+          '+h5[div],' +
+          '+h6[div]',
         toolbar_drawer: 'floating',
         branding: false,
         convert_urls: false,
@@ -1025,11 +1288,6 @@ export default class TinymceView extends JetView {
         importcss_append: true,
         images_reuse_filename: true,
         images_upload_handler: (blobInfo, success, failure) => {
-          // this.app.S3.headObject({
-          //	Bucket: 'redaktr',
-          //	Key: this.app.identityId + '/' + decodeURI(blobInfo.filename())
-          // }, (err, data) => {
-          // var filePath = (err ? '' : webix.uid() + '/') + decodeURI(blobInfo.filename());
           const filePath = webix.uid() + '/' + decodeURI(blobInfo.filename());
           this.app.S3.putObject({
             Bucket: 'redaktr',
@@ -1040,9 +1298,14 @@ export default class TinymceView extends JetView {
             if (err) failure(err.message);
             else success(filePath);
           });
-          // });
         },
-        document_base_url: '//' + (location.hostname === 'localhost' ? 'redaktr.com' : location.hostname.replace(/\w+./, '')) + '/' + this.app.identityId + '/',
+        document_base_url: '//' +
+          (location.hostname === 'localhost' ?
+            'redaktr.com' :
+            location.hostname.replace(/\w+./, '')) +
+          '/' +
+          this.app.identityId +
+          '/',
         statusbar: false,
         resize: false,
         spellchecker_languages: 'Russian=ru,Ukrainian=uk,English=en',
@@ -1185,6 +1448,10 @@ export default class TinymceView extends JetView {
       },
     };
   }
+  /**
+   * Инициализация tinyMCE
+   * @param {string} val Контент
+   */
   setValue(val) {
     $$('tinymce').getEditor(true).then((tinymce) => {
       tinymce.off('SetContent');
@@ -1197,16 +1464,8 @@ export default class TinymceView extends JetView {
         tinymce.contentWindow.AOS.refreshHard();
         this.getParentView()._save(null, this.getParentView());
       };
-
       tinymce.on('Change', save);
       tinymce.on('SetContent', save);
-
-      // tinymce.on("Change", this.getParentView()._save);
-      // tinymce.on("SetContent", this.getParentView()._save);
     });
   }
 }
-/* global tinymce */
-/* global webix */
-/* global AWS */
-/* global $$ */
