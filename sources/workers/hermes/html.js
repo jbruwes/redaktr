@@ -38,18 +38,18 @@ module.exports = {
         } else {
           let html = value[2].Body.toString();
           let mhtml = '<!DOCTYPE html>' +
-              '<html>' +
-              '<head>' +
-              '</head>' +
-              '<body>' +
-              '<div class="ui sidebar very wide vertical accordion menu"></div>' +
-              '<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a><div class="header item"></div></div>' +
-              '<div class="pusher"><div data-static="" class="ui fluid container">' +
-              // '<div id="content" style="margin: 3em 0.5em 1em; flex: 1 1 auto;"><main></main></div>' +
-              '<div id="content" style="margin: 0; flex: 1 1 auto;"><main></main></div>' +
-              '</div></div>' +
-              '</body>' +
-              '</html>';
+            '<html>' +
+            '<head>' +
+            '</head>' +
+            '<body>' +
+            '<div class="ui sidebar very wide vertical accordion menu"></div>' +
+            '<div class="ui main menu fixed" hidden><a class="launch icon item"><i class="content icon"></i></a><div class="header item"></div></div>' +
+            '<div class="pusher"><div data-static="" class="ui fluid container">' +
+            // '<div id="content" style="margin: 3em 0.5em 1em; flex: 1 1 auto;"><main></main></div>' +
+            '<div id="content" style="margin: 0; flex: 1 1 auto;"><main></main></div>' +
+            '</div></div>' +
+            '</body>' +
+            '</html>';
           let body = data.Body.toString().match(/<body[^>]*>[\s\S]*<\/body>/gi);
           body = body ? body[0].replace(/^<body[^>]*>/, '').replace(/<\/body>$/, '') : data.Body.toString();
           html = html.split(/\s*(<head>)\s*/);
@@ -60,17 +60,17 @@ module.exports = {
           buf = node.title ? node.title : node.value;
           buf = buf.replace(/"/g, '&quot;');
           buf = '<title>' + buf + '</title>' +
-              '<meta name="title" content="' + buf + '">' +
-              '<meta property="og:title" content="' + buf + '">' +
-              '<meta property="twitter:title" content="' + buf + '">';
+            '<meta name="title" content="' + buf + '">' +
+            '<meta property="og:title" content="' + buf + '">' +
+            '<meta property="twitter:title" content="' + buf + '">';
           html[1] = html[1] + buf;
           mhtml[1] = mhtml[1] + buf;
           if (node.description) {
             buf = node.description;
             buf = buf.replace(/"/g, '&quot;');
             buf = '<meta name="description" content="' + buf + '">' +
-                '<meta property="og:description" content="' + buf + '">' +
-                '<meta property="twitter:description" content="' + buf + '">';
+              '<meta property="og:description" content="' + buf + '">' +
+              '<meta property="twitter:description" content="' + buf + '">';
             html[1] = html[1] + buf;
             mhtml[1] = mhtml[1] + buf;
           }
@@ -84,8 +84,8 @@ module.exports = {
           buf = encodeURI(buf);
           buf = 'https://' + (value[0].Item.domain ? value[0].Item.domain : 'redaktr.com/' + value[0].Item.name) + '/' + (buf ? buf + '/' : '');
           buf = '<link rel="canonical" href="' + buf + '"/>' +
-              '<meta property="og:url" content="' + buf + '">' +
-              '<meta property="twitter:url" content="' + buf + '">';
+            '<meta property="og:url" content="' + buf + '">' +
+            '<meta property="twitter:url" content="' + buf + '">';
           html[1] = html[1] + buf;
           mhtml[1] = mhtml[1] + buf;
           if (node.image) {
@@ -93,7 +93,7 @@ module.exports = {
             buf = encodeURI(buf);
             buf = 'https://' + (value[0].Item.domain ? value[0].Item.domain : 'redaktr.com') + '/' + value[0].Item.id + '/' + buf;
             buf = '<meta property="og:image" content="' + buf + '">' +
-                '<meta property="twitter:image" content="' + buf + '">';
+              '<meta property="twitter:image" content="' + buf + '">';
             html[1] = html[1] + buf;
             mhtml[1] = mhtml[1] + buf;
           }
@@ -141,32 +141,32 @@ module.exports = {
           html = html.join('').replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, '><').replace(/^\s*$[\n\r]{1,}/gm, '');
           mhtml = mhtml.join('').replace(/>(\s{1,}|\t{1,}|[\n\r]{1,})</gm, '><').replace(/^\s*$[\n\r]{1,}/gm, '');
           /* if (node.data && node.data.length) {
-              buf = '<div class="ui container"><div class="ui divider"></div><div class="ui three doubling stackable cards">';
-              node.data.forEach(element => {
-                if (element.image && element.description) {
-                  var curPath;
-                  if (element.url) curPath = element.url.trim().replace(/^\/+|\/+$/g, '').replace(/ /g, '_');
-                  else {
-                    curPath = node.path;
-                    curPath = curPath.split('/');
-                    curPath.shift();
-                    curPath = curPath.join('/');
-                    curPath = (curPath + '/' + element.value.trim()).replace(/^\/+|\/+$/g, '').replace(/ /g, '_');
-                  }
-                  curPath = '/' + curPath + '/';
-                  buf = buf + '<div class="ui centered raised card" data-tilt>';
-                  buf = buf + '<a class="image" href="' + curPath + '">';
-                  buf = buf + '<img src="' + element.image + '" style="object-fit:cover;height:300px;">';
-                  buf = buf + '</a>';
-                  buf = buf + '<div class="content">';
-                  buf = buf + '<a class="ui tiny header" href="' + curPath + '">' + (element.title ? element.title : element.value) + '</a>';
-                  buf = buf + '<div class="meta">' + element.description + '</div>';
-                  buf = buf + '</div>';
-                  buf = buf + '</div>';
+            buf = '<div class="ui container"><div class="ui divider"></div><div class="ui three doubling stackable cards">';
+            node.data.forEach(element => {
+              if (element.image && element.description) {
+                var curPath;
+                if (element.url) curPath = element.url.trim().replace(/^\/+|\/+$/g, '').replace(/ /g, '_');
+                else {
+                  curPath = node.path;
+                  curPath = curPath.split('/');
+                  curPath.shift();
+                  curPath = curPath.join('/');
+                  curPath = (curPath + '/' + element.value.trim()).replace(/^\/+|\/+$/g, '').replace(/ /g, '_');
                 }
-              });
-              buf = buf + '</div><div class="ui hidden divider"></div></div>';
-            } else buf = "";*/
+                curPath = '/' + curPath + '/';
+                buf = buf + '<div class="ui centered raised card" data-tilt>';
+                buf = buf + '<a class="image" href="' + curPath + '">';
+                buf = buf + '<img src="' + element.image + '" style="object-fit:cover;height:300px;">';
+                buf = buf + '</a>';
+                buf = buf + '<div class="content">';
+                buf = buf + '<a class="ui tiny header" href="' + curPath + '">' + (element.title ? element.title : element.value) + '</a>';
+                buf = buf + '<div class="meta">' + element.description + '</div>';
+                buf = buf + '</div>';
+                buf = buf + '</div>';
+              }
+            });
+            buf = buf + '</div><div class="ui hidden divider"></div></div>';
+          } else buf = "";*/
           html = html.split(/(<[^>]+id=\"content\".*>)(<main><\/main>)(<[^>]+>)/);
           mhtml = mhtml.split(/(<[^>]+id=\"content\".*>)(<main><\/main>)(<[^>]+>)/);
           if (html.length === 1) html = html[0].split(/(<[^>]+id=\"content\".*>)(<div><\/div>)(<[^>]+>)/);
