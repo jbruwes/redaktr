@@ -2,8 +2,7 @@ const aws = require('aws-sdk');
 const html = require('./html');
 const s3 = new aws.S3();
 exports.handler = (event, context, callback) => {
-  const key = decodeURIComponent(event.Records[0].s3.object.key
-    .replace(/\+/g, ' '));
+  const key = decodeURIComponent(event.Records[0].s3.object.key);
   const id = key.match(/^[^/]+/)[0];
   Promise.all([s3.getObject({
     Bucket: 'redaktr',
