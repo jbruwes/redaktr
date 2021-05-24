@@ -1,7 +1,6 @@
 /* jshint esversion: 9 */
 const aws = require('aws-sdk');
 const s3 = new aws.S3();
-const documentClient = new aws.DynamoDB.DocumentClient();
 exports.handler = async(event, context) => {
   async function * listAllKeys(opts) {
     do {
@@ -11,16 +10,21 @@ exports.handler = async(event, context) => {
     } while (opts.ContinuationToken);
   }
   try {
-    let redaktr = await documentClient.scan({
-      TableName: 'redaktr',
-      ProjectionExpression: '#name',
-      ExpressionAttributeNames: {
-        '#name': 'name',
-      },
-    }).promise();
-    redaktr = redaktr.Items.map((obj) => {
-      return obj.name;
-    });
+    const redaktr = [];
+    for await (const data of listAllKeys({
+      Bucket: 'redaktr',
+      Delimiter: '/',
+    })) {
+      await Promise.all(data.Contents.filter((item) => {
+        return item.Key.split('.').pop() === 'json';
+      }).map(async(element) => {
+        const file = await s3.getObject({
+          Bucket: 'redaktr',
+          Key: element.Key,
+        }).promise();
+        redaktr.push(JSON.parse(file.Body.toString()).name);
+      }));
+    }
     for await (const data of listAllKeys({
       Bucket: 'redaktr.com',
     })) {
@@ -42,6 +46,5 @@ exports.handler = async(event, context) => {
     }
   } catch (err) {
     console.log(err);
-    throw new Error('documentClient.scan');
   }
 };
