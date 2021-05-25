@@ -18,7 +18,7 @@ module.exports = function(env) {
   var config = {
     mode: production ? "production" : "development",
     entry: {
-      redaktr: "./sources/redaktr.js"
+      redaktr: ['babel-polyfill', './sources/redaktr.js']
     },
     output: {
       path: path.join(__dirname, "codebase"),

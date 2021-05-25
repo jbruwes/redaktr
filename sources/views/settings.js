@@ -1,6 +1,4 @@
-import {
-  JetView,
-} from 'webix-jet';
+import { JetView } from 'webix-jet';
 import ValidateEmailView from './settingsViews/validateEmail';
 export default class SettingsView extends JetView {
   config() {
@@ -8,6 +6,7 @@ export default class SettingsView extends JetView {
       rows: [{
         view: 'form',
         autoheight: false,
+        scroll: true,
         elements: [{
           template: 'Project name',
           type: 'section',
@@ -15,8 +14,7 @@ export default class SettingsView extends JetView {
           id: 'name',
           view: 'label',
           label: '-',
-        },
-        {
+        }, {
           template: 'Domain',
           type: 'section',
         }, {
@@ -24,8 +22,19 @@ export default class SettingsView extends JetView {
           view: 'label',
           label: '-',
           labelWidth: 33,
-        },
-        {
+        }, {
+          template: 'Yandex Metrika',
+          type: 'section',
+        }, {
+          id: 'metrika',
+          view: 'text',
+        }, {
+          template: 'Google Analytics',
+          type: 'section',
+        }, {
+          id: 'analytics',
+          view: 'text',
+        }, {
           template: 'Icon',
           type: 'section',
           css: 'webix_section',
@@ -52,15 +61,13 @@ export default class SettingsView extends JetView {
           id: 'email',
           view: 'search',
           icon: false,
-        },
-        {
+        }, {
           id: 'verifyButton',
           view: 'button',
           disabled: true,
           value: 'Verify email',
-          click: (_) => this.validateemail.showWindow(this.cognitoUser, this),
-        },
-        ],
+          click: () => this.validateemail.showWindow(this.cognitoUser, this),
+        }, {}, {}],
         elementsConfig: {
           labelAlign: 'right',
         },
@@ -119,10 +126,15 @@ export default class SettingsView extends JetView {
           text: err.message,
           type: 'error',
         });
+        this.prop = {};
+        this._onChange();
       } else {
-        data = JSON.parse(data.Body.toString());
-        if (data.name) $$('name').setValue('http://redaktr.com/' + data.name);
-        if (data.domain) $$('domain').setValue(data.domain);
+        this.prop = JSON.parse(data.Body.toString());
+        if (this.prop.name) $$('name').setValue('http://redaktr.com/' + this.prop.name);
+        if (this.prop.domain) $$('domain').setValue(this.prop.domain);
+        if (this.prop.metrika) $$('metrika').setValue(this.prop.metrika);
+        if (this.prop.analytics) $$('analytics').setValue(this.prop.analytics);
+        this._onChange();
       }
     });
     const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
@@ -173,7 +185,30 @@ export default class SettingsView extends JetView {
       });
     }
   }
+  _onChange() {
+    $$('metrika').attachEvent("onChange", (value) => {
+      this.prop.metrika = value;
+      this._save();
+    });
+    $$('analytics').attachEvent("onChange", (value) => {
+      this.prop.analytics = value;
+      this._save();
+    });
+  }
+  async _save() {
+    try {
+      await this.app.S3.putObject({
+        Bucket: 'redaktr',
+        Key: this.app.identityId + '.json',
+        ContentType: 'application/json',
+        Body: webix.ajax().stringify(this.prop),
+      }).promise();
+      webix.message('Settings save complete');
+    } catch (e) {
+      webix.message({
+        text: e,
+        type: 'error',
+      });
+    }
+  }
 }
-/* global webix */
-/* global AWS */
-/* global $$ */

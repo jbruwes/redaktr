@@ -3,7 +3,7 @@ const tree = require('./tree');
 const s3 = new aws.S3();
 exports.handler = (event, context, callback) => {
   const key = decodeURIComponent(event.Records[0].s3.object.key);
-  const id = key.match(/^[^/]+/)[0];
+  const id = key.split('/').shift().split('.').shift();
   Promise.all([s3.getObject({
     Bucket: 'redaktr',
     Key: id + '.json',
