@@ -1,4 +1,4 @@
-import { JetView } from 'webix-jet';
+import {JetView} from 'webix-jet';
 import ValidateEmailView from './settingsViews/validateEmail';
 export default class SettingsView extends JetView {
   config() {
@@ -186,11 +186,11 @@ export default class SettingsView extends JetView {
     }
   }
   _onChange() {
-    $$('metrika').attachEvent("onChange", (value) => {
+    $$('metrika').attachEvent('onChange', (value) => {
       this.prop.metrika = value;
       this._save();
     });
-    $$('analytics').attachEvent("onChange", (value) => {
+    $$('analytics').attachEvent('onChange', (value) => {
       this.prop.analytics = value;
       this._save();
     });

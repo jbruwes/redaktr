@@ -10,6 +10,7 @@ export default class ToolbarView extends JetView {
         icon: 'mdi mdi-file-document-outline',
         click: (_) => {
           const sel = $$('tree').getSelectedId();
+          const curDate = new Date().toISOString();
           let item = null;
           if (sel) {
             let parent = $$('tree').getParentId(sel);
@@ -19,8 +20,8 @@ export default class ToolbarView extends JetView {
               description: '',
               title: '',
               icon: '',
-              lastmod: '',
-              date: new Date().toISOString(),
+              lastmod: curDate,
+              date: curDate,
               keywords: '',
               image: '',
               priority: '',
@@ -34,8 +35,8 @@ export default class ToolbarView extends JetView {
               url: '',
               description: '',
               title: '',
-              lastmod: '',
-              date: new Date().toISOString(),
+              lastmod: curDate,
+              date: curDate,
               keywords: '',
               image: '',
               priority: '',
