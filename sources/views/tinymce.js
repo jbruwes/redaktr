@@ -224,6 +224,21 @@ export default class TinymceView extends JetView {
             header +
             '</div></div>',
         }, {
+          title: 'pageheader',
+          description: 'заголовок с картинкой на подложке',
+          content: '<div class="ui basic vertical fitted segment mceNonEditable"' +
+            ' ' +
+            ['data-id="pageheader"',
+              commonData,
+              singleData].join(' ') +
+            ' ' +
+            'style="' +
+            'height:100vh;background-size:cover;background-position:center;' +
+            '">' +
+            '<div class="ui active very light dimmer">' +
+            header +
+            '</div></div>',
+        }, {
           title: 'headerlist',
           description: 'вертикальный список заголовков',
           content: items.replace('#{data}',

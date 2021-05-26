@@ -1,5 +1,6 @@
 /* jshint esversion: 9 */
 import './styles/app.css';
+import 'fomantic-ui-css/components/icon.css';
 import {
   JetApp,
   EmptyRouter,

@@ -33,11 +33,16 @@ module.exports = function(env) {
           use: "babel-loader?" + JSON.stringify(babelSettings)
         },
         {
-          test: /\.(svg|png|jpg|gif)$/,
-          //use: "url-loader?limit=25000",
-          use: 'file-loader?name=[name].[ext]'
+          test: /\.(eot|ttf|woff|woff2|svg|png|jpg|gif)$/,
+          use: [{
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              // outputPath: 'resource/',
+            },
+          }],
         },
-        {
+          {
           test: /\.(less|css)$/,
           use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
         }
