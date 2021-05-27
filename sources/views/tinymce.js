@@ -14,9 +14,10 @@ export default class TinymceView extends JetView {
       '<div class="item">#{content}</div>' +
       '</div>';
     const grid = '<div class="' +
-      'ui column centered stretched padded grid mceNonEditable ' +
-      '#{count} #{adaptive}' +
+      'ui #{count} column #{centered} stretched padded grid #{editable} ' +
+      '#{adaptive}' +
       '" #{data}>' +
+      '#{divider}' +
       '<div class="column #{align}" data-aos="#{aos}">#{content}</div>' +
       '</div>';
     const segments = '<div class="' +
@@ -150,7 +151,10 @@ export default class TinymceView extends JetView {
         }, {
           title: 'deck',
           description: 'колода карточек',
-          content: grid.replace('#{count}', 'three')
+          content: grid.replace('#{divider}', '')
+          .replace('#{centered}', 'centered')
+          .replace('#{editable}', 'mceNonEditable')
+          .replace('#{count}', 'three')
             .replace('#{aos}', 'flip-left')
             .replace('#{align}', '')
             .replace('#{adaptive}', '')
@@ -256,9 +260,29 @@ export default class TinymceView extends JetView {
             header +
             '</div>',
         }, {
+          title: 'doubleheader',
+          description: 'двойной заголовок',
+          content: '<div class="ui placeholder segment mceNonEditable">' +
+           grid.replace('#{divider}', '<div class="ui vertical divider">☆</div>')
+           .replace('#{editable}', '')
+           .replace('#{centered}', '')
+           .replace('#{count}', 'two')
+            .replace('#{aos}', 'fade-up')
+            .replace('#{align}', 'center aligned')
+            .replace('#{adaptive}', 'stackable doubling')
+            .replace('#{data}',
+              ['data-id="doubleheader"',
+                commonData,
+                singleData,
+                multiData].join(' '))
+            .replace('#{content}', header) + '</div>',
+        }, {
           title: 'icongrid',
           description: 'плитка из иконок',
-          content: grid.replace('#{count}', 'six')
+          content: grid.replace('#{divider}', '')
+          .replace('#{editable}', 'mceNonEditable')
+          .replace('#{centered}', 'centered')
+          .replace('#{count}', 'six')
             .replace('#{aos}', 'fade-up')
             .replace('#{align}', 'center aligned')
             .replace('#{adaptive}', 'stackable doubling')
@@ -271,7 +295,10 @@ export default class TinymceView extends JetView {
         }, {
           title: 'cardgrid',
           description: 'плитка из карточек',
-          content: grid.replace('#{count}', 'three')
+          content: grid.replace('#{divider}', '')
+          .replace('#{editable}', 'mceNonEditable')
+          .replace('#{centered}', 'centered')
+          .replace('#{count}', 'three')
             .replace('#{aos}', 'flip-left')
             .replace('#{align}', '')
             .replace('#{adaptive}', 'stackable doubling')
