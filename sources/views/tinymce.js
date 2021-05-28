@@ -182,11 +182,9 @@ export default class TinymceView extends JetView {
             .replace('#{content}',
               '<div' +
               ' ' +
-              'class="ui basic fitted segment"' +
+              'class="ui basic fitted segment jarallax"' +
               ' ' +
-              'style="' +
-              'height:100vh;background-size:cover;background-position:center;' +
-              '"' +
+              'style="height:100vh;"' +
               '>' +
               '<div class="ui active very light dimmer">' +
               header +
@@ -213,6 +211,8 @@ export default class TinymceView extends JetView {
             ' ' +
             'segment' +
             ' ' +
+            'jarallax' +
+            ' ' +
             'mceNonEditable' +
             '"' +
             ' ' +
@@ -221,24 +221,20 @@ export default class TinymceView extends JetView {
               singleData,
               'data-particles="default"'].join(' ') +
             ' ' +
-            'style="' +
-            'height:100vh;background-size:cover;background-position:center;' +
-            '">' +
+            'style="height:100vh;">' +
             '<div class="ui active very light center dimmer">' +
             header +
             '</div></div>',
         }, {
           title: 'pageheader',
           description: 'заголовок с картинкой на подложке',
-          content: '<div class="ui basic vertical fitted segment mceNonEditable"' +
+          content: '<div class="ui basic vertical fitted segment jarallax mceNonEditable"' +
             ' ' +
             ['data-id="pageheader"',
               commonData,
               singleData].join(' ') +
             ' ' +
-            'style="' +
-            'height:100vh;background-size:cover;background-position:center;' +
-            '">' +
+            'style="height:100vh;">' +
             '<div class="ui active very light dimmer">' +
             header +
             '</div></div>',
