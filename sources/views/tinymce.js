@@ -41,7 +41,8 @@ export default class TinymceView extends JetView {
     const multiData = 'data-length="" ' +
       'data-deep="false" ' +
       'data-sort="false" ' +
-      'data-reveal="true"';
+      'data-reveal="true" ' +
+      'data-children=""';
     const sliderData = 'data-pager="true" data-controls="true"';
     return {
       id: 'tinymce',
