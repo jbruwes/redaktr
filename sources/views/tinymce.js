@@ -185,7 +185,7 @@ export default class TinymceView extends JetView {
               ' ' +
               'class="ui basic fitted segment jarallax"' +
               ' ' +
-              'style="height:100vh;"' +
+              'style="min-height:100vh;"' +
               '>' +
               '<div class="ui active very light dimmer">' +
               header +
@@ -222,7 +222,7 @@ export default class TinymceView extends JetView {
               singleData,
               'data-particles="default"'].join(' ') +
             ' ' +
-            'style="height:100vh;">' +
+            'style="min-height:100vh;">' +
             '<div class="ui active very light center dimmer">' +
             header +
             '</div></div>',
@@ -235,7 +235,7 @@ export default class TinymceView extends JetView {
               commonData,
               singleData].join(' ') +
             ' ' +
-            'style="height:100vh;">' +
+            'style="min-height:100vh;">' +
             '<div class="ui active very light dimmer">' +
             header +
             '</div></div>',
