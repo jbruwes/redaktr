@@ -25,7 +25,7 @@ export default class TinymceView extends JetView {
       '" #{data}>' +
       '#{content}' +
       '</div>';
-    const header = '<div class="middle aligned content">' +
+    const header = '<div class="content">' +
       '<a class="ui header hvr-icon-wobble-vertical">' +
       '<i class="hvr-icon icon"><!-- --></i>' +
       '<span class="ui">' +
