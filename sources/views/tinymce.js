@@ -36,12 +36,11 @@ export default class TinymceView extends JetView {
       '<a class="ui circular inverted secondary icon button">' +
       '<i class="icon"><!-- --></i>' +
       '</a></div><img class="ui image" loading="#{loading}"></div>';
-    const commonData = 'data-auto="" data-description="true"';
-    const singleData = 'data-path="" data-date="true"';
+    const commonData = 'data-auto="" data-path="" data-reveal="true"';
+    const singleData = 'data-description="true" data-date="true"';
     const multiData = 'data-length="" ' +
       'data-deep="false" ' +
       'data-sort="false" ' +
-      'data-reveal="true" ' +
       'data-children=""';
     const sliderData = 'data-pager="true" data-controls="true"';
     return {
@@ -338,6 +337,14 @@ export default class TinymceView extends JetView {
             '<span class="ui">' +
             '<span class="sub header"><!-- --></span>' +
             '</span></span></span></a></div>',
+        }, {
+          title: 'pagination',
+          description: 'пейджер с номерами страниц и стрелками',
+          content: '<div class="ui pagination menu mceNonEditable" ' +
+            ['data-id="pagination"',
+              commonData,
+              multiData].join(' ') +
+            '><a class="item"><!-- --></a></div>',
         }],
         font_formats: 'Andale Mono=andale mono,times;' +
           'Arial=arial,helvetica,sans-serif;' +
