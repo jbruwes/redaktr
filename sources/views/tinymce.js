@@ -36,10 +36,11 @@ export default class TinymceView extends JetView {
       '<a class="ui circular inverted secondary icon button">' +
       '<i class="icon"><!-- --></i>' +
       '</a></div><img class="ui image" loading="#{loading}"></div>';
-    const commonData = 'data-auto="" data-path="" data-reveal="true"';
+    const commonData = 'data-auto="" data-path=""';
     const singleData = 'data-description="true" data-date="true"';
     const multiData = 'data-length="" ' +
       'data-deep="false" ' +
+      'data-reveal="true" ' +
       'data-sort="false" ' +
       'data-children=""';
     const sliderData = 'data-pager="true" data-controls="true"';
@@ -259,19 +260,19 @@ export default class TinymceView extends JetView {
           title: 'doubleheader',
           description: 'двойной заголовок',
           content: '<div class="ui placeholder segment mceNonEditable">' +
-           grid.replace('#{divider}', '<div class="ui vertical divider">☆</div>')
-             .replace('#{editable}', '')
-             .replace('#{centered}', '')
-             .replace('#{count}', 'two')
-             .replace('#{aos}', 'fade-up')
-             .replace('#{align}', 'center aligned')
-             .replace('#{adaptive}', 'stackable doubling')
-             .replace('#{data}',
-               ['data-id="doubleheader"',
-                 commonData,
-                 singleData,
-                 multiData].join(' '))
-             .replace('#{content}', header) + '</div>',
+            grid.replace('#{divider}', '<div class="ui vertical divider">☆</div>')
+              .replace('#{editable}', '')
+              .replace('#{centered}', '')
+              .replace('#{count}', 'two')
+              .replace('#{aos}', 'fade-up')
+              .replace('#{align}', 'center aligned')
+              .replace('#{adaptive}', 'stackable doubling')
+              .replace('#{data}',
+                ['data-id="doubleheader"',
+                  commonData,
+                  singleData,
+                  multiData].join(' '))
+              .replace('#{content}', header) + '</div>',
         }, {
           title: 'icongrid',
           description: 'плитка из иконок',
@@ -329,7 +330,9 @@ export default class TinymceView extends JetView {
           description: 'путь до текущей страницы',
           content: '<div class="ui mini fluid steps mceNonEditable" ' +
             ['data-id="breadcrumbs"',
-              commonData].join(' ') +
+              'data-reveal="true"',
+              commonData,
+              singleData].join(' ') +
             '><a class="step">' +
             '<i class="hvr-wobble-vertical icon"><!-- --></i>' +
             '<span class="content">' +
