@@ -332,14 +332,16 @@ export default class TinymceView extends JetView {
             ['data-id="breadcrumbs"',
               'data-reveal="true"',
               commonData,
-              singleData].join(' ') +
+              singleData,
+              multiData].join(' ') +
             '><a class="step">' +
             '<i class="hvr-wobble-vertical icon"><!-- --></i>' +
             '<span class="content">' +
             '<span class="ui title tiny header">' +
             '<span class="ui">' +
             '<span class="sub header"><!-- --></span>' +
-            '</span></span></span></a></div>',
+            '</span></span></span>' +
+            '</a></div>',
         }, {
           title: 'pagination',
           description: 'пейджер с номерами страниц и стрелками',
@@ -348,6 +350,12 @@ export default class TinymceView extends JetView {
               commonData,
               multiData].join(' ') +
             '><a class="item"><!-- --></a></div>',
+        }, {
+          title: 'parentbutton',
+          description: 'кнопка к родительской странице',
+          content: '<a class="ui labeled icon button mceNonEditable" ' +
+            ['data-id="parentbutton"', commonData, 'data-reveal="true"'].join(' ') +
+            '><i class="left arrow icon"></i>Back</a>',
         }],
         font_formats: 'Andale Mono=andale mono,times;' +
           'Arial=arial,helvetica,sans-serif;' +
