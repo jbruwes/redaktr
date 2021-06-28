@@ -432,8 +432,8 @@ export default class SignInView extends JetView {
             {
               padding: 2,
               cols: [
-                {},
-                {
+                {},{},
+                /*{
                   id: 'www',
                   view: 'button',
                   css: 'webix_transparent',
@@ -444,7 +444,7 @@ export default class SignInView extends JetView {
                   click: () => {
                     window.open('https://w--w--w.com', '_blank');
                   },
-                },
+                },*/
               ],
             },
           ],
